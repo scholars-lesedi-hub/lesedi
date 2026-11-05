@@ -1,84 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lesedi Scholars Hub - Click Press Learn</title>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesedi Scholars Hub - Full Platform</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9;color:#1e293b}
-.header{background:#0a2a5a;color:white;text-align:center;padding:30px 15px}
-.header h1{margin:0;font-size:32px}
-.btn{background:#facc15;color:#000;padding:12px 25px;border-radius:30px;border:none;font-weight:bold;font-size:16px;cursor:pointer}
-.card{background:white;margin:15px;padding:20px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,0.1);text-align:center}
-input,textarea{width:90%;padding:12px;margin:8px 0;border:2px solid #ddd;border-radius:10px}
-iframe{width:100%;height:400px;border:2px solid #0a2a5a;border-radius:10px}
+body{font-family:Arial;margin:0;background:#f1f5f9;color:#1e293b}
+.header{background:#0a2a5a;color:white;text-align:center;padding:25px 15px}
+.header h1{margin:0;font-size:28px}
+.btn{background:#facc15;color:#000;padding:12px 20px;border-radius:30px;border:none;font-weight:bold;cursor:pointer;margin:5px}
+.btn2{background:#0a2a5a;color:white;padding:10px 18px;border-radius:10px;border:none;font-weight:bold;cursor:pointer}
+.card{background:white;margin:15px;padding:20px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+input,textarea,select{width:95%;padding:12px;margin:7px 0;border:2px solid #ddd;border-radius:10px}
+iframe{width:100%;height:350px;border:2px solid #0a2a5a;border-radius:10px}
+.badge{background:#e2e8f0;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.timer{font-size:28px;font-weight:bold;color:red;text-align:center}
+.qbox{background:#f8fafc;padding:12px;border-radius:10px;margin:8px 0;border-left:4px solid #facc15}
+.price{border:2px solid #facc15;padding:15px;border-radius:12px;text-align:center;margin:10px 0}
+.price.best{border:3px solid #0a2a5a;background:#fefce8}
+.contactBar{background:#25D366;color:white;text-align:center;padding:12px;font-weight:bold}
+.contactBar a{color:white;text-decoration:none}
 </style>
-</head>
-<body>
+</head><body>
+
 <div class="header">
 <h1>📚 LESEDI SCHOLARS HUB</h1>
-<p>Education Lesedi Scholars Hub - Click Press Learn</p>
-<button class="btn" onclick="document.getElementById('pdfSection').scrollIntoView()">Start Learning Now</button>
+<p>Click - Press - Learn | Botswana's Digital Exam Platform</p>
+<button class="btn" onclick="show('exam')">Take Exam</button>
+<button class="btn" onclick="show('convert')">Convert PDF</button>
+<button class="btn" onclick="show('plans')">Subscribe</button>
 </div>
 
+<div class="contactBar">
+📞 WhatsApp / Orange Money: <a href="https://wa.me/26777980825">267 77980825</a> | MyZaka: 267 71823638
+</div>
+
+<!-- STAGE 2 -->
+<div class="card" id="exam">
+<span class="badge">Stage 2</span><h2>📝 Examination System</h2>
+<p>Questions, answer keys, timer & automatic marking.</p>
+<div class="timer" id="timer">10:00</div>
+<div class="qbox"><b>Q1. What is 5 + 7?</b><br>
+<input type="radio" name="q1" value="12"> 12 <input type="radio" name="q1" value="10"> 10 <input type="radio" name="q1" value="13"> 13</div>
+<div class="qbox"><b>Q2. Capital of Botswana?</b><br>
+<input type="radio" name="q2" value="Gaborone"> Gaborone <input type="radio" name="q2" value="Maun"> Maun</div>
+<div class="qbox"><b>Q3. Write 2 lines about Lesedi:</b><br><textarea id="q3" placeholder="Type answer..."></textarea></div>
+<button class="btn2" onclick="markExam()">Submit & Auto-Mark ✅</button>
+<p id="examResult"></p>
+</div>
+
+<!-- STAGE 3 -->
+<div class="card" id="convert">
+<span class="badge">Stage 3</span><h2>📄 Paper Conversion</h2>
+<p>Upload PDF examination and convert into digital questions.</p>
+<input type="file" id="pdfFile" accept=".pdf">
+<button class="btn2" onclick="convertPDF()">Convert PDF to Questions</button>
+<iframe id="pdfView"></iframe>
+<div id="pdfText" style="background:#fffbeb;padding:10px;border-radius:10px;margin-top:10px;white-space:pre-wrap;"></div>
+</div>
+
+<!-- STAGE 4 -->
 <div class="card">
-<h2>✨ Click - Press - Learn</h2>
-<p>Welcome to Lesedi! Simple lessons for every scholar in Botswana.</p>
+<span class="badge">Stage 4</span><h2>🤖 AI Marking with Teacher Approval</h2>
+<textarea id="aiAnswer" placeholder="Paste student answer... e.g. Photosynthesis is..."></textarea>
+<button class="btn2" onclick="aiMark()">AI Mark Now</button>
+<div id="aiResult" style="background:#eff6ff;padding:12px;border-radius:10px;margin-top:10px;"></div>
+<button class="btn" onclick="alert('Teacher Approved ✅')">Teacher Approve ✅</button>
 </div>
 
-<div class="card" id="pdfSection">
-<h2>📄 PDF to Digital Answering</h2>
-<p>Paste a PDF link OR upload your past paper, then answer below — no printing!</p>
+<!-- STAGE 5 -->
+<div class="card" id="plans">
+<span class="badge">Stage 5</span><h2>🚀 Subscriptions & Payments</h2>
+<p>Pay with Orange Money or MyZaka - Then WhatsApp proof to activate!</p>
 
-<input type="file" id="pdfUpload" accept=".pdf">
-<p>OR paste PDF link:</p>
-<input type="text" id="pdfLink" placeholder="Paste PDF link here...">
-<button class="btn" onclick="loadPDF()">Load PDF</button>
+<div class="price"><b>🆓 FREE - Try Lesedi</b><br>P0 - 1 paper per week<br><button class="btn2" onclick="show('exam')">Try Free Exam</button></div>
 
-<iframe id="pdfViewer" src=""></iframe>
+<div class="price"><b>⚡ Daily - P5 / day</b><br>1 full exam + AI marking for 24hrs<br>
+<button class="btn2" onclick="payDaily()">Pay P5 Orange Money</button></div>
 
-<h3>✍️ Answer Here</h3>
-<input type="text" id="stuName" placeholder="Your Name">
-<textarea id="ans1" placeholder="Q1 Answer..."></textarea>
-<textarea id="ans2" placeholder="Q2 Answer..."></textarea>
-<textarea id="ans3" placeholder="Q3 Answer..."></textarea>
-<button class="btn" onclick="submitAnswers()">Submit Answers ✅</button>
-<p id="result"></p>
-</div>
+<div class="price best"><b>⭐ Scholar Monthly - P30 / month [MOST POPULAR]</b><br>Unlimited exams, PDF conversion, AI marking, Reports<br>
+<button class="btn2" onclick="payMonthly()">Pay P30 - Orange Money 77980825</button><br>
+<button class="btn2" onclick="payMyZaka('P30 Monthly')">Pay P30 - MyZaka 71823638</button></div>
 
-<div class="card">
-<h2>📖 English</h2>
-<p>Reading, Writing, Grammar made easy.</p>
-<button class="btn">Open English</button>
-</div>
+<div class="price"><b>👨‍👩‍👧 Family - P70 / month</b><br>3 kids, 1 payment, parent WhatsApp report<br>
+<button class="btn2" onclick="payFamily()">Pay P70 Family</button></div>
 
-<div class="card">
-<h2>🔢 Maths</h2>
-<p>BGCSE & JC Maths made simple.</p>
-<button class="btn">Open Maths</button>
+<div class="price"><b>🏫 School - P350 / month or P1,200 / term</b><br>Up to 40 students, Teacher dashboard, Institution management<br>
+<button class="btn2" onclick="paySchool()">Pay School Plan</button></div>
+
+<h3>📊 Reports & School Management</h3>
+<input type="text" placeholder="School Name: e.g. Ledumang Senior">
+<select><option>Form 1</option><option>Form 2</option><option>Form 3</option><option>Form 5 BGCSE</option></select>
+<button class="btn2" onclick="alert('Report: Students 45, Avg 72%, Pass 88%')">Generate Report</button>
+
+<h3>📞 Contact Lesedi</h3>
+<p>WhatsApp / Call / Orange Money: <b>267 77980825</b><br>
+MyZaka / PayToCell: <b>267 71823638</b></p>
+<a href="https://wa.me/26777980825?text=Hi Lesedi! I want to subscribe" style="background:#25D366;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:bold;">Chat on WhatsApp</a>
 </div>
 
 <script>
-function loadPDF(){
-  let link=document.getElementById('pdfLink').value;
-  let file=document.getElementById('pdfUpload').files[0];
-  if(file){
-    document.getElementById('pdfViewer').src=URL.createObjectURL(file);
-  } else if(link){
-    document.getElementById('pdfViewer').src=link;
-  } else {
-    alert("Please upload a PDF or paste a link");
-  }
-}
-function submitAnswers(){
-  let name=document.getElementById('stuName').value;
-  let a1=document.getElementById('ans1').value;
-  let a2=document.getElementById('ans2').value;
-  let msg=`Thank you ${name}! Your answers were saved. Teacher will check: Q1: ${a1} | Q2: ${a2}`;
-  document.getElementById('result').innerText=msg;
-  let waText=encodeURIComponent(msg);
-  window.open(`https://wa.me/?text=${waText}`,"_blank");
-}
+let time=600; setInterval(()=>{if(time>0){time--;let m=Math.floor(time/60),s=time%60;document.getElementById('timer').innerText=m+":"+(s<10?"0"+s:s)}},1000);
+function markExam(){let score=0;if(document.querySelector('input[name="q1"]:checked')?.value=="12")score++;if(document.querySelector('input[name="q2"]:checked')?.value=="Gaborone")score++;if(document.getElementById('q3').value.length>10)score++;document.getElementById('examResult').innerHTML=`<b>Score: ${score}/3 = ${Math.round(score/3*100)}% 🎉</b>`}
+function show(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+async function convertPDF(){let f=document.getElementById('pdfFile').files[0];if(!f)return alert("Upload PDF first");document.getElementById('pdfView').src=URL.createObjectURL(f);let buf=await f.arrayBuffer();let pdf=await pdfjsLib.getDocument({data:buf}).promise;let txt="";for(let i=1;i<=Math.min(pdf.numPages,3);i++){let p=await pdf.getPage(i);let c=await p.getTextContent();txt+=c.items.map(x=>x.str).join(" ")+"\n---PAGE "+i+"---\n"}document.getElementById('pdfText').innerText="EXTRACTED:\n"+txt.substring(0,2000)}
+function aiMark(){let ans=document.getElementById('aiAnswer').value.toLowerCase();let score=2;let fb="";if(ans.includes("photo")||ans.includes("sun")||ans.includes("chlorophyll")){score+=5;fb+="Good keywords. "}if(ans.length>50){score+=1;fb+="Good detail. "}document.getElementById('aiResult').innerHTML=`<b>AI Score: ${score}/8</b><br>${fb} Needs teacher approval.`}
+function payDaily(){alert("Send P5 to Orange Money 77980825 - Name: Lesedi Scholars. Then WhatsApp proof to 77980825");window.open("https://wa.me/26777980825?text=Hi! I paid P5 Daily for Lesedi. Here is my proof","_blank")}
+function payMonthly(){alert("Send P30 to Orange Money 77980825 OR MyZaka 71823638. Then WhatsApp proof.");window.open("https://wa.me/26777980825?text=Hi! I paid P30 Monthly for Lesedi. Here is my proof","_blank")}
+function payMyZaka(plan){alert("Send "+plan+" to MyZaka / PayToCell 71823638. Then WhatsApp proof to 77980825");window.open("https://wa.me/26777980825?text=Hi! I paid "+plan+" via MyZaka 71823638","_blank")}
+function payFamily(){alert("Send P70 to Orange Money 77980825");window.open("https://wa.me/26777980825?text=Hi! I paid P70 Family Plan","_blank")}
+function paySchool(){alert("School Plan: Send P350 to Orange Money 77980825 or call 77980825");window.open("https://wa.me/26777980825?text=Hi! I want School Plan P350/P1200 for my school","_blank")}
 </script>
-</body>
-</html>
+</body></html>
