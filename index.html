@@ -75,7 +75,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div class="main">
 <div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD</h3><p style="font-size:13px">3 Months FREE TRIAL - min 3 tests.</p><button class="btn-blue" onclick="showSection('upload')">+ Create Quiz/Test/Exam from PDF</button> <button class="btn-blue" style="background:#16a34a" onclick="showSection('aiTeacher')">🤖 AI Assessment Help</button><p id="teacherInfo"></p></div>
-<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD</h3><p style="font-size:13px">Starter Free - 10 Questions / Two Topics per month.</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM NOW</button><p id="studentInfo"></p></div>
+<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD</h3><p style="font-size:13px">Starter Free - Always Free.</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM NOW</button><p id="studentInfo"></p></div>
 <div id="privateDash" class="dash" style="background:#fdf2f8;border:2px solid #f472b6"><h3>🔒 PRIVATE DASHBOARD</h3><p style="font-size:13px">Private assessments only.</p><button class="btn-blue" style="background:#be185d" onclick="showSection('upload')">🔒 Private Assessment Upload</button><p id="privateInfo"></p></div>
 <div id="parentDash" class="dash" style="background:#f0fdf4;border:2px solid #22c55e"><h3>👨‍👩‍👧 PARENT DASHBOARD</h3><p style="font-size:13px">See your child's progress.</p><button class="btn-blue" style="background:#16a34a" onclick="showParentReport()">📄 My Child's Report - 85%</button><p id="parentInfo"></p></div>
 
@@ -99,7 +99,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
 
-<!-- FREE EDUCATIONAL GAMES -->
+<!-- FREE EDUCATIONAL GAMES - Labelling Wordmaker Maps -->
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
 <h3>🎮 FREE EDUCATIONAL GAMES</h3>
 <p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center;margin:0">Labelling • Wordmaker • Maps</p>
@@ -150,14 +150,14 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <h3>💰 PRICING & PACKAGES - Learn-Click-Press</h3>
 <table class="price-table">
 <tr><th>Package</th><th>Price (BWP)</th><th>Billing Cycle</th></tr>
-<tr><td><b>Starter / Student</b><br><small>10 Questions / Two Topics per month</small></td><td><b>Free</b></td><td>Always Free</td></tr>
+<tr><td><b>Starter / Student</b></td><td><b>Free</b></td><td>Always Free</td></tr>
 <tr><td><b>Pro Scholar</b></td><td><b>BWP 50 – 75</b></td><td>Per Month</td></tr>
 <tr><td><b>Educator / Tutor</b></td><td><b>BWP 150 – 200</b></td><td>Per Month</td></tr>
 <tr><td><b>School / Center Hub</b><br><small>3 Months Free Trial min 3 tests</small></td><td><b>BWP 800 – 1,500</b></td><td>Per Term (Annual discount)</td></tr>
 </table>
 
 <div class="price-grid">
-<div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">10 Questions / Two Topics<br>per month</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Starter Free - 10 Questions / Two Topics per month')">START FREE</button></div>
+<div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">Always Free</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Starter Free')">START FREE</button></div>
 <div class="price-card"><h3>Pro Scholar</h3><div class="price">BWP 50-75</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Pro Scholar BWP 50-75')">BUY PRO</button></div>
 <div class="price-card"><h3>Educator / Tutor</h3><div class="price">BWP 150-200</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%;background:#7c3aed" onclick="buyPackage('Educator BWP 150-200')">BUY EDUCATOR</button></div>
 <div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term - Annual discount</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
@@ -222,7 +222,7 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages</h3><p>Starter Free 10 Questions / Two Topics per month • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
+<div class="card"><h3>💰 All Packages</h3><p>Starter Free • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
 </div>
 
 <div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p></div></div>
@@ -298,7 +298,7 @@ function showDashboard(role,name){
   if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests.";}
   else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready.";}
   else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall.";}
-  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month.";}
+  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - Always Free.";}
 }
 async function doSignup(){
   let phone=document.getElementById('s_phone').value.trim();
