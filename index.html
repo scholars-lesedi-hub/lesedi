@@ -5,30 +5,80 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lesedi Scholars Hub - Click Press Learn</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f4f6f9;color:#222;text-align:center}
-header{background:#0b2a4a;color:white;padding:40px 20px}
-header h1{font-size:38px;margin:0}
-header p{font-size:18px;opacity:0.9}
-.btn{display:inline-block;background:#ffcc00;color:#000;padding:14px 28px;margin:10px;border-radius:30px;text-decoration:none;font-weight:bold;font-size:18px}
-.container{padding:30px 20px;max-width:800px;margin:auto}
-.card{background:white;padding:25px;margin:15px 0;border-radius:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-.card h2{color:#0b2a4a}
-footer{background:#0b2a4a;color:white;padding:20px;margin-top:30px}
+body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9;color:#1e293b}
+.header{background:#0a2a5a;color:white;text-align:center;padding:30px 15px}
+.header h1{margin:0;font-size:32px}
+.btn{background:#facc15;color:#000;padding:12px 25px;border-radius:30px;border:none;font-weight:bold;font-size:16px;cursor:pointer}
+.card{background:white;margin:15px;padding:20px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,0.1);text-align:center}
+input,textarea{width:90%;padding:12px;margin:8px 0;border:2px solid #ddd;border-radius:10px}
+iframe{width:100%;height:400px;border:2px solid #0a2a5a;border-radius:10px}
 </style>
 </head>
 <body>
-<header>
+<div class="header">
 <h1>📚 LESEDI SCHOLARS HUB</h1>
 <p>Education Lesedi Scholars Hub - Click Press Learn</p>
-<a class="btn" href="#lessons">Start Learning Now</a>
-</header>
-<div class="container" id="lessons">
-<div class="card"><h2>✨ Click - Press - Learn</h2><p>Welcome to Lesedi! Simple lessons for every scholar in Botswana.</p></div>
-<div class="card"><h2>📖 English</h2><p>Reading, Writing, Grammar made easy.</p><a class="btn" href="#">Open English</a></div>
-<div class="card"><h2>🔢 Mathematics</h2><p>Numbers, problem solving, step by step.</p><a class="btn" href="#">Open Maths</a></div>
-<div class="card"><h2>🔬 Science</h2><p>Explore, discover, learn the world.</p><a class="btn" href="#">Open Science</a></div>
-<div class="card"><h2>🇧🇼 Setswana</h2><p>Re ithute Setswana ka boiketlo.</p><a class="btn" href="#">Open Setswana</a></div>
+<button class="btn" onclick="document.getElementById('pdfSection').scrollIntoView()">Start Learning Now</button>
 </div>
-<footer><p>© 2026 Lesedi Scholars Hub | Gaborone, Botswana | Made for learners</p></footer>
+
+<div class="card">
+<h2>✨ Click - Press - Learn</h2>
+<p>Welcome to Lesedi! Simple lessons for every scholar in Botswana.</p>
+</div>
+
+<div class="card" id="pdfSection">
+<h2>📄 PDF to Digital Answering</h2>
+<p>Paste a PDF link OR upload your past paper, then answer below — no printing!</p>
+
+<input type="file" id="pdfUpload" accept=".pdf">
+<p>OR paste PDF link:</p>
+<input type="text" id="pdfLink" placeholder="Paste PDF link here...">
+<button class="btn" onclick="loadPDF()">Load PDF</button>
+
+<iframe id="pdfViewer" src=""></iframe>
+
+<h3>✍️ Answer Here</h3>
+<input type="text" id="stuName" placeholder="Your Name">
+<textarea id="ans1" placeholder="Q1 Answer..."></textarea>
+<textarea id="ans2" placeholder="Q2 Answer..."></textarea>
+<textarea id="ans3" placeholder="Q3 Answer..."></textarea>
+<button class="btn" onclick="submitAnswers()">Submit Answers ✅</button>
+<p id="result"></p>
+</div>
+
+<div class="card">
+<h2>📖 English</h2>
+<p>Reading, Writing, Grammar made easy.</p>
+<button class="btn">Open English</button>
+</div>
+
+<div class="card">
+<h2>🔢 Maths</h2>
+<p>BGCSE & JC Maths made simple.</p>
+<button class="btn">Open Maths</button>
+</div>
+
+<script>
+function loadPDF(){
+  let link=document.getElementById('pdfLink').value;
+  let file=document.getElementById('pdfUpload').files[0];
+  if(file){
+    document.getElementById('pdfViewer').src=URL.createObjectURL(file);
+  } else if(link){
+    document.getElementById('pdfViewer').src=link;
+  } else {
+    alert("Please upload a PDF or paste a link");
+  }
+}
+function submitAnswers(){
+  let name=document.getElementById('stuName').value;
+  let a1=document.getElementById('ans1').value;
+  let a2=document.getElementById('ans2').value;
+  let msg=`Thank you ${name}! Your answers were saved. Teacher will check: Q1: ${a1} | Q2: ${a2}`;
+  document.getElementById('result').innerText=msg;
+  let waText=encodeURIComponent(msg);
+  window.open(`https://wa.me/?text=${waText}`,"_blank");
+}
+</script>
 </body>
 </html>
