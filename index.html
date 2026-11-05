@@ -62,7 +62,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="sidebar">
 <a class="active" onclick="showSection('home')">🏠 Home</a>
 <a onclick="showSection('takeExam')">📝 Take Examination</a>
-<a onclick="showSection('labelling')">🎮 Free Labelling Games</a>
+<a onclick="showSection('labelling')">🎮 Free Educational Games</a>
 <a onclick="showSection('results')">📊 My Results</a>
 <a onclick="showSection('reports')">📈 Performance Reports</a>
 <a onclick="showSection('upload')">📤 Upload PDF</a>
@@ -94,14 +94,14 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div>
 <div class="grid4">
 <div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>Start a quiz or exam</p></div>
-<div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Labelling Games</h3><p>Click • Label • Learn - FREE</p></div>
+<div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Educational Games</h3><p>Click • Play • Learn - FREE</p></div>
 <div class="gcard purple" onclick="showSection('results')">📊<h3>View Results</h3><p>Check your scores</p></div>
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
 
-<!-- FREE LABELLING GAMES - WHERE SUITABLE -->
+<!-- FREE EDUCATIONAL GAMES -->
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
-<h3>🎮 FREE INTERACTIVE LABELLING GAMES - Click • Press • Learn</h3>
+<h3>🎮 FREE EDUCATIONAL GAMES - Click • Press • Learn</h3>
 <p style="font-size:13px;color:#555">Free for all students! Tap the correct label. No payment needed.</p>
 
 <div class="game-box">
@@ -179,7 +179,7 @@ Pay securely - No bank details shown<br>
 <div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English Language Test</b><br><small>Primary 6 • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="joinExam('English Language Test')">Join Exam</button></div>
 </div>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
-<p style="font-size:13px">🎮 <b>NEW! Free Interactive Labelling Games!</b><br><small>Plant • Body • Botswana - FREE for all!</small></p>
+<p style="font-size:13px">🎮 <b>NEW! Free Educational Games!</b><br><small>Plant • Body • Botswana - FREE for all!</small></p>
 <p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free!</small></p>
 <p style="font-size:13px">🔒 <b>Secure Payment Now!</b><br><small>No bank details shown - Just Click Pay</small></p>
 </div>
@@ -188,7 +188,7 @@ Pay securely - No bank details shown<br>
 
 <div>
 <div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner">85%</div></div><p>Overall Performance</p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b>12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button></div>
-<div class="card" style="margin-top:10px"><h3>🎮 Free Labelling Games</h3><p style="font-size:13px">Free for all! No payment.<br>Label Plant, Body, Botswana.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW</button></div>
+<div class="card" style="margin-top:10px"><h3>🎮 Free Educational Games</h3><p style="font-size:13px">Free for all! No payment.<br>Label Plant, Body, Botswana.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW</button></div>
 <div class="card" style="margin-top:10px"><h3>🔒 How to Pay?</h3><p style="font-size:13px">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment - Click Pay Securely - No details shown<br>4. WhatsApp proof to 71823638</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button></div>
 <div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">Parents can see progress & pay.</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
 </div>
@@ -196,7 +196,7 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="labellingSection" style="display:none">
-<div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE INTERACTIVE LABELLING GAMES</h3><p style="font-size:13px">Click the correct label - FREE - No payment!</p>
+<div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE EDUCATIONAL GAMES</h3><p style="font-size:13px">Click the correct label - FREE - No payment!</p>
 <div class="game-box"><div style="font-size:60px">🌱 🌼 🌿</div><b>Label the Plant - Full Game</b><br><br>
 <button class="label-btn" onclick="alert('Correct! Leaf makes food!')">Leaf</button> <button class="label-btn" onclick="alert('Correct! Root takes water!')">Root</button> <button class="label-btn" onclick="alert('Correct! Stem holds plant!')">Stem</button><br><br>
 <b>Computer Parts:</b><br><button class="label-btn" onclick="alert('Correct! Monitor shows!')">Monitor 🖥️</button> <button class="label-btn" onclick="alert('Correct! Keyboard types!')">Keyboard ⌨️</button><br><br>
@@ -281,7 +281,7 @@ function showSection(sec){
     document.getElementById('otherSection').style.display='block';
     let titles={results:"My Results - 85% Overall",reports:"Performance Reports - P30",account:"My Account",help:"Help & Support - WhatsApp 71823638 / 77980825"};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Labelling Games available!";
+    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Educational Games available!";
   }
 }
 function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q);}
