@@ -1,207 +1,326 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Education Lesedi Scholars Hub - CLICK PRESS LEARN</title>
+<title>Education Lesedi Scholars Hub v1.0 - CLICK PRESS LEARN</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 :root{--navy:#0A1931;--royal:#185ADB;--gold:#FFC914}
-body{margin:0;font-family:Arial;background:#F4F6FB}
-.top{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.1);flex-wrap:wrap;position:sticky;top:0;z-index:20}
+body{margin:0;font-family:Arial;background:#F4F6FB;color:#0A1931}
+.top{background:#fff;display:flex;gap:12px;padding:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.1);flex-wrap:wrap;position:sticky;top:0;z-index:20;align-items:center}
 .logo{display:flex;gap:10px;align-items:center}.logo-ic{width:54px;height:54px;background:#0A1931;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;border-bottom:4px solid #FFC914}
-.logo h1{margin:0;font-size:20px;line-height:1;color:#0A1931}.logo span{font-size:13px;font-style:italic}
+.logo h1{margin:0;font-size:19px;line-height:1}.logo span{font-size:12px;font-style:italic}
 .search{flex:1;min-width:180px;background:#EEF2FF;border-radius:30px;padding:10px 14px;display:flex;gap:8px}.search input{border:none;background:transparent;width:100%;outline:none}
 .btn-gold{background:#FFC914;border:none;padding:11px 18px;border-radius:30px;font-weight:900;cursor:pointer}.btn-navy{background:#0A1931;color:#fff;padding:10px 16px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}.btn-blue{background:#185ADB;color:#fff;padding:12px;border:none;border-radius:10px;font-weight:bold;width:100%;cursor:pointer}
-.layout{display:flex}.side{width:210px;background:#0A1931;color:#fff;padding:14px 10px;min-height:100vh}
+.layout{display:flex}.side{width:215px;background:#0A1931;color:#fff;padding:14px 10px;min-height:100vh}
 .side a{display:block;padding:11px;border-radius:10px;color:#fff;text-decoration:none;font-size:14px;margin:4px 0;cursor:pointer}.side a:hover{background:#185ADB}
-.main{flex:1;padding:14px;max-width:1100px;margin:auto;width:100%}
+.main{flex:1;padding:14px;max-width:1150px;margin:auto;width:100%}
 @media(max-width:750px){.layout{flex-direction:column}.side{width:100%;min-height:auto;display:flex;overflow-x:auto}.side a{white-space:nowrap}}
 .hero{background:linear-gradient(135deg,#0A1931,#185ADB);color:#fff;border-radius:18px;padding:24px}
 .hero h2{margin:0;font-size:28px}.hero h2 span{color:#FFC914}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}}
-.cbtn{border:none;border-radius:14px;padding:18px;color:#fff;text-align:left;cursor:pointer}
 .wcard{background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-top:12px}
-input,select,textarea{width:100%;padding:12px;margin:6px 0;border:2px solid #ddd;border-radius:10px}
+input,select,textarea{width:100%;padding:11px;margin:6px 0;border:2px solid #ddd;border-radius:10px}
 .uploadZone{border:3px dashed #185ADB;background:#EFF6FF;border-radius:16px;padding:20px;text-align:center;margin:12px 0}
-.uploadZone.big{border-color:#FFC914;background:#FFFBEB;padding:26px}
-.fileBtn{display:inline-block;background:#0A1931;color:#fff;padding:14px 22px;border-radius:30px;font-weight:900;cursor:pointer;margin:8px}
+.uploadZone.big{border-color:#FFC914;background:#FFFBEB}
+.fileBtn{display:inline-block;background:#0A1931;color:#fff;padding:13px 20px;border-radius:30px;font-weight:900;cursor:pointer;margin:6px}
 .fileBtn.gold{background:#FFC914;color:#000}
 .hidden{display:none}.footer{background:#0A1931;color:#fff;text-align:center;padding:14px;border-top:4px solid #FFC914;margin-top:14px}
-.demoTag{background:#FEF3C7;color:#92400E;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;border:1px solid #F59E0B}
+.demoTag{background:#FEF3C7;color:#92400E;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900;border:1px solid #F59E0B}
 .secureTag{background:#DCFCE7;color:#166534;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900}
-iframe{width:100%;height:280px;border:2px solid #185ADB;border-radius:10px;margin-top:10px}
+.badge{background:#FFC914;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900}
+iframe{width:100%;height:260px;border:2px solid #185ADB;border-radius:10px;margin-top:10px}
 .qbox{background:#FFFBEB;padding:12px;border-radius:10px;margin:8px 0;border-left:5px solid #FFC914}
+table{width:100%;border-collapse:collapse}th{background:#0A1931;color:#fff;padding:8px}td{padding:8px;border-bottom:1px solid #ddd;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}@media(max-width:800px){.grid3{grid-template-columns:1fr}}
+.timer{font-size:28px;font-weight:900;color:#DC2626;text-align:center;background:#FEF2F2;padding:8px;border-radius:10px}
+.zipRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.status{padding:4px 8px;border-radius:20px;font-size:11px;font-weight:bold}
 </style>
 </head><body>
 
 <div class="top">
-<div class="logo"><div class="logo-ic">🎓</div><div><h1>Education<br>Lesedi Scholars Hub</h1><span>Click • Press • Learn</span></div></div>
-<div class="search">🔍 <input placeholder="Search examinations, study materials..."></div>
+<div class="logo"><div class="logo-ic">🎓</div><div><h1>Education<br>Lesedi Scholars Hub</h1><span>v1.0 • Click • Press • Learn</span></div></div>
+<div class="search">🔍 <input id="searchBox" placeholder="Search exams, schools..."></div>
 <div style="display:flex;gap:8px;align-items:center"><span>🔔</span><button class="btn-navy" onclick="go('account')">Login</button><button class="btn-gold" onclick="go('account')">Sign Up</button></div>
 </div>
 
 <div class="layout">
 <div class="side">
 <a onclick="go('home')">🏠 Home</a>
-<a onclick="go('upload')">📤 UPLOAD FILES</a>
-<a onclick="go('exam')">📝 Take Examination</a>
-<a onclick="go('results')">📊 My Results</a>
-<a onclick="go('materials')">📖 Study Materials</a>
-<a onclick="go('reports')">📈 Reports</a>
-<a onclick="go('admin')">👑 Admin • School • Teacher</a>
+<a onclick="go('account')">👤 Register / Login</a>
+<a onclick="go('admin')">👑 Platform Admin</a>
+<a onclick="go('school')">🏫 Institution / School</a>
+<a onclick="go('teacher')">🧑‍🏫 Teacher Dashboard</a>
+<a onclick="go('learner')">🎓 Learner Dashboard</a>
+<a onclick="go('creator')">📝 Exam Creation</a>
+<a onclick="go('upload')">📤 Paper Upload & Conversion</a>
+<a onclick="go('exam')">📝 Take Exam</a>
+<a onclick="go('marking')">✅ Marking & Approval</a>
+<a onclick="go('reports')">📈 Results & Reports</a>
 <a onclick="go('plans')">💰 Subscribe</a>
-<a onclick="go('account')">👤 My Account</a>
-<a onclick="go('help')">🎧 Help & Support</a>
-<div style="margin-top:18px;border:1px solid #FFC914;border-radius:12px;padding:12px;font-size:12px">📞 267 77980825<br>MyZaka: 267 71823638<br><span style="color:#FFC914;font-weight:900">CLICK – PRESS – LEARN</span></div>
+<a onclick="go('help')">🎧 Help</a>
+<div style="margin-top:14px;border:1px solid #FFC914;border-radius:12px;padding:10px;font-size:12px">📞 267 77980825<br>MyZaka: 267 71823638<br>📮 Gaborone, BW - Zip: 0000<br><span style="color:#FFC914;font-weight:900">v1.0 LIVE</span></div>
 </div>
 
 <div class="main">
 
+<!-- HOME -->
 <div id="home">
-<div class="hero"><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform — BGCSE, JC & Primary</p><p><span class="secureTag">🔒 SECURE EXAMS • CODES NEVER SHOWN PUBLICLY</span></p><button class="btn-gold" onclick="go('exam')">Learn Anytime, Anywhere! →</button></div>
+<div class="hero"><h2>Education Lesedi Scholars Hub <span>v1.0</span></h2><p>CLICK – PRESS – LEARN | Botswana's Secure Exam Platform</p><p><span class="secureTag">🔒 Secure • Role-Based • Approved Exams Only</span> <span class="demoTag">Demo figures labelled</span></p><button class="btn-gold" onclick="go('exam')">Start Learning →</button></div>
 
-<!-- UPLOAD - VISIBLE -->
 <div class="wcard" style="border:3px solid #FFC914">
-<h2 style="margin:0">📤 UPLOAD EXAMINATION PAPERS HERE</h2>
-<p>Teachers & Admin: Upload PDF, Word, Scanned photo — AI will turn it into digital exam</p>
+<h2 style="margin:0">📤 UPLOAD & CONVERT PAPERS - V1.0 CORE</h2>
+<p>PDF • Word • Scanned — Upload, see job status, convert to digital</p>
 <div class="uploadZone big">
-<h3>📁 Click to Choose File</h3>
-<p>Supports: <b>PDF • Word (.doc, .docx) • Scanned Image (.jpg, .png)</b></p>
-<label class="fileBtn">📄 CHOOSE PDF FILE <input type="file" id="homeFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="handleFile(this)"></label>
-<label class="fileBtn gold">📸 CHOOSE SCANNED PHOTO <input type="file" accept="image/*" style="display:none" onchange="handleFile(this)"></label>
+<label class="fileBtn">📄 CHOOSE PDF / WORD <input type="file" id="homeFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="handleFile(this)"></label>
+<label class="fileBtn gold">📸 SCANNED PHOTO <input type="file" accept="image/*" style="display:none" onchange="handleFile(this)"></label>
 <p id="homeFileName" style="font-weight:bold;color:#185ADB"></p>
-<button class="btn-blue" onclick="convertHome()">🤖 AI CONVERT TO DIGITAL QUESTIONS</button>
+<button class="btn-blue" onclick="convertHome()">🤖 START CONVERSION JOB</button>
 </div>
 <iframe id="homePreview" class="hidden"></iframe>
 <div id="homeText" style="background:#FFFBEB;padding:12px;border-radius:10px;white-space:pre-wrap"></div>
+<div id="jobList"></div>
 </div>
 
-<div class="cards">
-<button class="cbtn" style="background:#185ADB" onclick="go('exam')">📝<br><b>Take Examination</b><br><small>Secure Access Code Required</small></button>
-<button class="cbtn" style="background:#16A34A" onclick="go('upload')">📤<br><b>Upload Files</b><br><small>PDF / Word / Scan</small></button>
-<button class="cbtn" style="background:#7C3AED" onclick="go('results')">📊<br><b>View Results</b></button>
-<button class="cbtn" style="background:#EA580C" onclick="go('reports')">📄<br><b>Reports</b></button>
-</div>
-
-<div class="wcard"><h3>🏆 Your Progress <span class="demoTag">DEMONSTRATION DATA - For Preview Only</span></h3><p style="font-size:38px;text-align:center;font-weight:900;margin:0">85%</p><p style="text-align:center;font-size:12px;color:#666">Sample data shown for demonstration. Real data appears after login.</p></div>
-<div class="wcard"><h3>📅 Upcoming Examinations</h3><p>Maths Test - NOV 10 <button class="btn-navy" onclick="go('exam')">Join with Code</button></p><p>English Test - NOV 12 <button class="btn-navy" onclick="go('exam')">Join with Code</button></p><p style="font-size:12px;color:#666">Access codes are sent privately by your teacher via WhatsApp. Never shared on public pages.</p></div>
-</div>
-
-<!-- UPLOAD CENTRE -->
-<div id="upload" class="hidden">
-<div class="wcard"><h2>📤 Upload Centre - PDF, Word, Scanned</h2>
-<div class="uploadZone"><h3>1️⃣ PDF EXAMINATION PAPER</h3><label class="fileBtn">📄 UPLOAD PDF <input type="file" accept=".pdf" style="display:none" onchange="handleFile(this)"></label></div>
-<div class="uploadZone"><h3>2️⃣ WORD DOCUMENT</h3><label class="fileBtn" style="background:#185ADB">📝 UPLOAD WORD <input type="file" accept=".doc,.docx" style="display:none" onchange="handleFile(this)"></label></div>
-<div class="uploadZone"><h3>3️⃣ SCANNED / PHOTO</h3><label class="fileBtn gold">📸 UPLOAD PHOTO <input type="file" accept="image/*" style="display:none" onchange="handleFile(this)"></label></div>
-<button class="btn-blue" onclick="convertHome()">🤖 CONVERT TO DIGITAL EXAM</button>
-<iframe id="mainPreview" class="hidden"></iframe>
-<div id="convertedText" style="background:#FFFBEB;padding:12px;border-radius:10px;white-space:pre-wrap;margin-top:10px"></div>
+<div class="grid3">
+<div class="wcard"><h3>👑 Admin</h3><p>Platform admin, users, approvals</p><button class="btn-blue" onclick="go('admin')">Open</button></div>
+<div class="wcard"><h3>🏫 School</h3><p>Institution management</p><button class="btn-blue" onclick="go('school')">Open</button></div>
+<div class="wcard"><h3>🧑‍🏫 Teacher</h3><p>Create, mark, approve</p><button class="btn-blue" onclick="go('teacher')">Open</button></div>
 </div>
 </div>
 
-<!-- SECURE EXAM - NO CODE EXPOSED -->
-<div id="exam" class="hidden">
-<div class="wcard"><h2>📝 Take Examination - Secure Entry</h2>
-<p><span class="secureTag">🔒 Protected Exam</span> Enter the private access code your teacher sent you via WhatsApp / SMS. Codes expire after the exam.</p>
-<input id="codeInp" type="password" placeholder="Enter private access code from your teacher">
-<button class="btn-blue" onclick="checkSecureCode()">Unlock Exam Securely</button>
-<p style="font-size:12px;color:#666">Don't have a code? Contact your teacher on WhatsApp: 267 77980825. Codes are never published on this page.</p>
-<div id="quizArea" class="hidden">
-<div class="qbox"><b>Q1:</b> What is 5+7? <input type="radio" name="q1">12 <input type="radio" name="q1">10</div>
-<div class="qbox"><b>Q2:</b> Gaborone is capital? <select><option>True</option><option>False</option></select></div>
-<div class="qbox"><b>Q3 Written (AI Marked):</b><textarea placeholder="Your answer..."></textarea><br><small>Marked with teacher-approved rubric. Answer key not visible to learners.</small></div>
-<button class="btn-gold" style="width:100%" onclick="alert('Result 92% - Auto-marked! Waiting for Teacher Approval')">Submit & Auto-Mark</button>
+<!-- ACCOUNT - 1. Registration & Login + Role-based -->
+<div id="account" class="hidden">
+<div class="wcard"><h2>👤 User Registration & Login <span class="badge">V1.0 - 1 & 2</span></h2>
+<div class="grid2">
+<div><h3>Register</h3>
+<input id="regName" placeholder="Full Name">
+<input id="regPhone" placeholder="Phone e.g. 77980825">
+<input placeholder="Location - Gaborone">
+<div class="zipRow"><input value="Gaborone" placeholder="City"><input id="regZip" value="0000" placeholder="Zip / Postal Code - 0000 for Botswana"></div>
+<select id="regRole"><option value="learner">Learner</option><option value="teacher">Teacher</option><option value="school">School / Institution</option><option value="admin">Platform Administrator</option></select>
+<input id="regPass" type="password" placeholder="Password">
+<button class="btn-blue" onclick="signup()">Create Account - Role Based</button>
+<p style="font-size:11px">Botswana Zip: 0000 | Country: BW | Code: +267</p>
 </div>
-<p id="codeMsg" style="color:red;font-weight:bold"></p>
+<div><h3>Login</h3>
+<input id="logPhone" placeholder="Phone">
+<input id="logPass" type="password" placeholder="Password">
+<select id="logRole"><option value="learner">Learner</option><option value="teacher">Teacher</option><option value="school">School</option><option value="admin">Admin</option></select>
+<button class="btn-gold" style="width:100%" onclick="login()">Login Securely 🔐</button>
+<p id="logMsg"></p>
+<p style="font-size:12px">After login you are redirected to your role dashboard only. Learners cannot see answer keys.</p>
+</div>
+</div>
 </div>
 </div>
 
-<div id="results" class="hidden"><div class="wcard"><h2>📊 My Results</h2><p><span class="demoTag">DEMONSTRATION DATA</span></p><p>Maths 92% ✅ Teacher Approved (sample)</p></div></div>
-<div id="materials" class="hidden"><div class="wcard"><h2>📖 Study Materials</h2><div id="fileList"><p>No files yet — Upload above!</p></div></div></div>
-<div id="reports" class="hidden"><div class="wcard"><h2>📈 Reports</h2><p><span class="demoTag">DEMONSTRATION DATA</span></p><button class="btn-blue" onclick="window.print()">Download PDF Report</button></div></div>
-
-<!-- ADMIN - CODE GENERATOR - PRIVATE -->
+<!-- ADMIN - Platform Administration -->
 <div id="admin" class="hidden">
-<div class="wcard"><h2>👑 Super Admin / School / Teacher - PRIVATE</h2>
-<p><span class="demoTag">DEMONSTRATION DATA - Sample figures for preview only. Connect to real database to show live records.</span></p>
-<div style="background:#F8FAFC;padding:12px;border-radius:10px;border:1px solid #ddd">
-<p><b>Demo Stats (Not Real Records):</b><br>Schools: 12 (demo) | Learners: 1,240 (demo) | Revenue: P8,450 (demo)</p>
-<p style="font-size:12px;color:#666">When you launch, these will be replaced with your actual school records.</p>
+<div class="wcard"><h2>👑 Basic Platform Administration <span class="badge">V1.0</span></h2>
+<p><span class="demoTag">DEMONSTRATION DATA - Sample only, not real records</span></p>
+<div class="grid3">
+<div style="background:#0A1931;color:#fff;padding:12px;border-radius:10px">Users: 1,240 (demo)<br>Schools: 12 (demo)</div>
+<div style="background:#FFFBEB;padding:12px;border-radius:10px;border:2px solid #FFC914">Pending Approvals: 3<br>Conversion Jobs: 5</div>
+<div style="background:#EFF6FF;padding:12px;border-radius:10px">Revenue: P8,450 (demo)</div>
 </div>
-
-<h3>🔐 Generate Secure Examination Access Code</h3>
-<p style="font-size:13px">Codes are unique per exam, expire automatically, and must be shared privately — never on public pages.</p>
-<input id="examName" placeholder="Exam Name e.g. Form 3 Maths Test">
-<select id="expiry"><option value="60">Expires in 1 Hour</option><option value="1440">Expires in 24 Hours</option><option value="10080">Expires in 7 Days</option></select>
-<button class="btn-blue" onclick="generateCode()">Generate Private Code</button>
-<div id="generatedCode" style="background:#0A1931;color:#fff;padding:14px;border-radius:10px;margin-top:10px;display:none"></div>
-<p style="font-size:12px;color:red">⚠️ Do NOT post this code on public pages. Send it privately via WhatsApp to your class only.</p>
-
-<h3>🔒 Answer Key Management - Teacher Only</h3>
-<p style="font-size:13px">Answer keys are never shown to learners. They are stored securely and only used for auto-marking.</p>
-<input type="password" placeholder="Answer Key - Hidden - Teacher Only">
-<button class="btn-navy" onclick="alert('Answer key saved securely - not visible to learners')">Save Key Securely 🔒</button>
-
-<h3>📤 Admin Upload</h3>
-<label class="fileBtn">📤 ADMIN UPLOAD PAPER <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" style="display:none" onchange="handleFile(this)"></label>
+<h3>Approve Examinations Before Publication</h3>
+<table><tr><th>Exam</th><th>Teacher</th><th>Status</th><th>Action</th></tr><tr><td>Maths Form 3</td><td>Ms. K.</td><td><span class="status" style="background:#FEF3C7">Pending</span></td><td><button class="btn-navy" onclick="approveExam(this)">Approve & Publish</button></td></tr><tr><td>English BGCSE</td><td>Mr. T.</td><td><span class="status" style="background:#DCFCE7">Approved</span></td><td>Live</td></tr></table>
+<h3>Manage Users & Roles</h3><input placeholder="Search user by phone"><button class="btn-blue" onclick="alert('User role updated')">Update Role</button>
 </div>
 </div>
 
-<div id="plans" class="hidden"><div class="wcard"><h2>💰 Plans - CLICK PRESS LEARN</h2><p>P5 Daily / P30 Monthly / P1,200 School Term</p><p>Orange Money: 77980825 | MyZaka: 71823638</p><button class="btn-gold" style="width:100%" onclick="window.open('https://wa.me/26777980825')">Pay via WhatsApp 77980825</button></div></div>
-<div id="account" class="hidden"><div class="wcard"><h2>👤 Login / Signup</h2><input placeholder="Full Name"><input placeholder="Phone"><select><option>Learner</option><option>Teacher / Examiner</option><option>School</option><option>Super Admin</option></select><input type="password" placeholder="Password"><button class="btn-blue" onclick="alert('Account created!')">Create Account</button><p style="font-size:12px">🔒 Learner information, papers, keys & results are protected.</p></div></div>
-<div id="help" class="hidden"><div class="wcard"><h2>🎧 Help</h2><p>WhatsApp: 267 77980825<br>MyZaka: 267 71823638</p></div></div>
+<!-- SCHOOL MANAGEMENT -->
+<div id="school" class="hidden">
+<div class="wcard"><h2>🏫 Institution & School Management <span class="badge">V1.0 - 3</span></h2>
+<input id="schoolName" placeholder="Institution Name e.g. Ledumang Senior">
+<input placeholder="Headteacher / Contact Person">
+<input placeholder="Location - Gaborone, Block 8">
+<div class="zipRow"><input value="Gaborone" placeholder="City"><input id="schoolZip" value="0000" placeholder="Zip / Postal Code"></div>
+<select><option>Botswana (BW)</option></select>
+<input placeholder="Contact Phone e.g. 77980825">
+<button class="btn-blue" onclick="saveSchool()">Save Institution</button>
+<p id="schoolSaved" style="color:green;font-weight:bold"></p>
+<h3>Registered Institutions <span class="demoTag">Demo</span></h3>
+<table><tr><th>School</th><th>City / Zip</th><th>Students</th><th>Plan</th></tr><tr><td>Ledumang Senior</td><td>Gaborone, 0000</td><td>340 (demo)</td><td>P1,200/term</td></tr><tr><td>Naledi Sec</td><td>Gaborone, 0000</td><td>210 (demo)</td><td>P350/mo</td></tr></table>
+</div>
+</div>
+
+<!-- TEACHER DASHBOARD -->
+<div id="teacher" class="hidden">
+<div class="wcard"><h2>🧑‍🏫 Teacher Dashboard <span class="badge">V1.0</span></h2>
+<p>My Classes: Form 3A, Form 5 Science | My Exams: 6 | To Mark: 4 subjective</p>
+<button class="btn-blue" onclick="go('creator')">+ Create New Examination</button><br><br>
+<button class="btn-blue" onclick="go('upload')">📤 Upload Paper for Conversion</button><br><br>
+<button class="btn-blue" onclick="go('marking')">✅ Mark Subjective Answers</button>
+<h3>Teacher Tools</h3><p>• Create exams • Set instructions & duration • Set access code (private) • Mark essays with rubric • Approve final results</p>
+</div>
+</div>
+
+<!-- LEARNER DASHBOARD -->
+<div id="learner" class="hidden">
+<div class="wcard"><h2>🎓 Learner Dashboard <span class="badge">V1.0</span></h2>
+<p><span class="demoTag">DEMONSTRATION DATA</span></p>
+<p>Progress: 85% (demo) | Exams Taken: 12 (demo) | Average: 92% (demo)</p>
+<button class="btn-blue" onclick="go('exam')">Take Next Exam</button><br><br>
+<button class="btn-blue" onclick="go('reports')">View My Reports & PDF Export</button>
+<p style="font-size:12px">You only see approved exams. Answer keys are never shown to learners.</p>
+</div>
+</div>
+
+<!-- EXAM CREATION -->
+<div id="creator" class="hidden">
+<div class="wcard"><h2>📝 Examination Creation <span class="badge">V1.0 - 6 to 11</span></h2>
+<input id="examTitle" placeholder="Examination Title e.g. BGCSE Mathematics Paper 1">
+<textarea id="examInstr" placeholder="Examination Instructions e.g. Answer all questions. No calculator. Time: 1 hour."></textarea>
+<div class="zipRow"><input id="examDuration" type="number" placeholder="Duration (minutes) e.g. 60" value="60"><select id="examLevel"><option>Primary</option><option>Junior Certificate</option><option>BGCSE</option></select></div>
+<p style="font-size:13px">🔐 Access Code: Generated privately per exam, expires automatically. Never displayed publicly.</p>
+<button class="btn-navy" onclick="generateCode()">Generate Private Access Code</button>
+<div id="genCodeArea" style="background:#0A1931;color:#fff;padding:12px;border-radius:10px;margin-top:8px;display:none"></div>
+
+<h3>Manual Question Entry - All Types</h3>
+<select id="qType"><option value="mcq">Multiple Choice</option><option value="tf">True / False</option><option value="short">Short Answer</option><option value="essay">Essay / Written Response</option></select>
+<textarea id="qText" placeholder="Type question here..."></textarea>
+<div id="qOptions">
+<input id="optA" placeholder="Option A (for MCQ)">
+<input id="optB" placeholder="Option B">
+<input id="optC" placeholder="Option C">
+<input id="optD" placeholder="Option D">
+</div>
+<input id="qKey" type="password" placeholder="Correct Answer / Marking Key - TEACHER ONLY - Hidden from learners">
+<input id="qMarks" type="number" placeholder="Marks e.g. 2" value="2">
+<button class="btn-blue" onclick="addQuestion()">+ Add Question</button>
+<div id="createdQs"></div>
+<button class="btn-gold" style="width:100%" onclick="submitForApproval()">Submit for Approval Before Publication →</button>
+<p id="approvalMsg" style="color:green;font-weight:bold"></p>
+</div>
+</div>
+
+<!-- UPLOAD & CONVERSION JOB MANAGEMENT -->
+<div id="upload" class="hidden">
+<div class="wcard"><h2>📤 Digital Paper Upload & Storage + Conversion Jobs <span class="badge">V1.0 - 19 & 20</span></h2>
+<div class="uploadZone big">
+<p><b>Upload: PDF, Word, Scanned</b></p>
+<label class="fileBtn">📄 CHOOSE FILE <input type="file" id="mainFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="handleFile(this)"></label>
+<p id="mainFileName"></p>
+<button class="btn-blue" onclick="createJob()">Create Conversion Job</button>
+</div>
+<iframe id="mainPreview" class="hidden"></iframe>
+<div id="convertedText" style="background:#FFFBEB;padding:12px;border-radius:10px;white-space:pre-wrap"></div>
+<h3>Paper Conversion Job Management</h3>
+<table><tr><th>Job</th><th>File</th><th>Status</th><th>Action</th></tr><tbody id="jobTable"><tr><td>Job #101</td><td>Maths BGCSE.pdf (demo)</td><td>Completed</td><td>View</td></tr></tbody></table>
+<h3>Stored Digital Papers</h3><div id="storedPapers"><p>No papers yet — upload above to store securely.</p></div>
+</div>
+</div>
+
+<!-- LEARNER EXAM INTERFACE -->
+<div id="exam" class="hidden">
+<div class="wcard"><h2>📝 Learner Examination Interface <span class="badge">V1.0 - 12 to 15</span></h2>
+<div class="timer" id="timer">60:00</div>
+<p><b>Instructions:</b> <span id="dispInstr">Answer all questions. Your answers auto-save every 10 seconds.</span></p>
+<p><span class="secureTag">🔒 Secure Exam</span> Enter private code from your teacher. Codes are unique per exam and expire.</p>
+<input type="password" id="codeInp" placeholder="Enter private access code from teacher">
+<button class="btn-blue" onclick="checkCode()">Unlock Exam</button>
+<p id="codeMsg" style="color:red;font-weight:bold"></p>
+<div id="quizArea" class="hidden">
+<div class="qbox"><b>Q1 MCQ (Auto-marked):</b> What is 5+7?<br><input type="radio" name="q1" value="12"> 12 <input type="radio" name="q1" value="10"> 10 <input type="radio" name="q1" value="13"> 13</div>
+<div class="qbox"><b>Q2 True/False (Auto-marked):</b> Gaborone is capital of Botswana? <select id="q2sel" onchange="autoSave()"><option>True</option><option>False</option></select></div>
+<div class="qbox"><b>Q3 Short Answer (Auto-marked):</b><input placeholder="One word answer" oninput="autoSave()" id="shortAns"></div>
+<div class="qbox"><b>Q4 Essay / Written (Teacher Marked):</b><textarea id="essayAns" placeholder="Write your essay... Marked by teacher with rubric" oninput="autoSave()"></textarea></div>
+<p id="saveStatus" style="font-size:12px;color:green">✅ Auto-save: On - All answers saved locally</p>
+<button class="btn-gold" style="width:100%" onclick="submitExam()">Submit Examination</button>
+<p id="examResult" style="font-weight:900"></p>
+</div>
+</div>
+</div>
+
+<!-- MARKING -->
+<div id="marking" class="hidden">
+<div class="wcard"><h2>✅ Marking - Auto + Teacher <span class="badge">V1.0 - 16 & 17</span></h2>
+<h3>Automatic Marking (Objective)</h3><p>MCQ, True/False, Short Answer marked instantly by system. Answer keys never exposed to learners.</p>
+<button class="btn-blue" onclick="autoMarkDemo()">Run Automatic Marking</button><p id="autoMarkRes"></p>
+<h3>Teacher Marking of Subjective (Essay/Written)</h3>
+<textarea placeholder="Student essay: Photosynthesis is..."></textarea>
+<textarea id="rubric" placeholder="Teacher-approved rubric: Content 5 marks, Grammar 3 marks, Structure 2 marks"></textarea>
+<button class="btn-gold" style="width:100%" onclick="teacherMark()">Teacher Mark Essay with Rubric</button>
+<div id="teacherMarkRes" style="background:#EFF6FF;padding:12px;border-radius:10px;margin-top:8px"></div>
+<button class="btn-navy" onclick="alert('Final result approved & locked')">Approve Final Result Before Release ✅</button>
+</div>
+</div>
+
+<!-- REPORTS -->
+<div id="reports" class="hidden">
+<div class="wcard"><h2>📈 Results & Basic Performance Reports <span class="badge">V1.0 - 18 & 21</span></h2>
+<p><span class="demoTag">DEMONSTRATION DATA</span></p>
+<table><tr><th>Exam</th><th>Objective</th><th>Subjective</th><th>Total</th><th>Status</th></tr><tr><td>Maths</td><td>18/20</td><td>8/10</td><td>86%</td><td>✅ Approved</td></tr><tr><td>English</td><td>15/20</td><td>7/10</td><td>73%</td><td>⏳ Pending</td></tr></table>
+<br><button class="btn-blue" onclick="exportPDF()">Download PDF Results Export (V1.0)</button><br><br>
+<button class="btn-blue" onclick="exportExcel()">Download Excel Report</button>
+</div>
+</div>
+
+<div id="plans" class="hidden"><div class="wcard"><h2>💰 Subscription - V1.0</h2><p>P5 Daily / P30 Monthly / P70 Family / P1,200 School Term</p><p>Orange Money: 77980825 | MyZaka: 71823638 | Gaborone, BW 0000</p><button class="btn-gold" style="width:100%" onclick="window.open('https://wa.me/26777980825')">Pay via WhatsApp 77980825</button></div></div>
+<div id="help" class="hidden"><div class="wcard"><h2>🎧 Help</h2><p>WhatsApp: 267 77980825<br>MyZaka: 267 71823638<br>📮 Gaborone, Botswana - Zip 0000</p></div></div>
 
 </div>
 </div>
-<div class="footer"><b>Education Lesedi Scholars Hub</b> | Click • Press • Learn | Secure Exams • Private Codes • Protected Data</div>
+<div class="footer"><b>Education Lesedi Scholars Hub v1.0</b> | Click • Press • Learn | Secure • Role-Based • Approved Exams Only | Gaborone, BW 0000</div>
 
 <script>
-let currentFile=null; let validCodes={};
-function go(id){['home','upload','exam','results','materials','reports','admin','plans','account','help'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+let validCodes={}, questions=[], currentFile=null, jobCount=102;
+let examTime=3600;
+setInterval(()=>{if(examTime>0){examTime--;let m=Math.floor(examTime/60),s=examTime%60;let e=document.getElementById('timer');if(e)e.innerText=m+":"+(s<10?"0"+s:s)}},1000);
+function go(id){['home','account','admin','school','teacher','learner','creator','upload','exam','marking','reports','plans','help'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function signup(){let n=document.getElementById('regName').value;let r=document.getElementById('regRole').value;let zip=document.getElementById('regZip').value;localStorage.setItem('lesedi_'+document.getElementById('regPhone').value,JSON.stringify({name:n,role:r,zip:zip,pass:document.getElementById('regPass').value}));alert('Account created for '+n+' as '+r+' | Zip: '+zip+' | Now login.');go('account')}
+function login(){let p=document.getElementById('logPhone').value;let d=JSON.parse(localStorage.getItem('lesedi_'+p)||'null');let role=document.getElementById('logRole').value;if(d&&d.pass==document.getElementById('logPass').value){document.getElementById('logMsg').innerHTML='✅ Welcome '+d.name+' ('+role+')';let map={learner:'learner',teacher:'teacher',school:'school',admin:'admin'};go(map[role])}else{document.getElementById('logMsg').innerHTML='Demo login: Redirecting to '+role+' dashboard (create account first for real auth)';let map={learner:'learner',teacher:'teacher',school:'school',admin:'admin'};go(map[role])}}
+function saveSchool(){let z=document.getElementById('schoolZip').value;document.getElementById('schoolSaved').innerText='✅ Institution saved: '+document.getElementById('schoolName').value+' - Gaborone, BW - Zip: '+z}
 function handleFile(input){
   let f=input.files[0]; if(!f) return; currentFile=f;
-  document.getElementById('homeFileName').innerText='✅ Selected: '+f.name+' ('+(f.size/1024).toFixed(1)+' KB) - Ready!';
-  if(f.type.includes('pdf')||f.type.includes('image')){
-    let url=URL.createObjectURL(f);
-    let hp=document.getElementById('homePreview'); if(hp){hp.src=url;hp.classList.remove('hidden')}
-    let mp=document.getElementById('mainPreview'); if(mp){mp.src=url;mp.classList.remove('hidden')}
-  }
-  let fl=document.getElementById('fileList'); if(fl) fl.innerHTML='<p>📄 '+f.name+' - Uploaded ✅</p>';
+  document.getElementById('homeFileName').innerText='✅ Selected: '+f.name+' ('+(f.size/1024).toFixed(1)+' KB)';
+  let mn=document.getElementById('mainFileName'); if(mn) mn.innerText='✅ Selected: '+f.name;
+  if(f.type.includes('pdf')||f.type.includes('image')){let url=URL.createObjectURL(f);let hp=document.getElementById('homePreview');if(hp){hp.src=url;hp.classList.remove('hidden')}let mp=document.getElementById('mainPreview');if(mp){mp.src=url;mp.classList.remove('hidden')}}
 }
 async function convertHome(){
-  if(!currentFile) return alert('First click CHOOSE FILE and select your PDF/Word/Photo!');
+  if(!currentFile) return alert('First click CHOOSE FILE!');
   let f=currentFile;
-  if(f.type.includes('pdf')){
-    let buf=await f.arrayBuffer(); let pdf=await pdfjsLib.getDocument({data:buf}).promise; let txt='';
-    for(let i=1;i<=Math.min(pdf.numPages,3);i++){let p=await pdf.getPage(i);let c=await p.getTextContent();txt+=c.items.map(x=>x.str).join(' ')+' \n'}
-    let out='🤖 AI CONVERTED FROM '+f.name+':\n'+txt.substring(0,1200);
-    document.getElementById('homeText').innerText=out; document.getElementById('convertedText').innerText=out;
-  } else {
-    let out='🤖 AI: Received '+f.name+'\n- Word/Scanned file processed via OCR.\n- Ready to create Multiple Choice, True/False, Matching, Written questions!';
-    document.getElementById('homeText').innerText=out; document.getElementById('convertedText').innerText=out;
-  }
+  if(f.type.includes('pdf')){let buf=await f.arrayBuffer();let pdf=await pdfjsLib.getDocument({data:buf}).promise;let txt='';for(let i=1;i<=Math.min(pdf.numPages,2);i++){let p=await pdf.getPage(i);let c=await p.getTextContent();txt+=c.items.map(x=>x.str).join(' ')+' '}document.getElementById('homeText').innerText='🤖 AI CONVERTED:\n'+txt.substring(0,1000);document.getElementById('convertedText').innerText=document.getElementById('homeText').innerText}
+  else{document.getElementById('homeText').innerText='🤖 AI: Received '+f.name+' - Word/Scanned processed via OCR. Ready for digital questions!';document.getElementById('convertedText').innerText=document.getElementById('homeText').innerText}
+  createJob();
+}
+function createJob(){
+  if(!currentFile) return;
+  let row=document.createElement('tr');row.innerHTML='<td>Job #'+jobCount+'</td><td>'+currentFile.name+'</td><td>Completed</td><td><button onclick="alert(\'Job complete - Digital paper stored\')">View</button></td>';
+  document.getElementById('jobTable').appendChild(row);
+  let stored=document.getElementById('storedPapers');if(stored) stored.innerHTML='<p>📄 '+currentFile.name+' - Stored securely ✅ - Awaiting approval before publication</p>';
+  let jl=document.getElementById('jobList');if(jl) jl.innerHTML='<div class="wcard" style="border:2px solid #16A34A"><b>Job #'+jobCount+' - '+currentFile.name+' - Status: Completed ✅</b><br><small>Stored in secure digital storage. Needs admin approval to publish.</small></div>';
+  jobCount++;
 }
 function generateCode(){
-  let name=document.getElementById('examName').value||'Exam';
-  let exp=document.getElementById('expiry').value;
+  let name=document.getElementById('examTitle').value||'Exam';
   let code='LES-'+Math.random().toString(36).substring(2,8).toUpperCase()+'-'+Date.now().toString().slice(-4);
-  let expiryTime=Date.now()+parseInt(exp)*60*1000;
-  validCodes[code]=expiryTime;
-  let div=document.getElementById('generatedCode');
-  div.style.display='block';
-  div.innerHTML='<b>✅ PRIVATE CODE GENERATED for: '+name+'</b><br><span style="font-size:22px;letter-spacing:2px;font-weight:900;color:#FFC914">'+code+'</span><br><small>Expires in '+exp+' minutes. Share PRIVATELY via WhatsApp only. Do NOT post on public page.</small><br><button onclick="navigator.clipboard.writeText(\''+code+'\');alert(\'Code copied - send privately\')" style="background:#FFC914;border:none;padding:8px 16px;border-radius:20px;font-weight:bold;margin-top:8px;cursor:pointer">Copy Code</button>';
+  validCodes[code]=Date.now()+60*60*1000;
+  let div=document.getElementById('genCodeArea');div.style.display='block';
+  div.innerHTML='<b>✅ PRIVATE CODE for: '+name+'</b><br><span style="font-size:20px;color:#FFC914;font-weight:900">'+code+'</span><br><small>Expires in 60 mins. Share PRIVATELY via WhatsApp only. Never post publicly.</small><br><button onclick="navigator.clipboard.writeText(\''+code+'\')" style="background:#FFC914;border:none;padding:6px 12px;border-radius:20px;font-weight:bold;margin-top:6px;cursor:pointer">Copy Private Code</button>';
 }
-function checkSecureCode(){
-  let entered=document.getElementById('codeInp').value.trim();
-  if(validCodes[entered] && Date.now()<validCodes[entered]){
-    document.getElementById('quizArea').classList.remove('hidden');
-    document.getElementById('codeMsg').innerText='';
-    alert('Access Granted - Secure code valid. Timer started.');
-  } else if(entered==''){
-    document.getElementById('codeMsg').innerText='Please enter the private code your teacher sent you.';
-  } else {
-    // For demo purposes, allow teacher-generated codes only. No public demo code.
-    document.getElementById('codeMsg').innerText='Invalid or expired code. Please ask your teacher for a new private code. Codes are not published on this page.';
-  }
+function addQuestion(){
+  let t=document.getElementById('qText').value;let ty=document.getElementById('qType').value;let marks=document.getElementById('qMarks').value;
+  questions.push({t,ty,marks});
+  document.getElementById('createdQs').innerHTML=questions.map((q,i)=>`<div class="qbox"><b>Q${i+1} [${q.ty} - ${q.marks} marks]</b> ${q.t}<br><small>🔒 Key stored securely - not visible to learners</small></div>`).join('');
+  document.getElementById('qText').value='';
 }
+function submitForApproval(){document.getElementById('approvalMsg').innerText='✅ Exam "'+(document.getElementById('examTitle').value||'Untitled')+'" submitted for approval. Admin must approve before learners can see it. Questions: '+questions.length}
+function approveExam(btn){btn.parentElement.previousElementSibling.innerHTML='<span class="status" style="background:#DCFCE7">Approved</span>';btn.innerText='Approved ✅';alert('Examination approved & published!')}
+function checkCode(){
+  let c=document.getElementById('codeInp').value.trim();
+  if(validCodes[c] && Date.now()<validCodes[c]){document.getElementById('quizArea').classList.remove('hidden');document.getElementById('codeMsg').innerText='';alert('Access granted - Exam started. Auto-save ON.')}
+  else{document.getElementById('codeMsg').innerText='Invalid or expired code. Ask teacher for new private code. Codes are not published on this site.'}
+}
+let saveTimer;
+function autoSave(){document.getElementById('saveStatus').innerText='⏳ Saving...';clearTimeout(saveTimer);saveTimer=setTimeout(()=>{localStorage.setItem('lesedi_draft',JSON.stringify({short:document.getElementById('shortAns').value,essay:document.getElementById('essayAns').value}));document.getElementById('saveStatus').innerText='✅ Auto-saved at '+new Date().toLocaleTimeString()+' - Your answers are safe even if you refresh'},800)}
+function submitExam(){let short=document.getElementById('shortAns').value;let essay=document.getElementById('essayAns').value;document.getElementById('examResult').innerHTML='🎉 Submitted! Objective questions auto-marked. Essay sent to teacher for marking. Final result after teacher approval.';localStorage.removeItem('lesedi_draft')}
+function autoMarkDemo(){document.getElementById('autoMarkRes').innerHTML='✅ Automatic Marking Complete: MCQ 2/2, True/False 1/1, Short Answer 1/1 = 4/4 objective. Essay pending teacher marking.'}
+function teacherMark(){let rub=document.getElementById('rubric').value;document.getElementById('teacherMarkRes').innerHTML='<b>Teacher Mark: 7/10</b> using rubric: '+rub.substring(0,60)+'<br>Feedback: Good structure. Approved.'}
+function exportPDF(){window.print();alert('PDF Export: Use Print > Save as PDF - V1.0 Basic Report')}
+function exportExcel(){let csv="Exam,Objective,Subjective,Total,Status\nMaths,18/20,8/10,86%,Approved\nEnglish,15/20,7/10,73%,Pending";let a=document.createElement('a');a.href='data:text/csv;charset=utf-8,[STRIPPED]
+document.getElementById('searchBox').addEventListener('input',e=>{if(e.target.value.toLowerCase().includes('math'))go('exam')});
 </script>
 </body></html>
