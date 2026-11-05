@@ -15,7 +15,7 @@
 .sidebar a.active,.sidebar a:hover{background:#2563eb}
 .main{flex:1;padding:12px}
 .hero{background:linear-gradient(90deg,#0a2463,#2563eb);color:#fff;border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center}
-.hero h2{margin:0;font-size:24px}.hero h2 span{color:#facc15}.hero p{margin:6px 0 12px;font-size:14px}
+.hero h2{margin:0;font-size:22px;white-space:nowrap}.hero h2 span{color:#facc15}.hero p{margin:6px 0 12px;font-size:14px}
 .btn-yellow{background:#facc15;color:#000;border:none;padding:10px 18px;border-radius:20px;font-weight:bold;cursor:pointer}
 .btn-blue{background:#2563eb;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
 .grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:12px 0}
@@ -45,7 +45,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .price-table{width:100%;border-collapse:collapse;font-size:13px}
 .price-table th{text-align:left;padding:8px;border-bottom:1px solid #e5e7eb}
 .price-table td{padding:10px 8px;border-bottom:1px solid #f1f5f9}
-@media(max-width:800px){.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
+@media(max-width:800px){.hero h2{white-space:normal;font-size:20px}.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
 
@@ -78,7 +78,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div id="homeSection">
 <div class="hero">
-<div><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform<br><b>We Specialise on Digitalisation of Assessments</b></p>
+<div style="flex:1"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform<br><b>We Specialise on Digitalisation of Assessments</b></p>
 <button class="btn-yellow" onclick="showSection('takeExam')">Learn Anytime, Anywhere! →</button><br>
 <button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="buyPackage('ORDER ASSESSMENT - P10/Topic')">ORDER ASSESSMENT - P10/Topic</button>
 </div>
