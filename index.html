@@ -45,7 +45,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .price-table{width:100%;border-collapse:collapse;font-size:13px}
 .price-table th{text-align:left;padding:8px;border-bottom:1px solid #e5e7eb}
 .price-table td{padding:10px 8px;border-bottom:1px solid #f1f5f9}
-.service-bold{background:#facc15;color:#000;padding:8px 10px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-top:8px;line-height:1.4}
 @media(max-width:800px){.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
@@ -81,8 +80,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="hero">
 <div><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform<br><b>We Specialise on Digitalisation of Assessments</b></p>
 <button class="btn-yellow" onclick="showSection('takeExam')">Learn Anytime, Anywhere! →</button><br>
-<span class="service-bold">⭐ OUR SERVICE: WE CAN ALSO CREATE DIGITAL ASSESSMENT FOR YOU AT P10.00 / Topic<br>WhatsApp 71823638 to Order!</span>
-<button class="btn-blue" style="margin-top:8px;background:#fff;color:#0a2463" onclick="buyPackage('Create Digital Assessment P10 per Topic')">ORDER ASSESSMENT - P10 / Topic</button>
+<button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="buyPackage('ORDER ASSESSMENT - P10/Topic')">ORDER ASSESSMENT - P10/Topic</button>
 </div>
 <div style="font-size:70px">👦🏾👧🏾💻</div>
 </div>
@@ -98,14 +96,13 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
 
-<div class="card" style="border:2px solid #facc15">
+<div class="card">
 <h3>📤 UPLOAD PART - PDF → Digital Quizzes - Tests - Examinations</h3>
-<p style="font-size:13px;color:#555">Upload PDF - we digitalise it to Quiz / Test / Exam automatically. <b>OR WE CREATE FOR YOU - P10.00 / Topic!</b></p>
+<p style="font-size:13px;color:#555">Upload PDF - we digitalise it to Quiz / Test / Exam automatically.</p>
 <div class="upload-zone">
 <input type="file" id="pdfFile" accept=".pdf,.jpg,.png,.docx">
-<select id="assessType"><option>Convert to Digital Quiz</option><option>Convert to Digital Test</option><option>Convert to Digital Examination</option><option>Composition + Essay Marking</option><option>CREATE FOR ME - P10.00 / Topic</option></select>
+<select id="assessType"><option>Convert to Digital Quiz</option><option>Convert to Digital Test</option><option>Convert to Digital Examination</option><option>Composition + Essay Marking</option></select>
 <button class="btn-blue" style="width:100%;padding:12px" onclick="convertPDF()">CONVERT PDF TO DIGITAL → Learn-Click-Press</button>
-<button class="btn-yellow" style="width:100%;padding:12px;margin-top:6px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('Create Digital Assessment P10 per Topic')">✨ WE CREATE DIGITAL ASSESSMENT FOR YOU - P10.00 / Topic</button>
 <p id="uploadStatus"></p>
 </div>
 </div>
@@ -118,7 +115,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <tr><td><b>Pro Scholar</b></td><td><b>BWP 50 – 75</b></td><td>Per Month</td></tr>
 <tr><td><b>Educator / Tutor</b></td><td><b>BWP 150 – 200</b></td><td>Per Month</td></tr>
 <tr><td><b>School / Center Hub</b><br><small>3 Months Free Trial min 3 tests</small></td><td><b>BWP 800 – 1,500</b></td><td>Per Term (Annual discount)</td></tr>
-<tr><td><b>⭐ CREATE FOR YOU Service</b><br><small>We create digital assessment for you</small></td><td><b>P10.00</b></td><td>Per Topic</td></tr>
 </table>
 
 <div class="price-grid">
@@ -128,7 +124,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term - Annual discount</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
 </div>
 
-<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>Single assessment P10 • Create Assessment For You P10.00/Topic • Essay P15 • Full Report P30 • Past Papers P100/term</div>
+<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>Single assessment P10 • Essay P15 • Full Report P30 • Past Papers P100/term</div>
 
 <div class="bank-box">
 <b>🔒 SECURE PAYMENT - For Schools / Center Hub</b><br>
@@ -148,16 +144,16 @@ Pay securely - No bank details shown<br>
 <div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English Language Test</b><br><small>Primary 6 • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="joinExam('English Language Test')">Join Exam</button></div>
 </div>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
-<p style="font-size:13px">⭐ <b>WE CREATE ASSESSMENTS FOR YOU - P10 / Topic!</b><br><small>Send topic via WhatsApp 71823638</small></p>
-<p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free!</small> <span style="float:right">Nov 5, 2026</span></p>
+<p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free!</small></p>
+<p style="font-size:13px">🔒 <b>Secure Payment Now!</b><br><small>No bank details shown - Just Click Pay</small></p>
 </div>
 </div>
 </div>
 
 <div>
 <div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner">85%</div></div><p>Overall Performance</p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b>12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button></div>
-<div class="card" style="margin-top:10px"><h3>🔒 How to Pay?</h3><p style="font-size:13px">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment - Click Pay Securely<br>4. WhatsApp proof to 71823638</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button></div>
-<div class="card" style="margin-top:10px;background:#fffbeb;border:2px solid #facc15"><h3>⭐ OUR SERVICE</h3><p style="font-size:13px"><b>WE CAN ALSO CREATE DIGITAL ASSESSMENT FOR YOU AT P10.00 / Topic</b></p><button class="btn-yellow" style="width:100%;padding:10px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('Create Digital Assessment P10 per Topic')">ORDER NOW - P10 / Topic</button></div>
+<div class="card" style="margin-top:10px"><h3>🔒 How to Pay?</h3><p style="font-size:13px">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment - Click Pay Securely - No details shown<br>4. WhatsApp proof to 71823638</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button></div>
+<div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">Parents can see progress & pay.</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
 </div>
 </div>
 </div>
@@ -170,11 +166,11 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="aiTeacherSection" style="display:none">
-<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance - 3 Months Free Trial</h3><p style="font-size:13px;color:#ddd">For Teachers/Schools - Free for 3 months, min 3 tests. We also create for you P10/topic.</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
+<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance - 3 Months Free Trial</h3><p style="font-size:13px;color:#ddd">For Teachers/Schools - Free for 3 months, min 3 tests.</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
 </div>
 
 <div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages</h3><p>Starter Free • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term • Create For You P10/topic<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
+<div class="card"><h3>💰 All Packages</h3><p>Starter Free • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
 </div>
 
 <div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p></div></div>
@@ -232,7 +228,7 @@ function showSection(sec){
     document.getElementById('otherSection').style.display='block';
     let titles={results:"My Results - 85% Overall",materials:"Study Materials - P100/term",reports:"Performance Reports - P30",account:"My Account",help:"Help & Support - WhatsApp 71823638 / 77980825"};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. We create digital assessment for you P10/topic. 3 Months Free Trial min 3 tests.";
+    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests.";
   }
 }
 function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q);}
@@ -242,7 +238,7 @@ function showDashboard(role,name){
   document.getElementById('privateDash').style.display='none';
   document.getElementById('parentDash').style.display='none';
   document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
-  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. We create for you P10/topic.";}
+  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests.";}
   else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready.";}
   else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall.";}
   else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - Always Free.";}
@@ -270,26 +266,21 @@ async function doLogin(){
 function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
   let type=document.getElementById('assessType').value;
-  if(type.includes("CREATE FOR ME")){
-    alert("We will CREATE digital assessment for you at P10.00 / Topic!\n\nPay Orange Money 77980825 / MyZaka 71823638 / Secure Payment\nThen WhatsApp your Topic to 71823638");
-    whatsappOrder("CREATE FOR ME - P10 per Topic");
-    return;
-  }
-  if(!f){alert("Choose PDF first - Learn-Click-Press - OR choose CREATE FOR ME P10/Topic");return;}
+  if(!f){alert("Choose PDF first - Learn-Click-Press");return;}
   document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>... Your digital link is being created! Schools: 3 Months FREE TRIAL min 3 tests.";
 }
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){alert("Type topic for AI Teacher");return;}
   let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for:</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words<br>3. Marking scheme: 2 marks definition, 3 example<br><br>We can create full assessment for you - P10/topic - WhatsApp 71823638";
+  out.innerHTML="<b>AI Teacher Assistance for:</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words<br>3. Marking scheme: 2 marks definition, 3 example";
 }
 function buyPackage(pkg){
-  alert("You selected: "+pkg+"\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nWe create digital assessment for you at P10.00 / Topic!\n\nThen WhatsApp proof to 71823638 / 77980825!");
+  alert("You selected: "+pkg+"\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nThen WhatsApp proof to 71823638 / 77980825!");
   whatsappOrder(pkg);
 }
 function whatsappOrder(pkg){
-  let msg = pkg ? "Dumela! I want "+pkg+" - WE CREATE DIGITAL ASSESSMENT FOR ME P10.00/Topic - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub - Create Assessment P10/Topic?";
+  let msg = pkg ? "Dumela! I want "+pkg+" - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub";
   window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
 }
 function joinExam(name){alert("Joining "+name+" - Good luck!");showSection('takeExam');}
