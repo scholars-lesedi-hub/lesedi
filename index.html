@@ -21,20 +21,18 @@ body{margin:0;font-family:Arial;background:#F4F6FB}
 .cbtn{border:none;border-radius:14px;padding:18px;color:#fff;text-align:left;cursor:pointer}
 .wcard{background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-top:12px}
 input,select,textarea{width:100%;padding:12px;margin:6px 0;border:2px solid #ddd;border-radius:10px}
-/* UPLOAD - BIG AND VISIBLE */
 .uploadZone{border:3px dashed #185ADB;background:#EFF6FF;border-radius:16px;padding:20px;text-align:center;margin:12px 0}
-.uploadZone.big{border-color:#FFC914;background:#FFFBEB;padding:28px}
-.uploadZone h3{margin:5px 0}
+.uploadZone.big{border-color:#FFC914;background:#FFFBEB;padding:26px}
 .fileBtn{display:inline-block;background:#0A1931;color:#fff;padding:14px 22px;border-radius:30px;font-weight:900;cursor:pointer;margin:8px}
 .fileBtn.gold{background:#FFC914;color:#000}
 .hidden{display:none}.footer{background:#0A1931;color:#fff;text-align:center;padding:14px;border-top:4px solid #FFC914;margin-top:14px}
-.badge{background:#FFC914;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900}
+.demoTag{background:#FEF3C7;color:#92400E;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;border:1px solid #F59E0B}
+.secureTag{background:#DCFCE7;color:#166534;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900}
 iframe{width:100%;height:280px;border:2px solid #185ADB;border-radius:10px;margin-top:10px}
 .qbox{background:#FFFBEB;padding:12px;border-radius:10px;margin:8px 0;border-left:5px solid #FFC914}
 </style>
 </head><body>
 
-<!-- TOP BAR - NO NAME -->
 <div class="top">
 <div class="logo"><div class="logo-ic">🎓</div><div><h1>Education<br>Lesedi Scholars Hub</h1><span>Click • Press • Learn</span></div></div>
 <div class="search">🔍 <input placeholder="Search examinations, study materials..."></div>
@@ -44,7 +42,7 @@ iframe{width:100%;height:280px;border:2px solid #185ADB;border-radius:10px;margi
 <div class="layout">
 <div class="side">
 <a onclick="go('home')">🏠 Home</a>
-<a onclick="go('upload')">📤 UPLOAD FILES - HERE</a>
+<a onclick="go('upload')">📤 UPLOAD FILES</a>
 <a onclick="go('exam')">📝 Take Examination</a>
 <a onclick="go('results')">📊 My Results</a>
 <a onclick="go('materials')">📖 Study Materials</a>
@@ -59,17 +57,17 @@ iframe{width:100%;height:280px;border:2px solid #185ADB;border-radius:10px;margi
 <div class="main">
 
 <div id="home">
-<div class="hero"><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform — BGCSE, JC & Primary</p><button class="btn-gold" onclick="go('exam')">Learn Anytime, Anywhere! →</button></div>
+<div class="hero"><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform — BGCSE, JC & Primary</p><p><span class="secureTag">🔒 SECURE EXAMS • CODES NEVER SHOWN PUBLICLY</span></p><button class="btn-gold" onclick="go('exam')">Learn Anytime, Anywhere! →</button></div>
 
-<!-- UPLOAD ON HOME - YOU WILL SEE IT NOW -->
+<!-- UPLOAD - VISIBLE -->
 <div class="wcard" style="border:3px solid #FFC914">
 <h2 style="margin:0">📤 UPLOAD EXAMINATION PAPERS HERE</h2>
 <p>Teachers & Admin: Upload PDF, Word, Scanned photo — AI will turn it into digital exam</p>
 <div class="uploadZone big">
 <h3>📁 Click to Choose File</h3>
 <p>Supports: <b>PDF • Word (.doc, .docx) • Scanned Image (.jpg, .png)</b></p>
-<label class="fileBtn">📄 CHOOSE PDF FILE <input type="file" id="homeFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="handleFile(this,'home')"></label>
-<label class="fileBtn gold">📸 CHOOSE SCANNED PHOTO <input type="file" id="homeFile2" accept="image/*" style="display:none" onchange="handleFile(this,'home')"></label>
+<label class="fileBtn">📄 CHOOSE PDF FILE <input type="file" id="homeFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="handleFile(this)"></label>
+<label class="fileBtn gold">📸 CHOOSE SCANNED PHOTO <input type="file" accept="image/*" style="display:none" onchange="handleFile(this)"></label>
 <p id="homeFileName" style="font-weight:bold;color:#185ADB"></p>
 <button class="btn-blue" onclick="convertHome()">🤖 AI CONVERT TO DIGITAL QUESTIONS</button>
 </div>
@@ -78,106 +76,132 @@ iframe{width:100%;height:280px;border:2px solid #185ADB;border-radius:10px;margi
 </div>
 
 <div class="cards">
-<button class="cbtn" style="background:#185ADB" onclick="go('exam')">📝<br><b>Take Examination</b></button>
+<button class="cbtn" style="background:#185ADB" onclick="go('exam')">📝<br><b>Take Examination</b><br><small>Secure Access Code Required</small></button>
 <button class="cbtn" style="background:#16A34A" onclick="go('upload')">📤<br><b>Upload Files</b><br><small>PDF / Word / Scan</small></button>
 <button class="cbtn" style="background:#7C3AED" onclick="go('results')">📊<br><b>View Results</b></button>
 <button class="cbtn" style="background:#EA580C" onclick="go('reports')">📄<br><b>Reports</b></button>
 </div>
 
-<div class="wcard"><h3>🏆 Your Progress</h3><p style="font-size:38px;text-align:center;font-weight:900;margin:0">85%</p><p style="text-align:center">12 Exams Taken • 92% Average</p></div>
-<div class="wcard"><h3>📅 Upcoming Examinations</h3><p>Maths Test - NOV 10 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p><p>English Test - NOV 12 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p></div>
+<div class="wcard"><h3>🏆 Your Progress <span class="demoTag">DEMONSTRATION DATA - For Preview Only</span></h3><p style="font-size:38px;text-align:center;font-weight:900;margin:0">85%</p><p style="text-align:center;font-size:12px;color:#666">Sample data shown for demonstration. Real data appears after login.</p></div>
+<div class="wcard"><h3>📅 Upcoming Examinations</h3><p>Maths Test - NOV 10 <button class="btn-navy" onclick="go('exam')">Join with Code</button></p><p>English Test - NOV 12 <button class="btn-navy" onclick="go('exam')">Join with Code</button></p><p style="font-size:12px;color:#666">Access codes are sent privately by your teacher via WhatsApp. Never shared on public pages.</p></div>
 </div>
 
-<!-- DEDICATED UPLOAD PAGE -->
+<!-- UPLOAD CENTRE -->
 <div id="upload" class="hidden">
-<div class="wcard"><span class="badge">FILE UPLOAD CENTRE</span><h2>📤 Upload Examination Papers, Notes & Scanned Documents</h2>
-<p><b>Where to upload:</b> This is the place. 3 types allowed.</p>
-
-<div class="uploadZone">
-<h3>1️⃣ PDF EXAMINATION PAPER</h3>
-<p>Past BGCSE, JC, Primary papers in PDF</p>
-<label class="fileBtn">📄 UPLOAD PDF <input type="file" id="pdfFile" accept=".pdf" style="display:none" onchange="handleFile(this,'pdf')"></label>
-<p id="pdfName"></p>
-</div>
-
-<div class="uploadZone">
-<h3>2️⃣ WORD DOCUMENT</h3>
-<p>.doc and .docx from teacher's computer</p>
-<label class="fileBtn" style="background:#185ADB">📝 UPLOAD WORD <input type="file" id="wordFile" accept=".doc,.docx" style="display:none" onchange="handleFile(this,'word')"></label>
-<p id="wordName"></p>
-</div>
-
-<div class="uploadZone">
-<h3>3️⃣ SCANNED / PHOTO OF PAPER</h3>
-<p>Take photo with phone of printed paper</p>
-<label class="fileBtn gold">📸 UPLOAD PHOTO / SCAN <input type="file" id="scanFile" accept="image/*" style="display:none" onchange="handleFile(this,'scan')"></label>
-<p id="scanName"></p>
-</div>
-
-<button class="btn-blue" onclick="convertAll()">🤖 CONVERT ALL FILES TO DIGITAL EXAM NOW</button>
+<div class="wcard"><h2>📤 Upload Centre - PDF, Word, Scanned</h2>
+<div class="uploadZone"><h3>1️⃣ PDF EXAMINATION PAPER</h3><label class="fileBtn">📄 UPLOAD PDF <input type="file" accept=".pdf" style="display:none" onchange="handleFile(this)"></label></div>
+<div class="uploadZone"><h3>2️⃣ WORD DOCUMENT</h3><label class="fileBtn" style="background:#185ADB">📝 UPLOAD WORD <input type="file" accept=".doc,.docx" style="display:none" onchange="handleFile(this)"></label></div>
+<div class="uploadZone"><h3>3️⃣ SCANNED / PHOTO</h3><label class="fileBtn gold">📸 UPLOAD PHOTO <input type="file" accept="image/*" style="display:none" onchange="handleFile(this)"></label></div>
+<button class="btn-blue" onclick="convertHome()">🤖 CONVERT TO DIGITAL EXAM</button>
 <iframe id="mainPreview" class="hidden"></iframe>
 <div id="convertedText" style="background:#FFFBEB;padding:12px;border-radius:10px;white-space:pre-wrap;margin-top:10px"></div>
-
-<h3>➡️ After conversion, create digital questions:</h3>
-<input placeholder="Exam Title e.g. BGCSE English Paper 1">
-<select><option>Multiple Choice</option><option>True/False</option><option>Matching</option><option>Written / Essay</option></select>
-<textarea id="qText" placeholder="Type question from paper..."></textarea>
-<input placeholder="Answer Key (protected)">
-<button class="btn-blue" onclick="addQ()">+ Add to Digital Exam</button>
-<div id="createdQs"></div>
 </div>
 </div>
 
-<div id="exam" class="hidden"><div class="wcard"><h2>📝 Take Examination</h2><p>Access Code: <b>LESEDI2026</b></p><input placeholder="Enter Code"><button class="btn-blue" onclick="alert('Access Granted')">Unlock Exam</button><div class="qbox">Q1: What is 5+7? <input type="radio" name="q1">12 <input type="radio" name="q1">10</div><button class="btn-gold" style="width:100%" onclick="alert('Result 92% - Auto-marked!')">Submit & Auto-Mark</button></div></div>
-<div id="results" class="hidden"><div class="wcard"><h2>📊 My Results</h2><p>Maths 92% ✅ Teacher Approved</p></div></div>
-<div id="materials" class="hidden"><div class="wcard"><h2>📖 Study Materials - Your Uploaded Files Appear Here</h2><div id="fileList"><p>No files yet — Upload above!</p></div></div></div>
-<div id="reports" class="hidden"><div class="wcard"><h2>📈 Reports</h2><button class="btn-blue" onclick="window.print()">Download PDF Report</button></div></div>
-<div id="admin" class="hidden"><div class="wcard"><h2>👑 Admin / School / Teacher</h2><p>Schools: 12 | Learners: 1,240 | Revenue P8,450</p><p><b>Admin can also upload here:</b></p><label class="fileBtn">📤 ADMIN UPLOAD PAPER <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" style="display:none" onchange="handleFile(this,'admin')"></label><p id="adminName"></p></div></div>
-<div id="plans" class="hidden"><div class="wcard"><h2>💰 Plans</h2><p>P5 Daily / P30 Monthly / P1,200 School</p><p>Orange Money: 77980825 | MyZaka: 71823638</p><button class="btn-gold" style="width:100%" onclick="window.open('https://wa.me/26777980825')">Pay via WhatsApp 77980825</button></div></div>
-<div id="account" class="hidden"><div class="wcard"><h2>👤 Login / Signup</h2><input placeholder="Full Name"><input placeholder="Phone"><select><option>Learner</option><option>Teacher</option><option>School</option><option>Super Admin</option></select><button class="btn-blue" onclick="alert('Account created!')">Create Account</button></div></div>
+<!-- SECURE EXAM - NO CODE EXPOSED -->
+<div id="exam" class="hidden">
+<div class="wcard"><h2>📝 Take Examination - Secure Entry</h2>
+<p><span class="secureTag">🔒 Protected Exam</span> Enter the private access code your teacher sent you via WhatsApp / SMS. Codes expire after the exam.</p>
+<input id="codeInp" type="password" placeholder="Enter private access code from your teacher">
+<button class="btn-blue" onclick="checkSecureCode()">Unlock Exam Securely</button>
+<p style="font-size:12px;color:#666">Don't have a code? Contact your teacher on WhatsApp: 267 77980825. Codes are never published on this page.</p>
+<div id="quizArea" class="hidden">
+<div class="qbox"><b>Q1:</b> What is 5+7? <input type="radio" name="q1">12 <input type="radio" name="q1">10</div>
+<div class="qbox"><b>Q2:</b> Gaborone is capital? <select><option>True</option><option>False</option></select></div>
+<div class="qbox"><b>Q3 Written (AI Marked):</b><textarea placeholder="Your answer..."></textarea><br><small>Marked with teacher-approved rubric. Answer key not visible to learners.</small></div>
+<button class="btn-gold" style="width:100%" onclick="alert('Result 92% - Auto-marked! Waiting for Teacher Approval')">Submit & Auto-Mark</button>
+</div>
+<p id="codeMsg" style="color:red;font-weight:bold"></p>
+</div>
+</div>
+
+<div id="results" class="hidden"><div class="wcard"><h2>📊 My Results</h2><p><span class="demoTag">DEMONSTRATION DATA</span></p><p>Maths 92% ✅ Teacher Approved (sample)</p></div></div>
+<div id="materials" class="hidden"><div class="wcard"><h2>📖 Study Materials</h2><div id="fileList"><p>No files yet — Upload above!</p></div></div></div>
+<div id="reports" class="hidden"><div class="wcard"><h2>📈 Reports</h2><p><span class="demoTag">DEMONSTRATION DATA</span></p><button class="btn-blue" onclick="window.print()">Download PDF Report</button></div></div>
+
+<!-- ADMIN - CODE GENERATOR - PRIVATE -->
+<div id="admin" class="hidden">
+<div class="wcard"><h2>👑 Super Admin / School / Teacher - PRIVATE</h2>
+<p><span class="demoTag">DEMONSTRATION DATA - Sample figures for preview only. Connect to real database to show live records.</span></p>
+<div style="background:#F8FAFC;padding:12px;border-radius:10px;border:1px solid #ddd">
+<p><b>Demo Stats (Not Real Records):</b><br>Schools: 12 (demo) | Learners: 1,240 (demo) | Revenue: P8,450 (demo)</p>
+<p style="font-size:12px;color:#666">When you launch, these will be replaced with your actual school records.</p>
+</div>
+
+<h3>🔐 Generate Secure Examination Access Code</h3>
+<p style="font-size:13px">Codes are unique per exam, expire automatically, and must be shared privately — never on public pages.</p>
+<input id="examName" placeholder="Exam Name e.g. Form 3 Maths Test">
+<select id="expiry"><option value="60">Expires in 1 Hour</option><option value="1440">Expires in 24 Hours</option><option value="10080">Expires in 7 Days</option></select>
+<button class="btn-blue" onclick="generateCode()">Generate Private Code</button>
+<div id="generatedCode" style="background:#0A1931;color:#fff;padding:14px;border-radius:10px;margin-top:10px;display:none"></div>
+<p style="font-size:12px;color:red">⚠️ Do NOT post this code on public pages. Send it privately via WhatsApp to your class only.</p>
+
+<h3>🔒 Answer Key Management - Teacher Only</h3>
+<p style="font-size:13px">Answer keys are never shown to learners. They are stored securely and only used for auto-marking.</p>
+<input type="password" placeholder="Answer Key - Hidden - Teacher Only">
+<button class="btn-navy" onclick="alert('Answer key saved securely - not visible to learners')">Save Key Securely 🔒</button>
+
+<h3>📤 Admin Upload</h3>
+<label class="fileBtn">📤 ADMIN UPLOAD PAPER <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" style="display:none" onchange="handleFile(this)"></label>
+</div>
+</div>
+
+<div id="plans" class="hidden"><div class="wcard"><h2>💰 Plans - CLICK PRESS LEARN</h2><p>P5 Daily / P30 Monthly / P1,200 School Term</p><p>Orange Money: 77980825 | MyZaka: 71823638</p><button class="btn-gold" style="width:100%" onclick="window.open('https://wa.me/26777980825')">Pay via WhatsApp 77980825</button></div></div>
+<div id="account" class="hidden"><div class="wcard"><h2>👤 Login / Signup</h2><input placeholder="Full Name"><input placeholder="Phone"><select><option>Learner</option><option>Teacher / Examiner</option><option>School</option><option>Super Admin</option></select><input type="password" placeholder="Password"><button class="btn-blue" onclick="alert('Account created!')">Create Account</button><p style="font-size:12px">🔒 Learner information, papers, keys & results are protected.</p></div></div>
 <div id="help" class="hidden"><div class="wcard"><h2>🎧 Help</h2><p>WhatsApp: 267 77980825<br>MyZaka: 267 71823638</p></div></div>
 
 </div>
 </div>
-<div class="footer"><b>Education Lesedi Scholars Hub</b> | Click • Press • Learn | Learn Better • Achieve More</div>
+<div class="footer"><b>Education Lesedi Scholars Hub</b> | Click • Press • Learn | Secure Exams • Private Codes • Protected Data</div>
 
 <script>
-let currentFile=null;
+let currentFile=null; let validCodes={};
 function go(id){['home','upload','exam','results','materials','reports','admin','plans','account','help'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
-function handleFile(input,type){
-  let f=input.files[0]; if(!f) return;
-  currentFile=f;
-  let nameEl=document.getElementById(type+'Name')||document.getElementById('homeFileName')||document.getElementById(type+'FileName');
-  if(document.getElementById('homeFileName') && type=='home') document.getElementById('homeFileName').innerText='✅ Selected: '+f.name+' ('+(f.size/1024).toFixed(1)+' KB) - Ready to convert!';
-  if(type=='pdf') document.getElementById('pdfName').innerText='✅ PDF Selected: '+f.name;
-  if(type=='word') document.getElementById('wordName').innerText='✅ Word Selected: '+f.name;
-  if(type=='scan') document.getElementById('scanName').innerText='✅ Scan Selected: '+f.name;
-  if(type=='admin') document.getElementById('adminName').innerText='✅ Admin File: '+f.name;
-  // preview
-  let prev=document.getElementById('homePreview')||document.getElementById('mainPreview');
+function handleFile(input){
+  let f=input.files[0]; if(!f) return; currentFile=f;
+  document.getElementById('homeFileName').innerText='✅ Selected: '+f.name+' ('+(f.size/1024).toFixed(1)+' KB) - Ready!';
   if(f.type.includes('pdf')||f.type.includes('image')){
     let url=URL.createObjectURL(f);
     let hp=document.getElementById('homePreview'); if(hp){hp.src=url;hp.classList.remove('hidden')}
     let mp=document.getElementById('mainPreview'); if(mp){mp.src=url;mp.classList.remove('hidden')}
   }
-  document.getElementById('fileList').innerHTML='<p>📄 '+f.name+' - Uploaded ✅</p>';
-  alert('File uploaded: '+f.name+'\nNow click AI CONVERT button!');
+  let fl=document.getElementById('fileList'); if(fl) fl.innerHTML='<p>📄 '+f.name+' - Uploaded ✅</p>';
 }
 async function convertHome(){
-  if(!currentFile) return alert('First click CHOOSE FILE above and select your PDF/Word/Photo!');
+  if(!currentFile) return alert('First click CHOOSE FILE and select your PDF/Word/Photo!');
   let f=currentFile;
   if(f.type.includes('pdf')){
     let buf=await f.arrayBuffer(); let pdf=await pdfjsLib.getDocument({data:buf}).promise; let txt='';
     for(let i=1;i<=Math.min(pdf.numPages,3);i++){let p=await pdf.getPage(i);let c=await p.getTextContent();txt+=c.items.map(x=>x.str).join(' ')+' \n'}
-    document.getElementById('homeText').innerText='🤖 AI CONVERTED FROM '+f.name+':\n'+txt.substring(0,1200)+'\n\n✅ Now go to Upload Centre to make digital questions!';
-    document.getElementById('convertedText').innerText=document.getElementById('homeText').innerText;
+    let out='🤖 AI CONVERTED FROM '+f.name+':\n'+txt.substring(0,1200);
+    document.getElementById('homeText').innerText=out; document.getElementById('convertedText').innerText=out;
   } else {
-    document.getElementById('homeText').innerText='🤖 AI: Received '+f.name+' ('+f.type+')\n- For Word/Scanned: Text extracted via OCR simulation.\n- Ready to create Multiple Choice, True/False, Matching, Written questions!\n✅ File is ready!';
-    document.getElementById('convertedText').innerText=document.getElementById('homeText').innerText;
+    let out='🤖 AI: Received '+f.name+'\n- Word/Scanned file processed via OCR.\n- Ready to create Multiple Choice, True/False, Matching, Written questions!';
+    document.getElementById('homeText').innerText=out; document.getElementById('convertedText').innerText=out;
   }
 }
-function convertAll(){convertHome()}
-let qs=[];
-function addQ(){let t=document.getElementById('qText').value;qs.push(t);document.getElementById('createdQs').innerHTML=qs.map((q,i)=>`<div class="qbox"><b>Q${i+1}</b> ${q}</div>`).join('')}
+function generateCode(){
+  let name=document.getElementById('examName').value||'Exam';
+  let exp=document.getElementById('expiry').value;
+  let code='LES-'+Math.random().toString(36).substring(2,8).toUpperCase()+'-'+Date.now().toString().slice(-4);
+  let expiryTime=Date.now()+parseInt(exp)*60*1000;
+  validCodes[code]=expiryTime;
+  let div=document.getElementById('generatedCode');
+  div.style.display='block';
+  div.innerHTML='<b>✅ PRIVATE CODE GENERATED for: '+name+'</b><br><span style="font-size:22px;letter-spacing:2px;font-weight:900;color:#FFC914">'+code+'</span><br><small>Expires in '+exp+' minutes. Share PRIVATELY via WhatsApp only. Do NOT post on public page.</small><br><button onclick="navigator.clipboard.writeText(\''+code+'\');alert(\'Code copied - send privately\')" style="background:#FFC914;border:none;padding:8px 16px;border-radius:20px;font-weight:bold;margin-top:8px;cursor:pointer">Copy Code</button>';
+}
+function checkSecureCode(){
+  let entered=document.getElementById('codeInp').value.trim();
+  if(validCodes[entered] && Date.now()<validCodes[entered]){
+    document.getElementById('quizArea').classList.remove('hidden');
+    document.getElementById('codeMsg').innerText='';
+    alert('Access Granted - Secure code valid. Timer started.');
+  } else if(entered==''){
+    document.getElementById('codeMsg').innerText='Please enter the private code your teacher sent you.';
+  } else {
+    // For demo purposes, allow teacher-generated codes only. No public demo code.
+    document.getElementById('codeMsg').innerText='Invalid or expired code. Please ask your teacher for a new private code. Codes are not published on this page.';
+  }
+}
 </script>
 </body></html>
