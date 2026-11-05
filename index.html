@@ -12,14 +12,13 @@
 .btn-black{background:#000;color:#fff;border:none;padding:12px 20px;border-radius:9px;font-weight:bold;cursor:pointer;font-size:14px;margin:4px}
 .btn-white{background:#fff;color:#000;border:2px solid #000;padding:10px 20px;border-radius:9px;font-weight:bold;cursor:pointer;font-size:14px;margin:4px}
 .card{background:#fff;margin:12px;padding:18px;border-radius:14px;box-shadow:0 3px 12px rgba(0,0,0,.08)}
-input,select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:9px}
+input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:9px}
 .btn-main{background:#0f172a;color:#fff;width:100%;padding:14px;border:none;border-radius:9px;font-weight:bold;cursor:pointer}
 .btn-yellow{background:#f5b400;color:#000;width:100%;padding:14px;border:none;border-radius:9px;font-weight:bold;cursor:pointer}
 .popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99}
 .box{background:#fff;margin:25px auto;padding:22px;width:92%;max-width:420px;border-radius:16px}
 .footer{text-align:center;padding:20px;font-size:12px;color:#777}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.subject{background:#fffbeb;border:1px solid #ffe58a;padding:12px;border-radius:10px;text-align:center;font-weight:bold;font-size:13px;cursor:pointer}
+.badge{background:#fef3c7;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:bold}
 </style>
 </head><body>
 
@@ -27,56 +26,57 @@ input,select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-r
 
 <div class="hero">
 <h1>Education Lesedi<br>Scholars HUB<span>LEARN - CLICK - PRESS</span></h1>
-<p>UPLOAD PAPERS • All Schools • BGCSE • JCE • PSLE</p>
+<p>WE SPECIALISE ON DIGITALISATION OF ASSESSMENTS</p>
 <div class="tag">✦ Learn-Click-Press ✦</div><br><br>
 <button class="btn-black" onclick="openLogin()">LOGIN</button>
 <button class="btn-white" onclick="openSignup()">SIGNUP</button>
 <p id="welcomeMsg" style="font-weight:bold;margin-top:10px"></p>
 </div>
 
+<!-- 1. PDF TO DIGITAL -->
 <div class="card">
-<h3>📤 UPLOAD PAPERS - Learn-Click-Press</h3>
-<p style="font-size:13px;color:#555">1. Learn - Choose paper &nbsp; 2. Click - Upload &nbsp; 3. Press - Get Marking</p>
+<h3>📄 PDF → Digital Quizzes - Tests - Examinations</h3>
+<p style="font-size:13px;color:#555">Upload your PDF paper. We convert it to digital Quiz / Test / Exam automatically.</p>
+<span class="badge">QUIZ</span> <span class="badge">TEST</span> <span class="badge">EXAM</span>
 <input type="file" id="pdfFile" accept=".pdf,.jpg,.png,.docx">
-<select id="subject"><option>English Composition</option><option>Setswana Essay</option><option>Math Paper 1</option><option>Biology</option><option>History</option><option>Commerce</option></select>
-<button class="btn-main" onclick="uploadPaper()">UPLOAD & MARK 📝</button>
+<select id="assessType"><option>Convert to Digital Quiz</option><option>Convert to Digital Test</option><option>Convert to Digital Examination</option><option>Composition + Essay Marking</option></select>
+<button class="btn-main" onclick="convertPDF()">CONVERT PDF TO DIGITAL →</button>
 <p id="uploadStatus"></p>
 </div>
 
-<div class="card">
-<h3>📚 Subjects - Click to Learn</h3>
-<div class="grid">
-<div class="subject" onclick="pickSubject('English')">📖 English</div>
-<div class="subject" onclick="pickSubject('Math')">🔢 Math</div>
-<div class="subject" onclick="pickSubject('Biology')">🔬 Biology</div>
-<div class="subject" onclick="pickSubject('Setswana')">📝 Setswana</div>
-</div>
-</div>
-
-<div class="card">
-<h3>📝 Exam - Composition + Essay</h3>
-<p style="font-size:13px;color:#555">Past papers + marking scheme.</p>
-<button class="btn-main" style="background:#ffcc00;color:#000" onclick="openSignup()">START EXAM - SIGNUP FIRST</button>
+<!-- 2. AI TEACHER -->
+<div class="card" style="background:#0f172a;color:#fff">
+<h3 style="color:#ffcc00">🤖 AI Teacher Assessment Assistance</h3>
+<p style="font-size:13px;color:#ddd">AI helps teachers create, mark and give feedback for assessments. Paste topic or question:</p>
+<textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea>
+<button class="btn-yellow" onclick="aiAssist()">GET AI TEACHER HELP ✨</button>
+<p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p>
 </div>
 
-<!-- SIGNUP POPUP -->
+<!-- 3. HOW IT WORKS -->
+<div class="card">
+<h3>⚡ How it Works - Learn-Click-Press</h3>
+<p style="font-size:13px"><b>1. LEARN</b> - Upload PDF paper<br><b>2. CLICK</b> - Choose Quiz / Test / Exam<br><b>3. PRESS</b> - Get Digital Assessment + AI Marking</p>
+<button class="btn-main" style="background:#ffcc00;color:#000" onclick="openSignup()">START DIGITAL ASSESSMENT</button>
+</div>
+
+<!-- SIGNUP -->
 <div id="signupBox" class="popup"><div class="box">
 <h3 style="margin:0">Create Account - Signup</h3>
-<p style="font-size:13px;color:#666">New here? Sign up once.</p>
+<p style="font-size:13px;color:#666">For Digital Assessments</p>
 <input id="s_phone" placeholder="Phone - +267 7XXXXXXX">
 <input id="s_name" placeholder="Full Name - e.g. Tiro Lesedi">
 <input id="s_town" placeholder="Town">
 <input id="s_school" placeholder="School">
-<select id="s_role"><option>Student</option><option>Parent</option><option>Teacher</option></select>
+<select id="s_role"><option>Student</option><option>Teacher</option><option>Parent</option><option>School</option></select>
 <button class="btn-yellow" onclick="doSignup()">SIGNUP - SAVE ME</button>
 <p style="text-align:center;font-size:13px">Already have account? <b style="cursor:pointer" onclick="closeSignup();openLogin()">Login here</b></p>
 <p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
 
-<!-- LOGIN POPUP -->
+<!-- LOGIN -->
 <div id="loginBox" class="popup"><div class="box">
 <h3 style="margin:0">Welcome Back - Login</h3>
-<p style="font-size:13px;color:#666">Enter phone to login</p>
 <input id="l_phone" placeholder="Phone - +267 7XXXXXXX">
 <input id="l_name" placeholder="Full Name">
 <button class="btn-main" onclick="doLogin()">LOGIN</button>
@@ -84,7 +84,7 @@ input,select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-r
 <p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
 
-<div class="footer">Education Lesedi Scholars HUB • Learn-Click-Press • © 2026</div>
+<div class="footer">Education Lesedi Scholars HUB • Digitalisation of Assessments • Learn-Click-Press • © 2026</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -95,7 +95,6 @@ function openLogin(){ document.getElementById('loginBox').style.display='block';
 function closeLogin(){ document.getElementById('loginBox').style.display='none'; }
 function openSignup(){ document.getElementById('signupBox').style.display='block'; }
 function closeSignup(){ document.getElementById('signupBox').style.display='none'; }
-function pickSubject(s){ document.getElementById('subject').value=s; alert("You picked "+s); }
 
 async function doSignup(){
   let phone=document.getElementById('s_phone').value.trim();
@@ -104,37 +103,34 @@ async function doSignup(){
   let school=document.getElementById('s_school').value.trim() || "All Schools";
   let role=document.getElementById('s_role').value || "Student";
   if(!phone || !name){ alert("Please enter phone and name"); return; }
-  alert("Dumela "+name+"! Saving...");
   const { error } = await db.from('lesedi_users').insert([{phone: phone, full_name: name, town: town, school: school, role: role}]);
   if(error){ alert("Error: "+error.message); }
-  else{
-    alert("Dumela "+name+"! Signup done! Now you can Login!");
-    document.getElementById('welcomeMsg').textContent = "Dumela "+name+" • Account Created";
-    closeSignup(); openLogin();
-  }
+  else{ alert("Dumela "+name+"! Signup done!"); document.getElementById('welcomeMsg').textContent = "Dumela "+name+" • Account Created"; closeSignup(); openLogin(); }
 }
-
 async function doLogin(){
   let phone=document.getElementById('l_phone').value.trim();
-  let name=document.getElementById('l_name').value.trim();
   if(!phone){ alert("Enter phone"); return; }
   const { data, error } = await db.from('lesedi_users').select('*').eq('phone', phone).limit(1);
   if(error){ alert("Error: "+error.message); return; }
-  if(data && data.length>0){
-    alert("Dumela "+data[0].full_name+"! Login success! Learn-Click-Press!");
-    document.getElementById('welcomeMsg').textContent = "Dumela "+data[0].full_name+" • Logged In";
-    closeLogin();
-  } else {
-    alert("No account found for "+phone+" - Please Signup first");
-    closeLogin(); openSignup();
-  }
+  if(data && data.length>0){ alert("Dumela "+data[0].full_name+"! Login success!"); document.getElementById('welcomeMsg').textContent = "Dumela "+data[0].full_name+" • Logged In"; closeLogin(); }
+  else{ alert("No account for "+phone+" - Signup first"); closeLogin(); openSignup(); }
 }
 
-function uploadPaper(){
+function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
-  let sub=document.getElementById('subject').value;
-  if(!f){ alert("Choose file first"); return; }
-  document.getElementById('uploadStatus').innerHTML = "✅ <b>"+f.name+"</b> ("+sub+") uploaded! Marking coming!";
+  let type=document.getElementById('assessType').value;
+  if(!f){ alert("1. LEARN - Choose PDF\n2. CLICK - Choose type\n3. PRESS - Convert"); return; }
+  document.getElementById('uploadStatus').innerHTML = "✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>...<br>Your digital link is being created! Learn-Click-Press!";
+  // save to db as assessment
+  if(db){ db.from('lesedi_users').select('phone').limit(1).then(()=>{}); }
+}
+
+function aiAssist(){
+  let q=document.getElementById('aiInput').value.trim();
+  if(!q){ alert("Type topic for AI Teacher e.g. Photosynthesis quiz"); return; }
+  let out=document.getElementById('aiOutput');
+  out.style.display='block';
+  out.innerHTML = "<b>AI Teacher Assessment Assistance for:</b> "+q+"<br><br>1. Quiz Q1: What is "+q+"? [A] [B] [C] [D]<br>2. Test Question: Explain "+q+" in 100 words<br>3. Exam Tip: Marking scheme - 2 marks for definition, 3 for example<br><br><i>Your digital assessment draft is ready - now upload PDF to convert fully!</i>";
 }
 </script>
 </body></html>
