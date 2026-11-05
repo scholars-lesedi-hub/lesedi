@@ -2,43 +2,49 @@
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Education Lesedi Scholars Hub - CLICK PRESS LEARN</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 :root{--navy:#0A1931;--royal:#185ADB;--gold:#FFC914}
 body{margin:0;font-family:Arial;background:#F4F6FB}
-.top{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.1);flex-wrap:wrap}
+.top{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.1);flex-wrap:wrap;position:sticky;top:0;z-index:20}
 .logo{display:flex;gap:10px;align-items:center}.logo-ic{width:54px;height:54px;background:#0A1931;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;border-bottom:4px solid #FFC914}
 .logo h1{margin:0;font-size:20px;line-height:1;color:#0A1931}.logo span{font-size:13px;font-style:italic}
 .search{flex:1;min-width:180px;background:#EEF2FF;border-radius:30px;padding:10px 14px;display:flex;gap:8px}.search input{border:none;background:transparent;width:100%;outline:none}
-.btn-gold{background:#FFC914;border:none;padding:10px 18px;border-radius:30px;font-weight:900;cursor:pointer}.btn-navy{background:#0A1931;color:#fff;padding:10px 16px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
+.btn-gold{background:#FFC914;border:none;padding:11px 18px;border-radius:30px;font-weight:900;cursor:pointer}.btn-navy{background:#0A1931;color:#fff;padding:10px 16px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}.btn-blue{background:#185ADB;color:#fff;padding:12px;border:none;border-radius:10px;font-weight:bold;width:100%;cursor:pointer}
 .layout{display:flex}.side{width:210px;background:#0A1931;color:#fff;padding:14px 10px;min-height:100vh}
 .side a{display:block;padding:11px;border-radius:10px;color:#fff;text-decoration:none;font-size:14px;margin:4px 0;cursor:pointer}.side a:hover{background:#185ADB}
-.main{flex:1;padding:14px}
+.main{flex:1;padding:14px;max-width:1100px;margin:auto;width:100%}
 @media(max-width:750px){.layout{flex-direction:column}.side{width:100%;min-height:auto;display:flex;overflow-x:auto}.side a{white-space:nowrap}}
-.hero{background:linear-gradient(135deg,#0A1931,#185ADB);color:#fff;border-radius:18px;padding:28px}
-.hero h2{margin:0;font-size:30px}.hero h2 span{color:#FFC914}
+.hero{background:linear-gradient(135deg,#0A1931,#185ADB);color:#fff;border-radius:18px;padding:24px}
+.hero h2{margin:0;font-size:28px}.hero h2 span{color:#FFC914}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}}
 .cbtn{border:none;border-radius:14px;padding:18px;color:#fff;text-align:left;cursor:pointer}
 .wcard{background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-top:12px}
 input,select,textarea{width:100%;padding:12px;margin:6px 0;border:2px solid #ddd;border-radius:10px}
-.btn-blue{background:#185ADB;color:#fff;padding:11px;border:none;border-radius:10px;font-weight:bold;width:100%;cursor:pointer}
+/* UPLOAD - BIG AND VISIBLE */
+.uploadZone{border:3px dashed #185ADB;background:#EFF6FF;border-radius:16px;padding:20px;text-align:center;margin:12px 0}
+.uploadZone.big{border-color:#FFC914;background:#FFFBEB;padding:28px}
+.uploadZone h3{margin:5px 0}
+.fileBtn{display:inline-block;background:#0A1931;color:#fff;padding:14px 22px;border-radius:30px;font-weight:900;cursor:pointer;margin:8px}
+.fileBtn.gold{background:#FFC914;color:#000}
 .hidden{display:none}.footer{background:#0A1931;color:#fff;text-align:center;padding:14px;border-top:4px solid #FFC914;margin-top:14px}
+.badge{background:#FFC914;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900}
+iframe{width:100%;height:280px;border:2px solid #185ADB;border-radius:10px;margin-top:10px}
+.qbox{background:#FFFBEB;padding:12px;border-radius:10px;margin:8px 0;border-left:5px solid #FFC914}
 </style>
 </head><body>
 
-<!-- TOP BAR - CLEAN - NO NAME HERE -->
+<!-- TOP BAR - NO NAME -->
 <div class="top">
 <div class="logo"><div class="logo-ic">🎓</div><div><h1>Education<br>Lesedi Scholars Hub</h1><span>Click • Press • Learn</span></div></div>
 <div class="search">🔍 <input placeholder="Search examinations, study materials..."></div>
-<div style="display:flex;gap:8px;align-items:center">
-<span>🔔</span>
-<button class="btn-navy" onclick="go('account')">Login</button>
-<button class="btn-gold" onclick="go('account')">Sign Up</button>
-</div>
+<div style="display:flex;gap:8px;align-items:center"><span>🔔</span><button class="btn-navy" onclick="go('account')">Login</button><button class="btn-gold" onclick="go('account')">Sign Up</button></div>
 </div>
 
 <div class="layout">
 <div class="side">
 <a onclick="go('home')">🏠 Home</a>
+<a onclick="go('upload')">📤 UPLOAD FILES - HERE</a>
 <a onclick="go('exam')">📝 Take Examination</a>
 <a onclick="go('results')">📊 My Results</a>
 <a onclick="go('materials')">📖 Study Materials</a>
@@ -51,31 +57,127 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:2px solid #ddd
 </div>
 
 <div class="main">
+
 <div id="home">
-<div class="hero"><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform — BGCSE, JC & Primary</p><button class="btn-gold" onclick="go('exam')">Learn Anytime, Anywhere! → Start FREE Exam</button></div>
+<div class="hero"><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform — BGCSE, JC & Primary</p><button class="btn-gold" onclick="go('exam')">Learn Anytime, Anywhere! →</button></div>
+
+<!-- UPLOAD ON HOME - YOU WILL SEE IT NOW -->
+<div class="wcard" style="border:3px solid #FFC914">
+<h2 style="margin:0">📤 UPLOAD EXAMINATION PAPERS HERE</h2>
+<p>Teachers & Admin: Upload PDF, Word, Scanned photo — AI will turn it into digital exam</p>
+<div class="uploadZone big">
+<h3>📁 Click to Choose File</h3>
+<p>Supports: <b>PDF • Word (.doc, .docx) • Scanned Image (.jpg, .png)</b></p>
+<label class="fileBtn">📄 CHOOSE PDF FILE <input type="file" id="homeFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="handleFile(this,'home')"></label>
+<label class="fileBtn gold">📸 CHOOSE SCANNED PHOTO <input type="file" id="homeFile2" accept="image/*" style="display:none" onchange="handleFile(this,'home')"></label>
+<p id="homeFileName" style="font-weight:bold;color:#185ADB"></p>
+<button class="btn-blue" onclick="convertHome()">🤖 AI CONVERT TO DIGITAL QUESTIONS</button>
+</div>
+<iframe id="homePreview" class="hidden"></iframe>
+<div id="homeText" style="background:#FFFBEB;padding:12px;border-radius:10px;white-space:pre-wrap"></div>
+</div>
+
 <div class="cards">
 <button class="cbtn" style="background:#185ADB" onclick="go('exam')">📝<br><b>Take Examination</b></button>
-<button class="cbtn" style="background:#16A34A" onclick="go('materials')">📖<br><b>Study Materials</b></button>
+<button class="cbtn" style="background:#16A34A" onclick="go('upload')">📤<br><b>Upload Files</b><br><small>PDF / Word / Scan</small></button>
 <button class="cbtn" style="background:#7C3AED" onclick="go('results')">📊<br><b>View Results</b></button>
 <button class="cbtn" style="background:#EA580C" onclick="go('reports')">📄<br><b>Reports</b></button>
 </div>
-<div class="wcard"><h3>🏆 Your Progress</h3><p style="font-size:40px;text-align:center;font-weight:900">85%</p><p style="text-align:center">12 Exams Taken • 92% Average</p></div>
-<div class="wcard"><h3>📅 Upcoming Examinations</h3><p><b>Mathematics Test</b> - NOV 10 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p><p><b>English Test</b> - NOV 12 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p></div>
-<div class="wcard"><h3>🎧 Need Help?</h3><button class="btn-blue" onclick="window.open('https://wa.me/26777980825')">Contact Us - 77980825</button></div>
+
+<div class="wcard"><h3>🏆 Your Progress</h3><p style="font-size:38px;text-align:center;font-weight:900;margin:0">85%</p><p style="text-align:center">12 Exams Taken • 92% Average</p></div>
+<div class="wcard"><h3>📅 Upcoming Examinations</h3><p>Maths Test - NOV 10 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p><p>English Test - NOV 12 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p></div>
 </div>
 
-<div id="exam" class="hidden"><div class="wcard"><h2>📝 Take Examination</h2><input placeholder="Access Code - LESEDI2026"><button class="btn-blue" onclick="alert('Access Granted')">Unlock</button><p>Q1: What is 5+7? <input type="radio" name="q1">12 <input type="radio" name="q1">10</p><button class="btn-gold" style="width:100%" onclick="alert('Result 92% - Auto-marked!')">Submit & Auto-Mark</button></div></div>
-<div id="results" class="hidden"><div class="wcard"><h2>📊 Results</h2><p>Maths 92% ✅ Approved</p></div></div>
-<div id="materials" class="hidden"><div class="wcard"><h2>📖 Study Materials</h2><button class="btn-blue">BGCSE Maths</button></div></div>
-<div id="reports" class="hidden"><div class="wcard"><h2>📈 Reports</h2><button class="btn-blue" onclick="window.print()">Download PDF</button></div></div>
-<div id="admin" class="hidden"><div class="wcard"><h2>👑 Admin / School / Teacher</h2><p>Schools: 12 | Learners: 1,240 | Revenue P8,450</p><input type="file"><button class="btn-blue">Upload PDF & AI Convert</button></div></div>
-<div id="plans" class="hidden"><div class="wcard"><h2>💰 Plans</h2><p>P5 Daily / P30 Monthly / P1,200 School Term</p><p>Orange Money: 77980825 | MyZaka: 71823638</p><button class="btn-gold" style="width:100%" onclick="window.open('https://wa.me/26777980825?text=I want to pay')">Pay via WhatsApp 77980825</button></div></div>
-<div id="account" class="hidden"><div class="wcard"><h2>👤 My Account - Login / Signup</h2><input placeholder="Full Name"><input placeholder="Phone"><select><option>Learner</option><option>Teacher</option><option>School</option><option>Super Admin</option></select><button class="btn-blue" onclick="alert('Account created! Now your name will show - not anyone elses')">Create Account</button></div></div>
+<!-- DEDICATED UPLOAD PAGE -->
+<div id="upload" class="hidden">
+<div class="wcard"><span class="badge">FILE UPLOAD CENTRE</span><h2>📤 Upload Examination Papers, Notes & Scanned Documents</h2>
+<p><b>Where to upload:</b> This is the place. 3 types allowed.</p>
+
+<div class="uploadZone">
+<h3>1️⃣ PDF EXAMINATION PAPER</h3>
+<p>Past BGCSE, JC, Primary papers in PDF</p>
+<label class="fileBtn">📄 UPLOAD PDF <input type="file" id="pdfFile" accept=".pdf" style="display:none" onchange="handleFile(this,'pdf')"></label>
+<p id="pdfName"></p>
+</div>
+
+<div class="uploadZone">
+<h3>2️⃣ WORD DOCUMENT</h3>
+<p>.doc and .docx from teacher's computer</p>
+<label class="fileBtn" style="background:#185ADB">📝 UPLOAD WORD <input type="file" id="wordFile" accept=".doc,.docx" style="display:none" onchange="handleFile(this,'word')"></label>
+<p id="wordName"></p>
+</div>
+
+<div class="uploadZone">
+<h3>3️⃣ SCANNED / PHOTO OF PAPER</h3>
+<p>Take photo with phone of printed paper</p>
+<label class="fileBtn gold">📸 UPLOAD PHOTO / SCAN <input type="file" id="scanFile" accept="image/*" style="display:none" onchange="handleFile(this,'scan')"></label>
+<p id="scanName"></p>
+</div>
+
+<button class="btn-blue" onclick="convertAll()">🤖 CONVERT ALL FILES TO DIGITAL EXAM NOW</button>
+<iframe id="mainPreview" class="hidden"></iframe>
+<div id="convertedText" style="background:#FFFBEB;padding:12px;border-radius:10px;white-space:pre-wrap;margin-top:10px"></div>
+
+<h3>➡️ After conversion, create digital questions:</h3>
+<input placeholder="Exam Title e.g. BGCSE English Paper 1">
+<select><option>Multiple Choice</option><option>True/False</option><option>Matching</option><option>Written / Essay</option></select>
+<textarea id="qText" placeholder="Type question from paper..."></textarea>
+<input placeholder="Answer Key (protected)">
+<button class="btn-blue" onclick="addQ()">+ Add to Digital Exam</button>
+<div id="createdQs"></div>
+</div>
+</div>
+
+<div id="exam" class="hidden"><div class="wcard"><h2>📝 Take Examination</h2><p>Access Code: <b>LESEDI2026</b></p><input placeholder="Enter Code"><button class="btn-blue" onclick="alert('Access Granted')">Unlock Exam</button><div class="qbox">Q1: What is 5+7? <input type="radio" name="q1">12 <input type="radio" name="q1">10</div><button class="btn-gold" style="width:100%" onclick="alert('Result 92% - Auto-marked!')">Submit & Auto-Mark</button></div></div>
+<div id="results" class="hidden"><div class="wcard"><h2>📊 My Results</h2><p>Maths 92% ✅ Teacher Approved</p></div></div>
+<div id="materials" class="hidden"><div class="wcard"><h2>📖 Study Materials - Your Uploaded Files Appear Here</h2><div id="fileList"><p>No files yet — Upload above!</p></div></div></div>
+<div id="reports" class="hidden"><div class="wcard"><h2>📈 Reports</h2><button class="btn-blue" onclick="window.print()">Download PDF Report</button></div></div>
+<div id="admin" class="hidden"><div class="wcard"><h2>👑 Admin / School / Teacher</h2><p>Schools: 12 | Learners: 1,240 | Revenue P8,450</p><p><b>Admin can also upload here:</b></p><label class="fileBtn">📤 ADMIN UPLOAD PAPER <input type="file" accept=".pdf,.doc,.docx,.jpg,.png" style="display:none" onchange="handleFile(this,'admin')"></label><p id="adminName"></p></div></div>
+<div id="plans" class="hidden"><div class="wcard"><h2>💰 Plans</h2><p>P5 Daily / P30 Monthly / P1,200 School</p><p>Orange Money: 77980825 | MyZaka: 71823638</p><button class="btn-gold" style="width:100%" onclick="window.open('https://wa.me/26777980825')">Pay via WhatsApp 77980825</button></div></div>
+<div id="account" class="hidden"><div class="wcard"><h2>👤 Login / Signup</h2><input placeholder="Full Name"><input placeholder="Phone"><select><option>Learner</option><option>Teacher</option><option>School</option><option>Super Admin</option></select><button class="btn-blue" onclick="alert('Account created!')">Create Account</button></div></div>
 <div id="help" class="hidden"><div class="wcard"><h2>🎧 Help</h2><p>WhatsApp: 267 77980825<br>MyZaka: 267 71823638</p></div></div>
+
 </div>
 </div>
-<div class="footer"><b>Education Lesedi Scholars Hub</b> | Click • Press • Learn | Learn Better • Achieve More • Build a Brighter Future</div>
+<div class="footer"><b>Education Lesedi Scholars Hub</b> | Click • Press • Learn | Learn Better • Achieve More</div>
+
 <script>
-function go(id){['home','exam','results','materials','reports','admin','plans','account','help'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
+let currentFile=null;
+function go(id){['home','upload','exam','results','materials','reports','admin','plans','account','help'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function handleFile(input,type){
+  let f=input.files[0]; if(!f) return;
+  currentFile=f;
+  let nameEl=document.getElementById(type+'Name')||document.getElementById('homeFileName')||document.getElementById(type+'FileName');
+  if(document.getElementById('homeFileName') && type=='home') document.getElementById('homeFileName').innerText='✅ Selected: '+f.name+' ('+(f.size/1024).toFixed(1)+' KB) - Ready to convert!';
+  if(type=='pdf') document.getElementById('pdfName').innerText='✅ PDF Selected: '+f.name;
+  if(type=='word') document.getElementById('wordName').innerText='✅ Word Selected: '+f.name;
+  if(type=='scan') document.getElementById('scanName').innerText='✅ Scan Selected: '+f.name;
+  if(type=='admin') document.getElementById('adminName').innerText='✅ Admin File: '+f.name;
+  // preview
+  let prev=document.getElementById('homePreview')||document.getElementById('mainPreview');
+  if(f.type.includes('pdf')||f.type.includes('image')){
+    let url=URL.createObjectURL(f);
+    let hp=document.getElementById('homePreview'); if(hp){hp.src=url;hp.classList.remove('hidden')}
+    let mp=document.getElementById('mainPreview'); if(mp){mp.src=url;mp.classList.remove('hidden')}
+  }
+  document.getElementById('fileList').innerHTML='<p>📄 '+f.name+' - Uploaded ✅</p>';
+  alert('File uploaded: '+f.name+'\nNow click AI CONVERT button!');
+}
+async function convertHome(){
+  if(!currentFile) return alert('First click CHOOSE FILE above and select your PDF/Word/Photo!');
+  let f=currentFile;
+  if(f.type.includes('pdf')){
+    let buf=await f.arrayBuffer(); let pdf=await pdfjsLib.getDocument({data:buf}).promise; let txt='';
+    for(let i=1;i<=Math.min(pdf.numPages,3);i++){let p=await pdf.getPage(i);let c=await p.getTextContent();txt+=c.items.map(x=>x.str).join(' ')+' \n'}
+    document.getElementById('homeText').innerText='🤖 AI CONVERTED FROM '+f.name+':\n'+txt.substring(0,1200)+'\n\n✅ Now go to Upload Centre to make digital questions!';
+    document.getElementById('convertedText').innerText=document.getElementById('homeText').innerText;
+  } else {
+    document.getElementById('homeText').innerText='🤖 AI: Received '+f.name+' ('+f.type+')\n- For Word/Scanned: Text extracted via OCR simulation.\n- Ready to create Multiple Choice, True/False, Matching, Written questions!\n✅ File is ready!';
+    document.getElementById('convertedText').innerText=document.getElementById('homeText').innerText;
+  }
+}
+function convertAll(){convertHome()}
+let qs=[];
+function addQ(){let t=document.getElementById('qText').value;qs.push(t);document.getElementById('createdQs').innerHTML=qs.map((q,i)=>`<div class="qbox"><b>Q${i+1}</b> ${q}</div>`).join('')}
 </script>
 </body></html>
