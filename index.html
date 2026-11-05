@@ -39,6 +39,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .price-card.pop{border:2px solid #facc15;background:#fffbeb}
 .price{font-size:28px;font-weight:bold;margin:8px 0}
 .wa-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;padding:12px 16px;border-radius:30px;font-weight:bold;cursor:pointer;z-index:50;box-shadow:0 4px 12px rgba(0,0,0,.2);border:none}
+.pay-box{background:#ecfdf5;border:1px solid #22c55e;padding:10px;border-radius:8px;font-size:13px;text-align:center;margin-top:8px}
 @media(max-width:800px){.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
@@ -46,7 +47,8 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="top-header">
 <div class="logo"><div class="logo-icon">🎓</div><h1>Education Lesedi<br>Scholars Hub<br><span>Click • Press • Learn</span></h1></div>
 <div class="search">🔍 <input id="searchInput" placeholder="Search examinations, study materials..." onkeyup="searchExams()"></div>
-<div class="profile" id="topProfile"><span>🔔 <span style="background:red;color:#fff;border-radius:50%;padding:1px 5px;font-size:11px">3</span></span><button class="btn-login-top" onclick="openLogin()">LOGIN</button><button class="btn-signup-top" onclick="openSignup()">SIGNUP</button></div>
+<!-- BELL WITHOUT 3 - AS YOU ASKED -->
+<div class="profile" id="topProfile"><span style="font-size:18px;cursor:pointer" onclick="alert('No new notifications')">🔔</span><button class="btn-login-top" onclick="openLogin()">LOGIN</button><button class="btn-signup-top" onclick="openSignup()">SIGNUP</button></div>
 </div>
 
 <div class="layout">
@@ -96,14 +98,13 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 </div>
 
-<!-- PRICING & PACKAGES - NEW BUT SAME INTERFACE -->
 <div class="card" style="border:2px solid #0a2463">
 <h3>💰 PRICING & PACKAGES - Choose Your Plan - Learn-Click-Press</h3>
 <div class="price-grid">
 <div class="price-card">
 <h3>🎓 Student</h3><div class="price">P20<span style="font-size:13px">/exam</span></div>
 <p style="font-size:13px">✅ Take Digital Quiz/Test<br>✅ Instant AI Marking<br>✅ 1 Exam<br>✅ Results on WhatsApp</p>
-<button class="btn-blue" style="width:100%" onclick="buyPackage('Student P20')">BUY - Orange Money / MyZaka</button>
+<button class="btn-blue" style="width:100%" onclick="buyPackage('Student P20')">BUY - MyZaka / PayToCell</button>
 </div>
 <div class="price-card pop">
 <span style="background:#facc15;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">MOST POPULAR</span>
@@ -117,7 +118,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <button class="btn-blue" style="width:100%;background:#be185d" onclick="buyPackage('Private P150')">BOOK PRIVATE</button>
 </div>
 </div>
-<p style="font-size:12px;text-align:center">💳 Pay with Orange Money • MyZaka • EFT • Cash • <b>AI Essay Marking P15</b> • <b>Full Report P30</b> • <b>All Past Papers P100/term</b></p>
+<div class="pay-box">💳 <b>Pay with MyZaka / PayToCell: 267 71823638</b><br>Orange Money • MyZaka • EFT • <b>Essay P15 • Report P30 • Past Papers P100/term • AI Teacher P99/mo</b><br>Send screenshot to WhatsApp 71823638 to activate!</div>
 </div>
 
 <div class="two-col">
@@ -127,16 +128,16 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
 <p style="font-size:13px">ℹ️ <b>New: AI-Assisted Marking</b><br><small>Essays reviewed by AI + teacher approval.</small> <span style="float:right">Nov 2, 2026</span></p>
-<p style="font-size:13px">⭐ <b>Holiday Practice Tests - P20</b><br><small>Keep learning during holidays!</small> <span style="float:right">Oct 28, 2026</span></p>
-<p style="font-size:13px">🏆 <b>Top Schools Leaderboard Coming Soon</b><br><small>Is your school #1 in Botswana?</small></p>
+<p style="font-size:13px">⭐ <b>Holiday Practice Tests - P20</b><br><small>Pay via MyZaka 71823638</small> <span style="float:right">Oct 28, 2026</span></p>
+<p style="font-size:13px">🏆 <b>Top Schools Leaderboard Coming Soon</b><br><small>Is your school #1?</small></p>
 </div>
 </div>
 </div>
 
 <div>
-<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner">85%</div></div><p>Overall Performance</p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b>12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button></div>
-<div class="card" style="margin-top:10px"><h3>🎧 Need Help?</h3><p style="font-size:13px">WhatsApp us for instant help.</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button> <button class="btn-blue" style="background:#16a34a" onclick="alert('FAQs: 1. Upload PDF 2. Choose Quiz/Test/Exam 3. Press Convert')">❓ FAQs</button></div>
-<div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Business Idea: Parent?</h3><p style="font-size:13px">Parents can see progress & pay. Click Parent Dashboard below.</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
+<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner">85%</div></div><p>Overall Performance</p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b>12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30 - MyZaka 71823638</button></div>
+<div class="card" style="margin-top:10px"><h3>🎧 Need Help?</h3><p style="font-size:13px">WhatsApp 71823638 for instant help.</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button> <button class="btn-blue" style="background:#16a34a" onclick="alert('FAQs: 1. Upload PDF 2. Choose Quiz/Test/Exam 3. Press Convert - Pay MyZaka 71823638')">❓ FAQs</button></div>
+<div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">Parents can see progress & pay via MyZaka.</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
 </div>
 </div>
 </div>
@@ -149,11 +150,11 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 
 <div id="aiTeacherSection" style="display:none">
-<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance - P99/month for Teachers</h3><p style="font-size:13px;color:#ddd">First 3 free, then P99/month unlimited.</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p><button class="btn-blue" style="width:100%;margin-top:8px;background:#facc15;color:#000" onclick="buyPackage('AI Teacher P99')">UPGRADE TO AI TEACHER PRO - P99</button></div>
+<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance - P99/month</h3><p style="font-size:13px;color:#ddd">First 3 free, then P99/month - Pay MyZaka 71823638</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p><button class="btn-blue" style="width:100%;margin-top:8px;background:#facc15;color:#000" onclick="buyPackage('AI Teacher P99')">UPGRADE TO AI TEACHER PRO - P99 - MyZaka 71823638</button></div>
 </div>
 
 <div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages</h3><p>Student P20/exam • Teacher/School P999/mo • Private P150/hr • Essay Marking P15 • Report P30 • All Past Papers P100/term</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
+<div class="card"><h3>💰 All Packages - Pay MyZaka / PayToCell 267 71823638</h3><p>Student P20/exam • Teacher/School P999/mo • Private P150/hr • Essay P15 • Report P30 • Past Papers P100/term</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
 </div>
 
 <div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p></div></div>
@@ -161,9 +162,9 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 </div>
 
-<div class="footer"><span>Education Lesedi Scholars Hub</span><span>| Click • Press • Learn</span><span>🎓 Learn Better</span><span>📊 Achieve More</span><span>🏆 Build a Brighter Future</span><span style="background:#facc15;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold">Powered by Innovation & Education</span></div>
+<div class="footer"><span>Education Lesedi Scholars Hub</span><span>| Click • Press • Learn</span><span>🎓 Learn Better</span><span>📊 Achieve More</span><span>🏆 Build a Brighter Future</span><span style="background:#facc15;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold">MyZaka / PayToCell: 267 71823638</span></div>
 
-<button class="wa-float" onclick="whatsappOrder()">💬 WhatsApp - Order / Help</button>
+<button class="wa-float" onclick="whatsappOrder()">💬 WhatsApp 71823638 - Order / Help</button>
 
 <div id="signupBox" class="popup"><div class="box">
 <h3>Signup - Create Account</h3><input id="s_phone" placeholder="Phone - +267 7XXXXXXX"><input id="s_name" placeholder="Full Name"><input id="s_town" placeholder="Town"><input id="s_school" placeholder="School"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - SAVE ME</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
@@ -183,7 +184,7 @@ function openSignup(){document.getElementById('signupBox').style.display='block'
 function closeSignup(){document.getElementById('signupBox').style.display='none'}
 function logout(){alert("Logged out");location.reload()}
 function showParentDash(){document.getElementById('parentDash').style.display='block';document.getElementById('parentDash').scrollIntoView();}
-function showParentReport(){document.getElementById('parentInfo').innerHTML="📄 Report: 12 Exams, 85% Overall, 92% Avg. Pay P30 via Orange Money to download official PDF. WhatsApp us!";}
+function showParentReport(){document.getElementById('parentInfo').innerHTML="📄 Report: 12 Exams, 85% Overall, 92% Avg. Pay P30 via MyZaka 71823638 to download official PDF. WhatsApp us!";}
 
 function showSection(sec){
   document.getElementById('homeSection').style.display='none';
@@ -198,9 +199,9 @@ function showSection(sec){
   else if(sec==='upload'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>{document.getElementById('pdfFile').scrollIntoView()},100); }
   else{
     document.getElementById('otherSection').style.display='block';
-    let titles={results:"My Results - 85% Overall, 12 Exams, 92% Average",materials:"Study Materials - Notes, Past Papers, Digital Books - P100/term for all papers",reports:"Performance Reports - P30 for official PDF report",account:"My Account - Profile, School, Role",help:"Help & Support - WhatsApp Education Lesedi Scholars Hub"};
+    let titles={results:"My Results - 85% Overall, 12 Exams, 92% Average",materials:"Study Materials - Notes, Past Papers, Digital Books - P100/term",reports:"Performance Reports - P30 via MyZaka 71823638",account:"My Account - Profile, School, Role",help:"Help & Support - WhatsApp 71823638"};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Digitalisation of Assessments. Learn-Click-Press! WhatsApp us to order.";
+    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Digitalisation of Assessments. Pay MyZaka 267 71823638. Learn-Click-Press!";
   }
 }
 function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q);}
@@ -210,7 +211,7 @@ function showDashboard(role,name){
   document.getElementById('studentDash').style.display='none';
   document.getElementById('privateDash').style.display='none';
   document.getElementById('parentDash').style.display='none';
-  document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
+  document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
   if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! Create assessments from PDF above.";}
   else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private dashboard ready.";}
   else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Your child progress: 85% Overall.";}
@@ -241,21 +242,21 @@ function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
   let type=document.getElementById('assessType').value;
   if(!f){alert("Choose PDF first - Learn-Click-Press");return;}
-  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>... Your digital link is being created! Students can take it digitally with AI marking. To publish: Choose package below.";
+  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>... Your digital link is being created! To publish pay via MyZaka 71823638.";
 }
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){alert("Type topic for AI Teacher");return;}
   let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for:</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words<br>3. Marking scheme: 2 marks definition, 3 example<br><br>Upgrade to PRO P99 for unlimited.";
+  out.innerHTML="<b>AI Teacher Assistance for:</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words<br>3. Marking scheme: 2 marks definition, 3 example<br><br>Upgrade to PRO P99 - MyZaka 71823638";
 }
 function buyPackage(pkg){
-  alert("You selected: "+pkg+"\n\nPay with Orange Money / MyZaka / EFT.\nThen WhatsApp us your payment screenshot to activate!\n\nEducation Lesedi Scholars Hub - Learn-Click-Press");
+  alert("You selected: "+pkg+"\n\nPay with MyZaka / PayToCell: 267 71823638\n\nThen WhatsApp screenshot to 71823638 to activate!\n\nEducation Lesedi Scholars Hub");
   whatsappOrder(pkg);
 }
 function whatsappOrder(pkg){
-  let msg = pkg ? "Dumela! I want to buy "+pkg+" - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub - Digital Assessments";
-  window.open("https://wa.me/26777980825?text="+encodeURIComponent(msg), "_blank");
+  let msg = pkg ? "Dumela! I want to buy "+pkg+" - I will pay MyZaka 71823638 - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub - MyZaka 71823638";
+  window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
 }
 function joinExam(name){alert("Joining "+name+" - Good luck!");showSection('takeExam');}
 function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML=correct?"✅ Correct! AI Teacher: Well done!":"❌ Try again!";}
