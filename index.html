@@ -1,187 +1,81 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Education Lesedi Scholars Hub - CLICK PRESS LEARN | Botswana #1 Exam Platform</title>
-<meta name="description" content="Education Lesedi Scholars Hub - BGCSE, JC, Primary digital exams with AI marking. CLICK PRESS LEARN. Pay with Orange Money 77980825 / MyZaka 71823638">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<title>Education Lesedi Scholars Hub - CLICK PRESS LEARN</title>
 <style>
-:root{--navy:#0A1931;--royal:#185ADB;--gold:#FFC914;--green:#16A34A}
-*{box-sizing:border-box}body{margin:0;font-family:'Segoe UI',Arial;background:#F4F6FB;color:#0A1931}
-.top{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 2px 12px rgba(0,0,0,.1);position:sticky;top:0;z-index:20;flex-wrap:wrap}
-.logo{display:flex;gap:10px;align-items:center}.logo-ic{width:54px;height:54px;background:var(--navy);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;border-bottom:4px solid var(--gold)}
-.logo h1{margin:0;font-size:20px;line-height:1;color:var(--navy)}.logo span{font-size:13px;font-style:italic;color:#333}
+:root{--navy:#0A1931;--royal:#185ADB;--gold:#FFC914}
+body{margin:0;font-family:Arial;background:#F4F6FB}
+.top{background:#fff;display:flex;align-items:center;gap:12px;padding:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.1);flex-wrap:wrap}
+.logo{display:flex;gap:10px;align-items:center}.logo-ic{width:54px;height:54px;background:#0A1931;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;border-bottom:4px solid #FFC914}
+.logo h1{margin:0;font-size:20px;line-height:1;color:#0A1931}.logo span{font-size:13px;font-style:italic}
 .search{flex:1;min-width:180px;background:#EEF2FF;border-radius:30px;padding:10px 14px;display:flex;gap:8px}.search input{border:none;background:transparent;width:100%;outline:none}
-.btn-gold{background:var(--gold);border:none;padding:10px 20px;border-radius:30px;font-weight:900;cursor:pointer}.btn-blue{background:var(--royal);color:#fff;padding:11px;border:none;border-radius:10px;font-weight:bold;width:100%;cursor:pointer}.btn-navy{background:var(--navy);color:#fff;padding:10px 16px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
-.layout{display:flex}.side{width:210px;background:var(--navy);color:#fff;padding:14px 10px;flex-shrink:0;min-height:100vh}
-.side a{display:flex;gap:10px;padding:11px;border-radius:10px;color:#fff;text-decoration:none;font-size:14px;margin:4px 0;cursor:pointer}.side a:hover,.side a.active{background:var(--royal)}
-.main{flex:1;padding:14px;max-width:1100px;margin:auto;width:100%}
+.btn-gold{background:#FFC914;border:none;padding:10px 18px;border-radius:30px;font-weight:900;cursor:pointer}.btn-navy{background:#0A1931;color:#fff;padding:10px 16px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
+.layout{display:flex}.side{width:210px;background:#0A1931;color:#fff;padding:14px 10px;min-height:100vh}
+.side a{display:block;padding:11px;border-radius:10px;color:#fff;text-decoration:none;font-size:14px;margin:4px 0;cursor:pointer}.side a:hover{background:#185ADB}
+.main{flex:1;padding:14px}
 @media(max-width:750px){.layout{flex-direction:column}.side{width:100%;min-height:auto;display:flex;overflow-x:auto}.side a{white-space:nowrap}}
-.hero{background:linear-gradient(135deg,#0A1931,#185ADB);color:#fff;border-radius:18px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:15px}
-.hero h2{margin:0;font-size:30px}.hero h2 span{color:var(--gold)}.trust{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.trust span{background:rgba(255,255,255,.15);padding:6px 12px;border-radius:20px;font-size:12px}
+.hero{background:linear-gradient(135deg,#0A1931,#185ADB);color:#fff;border-radius:18px;padding:28px}
+.hero h2{margin:0;font-size:30px}.hero h2 span{color:#FFC914}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}}
-.cbtn{border:none;border-radius:14px;padding:18px;color:#fff;text-align:left;cursor:pointer;min-height:115px}
+.cbtn{border:none;border-radius:14px;padding:18px;color:#fff;text-align:left;cursor:pointer}
 .wcard{background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-top:12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:700px){.grid2{grid-template-columns:1fr}}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}@media(max-width:800px){.grid3{grid-template-columns:1fr}}
-input,select,textarea{width:100%;padding:12px;margin:6px 0;border:2px solid #E2E8F0;border-radius:10px}
-.prog{width:130px;height:130px;border-radius:50%;background:conic-gradient(#16A34A 0 85%,#E5E7EB 85% 100%);display:flex;align-items:center;justify-content:center;margin:auto}.prog div{width:100px;height:100px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900}
-.dateB{background:var(--royal);color:#fff;border-radius:8px;padding:6px 10px;text-align:center;font-weight:900}
-.exrow{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee;gap:8px}
-.price{border:2px solid #E2E8F0;border-radius:14px;padding:16px;text-align:center;background:#fff}.price.hot{border:3px solid var(--gold);background:#FFFBEB;transform:scale(1.02)}
-.timer{font-size:30px;font-weight:900;color:#DC2626;text-align:center;background:#FEF2F2;padding:8px;border-radius:10px}
-.qbox{background:#FFFBEB;padding:13px;border-radius:10px;margin:8px 0;border-left:5px solid var(--gold)}
-.badge{background:var(--gold);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;color:#000}.badgeB{background:var(--royal);color:#fff;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900}
-.hidden{display:none}.footer{background:var(--navy);color:#fff;text-align:center;padding:16px;border-top:4px solid var(--gold);margin-top:16px}
-.floatWA{position:fixed;bottom:18px;right:18px;background:#25D366;color:#fff;padding:13px 18px;border-radius:30px;text-decoration:none;font-weight:900;box-shadow:0 4px 15px rgba(0,0,0,.3);z-index:99}
-table{width:100%;border-collapse:collapse}th{background:var(--navy);color:#fff;padding:9px}td{padding:9px;border-bottom:1px solid #ddd;font-size:14px}
+input,select,textarea{width:100%;padding:12px;margin:6px 0;border:2px solid #ddd;border-radius:10px}
+.btn-blue{background:#185ADB;color:#fff;padding:11px;border:none;border-radius:10px;font-weight:bold;width:100%;cursor:pointer}
+.hidden{display:none}.footer{background:#0A1931;color:#fff;text-align:center;padding:14px;border-top:4px solid #FFC914;margin-top:14px}
 </style>
 </head><body>
 
+<!-- TOP BAR - CLEAN - NO NAME HERE -->
 <div class="top">
 <div class="logo"><div class="logo-ic">🎓</div><div><h1>Education<br>Lesedi Scholars Hub</h1><span>Click • Press • Learn</span></div></div>
-<div class="search">🔍 <input id="search" placeholder="Search BGCSE, JC, Primary exams..."></div>
-<div>🔔<span style="background:red;color:#fff;padding:2px 6px;border-radius:50%;font-size:11px">3</span></div>
-<div style="display:flex;gap:8px;align-items:center"><div style="width:42px;height:42px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900">K</div><div><b>Kutiwano K.</b><br><small>Learner</small></div></div>
+<div class="search">🔍 <input placeholder="Search examinations, study materials..."></div>
+<div style="display:flex;gap:8px;align-items:center">
+<span>🔔</span>
+<button class="btn-navy" onclick="go('account')">Login</button>
+<button class="btn-gold" onclick="go('account')">Sign Up</button>
+</div>
 </div>
 
 <div class="layout">
 <div class="side">
-<a class="active" onclick="go('home')">🏠 Home</a>
+<a onclick="go('home')">🏠 Home</a>
 <a onclick="go('exam')">📝 Take Examination</a>
 <a onclick="go('results')">📊 My Results</a>
 <a onclick="go('materials')">📖 Study Materials</a>
 <a onclick="go('reports')">📈 Reports</a>
-<a onclick="go('creator')">🧑‍🏫 Exam Creator & AI Convert</a>
 <a onclick="go('admin')">👑 Admin • School • Teacher</a>
-<a onclick="go('plans')">💰 Subscribe - P5 / P30</a>
+<a onclick="go('plans')">💰 Subscribe</a>
 <a onclick="go('account')">👤 My Account</a>
 <a onclick="go('help')">🎧 Help & Support</a>
-<a onclick="alert('Logged out')">↩️ Logout</a>
-<div style="margin-top:18px;background:#111E3A;border:1px solid #FFC914;border-radius:12px;padding:12px;font-size:12px;line-height:1.6">📞 Orange / WhatsApp<br><b>267 77980825</b><br>MyZaka / PayToCell<br><b>267 71823638</b><br><span style="color:#FFC914;font-weight:900">CLICK – PRESS – LEARN</span></div>
+<div style="margin-top:18px;border:1px solid #FFC914;border-radius:12px;padding:12px;font-size:12px">📞 267 77980825<br>MyZaka: 267 71823638<br><span style="color:#FFC914;font-weight:900">CLICK – PRESS – LEARN</span></div>
 </div>
 
 <div class="main">
-
-<!-- HOME = SUCCESS DASHBOARD -->
 <div id="home">
-<div class="hero">
-<div><h2>Welcome to<br><span>Education Lesedi<br>Scholars Hub</span></h2>
-<p>Your Online Examination and Learning Platform — Botswana's #1 for BGCSE, JC & Primary</p>
-<div class="trust"><span>✅ 1,240 Learners</span><span>⭐ 4.9 Rating</span><span>🔒 Papers Protected</span></div>
-<button class="btn-gold" onclick="go('exam')" style="margin-top:12px">Learn Anytime, Anywhere! → Start FREE Exam</button></div>
-<div style="font-size:64px">👦🏾👧🏾💻</div>
-</div>
-
+<div class="hero"><h2>Welcome to<br><span>Education Lesedi Scholars Hub</span></h2><p>Your Online Examination and Learning Platform — BGCSE, JC & Primary</p><button class="btn-gold" onclick="go('exam')">Learn Anytime, Anywhere! → Start FREE Exam</button></div>
 <div class="cards">
-<button class="cbtn" style="background:#185ADB" onclick="go('exam')">📝<br><b>Take Examination</b><br><small>Start a quiz or exam - Timer + Access Code</small></button>
-<button class="cbtn" style="background:#16A34A" onclick="go('materials')">📖<br><b>Study Materials</b><br><small>PDF to Digital - All subjects</small></button>
-<button class="cbtn" style="background:#7C3AED" onclick="go('results')">📊<br><b>View Results</b><br><small>Auto-mark + AI marking</small></button>
-<button class="cbtn" style="background:#EA580C" onclick="go('reports')">📄<br><b>Performance Reports</b><br><small>Download PDF & Excel</small></button>
+<button class="cbtn" style="background:#185ADB" onclick="go('exam')">📝<br><b>Take Examination</b></button>
+<button class="cbtn" style="background:#16A34A" onclick="go('materials')">📖<br><b>Study Materials</b></button>
+<button class="cbtn" style="background:#7C3AED" onclick="go('results')">📊<br><b>View Results</b></button>
+<button class="cbtn" style="background:#EA580C" onclick="go('reports')">📄<br><b>Reports</b></button>
+</div>
+<div class="wcard"><h3>🏆 Your Progress</h3><p style="font-size:40px;text-align:center;font-weight:900">85%</p><p style="text-align:center">12 Exams Taken • 92% Average</p></div>
+<div class="wcard"><h3>📅 Upcoming Examinations</h3><p><b>Mathematics Test</b> - NOV 10 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p><p><b>English Test</b> - NOV 12 - 09:00 <button class="btn-navy" onclick="go('exam')">Join Exam</button></p></div>
+<div class="wcard"><h3>🎧 Need Help?</h3><button class="btn-blue" onclick="window.open('https://wa.me/26777980825')">Contact Us - 77980825</button></div>
 </div>
 
-<div class="grid2">
-<div class="wcard"><h3>🏆 Your Progress</h3><div class="prog"><div>85%</div></div><p style="text-align:center">Overall Performance • 12 Exams Taken • 92% Average</p><button class="btn-blue" onclick="go('reports')">View Full Report</button></div>
-<div class="wcard"><h3>🔥 Why Lesedi Wins</h3><p>✅ <b>AI converts any PDF</b> — Past paper becomes digital in 10 seconds<br>✅ <b>Auto-mark + AI essay</b> with teacher approval<br>✅ <b>Works on any phone</b> — No app needed, even low data<br>✅ <b>Pay P5 with Orange Money</b> — No bank card needed</p><button class="btn-gold" onclick="go('plans')" style="width:100%">See Plans - From P5</button></div>
-</div>
-
-<div class="grid3">
-<div class="wcard"><h3>📅 Upcoming Examinations</h3>
-<div class="exrow"><div class="dateB">NOV<br>10</div><div><b>Mathematics Test</b><br><small>Primary 6 • 09:00-10:00</small></div><button class="btn-navy" onclick="go('exam')">Join</button></div>
-<div class="exrow"><div class="dateB">NOV<br>12</div><div><b>English Test</b><br><small>Primary 6 • 09:00-10:00</small></div><button class="btn-navy" onclick="go('exam')">Join</button></div>
-<div class="exrow"><div class="dateB">NOV<br>15</div><div><b>BGCSE Science</b><br><small>Form 5 • 14:00</small></div><button class="btn-navy" onclick="go('exam')">Join</button></div>
-</div>
-<div class="wcard"><h3>📢 Latest News</h3><p>ℹ️ <b>AI-Assisted Marking LIVE</b><br><small>Essays reviewed by AI + teacher approval. Nov 2, 2026</small></p><p>⭐ <b>Holiday Practice Tests</b><br><small>Keep learning during holidays! Oct 28, 2026</small></p><p>🎉 <b>New: P5 Daily Pass</b><br><small>Pay with Orange Money 77980825</small></p></div>
-<div class="wcard"><h3>🎧 Need Help?</h3><p>Support team is here for you.</p><button class="btn-blue" onclick="window.open('https://wa.me/26777980825')">📧 Contact Us - 77980825</button><br><br><button class="btn-blue" style="background:#16A34A" onclick="alert('FAQs: 1. Code is LESEDI2026 2. Pay to Orange 77980825 or MyZaka 71823638 3. WhatsApp proof to activate')">❓ FAQs</button></div>
-</div>
-
-<div class="wcard"><h3>💬 What Parents & Students Say</h3><p>⭐⭐⭐⭐⭐ <i>"My son improved from 60% to 85% in 2 weeks!"</i> - Mme M., Gaborone<br>⭐⭐⭐⭐⭐ <i>"PDF to exam is magic. No more printing!"</i> - Teacher, Ledumang</p></div>
-</div>
-
-<!-- EXAM -->
-<div id="exam" class="hidden">
-<div class="wcard"><span class="badge">EXAM SYSTEM + TIMER + ACCESS CODE</span><h2>📝 Take Examination</h2>
-<div class="timer" id="timer">30:00</div>
-<input id="codeInp" placeholder="Enter Access Code - Try LESEDI2026">
-<button class="btn-blue" onclick="unlock()">Unlock Exam</button>
-<div id="quizArea">
-<div class="qbox"><b>Q1 Multiple Choice:</b> What is 5+7? <br><input type="radio" name="q1" value="12"> 12 <input type="radio" name="q1" value="10"> 10</div>
-<div class="qbox"><b>Q2 True/False:</b> Gaborone is capital? <select id="q2"><option>True</option><option>False</option></select></div>
-<div class="qbox"><b>Q3 Matching:</b> Photosynthesis needs → <select><option>Sunlight</option><option>Moonlight</option></select></div>
-<div class="qbox"><b>Q4 Written (AI Marked):</b><textarea id="essay" placeholder="Write about photosynthesis..."></textarea></div>
-<button class="btn-gold" onclick="markExam()">Submit - Automatic Marking & Instant Result ✅</button>
-<p id="res" style="font-weight:900;font-size:18px"></p>
-<p><small>🔒 Answer key protected. Result needs teacher approval.</small></p>
-</div></div>
-</div>
-
-<!-- CREATOR -->
-<div id="creator" class="hidden">
-<div class="wcard"><span class="badgeB">AI PAPER CONVERSION</span><h2>🧑‍🏫 Digital Examination Creator</h2>
-<p>Upload PDF, Word, Scanned → AI turns into digital Multiple Choice, True/False, Matching, Written</p>
-<input type="file" id="pdfFile" accept=".pdf,.doc,.docx,.jpg,.png"><button class="btn-blue" onclick="convertPDF()">AI Convert PDF to Questions</button>
-<iframe id="pdfView" style="width:100%;height:250px;border:2px solid #185ADB;border-radius:10px;margin-top:8px"></iframe>
-<div id="pdfText" style="background:#FFFBEB;padding:12px;border-radius:10px;white-space:pre-wrap"></div>
-<hr>
-<input id="examTitle" placeholder="Exam Title e.g. BGCSE English Paper 1">
-<select id="qType"><option>Multiple Choice</option><option>True/False</option><option>Matching</option><option>Written / Essay</option></select>
-<textarea id="qText" placeholder="Question..."></textarea><input id="qKey" placeholder="Answer Key (protected - teacher only)">
-<input id="accCode" placeholder="Access Code e.g. LESEDI2026">
-<button class="btn-blue" onclick="addQ()">+ Add Question to Exam</button>
-<div id="created"></div>
-<h3>🤖 AI Essay Marking with Teacher Rubric</h3><textarea id="rubric" placeholder="Rubric: Content 5, Grammar 3 - Teacher approved"></textarea><button class="btn-gold" style="width:100%" onclick="aiEssay()">AI Mark Essay + Teacher Approve</button><div id="aiRes" style="background:#EFF6FF;padding:12px;border-radius:10px;margin-top:8px"></div>
+<div id="exam" class="hidden"><div class="wcard"><h2>📝 Take Examination</h2><input placeholder="Access Code - LESEDI2026"><button class="btn-blue" onclick="alert('Access Granted')">Unlock</button><p>Q1: What is 5+7? <input type="radio" name="q1">12 <input type="radio" name="q1">10</p><button class="btn-gold" style="width:100%" onclick="alert('Result 92% - Auto-marked!')">Submit & Auto-Mark</button></div></div>
+<div id="results" class="hidden"><div class="wcard"><h2>📊 Results</h2><p>Maths 92% ✅ Approved</p></div></div>
+<div id="materials" class="hidden"><div class="wcard"><h2>📖 Study Materials</h2><button class="btn-blue">BGCSE Maths</button></div></div>
+<div id="reports" class="hidden"><div class="wcard"><h2>📈 Reports</h2><button class="btn-blue" onclick="window.print()">Download PDF</button></div></div>
+<div id="admin" class="hidden"><div class="wcard"><h2>👑 Admin / School / Teacher</h2><p>Schools: 12 | Learners: 1,240 | Revenue P8,450</p><input type="file"><button class="btn-blue">Upload PDF & AI Convert</button></div></div>
+<div id="plans" class="hidden"><div class="wcard"><h2>💰 Plans</h2><p>P5 Daily / P30 Monthly / P1,200 School Term</p><p>Orange Money: 77980825 | MyZaka: 71823638</p><button class="btn-gold" style="width:100%" onclick="window.open('https://wa.me/26777980825?text=I want to pay')">Pay via WhatsApp 77980825</button></div></div>
+<div id="account" class="hidden"><div class="wcard"><h2>👤 My Account - Login / Signup</h2><input placeholder="Full Name"><input placeholder="Phone"><select><option>Learner</option><option>Teacher</option><option>School</option><option>Super Admin</option></select><button class="btn-blue" onclick="alert('Account created! Now your name will show - not anyone elses')">Create Account</button></div></div>
+<div id="help" class="hidden"><div class="wcard"><h2>🎧 Help</h2><p>WhatsApp: 267 77980825<br>MyZaka: 267 71823638</p></div></div>
 </div>
 </div>
-
-<!-- RESULTS / REPORTS -->
-<div id="results" class="hidden"><div class="wcard"><h2>📊 My Results - Teacher Approved</h2><table><tr><th>Exam</th><th>Score</th><th>Status</th></tr><tr><td>Maths</td><td>92%</td><td>✅ Approved</td></tr><tr><td>English</td><td>85%</td><td>✅ Approved</td></tr></table></div></div>
-<div id="reports" class="hidden"><div class="wcard"><h2>📈 Performance Reports - Downloadable</h2><p>Average 85% | 12 Exams | Top 5% in Gaborone</p><button class="btn-blue" onclick="window.print()">Download PDF Report</button><br><br><button class="btn-blue" onclick="dlExcel()">Download Excel Report</button><br><br><input placeholder="School Name"><input placeholder="Class"><button class="btn-navy" onclick="alert('School report generated!')">Generate School Report</button></div></div>
-<div id="materials" class="hidden"><div class="wcard"><h2>📖 Study Materials</h2><p>All past papers now digital.</p><button class="btn-blue">BGCSE Maths Notes</button><br><br><button class="btn-blue">JC English Notes</button><br><br><button class="btn-blue">Primary Science Notes</button></div></div>
-
-<!-- ADMIN -->
-<div id="admin" class="hidden">
-<div class="wcard"><span class="badge">SUPER ADMIN</span><h2>👑 Super Admin Dashboard</h2><div class="grid2"><div style="background:#0A1931;color:#fff;padding:15px;border-radius:10px">Schools: 12<br>Learners: 1,240<br>Revenue: P8,450 / month</div><div style="background:#FFFBEB;padding:15px;border-radius:10px;border:2px solid #FFC914">AI Conversions: 86<br>Protected Papers: ✅<br>Uptime: 99.9%</div></div></div>
-<div class="wcard"><h2>🏫 School & Institution Management</h2><input placeholder="School Name e.g. Ledumang Senior"><input placeholder="Headteacher Phone"><button class="btn-blue" onclick="alert('School added!')">Add School</button><table><tr><th>School</th><th>Students</th><th>Plan</th></tr><tr><td>Ledumang</td><td>340</td><td>P1,200/term</td></tr><tr><td>Naledi</td><td>210</td><td>P350/mo</td></tr></table></div>
-<div class="wcard"><h2>👨‍🏫 Teacher / Examiner Accounts</h2><input placeholder="Teacher Name"><input placeholder="Teacher Phone"><button class="btn-blue" onclick="alert('Teacher account created')">Create Teacher</button><p>Teachers can: Upload papers, Set rubrics, Approve results, View reports. Learner data is protected.</p></div>
-</div>
-
-<!-- PLANS - SUCCESS PRICING -->
-<div id="plans" class="hidden">
-<div class="wcard"><h2 style="text-align:center">💰 Choose Your Plan - CLICK PRESS LEARN</h2><p style="text-align:center">Pay with Orange Money or MyZaka — WhatsApp proof to activate instantly!</p>
-<div class="grid2" style="grid-template-columns:1fr 1fr 1fr 1fr">
-<div class="price"><b>🆓 FREE</b><br>P0<br><small>1 paper/week</small><br><button class="btn-blue" onclick="go('exam')">Try Free</button></div>
-<div class="price"><b>⚡ DAILY P5</b><br>P5 / day<br><small>1 full exam + AI mark</small><br><button class="btn-blue" onclick="pay('P5 Daily')">Pay P5</button></div>
-<div class="price hot"><b>⭐ MONTHLY P30</b><br><b>BEST SELLER</b><br><small>Unlimited + AI + Reports</small><br><button class="btn-gold" onclick="pay('P30 Monthly')" style="width:100%">Pay P30</button><button class="btn-blue" onclick="payZaka('P30')">MyZaka 71823638</button></div>
-<div class="price"><b>🏫 SCHOOL</b><br>P1,200 / term<br><small>Whole school</small><br><button class="btn-blue" onclick="pay('School P1200')">Pay School</button></div>
-</div>
-<div style="text-align:center;margin-top:12px"><b>Orange Money / WhatsApp: 267 77980825</b><br><b>MyZaka / PayToCell: 267 71823638</b><br><small>Send money → WhatsApp screenshot → Activated in 2 minutes</small></div>
-<div class="wcard" style="background:#0A1931;color:#fff;text-align:center"><b>🎁 REFER & EARN:</b> Invite 3 friends, get 1 month FREE! Share your link: scholars-lesedi-hub.github.io/lesedi</div>
-</div>
-</div>
-
-<!-- ACCOUNT / HELP -->
-<div id="account" class="hidden"><div class="wcard"><h2>👤 Registration & Login - Secure</h2><div class="grid2"><div><input id="regN" placeholder="Full Name"><input id="regP" placeholder="Phone"><select id="regR"><option>Learner</option><option>Teacher / Examiner</option><option>School</option><option>Super Admin</option></select><input type="password" placeholder="Password"><button class="btn-blue" onclick="signup()">Create Account</button></div><div><input id="logP" placeholder="Phone"><input type="password" placeholder="Password"><button class="btn-gold" style="width:100%" onclick="login()">Login 🔐</button><p id="logMsg"></p></div></div><p style="font-size:12px;text-align:center">🔒 Papers, Answer Keys, Learner Info & Results Protected with Access Codes & Encryption</p></div></div>
-<div id="help" class="hidden"><div class="wcard"><h2>🎧 Help & Support</h2><p>WhatsApp / Call: <b>267 77980825</b><br>MyZaka: <b>267 71823638</b></p><button class="btn-blue" onclick="window.open('https://wa.me/26777980825')">Chat on WhatsApp</button></div></div>
-
-</div>
-</div>
-
-<a class="floatWA" href="https://wa.me/26777980825?text=Hi Lesedi! I want to subscribe">💬 WhatsApp Us</a>
-
-<div class="footer"><b>Education Lesedi Scholars Hub</b> | Click • Press • Learn | 🎓 Learn Better • 📊 Achieve More • 🏆 Build a Brighter Future<br><span style="background:#FFC914;color:#000;padding:3px 10px;border-radius:20px;font-weight:900;font-size:12px">Powered by Innovation & Education • Gaborone, Botswana</span><br><small>Orange Money 77980825 • MyZaka 71823638 • Secure • Responsive on Computer, Tablet & Smartphone</small></div>
-
+<div class="footer"><b>Education Lesedi Scholars Hub</b> | Click • Press • Learn | Learn Better • Achieve More • Build a Brighter Future</div>
 <script>
-let Qs=[];let time=1800;setInterval(()=>{if(time>0){time--;let m=Math.floor(time/60),s=time%60;let e=document.getElementById('timer');if(e)e.innerText=m+":"+(s<10?"0"+s:s)}},1000);
-function go(id){['home','exam','results','materials','reports','creator','admin','plans','account','help'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
-function unlock(){let c=document.getElementById('codeInp').value;if(c.toUpperCase().includes('LESEDI')||c=='1234'||c=='')alert('✅ Access Granted - Timer Started');else alert('Wrong code - Use LESEDI2026')}
-function markExam(){let e=document.getElementById('essay').value;let sc=e.length>20?92:85;document.getElementById('res').innerHTML=`🎉 INSTANT RESULT: ${sc}% — Auto-marked! AI checked essay. Waiting for Teacher Approval ✅`;alert('Result saved to report!')}
-async function convertPDF(){let f=document.getElementById('pdfFile').files[0];if(!f)return alert('Upload PDF/Word/Scan first');if(f.type.includes('pdf')){document.getElementById('pdfView').src=URL.createObjectURL(f);let buf=await f.arrayBuffer();let pdf=await pdfjsLib.getDocument({data:buf}).promise;let txt='';for(let i=1;i<=Math.min(pdf.numPages,2);i++){let p=await pdf.getPage(i);let c=await p.getTextContent();txt+=c.items.map(x=>x.str).join(' ')+' '}document.getElementById('pdfText').innerText='🤖 AI CONVERTED:\n'+txt.substring(0,1000)+'\n→ Now add as digital questions below!'}else{document.getElementById('pdfText').innerText='🤖 AI: Received '+f.name+' (Word/Scanned) - OCR converting to digital questions... Ready!';if(f.type.includes('image'))document.getElementById('pdfView').src=URL.createObjectURL(f)}}
-function addQ(){let t=document.getElementById('qText').value;let ty=document.getElementById('qType').value;let k=document.getElementById('qKey').value;Qs.push({t,ty,k});document.getElementById('created').innerHTML=Qs.map((q,i)=>`<div class="qbox"><b>Q${i+1} [${q.ty}]</b> ${q.t}<br><small>🔒 Key: ${q.k}</small></div>`).join('')}
-function aiEssay(){let ans=document.getElementById('essay')?.value||"Good answer";let rub=document.getElementById('rubric').value;document.getElementById('aiRes').innerHTML=`<b>AI Score: 7/10 using rubric: ${rub.substring(0,60)}</b><br>Feedback: Good structure. Teacher approved ✅ Final result locked.`}
-function signup(){localStorage.setItem('lesedi_'+document.getElementById('regP').value,document.getElementById('regN').value);alert('Account created for '+document.getElementById('regN').value+' as '+document.getElementById('regR').value+'!')}
-function login(){document.getElementById('logMsg').innerHTML='✅ Welcome! Dashboard unlocked.';go('home')}
-function pay(plan){alert('Send '+plan+' to Orange Money 77980825 - Education Lesedi Scholars Hub. Then WhatsApp proof.');window.open('https://wa.me/26777980825?text=I paid '+plan+' for Lesedi','_blank')}
-function payZaka(p){alert('Send '+p+' to MyZaka / PayToCell 71823638. Then WhatsApp proof to 77980825');window.open('https://wa.me/26777980825?text=I paid '+p+' via MyZaka 71823638','_blank')}
-function dlExcel(){let csv="Exam,Score,Status\nMaths,92,Approved\nEnglish,85,Approved";let a=document.createElement('a');a.href='data:text/csv;charset=utf-8,[STRIPPED]
-document.getElementById('search').addEventListener('input',e=>{if(e.target.value.toLowerCase().includes('math'))go('exam')});
+function go(id){['home','exam','results','materials','reports','admin','plans','account','help'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
 </script>
 </body></html>
