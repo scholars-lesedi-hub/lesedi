@@ -1,418 +1,140 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Education Lesedi Scholars Hub | Dashboard</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Education Lesedi Scholars HUB - Learn-Click-Press</title>
+<style>
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#f4f4f5}
+.topbar{background:#0f172a;color:#fff;padding:9px;text-align:center;font-size:13px}
+.hero{background:linear-gradient(180deg,#ffcc00,#f5b400);padding:30px 15px 35px;text-align:center}
+.hero h1{margin:0;font-size:30px;line-height:1.1}
+.hero h1 span{font-size:15px;display:block;letter-spacing:2px;margin-top:4px}
+.hero p{margin:10px 0 16px;font-size:13px;letter-spacing:.6px;font-weight:bold}
+.tag{background:#000;color:#ffcc00;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:bold;display:inline-block}
+.btn-black{background:#000;color:#fff;border:none;padding:12px 20px;border-radius:9px;font-weight:bold;cursor:pointer;font-size:14px;margin:4px}
+.btn-white{background:#fff;color:#000;border:2px solid #000;padding:10px 20px;border-radius:9px;font-weight:bold;cursor:pointer;font-size:14px;margin:4px}
+.card{background:#fff;margin:12px;padding:18px;border-radius:14px;box-shadow:0 3px 12px rgba(0,0,0,.08)}
+input,select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:9px}
+.btn-main{background:#0f172a;color:#fff;width:100%;padding:14px;border:none;border-radius:9px;font-weight:bold;cursor:pointer}
+.btn-yellow{background:#f5b400;color:#000;width:100%;padding:14px;border:none;border-radius:9px;font-weight:bold;cursor:pointer}
+.popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99}
+.box{background:#fff;margin:25px auto;padding:22px;width:92%;max-width:420px;border-radius:16px}
+.footer{text-align:center;padding:20px;font-size:12px;color:#777}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.subject{background:#fffbeb;border:1px solid #ffe58a;padding:12px;border-radius:10px;text-align:center;font-weight:bold;font-size:13px;cursor:pointer}
+</style>
+</head><body>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<div class="topbar">Education Lesedi Scholars HUB</div>
 
-  <style>
-    * { box-sizing: border-box; }
+<div class="hero">
+<h1>Education Lesedi<br>Scholars HUB<span>LEARN - CLICK - PRESS</span></h1>
+<p>UPLOAD PAPERS • All Schools • BGCSE • JCE • PSLE</p>
+<div class="tag">✦ Learn-Click-Press ✦</div><br><br>
+<button class="btn-black" onclick="openLogin()">LOGIN</button>
+<button class="btn-white" onclick="openSignup()">SIGNUP</button>
+<p id="welcomeMsg" style="font-weight:bold;margin-top:10px"></p>
+</div>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f6fa;
-      color: #18304b;
-    }
+<div class="card">
+<h3>📤 UPLOAD PAPERS - Learn-Click-Press</h3>
+<p style="font-size:13px;color:#555">1. Learn - Choose paper &nbsp; 2. Click - Upload &nbsp; 3. Press - Get Marking</p>
+<input type="file" id="pdfFile" accept=".pdf,.jpg,.png,.docx">
+<select id="subject"><option>English Composition</option><option>Setswana Essay</option><option>Math Paper 1</option><option>Biology</option><option>History</option><option>Commerce</option></select>
+<button class="btn-main" onclick="uploadPaper()">UPLOAD & MARK 📝</button>
+<p id="uploadStatus"></p>
+</div>
 
-    header {
-      background: #102d50;
-      color: white;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+<div class="card">
+<h3>📚 Subjects - Click to Learn</h3>
+<div class="grid">
+<div class="subject" onclick="pickSubject('English')">📖 English</div>
+<div class="subject" onclick="pickSubject('Math')">🔢 Math</div>
+<div class="subject" onclick="pickSubject('Biology')">🔬 Biology</div>
+<div class="subject" onclick="pickSubject('Setswana')">📝 Setswana</div>
+</div>
+</div>
 
-    header h2 { margin: 0; font-size: 19px; }
+<div class="card">
+<h3>📝 Exam - Composition + Essay</h3>
+<p style="font-size:13px;color:#555">Past papers + marking scheme.</p>
+<button class="btn-main" style="background:#ffcc00;color:#000" onclick="openSignup()">START EXAM - SIGNUP FIRST</button>
+</div>
 
-    button {
-      border: 0;
-      padding: 12px 18px;
-      border-radius: 7px;
-      background: #f5a623;
-      color: #172b40;
-      font-weight: bold;
-      cursor: pointer;
-    }
+<!-- SIGNUP POPUP -->
+<div id="signupBox" class="popup"><div class="box">
+<h3 style="margin:0">Create Account - Signup</h3>
+<p style="font-size:13px;color:#666">New here? Sign up once.</p>
+<input id="s_phone" placeholder="Phone - +267 7XXXXXXX">
+<input id="s_name" placeholder="Full Name - e.g. Tiro Lesedi">
+<input id="s_town" placeholder="Town">
+<input id="s_school" placeholder="School">
+<select id="s_role"><option>Student</option><option>Parent</option><option>Teacher</option></select>
+<button class="btn-yellow" onclick="doSignup()">SIGNUP - SAVE ME</button>
+<p style="text-align:center;font-size:13px">Already have account? <b style="cursor:pointer" onclick="closeSignup();openLogin()">Login here</b></p>
+<p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
+</div></div>
 
-    button:hover { opacity: .9; }
+<!-- LOGIN POPUP -->
+<div id="loginBox" class="popup"><div class="box">
+<h3 style="margin:0">Welcome Back - Login</h3>
+<p style="font-size:13px;color:#666">Enter phone to login</p>
+<input id="l_phone" placeholder="Phone - +267 7XXXXXXX">
+<input id="l_name" placeholder="Full Name">
+<button class="btn-main" onclick="doLogin()">LOGIN</button>
+<p style="text-align:center;font-size:13px">No account? <b style="cursor:pointer" onclick="closeLogin();openSignup()">Signup here</b></p>
+<p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
+</div></div>
 
-    .container {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 0 18px;
-    }
+<div class="footer">Education Lesedi Scholars HUB • Learn-Click-Press • © 2026</div>
 
-    .panel {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 12px #0000000d;
-    }
-
-    .auth-box {
-      max-width: 450px;
-      margin: 55px auto;
-    }
-
-    input, select {
-      display: block;
-      width: 100%;
-      padding: 13px;
-      margin: 12px 0;
-      border: 1px solid #ccd5df;
-      border-radius: 7px;
-      font-size: 15px;
-      background: white;
-    }
-
-    .auth-box button { width: 100%; margin-top: 8px; }
-
-    .link {
-      color: #1768a8;
-      cursor: pointer;
-      text-align: center;
-      margin-top: 18px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      border-left: 5px solid #f5a623;
-      box-shadow: 0 3px 12px #0000000d;
-    }
-
-    .card h3 { margin-top: 0; }
-
-    .card p { color: #64748b; line-height: 1.5; }
-
-    .hidden { display: none !important; }
-
-    #message {
-      color: #b42318;
-      font-size: 14px;
-      margin-top: 12px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #64748b;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <h2>🎓 EDUCATION LESEDI SCHOLARS HUB</h2>
-  <button id="logoutBtn" class="hidden">Logout</button>
-</header>
-
-<main class="container">
-
-  <!-- LOGIN AND REGISTRATION -->
-  <section id="authSection" class="panel auth-box">
-
-    <h2 id="authTitle">Welcome Back</h2>
-    <p>Login to your Education Lesedi Scholars Hub account.</p>
-
-    <form id="authForm">
-
-      <div id="nameField" class="hidden">
-        <input id="fullName" type="text"
-          placeholder="Full name">
-      </div>
-
-      <div id="roleField" class="hidden">
-        <select id="accountRole">
-          <option value="learner">Individual Learner</option>
-          <option value="parent">Parent / Guardian</option>
-          <option value="tutor">Private Tutor</option>
-          <option value="teacher">Teacher / Examiner</option>
-          <option value="school">School / Institution</option>
-        </select>
-      </div>
-
-      <input id="email" type="email"
-        placeholder="Email address" required>
-
-      <input id="password" type="password"
-        placeholder="Password" minlength="8" required>
-
-      <button type="submit" id="submitBtn">Login</button>
-
-    </form>
-
-    <p id="toggleAuth" class="link">
-      New here? Create an account
-    </p>
-
-    <p id="message"></p>
-  </section>
-
-  <!-- DASHBOARD -->
-  <section id="dashboardSection" class="hidden">
-
-    <div class="panel">
-      <h1>Welcome, <span id="userName">User</span>!</h1>
-      <p>
-        Welcome to your Education Lesedi Scholars Hub dashboard.
-      </p>
-      <p>Account type: <strong id="userRole">Member</strong></p>
-    </div>
-
-    <div class="grid">
-
-      <div class="card">
-        <h3>📚 Study Materials</h3>
-        <p>Access revision resources and learning materials.</p>
-        <button onclick="showMessage('Study Materials')">
-          Open
-        </button>
-      </div>
-
-      <div class="card">
-        <h3>📝 Take Examination</h3>
-        <p>Access online examinations and mock tests.</p>
-        <button onclick="showMessage('Examinations')">
-          Open
-        </button>
-      </div>
-
-      <div class="card">
-        <h3>📤 Upload Examination</h3>
-        <p>Submit examination papers for digitisation.</p>
-        <button onclick="showMessage('Paper Upload')">
-          Open
-        </button>
-      </div>
-
-      <div class="card">
-        <h3>📊 My Results</h3>
-        <p>View your examination results and performance.</p>
-        <button onclick="showMessage('Results')">
-          Open
-        </button>
-      </div>
-
-      <div class="card">
-        <h3>👨‍👩‍👧 Learners & Children</h3>
-        <p>Manage learners and monitor their progress.</p>
-        <button onclick="showMessage('Learner Management')">
-          Open
-        </button>
-      </div>
-
-      <div class="card">
-        <h3>📈 Reports</h3>
-        <p>Access examination and performance reports.</p>
-        <button onclick="showMessage('Reports')">
-          Open
-        </button>
-      </div>
-
-    </div>
-
-    <div class="panel" style="margin-top:22px">
-      <h3>More services coming soon</h3>
-      <p>
-        Examination creation, automatic marking, subscriptions,
-        payments and advanced reports will be connected in
-        subsequent development stages.
-      </p>
-    </div>
-
-    <p id="dashboardMessage"></p>
-
-  </section>
-
-</main>
-
-<footer>
-  © 2026 Education Lesedi Scholars Hub.
-  All rights reserved.
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // STEP 1: INSERT YOUR SUPABASE PROJECT DETAILS
-  const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-  const SUPABASE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+let db=null;
+try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+function openLogin(){ document.getElementById('loginBox').style.display='block'; }
+function closeLogin(){ document.getElementById('loginBox').style.display='none'; }
+function openSignup(){ document.getElementById('signupBox').style.display='block'; }
+function closeSignup(){ document.getElementById('signupBox').style.display='none'; }
+function pickSubject(s){ document.getElementById('subject').value=s; alert("You picked "+s); }
 
-  let isRegistering = false;
-
-  const authSection = document.getElementById("authSection");
-  const dashboardSection =
-    document.getElementById("dashboardSection");
-
-  const message = document.getElementById("message");
-  const authForm = document.getElementById("authForm");
-
-  function showMessage(service) {
-    document.getElementById("dashboardMessage").textContent =
-      service + " will be connected to your database in the next stage.";
+async function doSignup(){
+  let phone=document.getElementById('s_phone').value.trim();
+  let name=document.getElementById('s_name').value.trim();
+  let town=document.getElementById('s_town').value.trim();
+  let school=document.getElementById('s_school').value.trim() || "All Schools";
+  let role=document.getElementById('s_role').value || "Student";
+  if(!phone || !name){ alert("Please enter phone and name"); return; }
+  alert("Dumela "+name+"! Saving...");
+  const { error } = await db.from('lesedi_users').insert([{phone: phone, full_name: name, town: town, school: school, role: role}]);
+  if(error){ alert("Error: "+error.message); }
+  else{
+    alert("Dumela "+name+"! Signup done! Now you can Login!");
+    document.getElementById('welcomeMsg').textContent = "Dumela "+name+" • Account Created";
+    closeSignup(); openLogin();
   }
+}
 
-  // Switch between login and registration
-  document.getElementById("toggleAuth").onclick = function () {
-    isRegistering = !isRegistering;
-
-    document.getElementById("authTitle").textContent =
-      isRegistering ? "Create Your Account" : "Welcome Back";
-
-    document.getElementById("submitBtn").textContent =
-      isRegistering ? "Register" : "Login";
-
-    document.getElementById("nameField").classList.toggle(
-      "hidden", !isRegistering
-    );
-
-    document.getElementById("roleField").classList.toggle(
-      "hidden", !isRegistering
-    );
-
-    this.textContent = isRegistering
-      ? "Already registered? Login"
-      : "New here? Create an account";
-
-    message.textContent = "";
-  };
-
-  // Registration and login
-  authForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    message.textContent = "";
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    const submitBtn = document.getElementById("submitBtn");
-    submitBtn.disabled = true;
-
-    try {
-      if (isRegistering) {
-        const fullName =
-          document.getElementById("fullName").value.trim();
-
-        const role =
-          document.getElementById("accountRole").value;
-
-        if (!fullName) {
-          throw new Error("Please enter your full name.");
-        }
-
-        const { data, error } = await supabaseClient.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: fullName,
-              account_type: role
-            }
-          }
-        });
-
-        if (error) throw error;
-
-        if (data.session) {
-          await loadDashboard(data.session.user);
-        } else {
-          message.style.color = "green";
-          message.textContent =
-            "Registration received. Check your email to confirm your account.";
-        }
-
-      } else {
-        const { data, error } =
-          await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-          });
-
-        if (error) throw error;
-
-        await loadDashboard(data.user);
-      }
-
-    } catch (error) {
-      message.style.color = "#b42318";
-      message.textContent = error.message;
-    } finally {
-      submitBtn.disabled = false;
-    }
-  });
-
-  // Display dashboard
-  async function loadDashboard(user) {
-    if (!user) return;
-
-    const fullName =
-      user.user_metadata?.full_name || user.email;
-
-    const role =
-      user.user_metadata?.account_type || "Member";
-
-    document.getElementById("userName").textContent = fullName;
-
-    document.getElementById("userRole").textContent =
-      role.charAt(0).toUpperCase() + role.slice(1);
-
-    authSection.classList.add("hidden");
-    dashboardSection.classList.remove("hidden");
-
-    document.getElementById("logoutBtn").classList.remove("hidden");
+async function doLogin(){
+  let phone=document.getElementById('l_phone').value.trim();
+  let name=document.getElementById('l_name').value.trim();
+  if(!phone){ alert("Enter phone"); return; }
+  const { data, error } = await db.from('lesedi_users').select('*').eq('phone', phone).limit(1);
+  if(error){ alert("Error: "+error.message); return; }
+  if(data && data.length>0){
+    alert("Dumela "+data[0].full_name+"! Login success! Learn-Click-Press!");
+    document.getElementById('welcomeMsg').textContent = "Dumela "+data[0].full_name+" • Logged In";
+    closeLogin();
+  } else {
+    alert("No account found for "+phone+" - Please Signup first");
+    closeLogin(); openSignup();
   }
+}
 
-  // Logout
-  document.getElementById("logoutBtn").onclick = async function () {
-    const { error } = await supabaseClient.auth.signOut();
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    dashboardSection.classList.add("hidden");
-    authSection.classList.remove("hidden");
-    this.classList.add("hidden");
-    authForm.reset();
-  };
-
-  // Check whether a user is already logged in
-  async function startApp() {
-    const { data, error } = await supabaseClient.auth.getSession();
-
-    if (error) {
-      message.textContent = error.message;
-      return;
-    }
-
-    if (data.session) {
-      await loadDashboard(data.session.user);
-    }
-  }
-
-  startApp();
+function uploadPaper(){
+  let f=document.getElementById('pdfFile').files[0];
+  let sub=document.getElementById('subject').value;
+  if(!f){ alert("Choose file first"); return; }
+  document.getElementById('uploadStatus').innerHTML = "✅ <b>"+f.name+"</b> ("+sub+") uploaded! Marking coming!";
+}
 </script>
-
-</body>
-</html>
+</body></html>
