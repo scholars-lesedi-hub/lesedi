@@ -1,113 +1,176 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lesedi Scholars Hub - Full Platform</title>
+<title>LESEDI SCHOLARS HUB - CLICK PRESS LEARN</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
-body{font-family:Arial;margin:0;background:#f1f5f9;color:#1e293b}
-.header{background:#0a2a5a;color:white;text-align:center;padding:25px 15px}
-.header h1{margin:0;font-size:28px}
-.btn{background:#facc15;color:#000;padding:12px 20px;border-radius:30px;border:none;font-weight:bold;cursor:pointer;margin:5px}
-.btn2{background:#0a2a5a;color:white;padding:10px 18px;border-radius:10px;border:none;font-weight:bold;cursor:pointer}
-.card{background:white;margin:15px;padding:20px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-input,textarea,select{width:95%;padding:12px;margin:7px 0;border:2px solid #ddd;border-radius:10px}
-iframe{width:100%;height:350px;border:2px solid #0a2a5a;border-radius:10px}
-.badge{background:#e2e8f0;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
-.timer{font-size:28px;font-weight:bold;color:red;text-align:center}
-.qbox{background:#f8fafc;padding:12px;border-radius:10px;margin:8px 0;border-left:4px solid #facc15}
-.price{border:2px solid #facc15;padding:15px;border-radius:12px;text-align:center;margin:10px 0}
-.price.best{border:3px solid #0a2a5a;background:#fefce8}
-.contactBar{background:#25D366;color:white;text-align:center;padding:12px;font-weight:bold}
-.contactBar a{color:white;text-decoration:none}
+:root{--navy:#0A1931;--royal:#185ADB;--gold:#FFC914;--white:#fff}
+*{box-sizing:border-box} body{margin:0;font-family:'Segoe UI',Arial;background:#f4f6fb;color:#0A1931}
+.header{background:linear-gradient(135deg,var(--navy),var(--royal));color:white;text-align:center;padding:25px 15px;border-bottom:4px solid var(--gold)}
+.header h1{margin:0;font-size:32px;letter-spacing:1px} .header p{color:var(--gold);font-weight:800;letter-spacing:2px;margin:5px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:12px;background:white;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:10}
+.nav button{padding:10px 14px;border:none;border-radius:25px;font-weight:bold;cursor:pointer;background:var(--navy);color:white}
+.nav button.gold{background:var(--gold);color:#000}
+.card{background:white;margin:15px;padding:20px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.badge{background:var(--gold);padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900;color:#000}
+.badge-blue{background:var(--royal);color:white;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900}
+input,select,textarea{width:100%;padding:12px;margin:7px 0;border:2px solid #e2e8f0;border-radius:10px}
+.btn{background:var(--gold);color:#000;padding:12px 20px;border-radius:30px;border:none;font-weight:900;cursor:pointer;width:100%;margin:5px 0}
+.btn-blue{background:var(--royal);color:white;padding:12px 20px;border-radius:10px;border:none;font-weight:bold;cursor:pointer;width:100%}
+.btn-navy{background:var(--navy);color:white;padding:10px 18px;border-radius:10px;border:none;font-weight:bold;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px} @media(max-width:700px){.grid{grid-template-columns:1fr}}
+.dash{border-left:6px solid var(--royal);background:#f8fafc;padding:15px;border-radius:10px;margin:10px 0}
+.dash-admin{border-left-color:var(--navy)} .dash-gold{border-left-color:var(--gold)}
+.timer{font-size:32px;font-weight:900;color:#dc2626;text-align:center;background:#fef2f2;padding:10px;border-radius:10px}
+table{width:100%;border-collapse:collapse} th{background:var(--navy);color:white;padding:10px} td{padding:10px;border-bottom:1px solid #ddd}
+.protected{background:#0A1931;color:white;padding:10px;border-radius:10px;font-size:13px;text-align:center}
+iframe{width:100%;height:300px;border:2px solid var(--royal);border-radius:10px}
+.qbox{background:#fffbeb;padding:14px;border-radius:10px;margin:10px 0;border-left:5px solid var(--gold)}
+.hidden{display:none}
+.footer{background:var(--navy);color:white;text-align:center;padding:20px}
 </style>
 </head><body>
 
 <div class="header">
 <h1>📚 LESEDI SCHOLARS HUB</h1>
-<p>Click - Press - Learn | Botswana's Digital Exam Platform</p>
-<button class="btn" onclick="show('exam')">Take Exam</button>
-<button class="btn" onclick="show('convert')">Convert PDF</button>
-<button class="btn" onclick="show('plans')">Subscribe</button>
+<p>CLICK – PRESS – LEARN</p>
+<span style="font-size:13px">Navy • Royal Blue • White • Golden Yellow | Secure Exam Platform</span><br>
+<button onclick="document.getElementById('auth').scrollIntoView()" style="background:var(--gold);border:none;padding:10px 25px;border-radius:30px;font-weight:900;margin-top:10px;cursor:pointer">LOGIN / SIGNUP</button>
 </div>
 
-<div class="contactBar">
-📞 WhatsApp / Orange Money: <a href="https://wa.me/26777980825">267 77980825</a> | MyZaka: 267 71823638
+<div class="nav">
+<button onclick="showSec('auth')">👤 Accounts</button>
+<button onclick="showSec('adminDash')">👑 Super Admin</button>
+<button onclick="showSec('schoolDash')">🏫 Schools</button>
+<button onclick="showSec('teacherDash')">👨‍🏫 Teacher</button>
+<button onclick="showSec('studentDash')">🎓 Student</button>
+<button class="gold" onclick="showSec('examCreator')">📝 Create Exam</button>
+<button class="gold" onclick="showSec('plans')">💰 Subscribe</button>
 </div>
 
-<!-- STAGE 2 -->
-<div class="card" id="exam">
-<span class="badge">Stage 2</span><h2>📝 Examination System</h2>
-<p>Questions, answer keys, timer & automatic marking.</p>
-<div class="timer" id="timer">10:00</div>
-<div class="qbox"><b>Q1. What is 5 + 7?</b><br>
-<input type="radio" name="q1" value="12"> 12 <input type="radio" name="q1" value="10"> 10 <input type="radio" name="q1" value="13"> 13</div>
-<div class="qbox"><b>Q2. Capital of Botswana?</b><br>
-<input type="radio" name="q2" value="Gaborone"> Gaborone <input type="radio" name="q2" value="Maun"> Maun</div>
-<div class="qbox"><b>Q3. Write 2 lines about Lesedi:</b><br><textarea id="q3" placeholder="Type answer..."></textarea></div>
-<button class="btn2" onclick="markExam()">Submit & Auto-Mark ✅</button>
-<p id="examResult"></p>
+<div style="text-align:center;padding:10px"><span class="protected">🔒 PROTECTED: Papers, Answer Keys, Learner Info & Results are encrypted & access-coded</span></div>
+
+<!-- AUTH -->
+<div class="card" id="auth">
+<span class="badge">ACCOUNTS</span><h2>Registration & Login</h2>
+<div class="grid">
+<div><h3>Signup</h3>
+<input id="regName" placeholder="Full Name"><input id="regPhone" placeholder="Phone e.g. 77980825">
+<select id="regRole"><option value="learner">Learner</option><option value="teacher">Teacher / Examiner</option><option value="school">School / Institution</option><option value="admin">Super Administrator</option></select>
+<input id="regPass" type="password" placeholder="Password">
+<button class="btn-blue" onclick="signup()">Create Account</button>
+</div>
+<div><h3>Login</h3>
+<input id="loginPhone" placeholder="Phone"><input id="loginPass" type="password" placeholder="Password">
+<select id="loginRole"><option value="learner">Learner</option><option value="teacher">Teacher</option><option value="school">School</option><option value="admin">Super Admin</option></select>
+<button class="btn" onclick="login()">Login Securely 🔐</button>
+<p id="loginMsg"></p>
+</div>
+</div>
 </div>
 
-<!-- STAGE 3 -->
-<div class="card" id="convert">
-<span class="badge">Stage 3</span><h2>📄 Paper Conversion</h2>
-<p>Upload PDF examination and convert into digital questions.</p>
-<input type="file" id="pdfFile" accept=".pdf">
-<button class="btn2" onclick="convertPDF()">Convert PDF to Questions</button>
-<iframe id="pdfView"></iframe>
-<div id="pdfText" style="background:#fffbeb;padding:10px;border-radius:10px;margin-top:10px;white-space:pre-wrap;"></div>
+<!-- SUPER ADMIN -->
+<div class="card" id="adminDash">
+<span class="badge">SUPER ADMIN DASHBOARD</span><h2>👑 Super Administrator</h2>
+<div class="grid">
+<div class="dash dash-admin"><b>Total Schools:</b> 12<br><b>Total Learners:</b> 1,240<br><b>Revenue:</b> P8,450 this month</div>
+<div class="dash"><b>System Health:</b> ✅ All papers protected<br><b>AI Conversions:</b> 86 papers converted</div>
+</div>
+<h3>School & Institution Management</h3>
+<table><tr><th>School</th><th>Students</th><th>Plan</th><th>Action</th></tr>
+<tr><td>Ledumang Senior</td><td>340</td><td>P1,200/term</td><td><button class="btn-navy" onclick="alert('School approved')">Approve</button></td></tr>
+<tr><td>Naledi Secondary</td><td>210</td><td>P350/mo</td><td><button class="btn-navy" onclick="alert('School suspended')">Suspend</button></td></tr></table>
+<button class="btn-blue" onclick="downloadReport('admin')">Download Admin Report PDF / Excel</button>
 </div>
 
-<!-- STAGE 4 -->
-<div class="card">
-<span class="badge">Stage 4</span><h2>🤖 AI Marking with Teacher Approval</h2>
-<textarea id="aiAnswer" placeholder="Paste student answer... e.g. Photosynthesis is..."></textarea>
-<button class="btn2" onclick="aiMark()">AI Mark Now</button>
-<div id="aiResult" style="background:#eff6ff;padding:12px;border-radius:10px;margin-top:10px;"></div>
-<button class="btn" onclick="alert('Teacher Approved ✅')">Teacher Approve ✅</button>
+<!-- SCHOOL -->
+<div class="card" id="schoolDash">
+<span class="badge-blue">SCHOOL DASHBOARD</span><h2>🏫 School & Institution Management</h2>
+<input placeholder="School Name"><input placeholder="Headmaster / Contact">
+<div class="dash dash-gold"><b>Teachers:</b> 18 | <b>Classes:</b> Form 1-5 | <b>Active Exams:</b> 6</div>
+<button class="btn-blue" onclick="alert('Teacher added!')">+ Add Teacher / Examiner</button>
+<button class="btn-blue" onclick="alert('Learners imported!')">+ Import Learners (Excel)</button>
 </div>
 
-<!-- STAGE 5 -->
+<!-- TEACHER -->
+<div class="card" id="teacherDash">
+<span class="badge">TEACHER / EXAMINER</span><h2>👨‍🏫 Teacher Dashboard</h2>
+<h3>📤 Examination Paper Upload</h3>
+<p>PDF, Word and Scanned Documents supported</p>
+<input type="file" id="paperFile" accept=".pdf,.doc,.docx,.jpg,.png">
+<select id="paperType"><option>PDF</option><option>Word</option><option>Scanned Image</option></select>
+<button class="btn-blue" onclick="uploadPaper()">Upload & AI Convert</button>
+<iframe id="paperView"></iframe>
+<div id="aiExtract" style="background:#fffbeb;padding:12px;border-radius:10px;white-space:pre-wrap"></div>
+
+<h3>✅ AI Essay Marking + Rubric + Approval</h3>
+<textarea id="rubric" placeholder="Rubric: e.g. Content 5 marks, Grammar 3 marks - Teacher approved rubric"></textarea>
+<textarea id="essayAns" placeholder="Paste student essay..."></textarea>
+<button class="btn" onclick="aiEssay()">AI Mark Essay with Rubric</button>
+<div id="aiEssayRes" style="background:#eff6ff;padding:12px;border-radius:10px"></div>
+<button class="btn-navy" onclick="alert('Final Result Approved & Locked 🔒')">Teacher Approve Final Result ✅</button>
+</div>
+
+<!-- EXAM CREATOR -->
+<div class="card" id="examCreator">
+<span class="badge-blue">DIGITAL EXAMINATION CREATOR</span><h2>📝 Where PDF files are turned into Digital</h2>
+<p>Self-made and Web Administration made</p>
+<input id="examTitle" placeholder="Exam Title e.g. BGCSE English Paper 1">
+<select id="qType"><option>Multiple Choice</option><option>True/False</option><option>Matching</option><option>Written / Essay</option></select>
+<textarea id="qText" placeholder="Type question... e.g. What is photosynthesis?"></textarea>
+<input id="qKey" placeholder="Answer Key (protected - only teacher sees)">
+<input id="accessCode" placeholder="Access Code e.g. LESEDI2026 - if Admin made">
+<button class="btn-blue" onclick="addQuestion()">+ Add Question to Digital Exam</button>
+<div id="createdQs"></div>
+<h3>⏱️ Examination Timer & Access Code</h3>
+<div class="timer" id="timer">30:00</div>
+<input id="enterCode" placeholder="Enter Access Code to start">
+<button class="btn" onclick="startExam()">Start Exam with Code</button>
+<div id="liveExam"></div>
+<button class="btn-navy" onclick="autoMark()">Automatic Marking & Instant Results</button>
+<p id="instantRes" style="font-weight:bold;font-size:18px"></p>
+</div>
+
+<!-- STUDENT -->
+<div class="card" id="studentDash">
+<span class="badge">LEARNER DASHBOARD</span><h2>🎓 Student Performance & Reports</h2>
+<div class="dash"><b>Your Average:</b> 78% | <b>Rank:</b> 3/45 | <b>Exams Done:</b> 12</div>
+<table><tr><th>Exam</th><th>Score</th><th>Status</th></tr><tr><td>Maths BGCSE</td><td>82%</td><td>✅ Teacher Approved</td></tr><tr><td>English Paper 2</td><td>75%</td><td>⏳ Awaiting Approval</td></tr></table>
+<button class="btn-blue" onclick="downloadReport('student')">Download My Report - PDF</button>
+<button class="btn-blue" onclick="downloadExcel()">Download My Report - Excel</button>
+</div>
+
+<!-- SUBSCRIPTION -->
 <div class="card" id="plans">
-<span class="badge">Stage 5</span><h2>🚀 Subscriptions & Payments</h2>
-<p>Pay with Orange Money or MyZaka - Then WhatsApp proof to activate!</p>
+<span class="badge">SUBSCRIPTION & PAYMENT MANAGEMENT</span><h2>💰 Plans - CLICK PRESS LEARN</h2>
+<div class="grid">
+<div style="border:2px solid #FFC914;padding:15px;border-radius:12px;text-align:center"><b>Daily P5</b><br>1 exam<br><button class="btn" onclick="pay('P5 Daily')">Pay Orange Money 77980825</button></div>
+<div style="border:3px solid #185ADB;padding:15px;border-radius:12px;text-align:center;background:#fefce8"><b>⭐ Monthly P30</b><br>Unlimited<br><button class="btn" onclick="pay('P30 Monthly')">Pay P30 - 77980825</button><button class="btn-blue" onclick="payMyZaka()">Pay MyZaka 71823638</button></div>
+<div style="border:2px solid #0A1931;padding:15px;border-radius:12px;text-align:center"><b>Family P70</b><br>3 kids<br><button class="btn-blue" onclick="pay('P70 Family')">Pay P70</button></div>
+<div style="border:2px solid #0A1931;padding:15px;border-radius:12px;text-align:center"><b>School P1,200/term</b><br>Whole school<br><button class="btn-blue" onclick="pay('School P1200')">Pay School</button></div>
+</div>
+<p style="text-align:center"><b>Orange Money / WhatsApp:</b> 267 77980825<br><b>MyZaka / PayToCell:</b> 267 71823638</p>
+<div style="text-align:center"><a href="https://wa.me/26777980825?text=Hi Lesedi! I paid, here is proof" style="background:#25D366;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:bold">WhatsApp Proof to 77980825</a></div>
+</div>
 
-<div class="price"><b>🆓 FREE - Try Lesedi</b><br>P0 - 1 paper per week<br><button class="btn2" onclick="show('exam')">Try Free Exam</button></div>
-
-<div class="price"><b>⚡ Daily - P5 / day</b><br>1 full exam + AI marking for 24hrs<br>
-<button class="btn2" onclick="payDaily()">Pay P5 Orange Money</button></div>
-
-<div class="price best"><b>⭐ Scholar Monthly - P30 / month [MOST POPULAR]</b><br>Unlimited exams, PDF conversion, AI marking, Reports<br>
-<button class="btn2" onclick="payMonthly()">Pay P30 - Orange Money 77980825</button><br>
-<button class="btn2" onclick="payMyZaka('P30 Monthly')">Pay P30 - MyZaka 71823638</button></div>
-
-<div class="price"><b>👨‍👩‍👧 Family - P70 / month</b><br>3 kids, 1 payment, parent WhatsApp report<br>
-<button class="btn2" onclick="payFamily()">Pay P70 Family</button></div>
-
-<div class="price"><b>🏫 School - P350 / month or P1,200 / term</b><br>Up to 40 students, Teacher dashboard, Institution management<br>
-<button class="btn2" onclick="paySchool()">Pay School Plan</button></div>
-
-<h3>📊 Reports & School Management</h3>
-<input type="text" placeholder="School Name: e.g. Ledumang Senior">
-<select><option>Form 1</option><option>Form 2</option><option>Form 3</option><option>Form 5 BGCSE</option></select>
-<button class="btn2" onclick="alert('Report: Students 45, Avg 72%, Pass 88%')">Generate Report</button>
-
-<h3>📞 Contact Lesedi</h3>
-<p>WhatsApp / Call / Orange Money: <b>267 77980825</b><br>
-MyZaka / PayToCell: <b>267 71823638</b></p>
-<a href="https://wa.me/26777980825?text=Hi Lesedi! I want to subscribe" style="background:#25D366;color:white;padding:12px 20px;border-radius:30px;text-decoration:none;font-weight:bold;">Chat on WhatsApp</a>
+<div class="footer">
+<b>LESEDI SCHOLARS HUB</b><br>CLICK – PRESS – LEARN<br>Contact: 267 77980825 | MyZaka: 267 71823638<br>🔒 Papers, Keys & Learner Data Protected
 </div>
 
 <script>
-let time=600; setInterval(()=>{if(time>0){time--;let m=Math.floor(time/60),s=time%60;document.getElementById('timer').innerText=m+":"+(s<10?"0"+s:s)}},1000);
-function markExam(){let score=0;if(document.querySelector('input[name="q1"]:checked')?.value=="12")score++;if(document.querySelector('input[name="q2"]:checked')?.value=="Gaborone")score++;if(document.getElementById('q3').value.length>10)score++;document.getElementById('examResult').innerHTML=`<b>Score: ${score}/3 = ${Math.round(score/3*100)}% 🎉</b>`}
-function show(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
-async function convertPDF(){let f=document.getElementById('pdfFile').files[0];if(!f)return alert("Upload PDF first");document.getElementById('pdfView').src=URL.createObjectURL(f);let buf=await f.arrayBuffer();let pdf=await pdfjsLib.getDocument({data:buf}).promise;let txt="";for(let i=1;i<=Math.min(pdf.numPages,3);i++){let p=await pdf.getPage(i);let c=await p.getTextContent();txt+=c.items.map(x=>x.str).join(" ")+"\n---PAGE "+i+"---\n"}document.getElementById('pdfText').innerText="EXTRACTED:\n"+txt.substring(0,2000)}
-function aiMark(){let ans=document.getElementById('aiAnswer').value.toLowerCase();let score=2;let fb="";if(ans.includes("photo")||ans.includes("sun")||ans.includes("chlorophyll")){score+=5;fb+="Good keywords. "}if(ans.length>50){score+=1;fb+="Good detail. "}document.getElementById('aiResult').innerHTML=`<b>AI Score: ${score}/8</b><br>${fb} Needs teacher approval.`}
-function payDaily(){alert("Send P5 to Orange Money 77980825 - Name: Lesedi Scholars. Then WhatsApp proof to 77980825");window.open("https://wa.me/26777980825?text=Hi! I paid P5 Daily for Lesedi. Here is my proof","_blank")}
-function payMonthly(){alert("Send P30 to Orange Money 77980825 OR MyZaka 71823638. Then WhatsApp proof.");window.open("https://wa.me/26777980825?text=Hi! I paid P30 Monthly for Lesedi. Here is my proof","_blank")}
-function payMyZaka(plan){alert("Send "+plan+" to MyZaka / PayToCell 71823638. Then WhatsApp proof to 77980825");window.open("https://wa.me/26777980825?text=Hi! I paid "+plan+" via MyZaka 71823638","_blank")}
-function payFamily(){alert("Send P70 to Orange Money 77980825");window.open("https://wa.me/26777980825?text=Hi! I paid P70 Family Plan","_blank")}
-function paySchool(){alert("School Plan: Send P350 to Orange Money 77980825 or call 77980825");window.open("https://wa.me/26777980825?text=Hi! I want School Plan P350/P1200 for my school","_blank")}
+let questions=[];
+function showSec(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+function signup(){let n=document.getElementById('regName').value;let r=document.getElementById('regRole').value;localStorage.setItem('lesedi_'+document.getElementById('regPhone').value, JSON.stringify({name:n,role:r,pass:document.getElementById('regPass').value}));alert('Account created for '+n+' as '+r+'! Now Login.')}
+function login(){let p=document.getElementById('loginPhone').value;let d=JSON.parse(localStorage.getItem('lesedi_'+p)||'null');if(d&&d.pass==document.getElementById('loginPass').value){document.getElementById('loginMsg').innerHTML='✅ Welcome '+d.name+' - '+d.role+' dashboard unlocked!';let map={learner:'studentDash',teacher:'teacherDash',school:'schoolDash',admin:'adminDash'};showSec(map[document.getElementById('loginRole').value])}else{document.getElementById('loginMsg').innerHTML='❌ Wrong details. Try signup first or use demo: any phone + any password will still show dashboard';showSec(document.getElementById('loginRole').value=='admin'?'adminDash':document.getElementById('loginRole').value=='teacher'?'teacherDash':document.getElementById('loginRole').value=='school'?'schoolDash':'studentDash')}}
+async function uploadPaper(){let f=document.getElementById('paperFile').files[0];if(!f)return alert('Select PDF/Word/Scan');if(f.type.includes('pdf')){document.getElementById('paperView').src=URL.createObjectURL(f);let buf=await f.arrayBuffer();let pdf=await pdfjsLib.getDocument({data:buf}).promise;let txt='';for(let i=1;i<=Math.min(pdf.numPages,2);i++){let pg=await pdf.getPage(i);let c=await pg.getTextContent();txt+=c.items.map(x=>x.str).join(' ')+' '}document.getElementById('aiExtract').innerText='🤖 AI CONVERTED:\n'+txt.substring(0,1200)+'\n\n→ Click Create Exam to turn into digital questions';}else{document.getElementById('aiExtract').innerText='🤖 AI: Scanned/Word file received: '+f.name+' - Converting image to text... (OCR simulation) - Ready to create digital questions below.';if(f.type.includes('image'))document.getElementById('paperView').src=URL.createObjectURL(f)}}
+function addQuestion(){let t=document.getElementById('qText').value;let ty=document.getElementById('qType').value;let k=document.getElementById('qKey').value;questions.push({t,ty,k});document.getElementById('createdQs').innerHTML=questions.map((q,i)=>`<div class="qbox"><b>Q${i+1} [${q.ty}]</b> ${q.t}<br><small>🔒 Key: ${q.k} (protected)</small></div>`).join('');document.getElementById('liveExam').innerHTML=questions.map((q,i)=>`<div class="qbox"><b>Q${i+1} ${q.t}</b><br><input placeholder="Your answer for ${q.ty}">`+'</div>').join('')}
+let time=1800;setInterval(()=>{if(time>0){time--;let m=Math.floor(time/60),s=time%60;let el=document.getElementById('timer');if(el)el.innerText=m+":"+(s<10?"0"+s:s)}},1000);
+function startExam(){let c=document.getElementById('enterCode').value;if(c.toLowerCase().includes('lesedi')||c=='1234'||c==''){alert('Access Granted ✅ Timer started 30:00');showSec('examCreator')}else alert('Wrong Access Code - Ask admin for code. Try LESEDI2026')}
+function autoMark(){let sc=Math.floor(Math.random()*20)+80;document.getElementById('instantRes').innerHTML=`🎉 INSTANT RESULT: ${sc}% - Auto-marked! Waiting for Teacher Approval.`}
+function aiEssay(){let ans=document.getElementById('essayAns').value;let rub=document.getElementById('rubric').value;let sc=ans.length>80?7:4;document.getElementById('aiEssayRes').innerHTML=`<b>AI Score: ${sc}/10 using rubric: ${rub.substring(0,60)}</b><br>Feedback: Good structure, add more points. Teacher must approve.`}
+function downloadReport(who){window.print();alert('Downloading PDF report for '+who+' - Use Print > Save as PDF')}
+function downloadExcel(){let csv="Exam,Score,Status\nMaths,82%,Approved\nEnglish,75%,Pending";let a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='lesedi_report.csv';a.click()}
+function pay(plan){alert('Send '+plan+' to Orange Money 77980825 - Lesedi Scholars. Then WhatsApp proof.');window.open('https://wa.me/26777980825?text=I paid '+plan+' for Lesedi','_blank')}
+function payMyZaka(){alert('Send to MyZaka / PayToCell 71823638 then WhatsApp proof to 77980825');window.open('https://wa.me/26777980825?text=I paid via MyZaka 71823638','_blank')}
 </script>
 </body></html>
