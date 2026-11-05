@@ -18,7 +18,7 @@
 .hero h2{margin:0;font-size:22px;white-space:nowrap}.hero h2 span{color:#facc15}.hero p{margin:6px 0 12px;font-size:14px}
 .btn-yellow{background:#facc15;color:#000;border:none;padding:10px 18px;border-radius:20px;font-weight:bold;cursor:pointer}
 .btn-blue{background:#2563eb;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
-.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:12px 0}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}
 .gcard{border-radius:12px;padding:16px;color:#fff;text-align:center;cursor:pointer}.gcard h3{margin:6px 0 4px;font-size:16px}.gcard p{margin:0;font-size:12px;opacity:.9}
 .blue{background:#2563eb}.green{background:#16a34a}.purple{background:#7c3aed}.orange{background:#ea580c}
 .progress-card{background:#fff;border-radius:12px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
@@ -51,7 +51,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div class="top-header">
 <div class="logo"><div class="logo-icon">🎓</div><h1>Education Lesedi<br>Scholars Hub<br><span>Click • Press • Learn</span></h1></div>
-<div class="search">🔍 <input id="searchInput" placeholder="Search examinations, study materials..." onkeyup="searchExams()"></div>
+<div class="search">🔍 <input id="searchInput" placeholder="Search examinations..." onkeyup="searchExams()"></div>
 <div class="profile" id="topProfile"><span style="font-size:18px;cursor:pointer" onclick="alert('No new notifications')">🔔</span><button class="btn-login-top" onclick="openLogin()">LOGIN</button><button class="btn-signup-top" onclick="openSignup()">SIGNUP</button></div>
 </div>
 
@@ -60,7 +60,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <a class="active" onclick="showSection('home')">🏠 Home</a>
 <a onclick="showSection('takeExam')">📝 Take Examination</a>
 <a onclick="showSection('results')">📊 My Results</a>
-<a onclick="showSection('materials')">📖 Study Materials</a>
 <a onclick="showSection('reports')">📈 Performance Reports</a>
 <a onclick="showSection('upload')">📤 Upload PDF</a>
 <a onclick="showSection('aiTeacher')">🤖 AI Teacher</a>
@@ -91,7 +90,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div>
 <div class="grid4">
 <div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>Start a quiz or exam</p></div>
-<div class="gcard green" onclick="showSection('materials')">📖<h3>Study Materials</h3><p>Access learning resources</p></div>
 <div class="gcard purple" onclick="showSection('results')">📊<h3>View Results</h3><p>Check your scores</p></div>
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
@@ -226,7 +224,7 @@ function showSection(sec){
   else if(sec==='upload'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>{document.getElementById('pdfFile').scrollIntoView()},100); }
   else{
     document.getElementById('otherSection').style.display='block';
-    let titles={results:"My Results - 85% Overall",materials:"Study Materials - P100/term",reports:"Performance Reports - P30",account:"My Account",help:"Help & Support - WhatsApp 71823638 / 77980825"};
+    let titles={results:"My Results - 85% Overall",reports:"Performance Reports - P30",account:"My Account",help:"Help & Support - WhatsApp 71823638 / 77980825"};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
     document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests.";
   }
