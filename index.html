@@ -94,17 +94,19 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div>
 <div class="grid4">
 <div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>Start a quiz or exam</p></div>
-<div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Educational Games</h3><p>Click • Play • Learn - FREE</p></div>
+<div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Educational Games</h3><p>Labelling • Spelling • Maps</p></div>
 <div class="gcard purple" onclick="showSection('results')">📊<h3>View Results</h3><p>Check your scores</p></div>
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
 
-<!-- FREE EDUCATIONAL GAMES -->
+<!-- FREE EDUCATIONAL GAMES - Labelling Spelling Maps -->
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
-<h3>🎮 FREE EDUCATIONAL GAMES - Click • Press • Learn</h3>
-<p style="font-size:13px;color:#555">Free for all students! Tap the correct label. No payment needed.</p>
+<h3>🎮 FREE EDUCATIONAL GAMES</h3>
+<p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center;margin:0">Labelling • Spelling • Maps</p>
+<p style="font-size:13px;color:#555;text-align:center">Free for all students! Tap to play. No payment needed.</p>
 
 <div class="game-box">
+<div style="font-size:13px;font-weight:bold;color:#16a34a">🏷️ LABELLING</div>
 <div style="font-size:48px">🌱</div><b>Game 1: Label the Plant</b><br><small>Where is the LEAF?</small><br>
 <button class="label-btn" onclick="labelGame(this,true)">Leaf 🍃</button>
 <button class="label-btn" onclick="labelGame(this,false)">Root</button>
@@ -113,22 +115,24 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 
 <div class="game-box" style="border-color:#2563eb;background:#eff6ff">
-<div style="font-size:48px">🧍🏾</div><b>Game 2: Label Body Parts</b><br><small>Where is the EYE?</small><br>
-<button class="label-btn" onclick="labelGame2(this,false)">Nose</button>
-<button class="label-btn" onclick="labelGame2(this,true)">Eye 👁️</button>
-<button class="label-btn" onclick="labelGame2(this,false)">Ear</button>
+<div style="font-size:13px;font-weight:bold;color:#2563eb">🔤 SPELLING</div>
+<div style="font-size:48px">📖</div><b>Game 2: Spell the Word</b><br><small>Spell: LESEDI - Choose correct spelling</small><br>
+<button class="label-btn" onclick="labelGame2(this,false)">LESEDY</button>
+<button class="label-btn" onclick="labelGame2(this,true)">LESEDI ✅</button>
+<button class="label-btn" onclick="labelGame2(this,false)">LESEDE</button>
 <p id="game2Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
 
 <div class="game-box" style="border-color:#facc15;background:#fffbeb">
-<div style="font-size:48px">🇧🇼</div><b>Game 3: Label Botswana Towns</b><br><small>Which is capital of Botswana?</small><br>
+<div style="font-size:13px;font-weight:bold;color:#b45309">🗺️ MAPS</div>
+<div style="font-size:48px">🇧🇼</div><b>Game 3: Maps - Botswana Towns</b><br><small>Which is capital of Botswana?</small><br>
 <button class="label-btn" onclick="labelGame3(this,false)">Palapye</button>
 <button class="label-btn" onclick="labelGame3(this,true)">Gaborone ✅</button>
 <button class="label-btn" onclick="labelGame3(this,false)">Maun</button>
 <p id="game3Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
 
-<button class="btn-blue" style="width:100%;background:#16a34a;padding:12px" onclick="showSection('labelling')">PLAY ALL FREE GAMES →</button>
+<button class="btn-blue" style="width:100%;background:#16a34a;padding:12px" onclick="showSection('labelling')">PLAY ALL FREE GAMES → Labelling • Spelling • Maps</button>
 </div>
 
 <div class="card">
@@ -179,7 +183,7 @@ Pay securely - No bank details shown<br>
 <div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English Language Test</b><br><small>Primary 6 • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="joinExam('English Language Test')">Join Exam</button></div>
 </div>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
-<p style="font-size:13px">🎮 <b>NEW! Free Educational Games!</b><br><small>Plant • Body • Botswana - FREE for all!</small></p>
+<p style="font-size:13px">🎮 <b>NEW! Free Educational Games!</b><br><small>Labelling • Spelling • Maps - FREE for all!</small></p>
 <p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free!</small></p>
 <p style="font-size:13px">🔒 <b>Secure Payment Now!</b><br><small>No bank details shown - Just Click Pay</small></p>
 </div>
@@ -188,7 +192,7 @@ Pay securely - No bank details shown<br>
 
 <div>
 <div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner">85%</div></div><p>Overall Performance</p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b>12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button></div>
-<div class="card" style="margin-top:10px"><h3>🎮 Free Educational Games</h3><p style="font-size:13px">Free for all! No payment.<br>Label Plant, Body, Botswana.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW</button></div>
+<div class="card" style="margin-top:10px"><h3>🎮 Free Educational Games</h3><p style="font-size:13px;font-weight:bold;color:#16a34a">Labelling • Spelling • Maps</p><p style="font-size:13px">Free for all! No payment.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW</button></div>
 <div class="card" style="margin-top:10px"><h3>🔒 How to Pay?</h3><p style="font-size:13px">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment - Click Pay Securely - No details shown<br>4. WhatsApp proof to 71823638</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button></div>
 <div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">Parents can see progress & pay.</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
 </div>
@@ -196,11 +200,11 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="labellingSection" style="display:none">
-<div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE EDUCATIONAL GAMES</h3><p style="font-size:13px">Click the correct label - FREE - No payment!</p>
-<div class="game-box"><div style="font-size:60px">🌱 🌼 🌿</div><b>Label the Plant - Full Game</b><br><br>
+<div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE EDUCATIONAL GAMES</h3><p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center">Labelling • Spelling • Maps</p><p style="font-size:13px">Click the correct answer - FREE - No payment!</p>
+<div class="game-box"><div style="font-size:60px">🌱 🌼 🌿</div><b>🏷️ LABELLING: Label the Plant</b><br><br>
 <button class="label-btn" onclick="alert('Correct! Leaf makes food!')">Leaf</button> <button class="label-btn" onclick="alert('Correct! Root takes water!')">Root</button> <button class="label-btn" onclick="alert('Correct! Stem holds plant!')">Stem</button><br><br>
-<b>Computer Parts:</b><br><button class="label-btn" onclick="alert('Correct! Monitor shows!')">Monitor 🖥️</button> <button class="label-btn" onclick="alert('Correct! Keyboard types!')">Keyboard ⌨️</button><br><br>
-<b>Botswana:</b><br><button class="label-btn" onclick="alert('Correct! Gaborone is capital!')">Gaborone</button> <button class="label-btn" onclick="alert('Try again!')">Palapye is town</button>
+<b>🔤 SPELLING:</b><br><button class="label-btn" onclick="alert('Correct! LESEDI!')">LESEDI</button> <button class="label-btn" onclick="alert('Try again!')">LESEDY</button><br><br>
+<b>🗺️ MAPS - Botswana:</b><br><button class="label-btn" onclick="alert('Correct! Gaborone is capital!')">Gaborone</button> <button class="label-btn" onclick="alert('Try again!')">Palapye is town</button>
 </div>
 <button class="btn-blue" onclick="showSection('home')">← Back to Home</button>
 </div>
@@ -249,7 +253,7 @@ function securePay(){
   });
 }
 function labelGame(el,ok){document.getElementById('game1Msg').innerHTML=ok?"✅ Correct! Leaf! +10 points":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
-function labelGame2(el,ok){document.getElementById('game2Msg').innerHTML=ok?"✅ Correct! Eye! +10 points":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
+function labelGame2(el,ok){document.getElementById('game2Msg').innerHTML=ok?"✅ Correct! LESEDI! +10 points":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
 function labelGame3(el,ok){document.getElementById('game3Msg').innerHTML=ok?"✅ Correct! Gaborone is capital! +10 points":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
 function openLogin(){document.getElementById('loginBox').style.display='block'}
 function closeLogin(){document.getElementById('loginBox').style.display='none'}
@@ -281,7 +285,7 @@ function showSection(sec){
     document.getElementById('otherSection').style.display='block';
     let titles={results:"My Results - 85% Overall",reports:"Performance Reports - P30",account:"My Account",help:"Help & Support - WhatsApp 71823638 / 77980825"};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Educational Games available!";
+    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Educational Games - Labelling Spelling Maps available!";
   }
 }
 function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q);}
