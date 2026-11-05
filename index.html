@@ -1,38 +1,97 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Education Lesedi</title>
-<style>body{font-family:Arial;margin:0;background:#f5f5f5}.topbar{background:#000;color:#fff;padding:12px;text-align:center}.hero{background:#ffcc00;padding:20px;text-align:center}.card{background:#fff;margin:10px;padding:15px;border-radius:10px}.btn{background:#000;color:#fff;padding:12px;width:100%;border:none;border-radius:8px;font-weight:bold}input{width:95%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:6px}#myBox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99}.box{background:#fff;margin:40px auto;padding:20px;width:90%;max-width:400px;border-radius:12px}</style>
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Education Lesedi Dumela</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#f2f2f2}
+.topbar{background:#0f172a;color:#fff;padding:10px;text-align:center;font-size:13px;letter-spacing:.3px}
+.hero{background:linear-gradient(180deg,#ffcc00,#f5b400);padding:28px 15px 32px;text-align:center}
+.hero h1{margin:0;font-size:28px}
+.hero p{margin:8px 0 16px;font-size:13px;letter-spacing:.5px}
+.btn-black{background:#000;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-weight:bold;cursor:pointer}
+.card{background:#fff;margin:12px;padding:16px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.card h3{margin:0 0 8px}
+input,select{width:95%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
+.btn-main{background:#0f172a;color:#fff;width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+.btn-yellow{background:#f5b400;color:#000;width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+#myBox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:99}
+.box{background:#fff;margin:30px auto;padding:20px;width:90%;max-width:420px;border-radius:14px}
+.small{font-size:12px;color:#666;text-align:center}
+</style>
 </head><body>
-<div class="topbar">Education Lesedi Dumela • Capital of Botswana</div>
-<div class="hero"><h2>Education Lesedi Dumela</h2><p>UPLOAD PAPERS • All Schools • BGCSE • JCE</p><button onclick="openLogin()" style="background:#000;color:#fff;padding:10px 20px;border-radius:8px">LOGIN / SIGNUP</button></div>
-<div class="card"><h3>📤 UPLOAD PAPERS</h3><input type="file" id="pdfFile"><button class="btn" onclick="alert('Upload working!')">UPLOAD & MARK</button></div>
-<div class="card"><h3>📝 Exam - Composition + Essay</h3><p>Choose subject, upload, get marking.</p></div>
 
+<div class="topbar">Education Lesedi Dumela • Capital of Botswana</div>
+
+<div class="hero">
+<h1>Education Lesedi Dumela</h1>
+<p>UPLOAD PAPERS • All Schools • BGCSE • JCE</p>
+<button class="btn-black" onclick="openLogin()">LOGIN / SIGNUP</button>
+<p class="small" id="welcomeMsg"></p>
+</div>
+
+<div class="card">
+<h3>📤 UPLOAD PAPERS</h3>
+<p style="font-size:13px;color:#555">Upload PDF - we mark it for you</p>
+<input type="file" id="pdfFile" accept=".pdf,.jpg,.png">
+<button class="btn-main" onclick="uploadPaper()">UPLOAD & MARK</button>
+<p id="uploadStatus" style="font-size:13px"></p>
+</div>
+
+<div class="card">
+<h3>📝 Composition + Essay</h3>
+<p style="font-size:13px;color:#555">Choose subject, upload, get marking.</p>
+<select id="subject"><option>English Composition</option><option>Setswana Essay</option><option>Biology</option><option>Math</option><option>History</option></select>
+<button class="btn-main" style="background:#ffcc00;color:#000" onclick="alert('Choose file above, then UPLOAD & MARK')">START EXAM</button>
+</div>
+
+<div class="card">
+<h3>🏫 All Schools - Botswana</h3>
+<p style="font-size:13px">Thuto Ke Thebe Scholars Hub • Gaborone • Francistown • Maun</p>
+</div>
+
+<!-- LOGIN POPUP - SAME AS YOUR VIDEO -->
 <div id="myBox"><div class="box">
-<h3>Dumela! Sign Up</h3>
+<h3 style="margin:0">Dumela! Sign Up / Login</h3>
+<p style="font-size:13px;color:#666">Enter once - we save you to database</p>
 <input id="phone" placeholder="+267 7XXXXXXX">
-<input id="n1" placeholder="Full Name - Tiro">
+<input id="n1" placeholder="Full Name - e.g. Tiro Lesedi">
 <input id="t1" placeholder="Town - Gaborone">
 <input id="s1" placeholder="School - All Schools">
-<button class="btn" style="background:#f5b400;color:#000" onclick="getOtp()">SAVE & SIGNUP</button>
-<p onclick="closeLogin()" style="text-align:center;cursor:pointer">Close</p>
+<select id="role"><option>Student</option><option>Parent</option><option>Teacher</option></select>
+<button class="btn-yellow" onclick="getOtp()">Send OTP via SMS - SAVE & SIGNUP</button>
+<p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
+<p class="small">We save to lesedi_users table</p>
 </div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// DATABASE FIRST
 let db=null;
-try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
+try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){ console.log(e); }
 
 function openLogin(){ document.getElementById('myBox').style.display='block'; }
 function closeLogin(){ document.getElementById('myBox').style.display='none'; }
 
 async function getOtp(){
-  let phone=document.getElementById('phone').value;
-  let name=document.getElementById('n1').value;
-  let town=document.getElementById('t1').value || "Gaborone";
+  let phone=document.getElementById('phone').value.trim();
+  let name=document.getElementById('n1').value.trim();
+  let town=document.getElementById('t1').value.trim() || "Gaborone";
+  let school=document.getElementById('s1').value.trim() || "All Schools";
+  let role=document.getElementById('role').value || "Student";
   if(!phone || !name){ alert("Please enter phone and name"); return; }
   alert("Dumela "+name+"! Saving...");
-  const { error } = await db.from('lesedi_users').insert([{phone: phone, full_name: name, town: town, school: 'All Schools', role: 'Student'}]);
+  const { error } = await db.from('lesedi_users').insert([{phone: phone, full_name: name, town: town, school: school, role: role}]);
   if(error){ alert("Error: "+error.message); }
-  else{ alert("Dumela "+name+"! You are SAVED! Check Supabase lesedi_users"); closeLogin(); }
+  else{
+    alert("Dumela "+name+"! You are SAVED in lesedi_users!");
+    document.getElementById('welcomeMsg').textContent = "Dumela "+name+" • "+town;
+    closeLogin();
+  }
+}
+
+function uploadPaper(){
+  let f=document.getElementById('pdfFile').files[0];
+  if(!f){ alert("Choose a file first"); return; }
+  document.getElementById('uploadStatus').textContent = "Uploading "+f.name+"... Marking coming soon!";
 }
 </script>
 </body></html>
