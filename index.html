@@ -15,10 +15,16 @@
 input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:9px}
 .btn-main{background:#0f172a;color:#fff;width:100%;padding:14px;border:none;border-radius:9px;font-weight:bold;cursor:pointer}
 .btn-yellow{background:#f5b400;color:#000;width:100%;padding:14px;border:none;border-radius:9px;font-weight:bold;cursor:pointer}
-.popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99}
+.popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99;overflow:auto}
 .box{background:#fff;margin:25px auto;padding:22px;width:92%;max-width:420px;border-radius:16px}
 .footer{text-align:center;padding:20px;font-size:12px;color:#777}
 .badge{background:#fef3c7;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:bold}
+.dash{display:none;margin:12px;padding:18px;border-radius:14px}
+.dash-teacher{background:#fff7ed;border:2px solid #fb923c}
+.dash-student{background:#eff6ff;border:2px solid #60a5fa}
+.dash-private{background:#fdf2f8;border:2px solid #f472b6}
+.dash h3{margin:0 0 8px}
+.dash button{margin:4px 0}
 </style>
 </head><body>
 
@@ -33,7 +39,33 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
 <p id="welcomeMsg" style="font-weight:bold;margin-top:10px"></p>
 </div>
 
-<!-- 1. PDF TO DIGITAL -->
+<!-- DASHBOARDS - HIDDEN UNTIL LOGIN -->
+<div id="teacherDash" class="dash dash-teacher">
+<h3>👩‍🏫 TEACHER DASHBOARD</h3>
+<p style="font-size:13px">Create digital assessments, mark with AI, view class results.</p>
+<button class="btn-main" onclick="document.getElementById('pdfFile').scrollIntoView()">+ Create New Quiz / Test / Exam from PDF</button>
+<button class="btn-main" style="background:#fff;color:#000;border:1px solid #ddd" onclick="showMyAssessments()">📊 My Assessments & Results</button>
+<button class="btn-yellow" onclick="aiFocus()">🤖 AI Teacher Assessment Assistance</button>
+<p id="teacherInfo" style="font-size:13px"></p>
+</div>
+
+<div id="studentDash" class="dash dash-student">
+<h3>🎓 STUDENT DASHBOARD</h3>
+<p style="font-size:13px">Take digital Quizzes, Tests, Examinations. See your marks instantly.</p>
+<button class="btn-main" onclick="takeQuiz()">▶️ TAKE MY QUIZ / TEST</button>
+<button class="btn-main" style="background:#fff;color:#000;border:1px solid #ddd" onclick="myResults()">📝 My Results & Feedback</button>
+<p id="studentInfo" style="font-size:13px"></p>
+</div>
+
+<div id="privateDash" class="dash dash-private">
+<h3>🔒 PRIVATE DASHBOARD</h3>
+<p style="font-size:13px">Private lessons, private school assessments, one-on-one.</p>
+<button class="btn-main" style="background:#be185d" onclick="bookPrivate()">🔒 Book Private Assessment</button>
+<button class="btn-main" style="background:#fff;color:#000;border:1px solid #ddd" onclick="privateFiles()">📁 My Private Files</button>
+<p id="privateInfo" style="font-size:13px"></p>
+</div>
+
+<!-- 1. PDF TO DIGITAL - KEEP AS IS -->
 <div class="card">
 <h3>📄 PDF → Digital Quizzes - Tests - Examinations</h3>
 <p style="font-size:13px;color:#555">Upload your PDF paper. We convert it to digital Quiz / Test / Exam automatically.</p>
@@ -44,7 +76,7 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
 <p id="uploadStatus"></p>
 </div>
 
-<!-- 2. AI TEACHER -->
+<!-- 2. AI TEACHER - KEEP AS IS -->
 <div class="card" style="background:#0f172a;color:#fff">
 <h3 style="color:#ffcc00">🤖 AI Teacher Assessment Assistance</h3>
 <p style="font-size:13px;color:#ddd">AI helps teachers create, mark and give feedback for assessments. Paste topic or question:</p>
@@ -53,22 +85,22 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
 <p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p>
 </div>
 
-<!-- 3. HOW IT WORKS -->
+<!-- 3. HOW IT WORKS - KEEP AS IS -->
 <div class="card">
 <h3>⚡ How it Works - Learn-Click-Press</h3>
 <p style="font-size:13px"><b>1. LEARN</b> - Upload PDF paper<br><b>2. CLICK</b> - Choose Quiz / Test / Exam<br><b>3. PRESS</b> - Get Digital Assessment + AI Marking</p>
 <button class="btn-main" style="background:#ffcc00;color:#000" onclick="openSignup()">START DIGITAL ASSESSMENT</button>
 </div>
 
-<!-- SIGNUP -->
+<!-- SIGNUP - NOW WITH DASHBOARD CHOICE -->
 <div id="signupBox" class="popup"><div class="box">
 <h3 style="margin:0">Create Account - Signup</h3>
-<p style="font-size:13px;color:#666">For Digital Assessments</p>
+<p style="font-size:13px;color:#666">Choose your dashboard</p>
 <input id="s_phone" placeholder="Phone - +267 7XXXXXXX">
 <input id="s_name" placeholder="Full Name - e.g. Tiro Lesedi">
 <input id="s_town" placeholder="Town">
 <input id="s_school" placeholder="School">
-<select id="s_role"><option>Student</option><option>Teacher</option><option>Parent</option><option>School</option></select>
+<select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select>
 <button class="btn-yellow" onclick="doSignup()">SIGNUP - SAVE ME</button>
 <p style="text-align:center;font-size:13px">Already have account? <b style="cursor:pointer" onclick="closeSignup();openLogin()">Login here</b></p>
 <p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
@@ -79,7 +111,8 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
 <h3 style="margin:0">Welcome Back - Login</h3>
 <input id="l_phone" placeholder="Phone - +267 7XXXXXXX">
 <input id="l_name" placeholder="Full Name">
-<button class="btn-main" onclick="doLogin()">LOGIN</button>
+<select id="l_role"><option>Student</option><option>Teacher</option><option>Private</option></select>
+<button class="btn-main" onclick="doLogin()">LOGIN TO MY DASHBOARD</button>
 <p style="text-align:center;font-size:13px">No account? <b style="cursor:pointer" onclick="closeLogin();openSignup()">Signup here</b></p>
 <p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
@@ -90,11 +123,31 @@ input,select,textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd
 <script>
 let db=null;
 try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
+let currentUser=null;
 
 function openLogin(){ document.getElementById('loginBox').style.display='block'; }
 function closeLogin(){ document.getElementById('loginBox').style.display='none'; }
 function openSignup(){ document.getElementById('signupBox').style.display='block'; }
 function closeSignup(){ document.getElementById('signupBox').style.display='none'; }
+
+function showDashboard(role, name, extra){
+  document.getElementById('teacherDash').style.display='none';
+  document.getElementById('studentDash').style.display='none';
+  document.getElementById('privateDash').style.display='none';
+  if(role==='Teacher'){
+    document.getElementById('teacherDash').style.display='block';
+    document.getElementById('teacherInfo').innerHTML = "Dumela Teacher "+name+"! You can create assessments now.<br>"+(extra||"");
+    document.getElementById('teacherDash').scrollIntoView();
+  } else if(role==='Private'){
+    document.getElementById('privateDash').style.display='block';
+    document.getElementById('privateInfo').innerHTML = "Dumela "+name+"! Private dashboard ready. Your files are private only to you.";
+    document.getElementById('privateDash').scrollIntoView();
+  } else {
+    document.getElementById('studentDash').style.display='block';
+    document.getElementById('studentInfo').innerHTML = "Dumela "+name+"! Ready to take your digital Quiz/Test/Exam.";
+    document.getElementById('studentDash').scrollIntoView();
+  }
+}
 
 async function doSignup(){
   let phone=document.getElementById('s_phone').value.trim();
@@ -105,15 +158,32 @@ async function doSignup(){
   if(!phone || !name){ alert("Please enter phone and name"); return; }
   const { error } = await db.from('lesedi_users').insert([{phone: phone, full_name: name, town: town, school: school, role: role}]);
   if(error){ alert("Error: "+error.message); }
-  else{ alert("Dumela "+name+"! Signup done!"); document.getElementById('welcomeMsg').textContent = "Dumela "+name+" • Account Created"; closeSignup(); openLogin(); }
+  else{
+    alert("Dumela "+name+"! "+role+" account created!");
+    document.getElementById('welcomeMsg').textContent = "Dumela "+name+" • "+role+" • Account Created";
+    currentUser={name:name, role:role, phone:phone};
+    closeSignup();
+    showDashboard(role, name);
+  }
 }
 async function doLogin(){
   let phone=document.getElementById('l_phone').value.trim();
+  let role=document.getElementById('l_role').value;
   if(!phone){ alert("Enter phone"); return; }
   const { data, error } = await db.from('lesedi_users').select('*').eq('phone', phone).limit(1);
   if(error){ alert("Error: "+error.message); return; }
-  if(data && data.length>0){ alert("Dumela "+data[0].full_name+"! Login success!"); document.getElementById('welcomeMsg').textContent = "Dumela "+data[0].full_name+" • Logged In"; closeLogin(); }
-  else{ alert("No account for "+phone+" - Signup first"); closeLogin(); openSignup(); }
+  if(data && data.length>0){
+    let u=data[0];
+    let finalRole = role || u.role || "Student";
+    alert("Dumela "+u.full_name+"! Login success to "+finalRole+" Dashboard!");
+    document.getElementById('welcomeMsg').textContent = "Dumela "+u.full_name+" • "+finalRole+" • Logged In";
+    currentUser=u;
+    closeLogin();
+    showDashboard(finalRole, u.full_name);
+  } else {
+    alert("No account for "+phone+" - Signup first");
+    closeLogin(); openSignup();
+  }
 }
 
 function convertPDF(){
@@ -121,16 +191,19 @@ function convertPDF(){
   let type=document.getElementById('assessType').value;
   if(!f){ alert("1. LEARN - Choose PDF\n2. CLICK - Choose type\n3. PRESS - Convert"); return; }
   document.getElementById('uploadStatus').innerHTML = "✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>...<br>Your digital link is being created! Learn-Click-Press!";
-  // save to db as assessment
-  if(db){ db.from('lesedi_users').select('phone').limit(1).then(()=>{}); }
 }
-
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){ alert("Type topic for AI Teacher e.g. Photosynthesis quiz"); return; }
   let out=document.getElementById('aiOutput');
   out.style.display='block';
-  out.innerHTML = "<b>AI Teacher Assessment Assistance for:</b> "+q+"<br><br>1. Quiz Q1: What is "+q+"? [A] [B] [C] [D]<br>2. Test Question: Explain "+q+" in 100 words<br>3. Exam Tip: Marking scheme - 2 marks for definition, 3 for example<br><br><i>Your digital assessment draft is ready - now upload PDF to convert fully!</i>";
+  out.innerHTML = "<b>AI Teacher Assessment Assistance for:</b> "+q+"<br><br>1. Quiz Q1: What is "+q+"? [A] [B] [C] [D]<br>2. Test Question: Explain "+q+" in 100 words<br>3. Exam Tip: Marking scheme - 2 marks for definition, 3 for example<br><br><i>Your digital assessment draft is ready!</i>";
 }
+function aiFocus(){ document.getElementById('aiInput').scrollIntoView(); document.getElementById('aiInput').focus(); }
+function showMyAssessments(){ document.getElementById('teacherInfo').innerHTML = "📊 You have 0 assessments yet. Upload PDF above to create your first digital Quiz/Test/Exam!"; }
+function takeQuiz(){ alert("Your digital Quiz is ready! After Teacher uploads PDF, you will see it here. Learn-Click-Press!"); document.getElementById('studentInfo').innerHTML = "🎯 Quiz: 5 Questions • 10 mins • AI marking ON"; }
+function myResults(){ document.getElementById('studentInfo').innerHTML = "📝 Your last results: No results yet. Take a quiz to see AI feedback here!"; }
+function bookPrivate(){ document.getElementById('privateInfo').innerHTML = "🔒 Private booking: WhatsApp us with your topic, we will create private digital assessment for you only."; }
+function privateFiles(){ document.getElementById('privateInfo').innerHTML = "📁 Private files: Only you can see. Upload PDF above, it will be marked as Private."; }
 </script>
 </body></html>
