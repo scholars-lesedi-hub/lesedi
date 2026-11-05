@@ -10,14 +10,15 @@
 .logo h1 span{font-size:13px;font-style:italic;font-weight:bold}
 .search{flex:1;max-width:480px;display:flex;background:#f1f5f9;border-radius:20px;padding:8px 12px;border:1px solid #e2e8f0}
 .search input{border:none;background:transparent;width:100%;outline:none}
-.profile{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:bold}
-.avatar{width:36px;height:36px;background:#0f2a5a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.profile{display:flex;align-items:center;gap:8px}
+.btn-login-top{background:#0a2463;color:#fff;border:none;padding:9px 18px;border-radius:20px;font-weight:bold;cursor:pointer}
+.btn-signup-top{background:#facc15;color:#000;border:none;padding:9px 16px;border-radius:20px;font-weight:bold;cursor:pointer}
 .layout{display:flex;min-height:calc(100vh - 60px)}
 .sidebar{background:#0a2463;color:#fff;width:210px;padding:12px;flex-shrink:0}
 .sidebar a{display:block;color:#fff;text-decoration:none;padding:11px 10px;border-radius:8px;margin:4px 0;font-size:14px;cursor:pointer}
 .sidebar a.active,.sidebar a:hover{background:#2563eb}
 .main{flex:1;padding:12px}
-.hero{background:linear-gradient(90deg,#0a2463,#2563eb);color:#fff;border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center;overflow:hidden;position:relative}
+.hero{background:linear-gradient(90deg,#0a2463,#2563eb);color:#fff;border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center}
 .hero h2{margin:0;font-size:24px}
 .hero h2 span{color:#facc15}
 .hero p{margin:6px 0 12px;font-size:14px}
@@ -32,7 +33,6 @@
 .ring{width:110px;height:110px;border-radius:50%;background:conic-gradient(#16a34a 0 85%,#e5e7eb 85% 100%);display:flex;align-items:center;justify-content:center;margin:0 auto}
 .ring-inner{width:80px;height:80px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:22px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.three-col{display:grid;grid-template-columns:1.2fr 1.2fr 0.8fr;gap:10px}
 .card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .card h3{margin:0 0 10px;font-size:15px}
 .exam-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f1f5f9;padding:8px 0}
@@ -43,14 +43,19 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .dash{display:none;border-radius:12px;padding:14px;margin:12px 0}
 .footer{background:#0a2463;color:#fff;text-align:center;padding:12px;font-size:13px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
 .upload-zone{border:2px dashed #2563eb;background:#eff6ff;padding:16px;border-radius:12px;text-align:center}
-@media(max-width:800px){.sidebar{display:none}.grid4{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}}
+@media(max-width:800px){.sidebar{display:none}.grid4{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
 
 <div class="top-header">
 <div class="logo"><div class="logo-icon">🎓</div><h1>Education Lesedi<br>Scholars Hub<br><span>Click • Press • Learn</span></h1></div>
 <div class="search">🔍 <input id="searchInput" placeholder="Search examinations, study materials..." onkeyup="searchExams()"></div>
-<div class="profile"><span>🔔 <span style="background:red;color:#fff;border-radius:50%;padding:1px 5px;font-size:11px">3</span></span><div class="avatar">👤</div><div><span id="profileName">Kutlwano K.</span><br><small style="font-weight:normal">Learner</small></div></div>
+<!-- LOGIN HERE - NO MORE KUTLWANO K -->
+<div class="profile" id="topProfile">
+<span>🔔 <span style="background:red;color:#fff;border-radius:50%;padding:1px 5px;font-size:11px">3</span></span>
+<button class="btn-login-top" onclick="openLogin()">LOGIN</button>
+<button class="btn-signup-top" onclick="openSignup()">SIGNUP</button>
+</div>
 </div>
 
 <div class="layout">
@@ -65,11 +70,9 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <a onclick="showSection('account')">👤 My Account</a>
 <a onclick="showSection('help')">🎧 Help & Support</a>
 <a onclick="logout()">🚪 Logout</a>
-<div style="margin-top:20px;background:#facc15;color:#000;padding:10px;border-radius:8px;font-size:12px;font-weight:bold;text-align:center">LOGIN / SIGNUP<br><button onclick="openLogin()" style="margin:4px;background:#000;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer">LOGIN</button> <button onclick="openSignup()" style="margin:4px;background:#fff;border:1px solid #000;padding:6px 10px;border-radius:6px;cursor:pointer">SIGNUP</button></div>
 </div>
 
 <div class="main">
-<!-- DASHBOARDS -->
 <div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD</h3><p style="font-size:13px">Create digital assessments, AI marking, view class.</p><button class="btn-blue" onclick="showSection('upload')">+ Create Quiz/Test/Exam from PDF</button> <button class="btn-blue" style="background:#16a34a" onclick="showSection('aiTeacher')">🤖 AI Assessment Help</button><p id="teacherInfo"></p></div>
 <div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD</h3><p style="font-size:13px">Take digital Quizzes, Tests, Examinations.</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM NOW</button><p id="studentInfo"></p></div>
 <div id="privateDash" class="dash" style="background:#fdf2f8;border:2px solid #f472b6"><h3>🔒 PRIVATE DASHBOARD</h3><p style="font-size:13px">Private assessments & 1-on-1 lessons.</p><button class="btn-blue" style="background:#be185d" onclick="showSection('upload')">🔒 Private Upload</button><p id="privateInfo"></p></div>
@@ -89,7 +92,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
 
-<!-- UPLOAD PART - YOUR REQUEST - MUST NOT FORGET -->
 <div class="card" style="border:2px solid #facc15">
 <h3>📤 UPLOAD PART - PDF → Digital Quizzes - Tests - Examinations</h3>
 <p style="font-size:13px;color:#555">Upload PDF - we digitalise it to Quiz / Test / Exam automatically.</p>
@@ -106,7 +108,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="exam-row"><div class="date-box">NOV<br>10</div><div style="flex:1;padding:0 8px"><b>Mathematics Test</b><br><small>Primary 6 • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="joinExam('Mathematics Test')">Join Exam</button></div>
 <div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English Language Test</b><br><small>Primary 6 • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="joinExam('English Language Test')">Join Exam</button></div>
 </div>
-
 <div class="card"><h3>📢 Latest News & Announcements</h3>
 <p style="font-size:13px">ℹ️ <b>New Feature: AI-Assisted Marking</b><br><small>Essays will be reviewed by AI + teacher approval.</small> <span style="float:right">Nov 2, 2026</span></p>
 <p style="font-size:13px">⭐ <b>Holiday Practice Tests Available</b><br><small>Keep learning during holidays!</small> <span style="float:right">Oct 28, 2026</span></p>
@@ -116,25 +117,22 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div>
 <div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner">85%</div></div><p>Overall Performance</p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b>12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div></div>
-<div class="card" style="margin-top:10px"><h3>🎧 Need Help?</h3><p style="font-size:13px">Our support team is here to help you.</p><button class="btn-blue" onclick="alert('Contact us on WhatsApp - Education Lesedi Scholars Hub')">✉️ Contact Us</button> <button class="btn-blue" style="background:#16a34a" onclick="alert('FAQs: 1. Upload PDF 2. Choose Quiz/Test/Exam 3. Press Convert')">❓ FAQs</button></div>
+<div class="card" style="margin-top:10px"><h3>🎧 Need Help?</h3><p style="font-size:13px">Our support team is here to help you.</p><button class="btn-blue" onclick="alert('Contact us - Education Lesedi Scholars Hub')">✉️ Contact Us</button> <button class="btn-blue" style="background:#16a34a" onclick="alert('FAQs: 1. Upload PDF 2. Choose Quiz/Test/Exam 3. Press Convert')">❓ FAQs</button></div>
 </div>
 </div>
 </div>
 
-<!-- TAKE EXAM SECTION -->
 <div id="takeExamSection" style="display:none">
-<div class="card"><h3>📝 Take Examination - Digital Quizzes, Tests, Examinations</h3><p>Choose assessment type, then answer digitally, AI marks instantly.</p>
+<div class="card"><h3>📝 Take Examination - Digital Quizzes, Tests, Examinations</h3>
 <select id="examSelect"><option>Mathematics Test - Primary 6</option><option>English Language Test - Primary 6</option><option>BGCSE Biology Quiz</option><option>Composition + Essay</option></select>
-<div id="quizArea" style="background:#f8fafc;padding:12px;border-radius:8px"><b>Q1:</b> What is 12 x 8?<br><button class="btn-blue" style="margin:4px" onclick="answerQuiz(this,true)">96 ✅</button> <button class="btn-blue" style="margin:4px;background:#fff;color:#000;border:1px solid #ddd" onclick="answerQuiz(this,false)">88</button> <button class="btn-blue" style="margin:4px;background:#fff;color:#000;border:1px solid #ddd" onclick="answerQuiz(this,false)">86</button><p id="quizFeedback"></p></div>
+<div style="background:#f8fafc;padding:12px;border-radius:8px"><b>Q1:</b> What is 12 x 8?<br><button class="btn-blue" style="margin:4px" onclick="answerQuiz(true)">96 ✅</button> <button class="btn-blue" style="margin:4px;background:#fff;color:#000;border:1px solid #ddd" onclick="answerQuiz(false)">88</button><p id="quizFeedback"></p></div>
 <button class="btn-blue" onclick="submitExam()">SUBMIT EXAM</button></div>
 </div>
 
-<!-- AI TEACHER SECTION -->
 <div id="aiTeacherSection" style="display:none">
-<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance</h3><p style="font-size:13px;color:#ddd">AI helps teachers create, mark and give feedback.</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
+<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance</h3><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
 </div>
 
-<!-- OTHER SECTIONS -->
 <div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p></div></div>
 
 </div>
@@ -142,7 +140,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div class="footer"><span>Education Lesedi Scholars Hub</span><span>| Click • Press • Learn</span><span>🎓 Learn Better</span><span>📊 Achieve More</span><span>🏆 Build a Brighter Future</span><span style="background:#facc15;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold">Powered by Innovation & Education</span></div>
 
-<!-- LOGIN / SIGNUP -->
 <div id="signupBox" class="popup"><div class="box">
 <h3>Signup - Create Account</h3><input id="s_phone" placeholder="Phone - +267 7XXXXXXX"><input id="s_name" placeholder="Full Name"><input id="s_town" placeholder="Town"><input id="s_school" placeholder="School"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - SAVE ME</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
@@ -176,15 +173,15 @@ function showSection(sec){
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
     document.getElementById('otherText').textContent="This section is part of Education Lesedi Scholars Hub - Digitalisation of Assessments. Learn-Click-Press!";
   }
-  document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
 }
-function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q+" in Examinations & Study Materials");}
+function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q);}
 
 function showDashboard(role,name){
   document.getElementById('teacherDash').style.display='none';
   document.getElementById('studentDash').style.display='none';
   document.getElementById('privateDash').style.display='none';
-  document.getElementById('profileName').textContent=name;
+  // UPDATE TOP HEADER TO SHOW LOGGED IN USER - NOT KUTLWANO
+  document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
   if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! Create assessments from PDF above.";}
   else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private dashboard ready.";}
   else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Ready for digital Quiz/Test/Exam.";}
@@ -214,16 +211,16 @@ function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
   let type=document.getElementById('assessType').value;
   if(!f){alert("Choose PDF first - Learn-Click-Press");return;}
-  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>... Your digital link is being created! Students can now take it digitally with AI marking!";
+  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>... Your digital link is being created!";
 }
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){alert("Type topic for AI Teacher");return;}
   let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for:</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words<br>3. Marking scheme: 2 marks definition, 3 example<br><br><i>Digital assessment draft ready!</i>";
+  out.innerHTML="<b>AI Teacher Assistance for:</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words<br>3. Marking scheme: 2 marks definition, 3 example";
 }
-function joinExam(name){alert("Joining "+name+" - Good luck! Learn-Click-Press!");showSection('takeExam');}
-function answerQuiz(el,correct){document.getElementById('quizFeedback').innerHTML=correct?"✅ Correct! AI Teacher: Well done!":"❌ Try again - AI Teacher hint: think carefully!";}
-function submitExam(){alert("Exam submitted! AI marking... Your result: 85% - Well done! Check My Results.");showSection('results');}
+function joinExam(name){alert("Joining "+name+" - Good luck!");showSection('takeExam');}
+function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML=correct?"✅ Correct! AI Teacher: Well done!":"❌ Try again!";}
+function submitExam(){alert("Exam submitted! AI marking... Result: 85%");showSection('results');}
 </script>
 </body></html>
