@@ -104,9 +104,9 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
 
-<!-- 3 EDUCATION LEVELS - FOREVER -->
+<!-- 3 EDUCATION LEVELS -->
 <div class="card" style="border:2px solid #0a2463;background:#eff6ff">
-<h3>🎯 CHOOSE YOUR EDUCATION LEVEL - FOREVER</h3>
+<h3>🎯 CHOOSE YOUR EDUCATION LEVEL</h3>
 <p style="font-size:13px;text-align:center;font-weight:bold">PSLE (Std 1 to 7) • JC (Form 1 to 3) • BGCSE (Form 4 to 5)</p>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center">
 <button class="level-btn active" onclick="setLevel('PSLE - Std 6',this)">PSLE ⭐<small>Std 1 to 7</small></button>
@@ -211,7 +211,7 @@ Pay securely - No bank details shown<br>
 <div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English - <span class="lvlName">PSLE - Std 6</span> - 10 Qs FREE</b><br><small>PSLE / JC / BGCSE • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="startLevelQuiz('eng')">Start Free</button></div>
 </div>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
-<p style="font-size:13px">🎯 <b>3 Levels Forever!</b><br><small>PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)</small></p>
+<p style="font-size:13px">🎯 <b>3 Levels!</b><br><small>PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)</small></p>
 <p style="font-size:13px">🎮 <b>Free Educational Games!</b><br><small>Label Scramble Naming - FREE for all!</small></p>
 <p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free!</small></p>
 </div>
@@ -240,7 +240,7 @@ Pay securely - No bank details shown<br>
 
 <div id="takeExamSection" style="display:none">
 <div class="card"><h3>📝 Take Examination - <span class="lvlName">PSLE - Std 6</span> - Starter Free: 10 Questions / Two Topics</h3>
-<p style="font-size:13px;font-weight:bold">1. Education Level - FOREVER: PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)</p>
+<p style="font-size:13px;font-weight:bold">1. Education Level: PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)</p>
 <div style="display:flex;gap:6px">
 <button class="level-btn" style="flex:1" onclick="setLevel('PSLE - Std 6',this)">PSLE<small>Std 1-7</small></button>
 <button class="level-btn" style="flex:1" onclick="setLevel('JC - Form 2',this)">JC<small>Form 1-3</small></button>
@@ -270,7 +270,7 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages</h3><p>Levels Forever: PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)<br><br>Starter Free 10 Questions / Two Topics per month - NO PAYMENT • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
+<div class="card"><h3>💰 All Packages</h3><p>Levels: PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)<br><br>Starter Free 10 Questions / Two Topics per month - NO PAYMENT • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
 </div>
 
 <div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p></div></div>
@@ -302,8 +302,7 @@ Pay securely - No bank details shown<br>
 let db=null;
 try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
 const SECURE_ACC="62728369697";
-// FOREVER LEVELS
-const LEVELS_FOREVER="PSLE (Std 1 to 7) • JC (Form 1 to 3) • BGCSE (Form 4 to 5)";
+const LEVELS_INFO="PSLE (Std 1 to 7) • JC (Form 1 to 3) • BGCSE (Form 4 to 5)";
 let currentLevel="PSLE - Std 6";
 let currentClass="Std 6";
 const LEVEL_DESC={"PSLE - Std 6":"PSLE Level - Std 1 to 7 - Fractions, Decimals, Grammar","JC - Form 2":"JC Level - Form 1 to 3 - Algebra, Comprehension","BGCSE - Form 4":"BGCSE Level - Form 4 to 5 - Biology, Maths Paper 1"};
@@ -329,11 +328,10 @@ let curQuiz=null,curIdx=0,curScore=0,curSubject="math";
 function setLevel(lvl,btn){
   currentLevel=lvl;
   document.getElementById('selectedLevelText').innerHTML=lvl;
-  document.getElementById('levelDesc').innerHTML=LEVEL_DESC[lvl]||LEVELS_FOREVER;
+  document.getElementById('levelDesc').innerHTML=LEVEL_DESC[lvl]||LEVELS_INFO;
   document.querySelectorAll('.lvlName').forEach(e=>e.innerHTML=lvl);
   document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
-  // Sync class select
   let cls=lvl.split(" - ")[1] || lvl;
   let sel=document.getElementById('classSelect'); if(sel) sel.value=cls;
   let sel2=document.getElementById('examClassSelect'); if(sel2) sel2.value=cls;
@@ -355,7 +353,7 @@ function startLevelQuiz(subject){
   curQuiz=getQuizFor(currentLevel, subject);
   curIdx=0;curScore=0;
   document.getElementById('quizResult').style.display='none';
-  if(want) document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" ("+LEVELS_FOREVER+") | Topic: <b>"+want+"</b>";
+  if(want) document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" ("+LEVELS_INFO+") | Topic: <b>"+want+"</b>";
   showQuizQ();
 }
 function orderLevelTopic(){
@@ -433,20 +431,20 @@ function showSection(sec){
     document.getElementById('otherSection').style.display='block';
     let titles={results:"My Results - 85% Overall - "+currentLevel,reports:"Performance Reports - P30",account:"My Account - "+currentLevel,help:"Help & Support - WhatsApp 71823638 / 77980825"};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Levels Forever: "+LEVELS_FOREVER+" - Current: "+currentLevel+" - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Games - Label Scramble Naming! 10 Free Questions per month - By Level.";
+    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Levels: "+LEVELS_INFO+" - Current: "+currentLevel+" - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Games - Label Scramble Naming! 10 Free Questions per month - By Level.";
   }
 }
-function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q+" for "+currentLevel+" - "+LEVELS_FOREVER);}
+function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q+" for "+currentLevel+" - "+LEVELS_INFO);}
 function showDashboard(role,name){
   document.getElementById('teacherDash').style.display='none';
   document.getElementById('studentDash').style.display='none';
   document.getElementById('privateDash').style.display='none';
   document.getElementById('parentDash').style.display='none';
   document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+' • '+currentLevel+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
-  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. Level: "+currentLevel+" - "+LEVELS_FOREVER;}
+  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. Level: "+currentLevel+" - "+LEVELS_INFO;}
   else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready. Level: "+currentLevel;}
   else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall. Level: "+currentLevel;}
-  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - Level: "+currentLevel+" - NO PAYMENT. Levels: "+LEVELS_FOREVER;}
+  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - Level: "+currentLevel+" - NO PAYMENT. Levels: "+LEVELS_INFO;}
 }
 async function doSignup(){
   let phone=document.getElementById('s_phone').value.trim();
@@ -459,7 +457,7 @@ async function doSignup(){
   if(!phone||!name){alert("Enter phone and name");return;}
   const {error}=await db.from('lesedi_users').insert([{phone:phone,full_name:name,town:town,school:school,role:role}]);
   if(error) alert("Error: "+error.message);
-  else{alert("Dumela "+name+"! "+role+" "+lvl+" account created! Levels: "+LEVELS_FOREVER+" - 3 Months FREE TRIAL for Schools - min 3 tests!");closeSignup();showDashboard(role,name);}
+  else{alert("Dumela "+name+"! "+role+" "+lvl+" account created! Levels: "+LEVELS_INFO+" - 3 Months FREE TRIAL for Schools - min 3 tests!");closeSignup();showDashboard(role,name);}
 }
 async function doLogin(){
   let phone=document.getElementById('l_phone').value.trim();
@@ -476,24 +474,24 @@ function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
   let type=document.getElementById('assessType').value;
   if(!f){alert("Choose PDF first - Learn-Click-Press");return;}
-  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b> ("+LEVELS_FOREVER+")... Your digital link is being created! Schools: 3 Months FREE TRIAL min 3 tests.";
+  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b> ("+LEVELS_INFO+")... Your digital link is being created! Schools: 3 Months FREE TRIAL min 3 tests.";
 }
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){alert("Type topic for AI Teacher");return;}
   let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+" ("+LEVELS_FOREVER+"):</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+"<br>3. Marking scheme: 2 marks definition, 3 example";
+  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+" ("+LEVELS_INFO+"):</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+"<br>3. Marking scheme: 2 marks definition, 3 example";
 }
 function buyPackage(pkg){
   if(pkg.includes("Starter Free")){
     startLevelQuiz('math');
     return;
   }
-  alert("You selected: "+pkg+" for "+currentLevel+" ("+LEVELS_FOREVER+")\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nThen WhatsApp proof to 71823638 / 77980825!");
+  alert("You selected: "+pkg+" for "+currentLevel+" ("+LEVELS_INFO+")\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nThen WhatsApp proof to 71823638 / 77980825!");
   whatsappOrder(pkg+" - "+currentLevel);
 }
 function whatsappOrder(pkg){
-  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_FOREVER+" - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel+" - "+LEVELS_FOREVER;
+  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_INFO+" - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel+" - "+LEVELS_INFO;
   window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
 }
 function joinExam(name){alert("Joining "+name+" for "+currentLevel+" - Good luck!");showSection('takeExam');}
