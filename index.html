@@ -32,7 +32,8 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99;overflow:auto}
 .box{background:#fff;margin:25px auto;padding:22px;width:92%;max-width:420px;border-radius:16px}
 .dash{display:none;border-radius:12px;padding:14px;margin:12px 0}
-.footer{background:#0a2463;color:#fff;text-align:center;padding:12px;font-size:13px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.footer{background:#0a2463;color:#fff;text-align:center;padding:14px 12px;font-size:13px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
 .upload-zone{border:2px dashed #2563eb;background:#eff6ff;padding:16px;border-radius:12px;text-align:center}
 .price-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:12px 0}
 .price-card{background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.08);border:2px solid #e5e7eb}
@@ -55,6 +56,8 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .level-btn.active{background:#0a2463;color:#fff}
 .level-btn small{display:block;font-weight:normal;font-size:11px}
 .review-box{text-align:left;background:#fff;border:1px solid #e5e7eb;padding:10px;border-radius:8px;margin:6px 0;font-size:13px}
+.copyright{background:#071a4a;color:#cbd5e1;text-align:center;padding:10px;font-size:12px;line-height:1.6}
+.email-link{color:#facc15;text-decoration:none;font-weight:bold}
 @media(max-width:800px){.hero h2{white-space:normal;font-size:20px}.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
@@ -78,6 +81,10 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <a onclick="showSection('account')">👤 My Account</a>
 <a onclick="showSection('help')">🎧 Help & Support</a>
 <a onclick="logout()">🚪 Logout</a>
+<div style="margin-top:20px;padding:10px;background:#071a4a;border-radius:8px;font-size:11px;line-height:1.6;text-align:center">
+📧 <a href="mailto:educationlesedihelpdesk@gmail.com" style="color:#facc15;text-decoration:none;font-weight:bold">educationlesedihelpdesk@gmail.com</a><br>
+© 2026 Education Lesedi Scholars Hub<br>All Rights Reserved
+</div>
 </div>
 
 <div class="main">
@@ -124,7 +131,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS - <span class="lvlName">PSLE - Std 6</span> - 10 Qs FREE</button>
 <button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH - <span class="lvlName">PSLE - Std 6</span> - 10 Qs FREE</button>
 </div>
-<p style="font-size:12px;color:#555;margin-top:6px">Starter Free: 10 Questions / Two Topics per month for YOUR level. Answers shown only at the end. Need more? P10/Topic via Orange Money 77980825 / MyZaka 71823638</p>
+<p style="font-size:12px;color:#555;margin-top:6px">Starter Free: 10 Questions / Two Topics per month for YOUR level. Answers shown only at the end. Need more? P10/Topic via Orange Money 77980825 / MyZaka 71823638 • Email: educationlesedihelpdesk@gmail.com</p>
 </div>
 
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
@@ -160,7 +167,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div class="card">
 <h3>📤 UPLOAD PART - PDF → Digital Quizzes - Tests - Examinations</h3>
-<p style="font-size:13px;color:#555">Upload PDF - we digitalise it to Quiz / Test / Exam automatically. Levels: PSLE • JC • BGCSE</p>
+<p style="font-size:13px;color:#555">Upload PDF - we digitalise it to Quiz / Test / Exam automatically. Levels: PSLE • JC • BGCSE • Questions? Email: educationlesedihelpdesk@gmail.com</p>
 <div class="upload-zone">
 <input type="file" id="pdfFile" accept=".pdf,.jpg,.png,.docx">
 <select id="assessType"><option>Convert to Digital Quiz</option><option>Convert to Digital Test</option><option>Convert to Digital Examination</option><option>Composition + Essay Marking</option></select>
@@ -185,12 +192,12 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="price-card"><h3>Educator / Tutor</h3><div class="price">BWP 150-200</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%;background:#7c3aed" onclick="buyPackage('Educator BWP 150-200')">BUY EDUCATOR</button></div>
 <div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term - Annual discount</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
 </div>
-<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>Single assessment P10 • Essay P15 • Full Report P30 • Past Papers P100/term<br><small>NOTE: Starter Free = NO payment. Only Pro / Educator / School pay.</small></div>
+<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>📧 <b>educationlesedihelpdesk@gmail.com</b><br>Single assessment P10 • Essay P15 • Full Report P30 • Past Papers P100/term<br><small>NOTE: Starter Free = NO payment. Only Pro / Educator / School pay.</small></div>
 <div class="bank-box">
 <b>🔒 SECURE PAYMENT - For Schools / Center Hub</b><br>
 Pay securely - No bank details shown<br>
 <button class="btn-blue" style="width:100%;margin-top:8px;background:#0a2463;padding:12px" onclick="securePay()">💳 PAY SECURELY NOW</button>
-<p style="font-size:11px;margin-top:6px">Like big websites - you pay without seeing bank name or branch. After payment, WhatsApp proof to 71823638.</p>
+<p style="font-size:11px;margin-top:6px">Like big websites - you pay without seeing bank name or branch. After payment, WhatsApp proof to 71823638 or Email to educationlesedihelpdesk@gmail.com</p>
 <input type="file" id="proofFile" accept=".pdf,.jpg,.png" style="margin-top:6px">
 <button class="btn-blue" style="width:100%;margin-top:6px;background:#16a34a" onclick="uploadProof()">📤 UPLOAD PROOF OF PAYMENT</button>
 <p id="proofStatus" style="font-size:12px"></p>
@@ -205,7 +212,7 @@ Pay securely - No bank details shown<br>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
 <p style="font-size:13px">🎯 <b>3 Levels!</b><br><small>PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)</small></p>
 <p style="font-size:13px">🎮 <b>Free Educational Games!</b><br><small>Label Scramble Naming - FREE for all!</small></p>
-<p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free!</small></p>
+<p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free! Email: educationlesedihelpdesk@gmail.com</small></p>
 </div>
 </div>
 </div>
@@ -213,8 +220,8 @@ Pay securely - No bank details shown<br>
 <div>
 <div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner" id="ringScore">85%</div></div><p>Overall Performance - <span class="lvlName">PSLE - Std 6</span></p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b id="examsTaken">12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button></div>
 <div class="card" style="margin-top:10px"><h3>🎮 Free Educational Games</h3><p style="font-size:13px;font-weight:bold;color:#16a34a">Label Scramble Naming</p><p style="font-size:13px">Free for all! No payment.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW</button></div>
-<div class="card" style="margin-top:10px"><h3>🔒 How to Pay?</h3><p style="font-size:13px">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment - Click Pay Securely - No details shown<br>4. WhatsApp proof to 71823638<br><br><b>Starter Free = NO PAYMENT</b><br>Levels: PSLE • JC • BGCSE</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button></div>
-<div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">Parents can see progress & pay. PSLE • JC • BGCSE</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
+<div class="card" style="margin-top:10px"><h3>🔒 How to Pay? • Help?</h3><p style="font-size:13px">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment - Click Pay Securely - No details shown<br>4. WhatsApp proof to 71823638<br>5. Email: <b>educationlesedihelpdesk@gmail.com</b><br><br><b>Starter Free = NO PAYMENT</b><br>Levels: PSLE • JC • BGCSE</p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button> <button class="btn-blue" style="background:#0a2463;margin-top:6px" onclick="emailHelp()">📧 Email Helpdesk</button></div>
+<div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">Parents can see progress & pay. PSLE • JC • BGCSE<br>Email: educationlesedihelpdesk@gmail.com</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
 </div>
 </div>
 </div>
@@ -251,7 +258,7 @@ Pay securely - No bank details shown<br>
 <div id="quizResult" style="display:none;text-align:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:10px">
 <h3 id="quizScoreText"></h3>
 <div id="quizReview" style="text-align:left;margin-top:10px"></div>
-<p style="font-size:13px;margin-top:10px">Starter Free used: 10 Questions. Want more for your level?</p>
+<p style="font-size:13px;margin-top:10px">Starter Free used: 10 Questions. Want more for your level? Email: educationlesedihelpdesk@gmail.com</p>
 <button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold" onclick="orderLevelTopic()">ORDER MORE FOR MY LEVEL - P10/Topic via WhatsApp</button>
 </div>
 <button class="btn-blue" onclick="showSection('home')" style="margin-top:10px">← Back to Home</button>
@@ -259,19 +266,28 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="aiTeacherSection" style="display:none">
-<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance - 3 Months Free Trial</h3><p style="font-size:13px;color:#ddd">For Teachers/Schools - Free for 3 months, min 3 tests. Levels: PSLE • JC • BGCSE</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
+<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher Assessment Assistance - 3 Months Free Trial</h3><p style="font-size:13px;color:#ddd">For Teachers/Schools - Free for 3 months, min 3 tests. Levels: PSLE • JC • BGCSE • Email: educationlesedihelpdesk@gmail.com</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis for BGCSE..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
 </div>
 
 <div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages</h3><p>Levels: PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)<br><br>Starter Free 10 Questions / Two Topics per month - NO PAYMENT • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
+<div class="card"><h3>💰 All Packages</h3><p>Levels: PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)<br><br>Starter Free 10 Questions / Two Topics per month - NO PAYMENT • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment • Email: educationlesedihelpdesk@gmail.com<br><br>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
 </div>
 
-<div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p></div></div>
+<div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p><div style="background:#eff6ff;padding:12px;border-radius:8px;margin-top:10px;font-size:13px"><b>Help & Support</b><br>📧 Email: <a href="mailto:educationlesedihelpdesk@gmail.com">educationlesedihelpdesk@gmail.com</a><br>💬 WhatsApp: 71823638 / 77980825<br>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</div></div></div>
 
 </div>
 </div>
 
-<div class="footer"><span>Education Lesedi Scholars Hub</span><span>| Click • Press • Learn</span><span>🎓 Learn Better</span><span>📊 Achieve More</span><span style="background:#facc15;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold">PSLE • JC • BGCSE | Orange Money 77980825 • MyZaka 71823638</span></div>
+<div class="footer">
+<div class="footer-links"><span>Education Lesedi Scholars Hub</span><span>| Click • Press • Learn</span><span>🎓 Learn Better</span><span>📊 Achieve More</span></div>
+<div class="footer-links"><span style="background:#facc15;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold">PSLE • JC • BGCSE | Orange Money 77980825 • MyZaka 71823638</span></div>
+<div>📧 Helpdesk: <a href="mailto:educationlesedihelpdesk@gmail.com" class="email-link">educationlesedihelpdesk@gmail.com</a> • WhatsApp: 71823638</div>
+</div>
+<div class="copyright">
+© 2026 Education Lesedi Scholars Hub. All Rights Reserved.<br>
+Click • Press • Learn | PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)<br>
+Content, quizzes, games and assessments on this platform are property of Education Lesedi Scholars Hub and may not be copied without permission. • Contact: educationlesedihelpdesk@gmail.com
+</div>
 
 <button class="wa-float" onclick="whatsappOrder()">💬 WhatsApp 71823638 - Order / Help</button>
 
@@ -280,14 +296,14 @@ Pay securely - No bank details shown<br>
 <p style="font-size:12px;font-weight:bold;text-align:center">PSLE (Std 1-7) • JC (Form 1-3) • BGCSE (Form 4-5)</p>
 <input id="s_phone" placeholder="Phone - +267 7XXXXXXX"><input id="s_name" placeholder="Full Name"><input id="s_town" placeholder="Town"><input id="s_school" placeholder="School"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select>
 <select id="s_level"><option>PSLE - Std 1</option><option>PSLE - Std 2</option><option>PSLE - Std 3</option><option>PSLE - Std 4</option><option>PSLE - Std 5</option><option selected>PSLE - Std 6</option><option>PSLE - Std 7</option><option>JC - Form 1</option><option>JC - Form 2</option><option>JC - Form 3</option><option>BGCSE - Form 4</option><option>BGCSE - Form 5</option></select>
-<button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - START FREE TRIAL</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
+<button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - START FREE TRIAL</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p style="text-align:center;font-size:12px;color:#555">Need help? educationlesedihelpdesk@gmail.com<br>© 2026 Education Lesedi Scholars Hub</p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
 <div id="loginBox" class="popup"><div class="box">
 <h3>Login - Welcome Back</h3>
 <p style="font-size:12px;font-weight:bold;text-align:center">PSLE • JC • BGCSE</p>
 <input id="l_phone" placeholder="Phone"><input id="l_name" placeholder="Full Name"><select id="l_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select>
 <select id="l_level"><option>PSLE - Std 1</option><option>PSLE - Std 2</option><option>PSLE - Std 3</option><option>PSLE - Std 4</option><option>PSLE - Std 5</option><option selected>PSLE - Std 6</option><option>PSLE - Std 7</option><option>JC - Form 1</option><option>JC - Form 2</option><option>JC - Form 3</option><option>BGCSE - Form 4</option><option>BGCSE - Form 5</option></select>
-<button class="btn-blue" style="width:100%;padding:13px" onclick="doLogin()">LOGIN TO DASHBOARD</button><p style="text-align:center;font-size:13px">No account? <b onclick="closeLogin();openSignup()" style="cursor:pointer">Signup - 3 Months Free</b></p><p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
+<button class="btn-blue" style="width:100%;padding:13px" onclick="doLogin()">LOGIN TO DASHBOARD</button><p style="text-align:center;font-size:13px">No account? <b onclick="closeLogin();openSignup()" style="cursor:pointer">Signup - 3 Months Free</b></p><p style="text-align:center;font-size:12px;color:#555">Help: educationlesedihelpdesk@gmail.com<br>© 2026 Education Lesedi Scholars Hub</p><p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -295,6 +311,7 @@ Pay securely - No bank details shown<br>
 let db=null;
 try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
 const SECURE_ACC="62728369697";
+const HELPDESK_EMAIL="educationlesedihelpdesk@gmail.com";
 const LEVELS_INFO="PSLE (Std 1 to 7) • JC (Form 1 to 3) • BGCSE (Form 4 to 5)";
 let currentLevel="PSLE - Std 6";
 let currentClass="Std 6";
@@ -355,7 +372,6 @@ function orderLevelTopic(){
 }
 function showQuizQ(){
   let item=curQuiz[curIdx];
-  // NO SCORE SHOWN DURING EXAM - only question number
   document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" | Question "+(curIdx+1)+" / 10 - Starter Free - Answers at the end";
   document.getElementById('quizQ').innerHTML="Q"+(curIdx+1)+": "+item.q;
   document.getElementById('quizFeedback').innerHTML="";
@@ -367,10 +383,8 @@ function showQuizQ(){
   document.getElementById('quizOpts').innerHTML=html;
 }
 function answerRealQuiz(i,el){
-  // FIXED: Do NOT reveal correct/incorrect, do NOT show answer. Just save and allow Next.
   userAnswers[curIdx]=i;
   if(i===curQuiz[curIdx].a) curScore++;
-  // Visual only: highlight selected, no green/red correct logic
   document.querySelectorAll('.quiz-opt').forEach(b=>{b.classList.remove('selected'); b.disabled=true;});
   el.classList.add('selected');
   document.getElementById('quizFeedback').innerHTML="✓ Answer saved - Click NEXT QUESTION";
@@ -379,16 +393,14 @@ function answerRealQuiz(i,el){
 function nextQuizQ(){
   curIdx++;
   if(curIdx>=10){
-    // END: Show total score + full review
     document.getElementById('quizQ').innerHTML="Finished - "+currentLevel+"!";
     document.getElementById('quizOpts').innerHTML="";
     document.getElementById('quizCounter').innerHTML="Done - 10 Questions Complete for "+currentLevel;
     document.getElementById('quizNext').style.display='none';
     document.getElementById('quizResult').style.display='block';
-    document.getElementById('quizScoreText').innerHTML="🎉 Your Result: "+curScore+" / 10 = "+(curScore*10)+"% - "+currentLevel;
+    document.getElementById('quizScoreText').innerHTML="🎉 Your Result: "+curScore+" / 10 = "+(curScore*10)+"% - "+currentLevel+"<br><small>© 2026 Education Lesedi Scholars Hub</small>";
     document.getElementById('quizFeedback').innerHTML="";
     document.getElementById('ringScore').innerHTML=(curScore*10)+"%";
-    // Build review with correct answers - ONLY at end
     let review="<h4 style='text-align:center'>📋 Answers Review:</h4>";
     curQuiz.forEach((item,idx)=>{
       let myAns=userAnswers[idx];
@@ -398,14 +410,18 @@ function nextQuizQ(){
       let correctText = item.o[correct];
       review+="<div class='review-box'>"+icon+" <b>Q"+(idx+1)+":</b> "+item.q+"<br>Your answer: <b>"+myText+"</b><br>Correct answer: <b style='color:#16a34a'>"+correctText+"</b></div>";
     });
+    review+="<p style='text-align:center;font-size:11px;color:#666'>© 2026 Education Lesedi Scholars Hub. All Rights Reserved. • Help: "+HELPDESK_EMAIL+"</p>";
     document.getElementById('quizReview').innerHTML=review;
   }else showQuizQ();
 }
 function securePay(){
   navigator.clipboard.writeText(SECURE_ACC).then(()=>{
-    alert("Secure Payment Ready! Account copied securely in background.\n\nOpen your bank app and paste to pay Education Lesedi Scholars Hub.\n\nThen WhatsApp proof to 71823638.");
+    alert("Secure Payment Ready! Account copied securely in background.\n\nOpen your bank app and paste to pay Education Lesedi Scholars Hub.\n\nThen WhatsApp proof to 71823638 or Email to "+HELPDESK_EMAIL);
     whatsappOrder("Secure Bank Payment");
   });
+}
+function emailHelp(){
+  window.location.href="mailto:"+HELPDESK_EMAIL+"?subject=Help - Education Lesedi Scholars Hub&body=Dumela, I need help with ";
 }
 function labelGame(el,ok){document.getElementById('game1Msg').innerHTML=ok?"✅ Correct! Leaf! +10 points":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
 function labelGame2(el,ok){document.getElementById('game2Msg').innerHTML=ok?"✅ Correct! LESEDI! +10 points":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
@@ -416,11 +432,11 @@ function openSignup(){document.getElementById('signupBox').style.display='block'
 function closeSignup(){document.getElementById('signupBox').style.display='none'}
 function logout(){alert("Logged out");location.reload()}
 function showParentDash(){document.getElementById('parentDash').style.display='block';document.getElementById('parentDash').scrollIntoView();}
-function showParentReport(){document.getElementById('parentInfo').innerHTML="📄 Report: 12 Exams, 85% Overall. Level: "+currentLevel+". Pay P30 via Orange Money 77980825 / MyZaka 71823638 / Secure Payment";}
+function showParentReport(){document.getElementById('parentInfo').innerHTML="📄 Report: 12 Exams, 85% Overall. Level: "+currentLevel+". Pay P30 via Orange Money 77980825 / MyZaka 71823638 / Email: "+HELPDESK_EMAIL;}
 function uploadProof(){
   let f=document.getElementById('proofFile').files[0];
   if(!f){alert("Choose proof of payment screenshot first");return;}
-  document.getElementById('proofStatus').innerHTML="✅ "+f.name+" received! Now WhatsApp it to 71823638 to activate. Thank you!";
+  document.getElementById('proofStatus').innerHTML="✅ "+f.name+" received! Now WhatsApp it to 71823638 or Email to "+HELPDESK_EMAIL+" to activate. Thank you!";
   whatsappOrder("Proof of Payment - "+f.name);
 }
 function showSection(sec){
@@ -438,21 +454,21 @@ function showSection(sec){
   else if(sec==='upload'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>{document.getElementById('pdfFile').scrollIntoView()},100); }
   else{
     document.getElementById('otherSection').style.display='block';
-    let titles={results:"My Results - 85% Overall - "+currentLevel,reports:"Performance Reports - P30",account:"My Account - "+currentLevel,help:"Help & Support - WhatsApp 71823638 / 77980825"};
+    let titles={results:"My Results - 85% Overall - "+currentLevel,reports:"Performance Reports - P30",account:"My Account - "+currentLevel,help:"Help & Support - "+HELPDESK_EMAIL};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Levels: "+LEVELS_INFO+" - Current: "+currentLevel+" - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Games - Label Scramble Naming! 10 Free Questions per month - By Level.";
+    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Levels: "+LEVELS_INFO+" - Current: "+currentLevel+" - Email: "+HELPDESK_EMAIL+" - Pay Orange Money 77980825 / MyZaka 71823638. © 2026 Education Lesedi Scholars Hub. All Rights Reserved.";
   }
 }
-function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q+" for "+currentLevel+" - "+LEVELS_INFO);}
+function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q+" for "+currentLevel+" - "+LEVELS_INFO+" - Help: "+HELPDESK_EMAIL);}
 function showDashboard(role,name){
   document.getElementById('teacherDash').style.display='none';
   document.getElementById('studentDash').style.display='none';
   document.getElementById('privateDash').style.display='none';
   document.getElementById('parentDash').style.display='none';
   document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+' • '+currentLevel+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
-  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. Level: "+currentLevel+" - "+LEVELS_INFO;}
+  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. Level: "+currentLevel+" - "+LEVELS_INFO+" - Help: "+HELPDESK_EMAIL;}
   else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready. Level: "+currentLevel;}
-  else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall. Level: "+currentLevel;}
+  else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall. Level: "+currentLevel+" - Help: "+HELPDESK_EMAIL;}
   else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - Level: "+currentLevel+" - NO PAYMENT. Levels: "+LEVELS_INFO;}
 }
 async function doSignup(){
@@ -466,7 +482,7 @@ async function doSignup(){
   if(!phone||!name){alert("Enter phone and name");return;}
   const {error}=await db.from('lesedi_users').insert([{phone:phone,full_name:name,town:town,school:school,role:role}]);
   if(error) alert("Error: "+error.message);
-  else{alert("Dumela "+name+"! "+role+" "+lvl+" account created! Levels: "+LEVELS_INFO+" - 3 Months FREE TRIAL for Schools - min 3 tests!");closeSignup();showDashboard(role,name);}
+  else{alert("Dumela "+name+"! "+role+" "+lvl+" account created! Levels: "+LEVELS_INFO+" - Help: "+HELPDESK_EMAIL+" - 3 Months FREE TRIAL for Schools - min 3 tests!");closeSignup();showDashboard(role,name);}
 }
 async function doLogin(){
   let phone=document.getElementById('l_phone').value.trim();
@@ -477,34 +493,34 @@ async function doLogin(){
   const {data,error}=await db.from('lesedi_users').select('*').eq('phone',phone).limit(1);
   if(error){alert(error.message);return;}
   if(data&&data.length>0){alert("Dumela "+data[0].full_name+"! Login to "+role+" "+lvl+" Dashboard!");closeLogin();showDashboard(role,data[0].full_name);}
-  else{alert("No account for "+phone+" - Signup first - 3 Months Free Trial");closeLogin();openSignup();}
+  else{alert("No account for "+phone+" - Signup first - 3 Months Free Trial - Help: "+HELPDESK_EMAIL);closeLogin();openSignup();}
 }
 function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
   let type=document.getElementById('assessType').value;
   if(!f){alert("Choose PDF first - Learn-Click-Press");return;}
-  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b> ("+LEVELS_INFO+")... Your digital link is being created! Schools: 3 Months FREE TRIAL min 3 tests.";
+  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b> ("+LEVELS_INFO+")... Your digital link is being created! Schools: 3 Months FREE TRIAL min 3 tests. Help: "+HELPDESK_EMAIL;
 }
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){alert("Type topic for AI Teacher");return;}
   let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+" ("+LEVELS_INFO+"):</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+"<br>3. Marking scheme: 2 marks definition, 3 example";
+  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+" ("+LEVELS_INFO+"):</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+"<br>3. Marking scheme: 2 marks definition, 3 example<br><small>© 2026 Education Lesedi Scholars Hub</small>";
 }
 function buyPackage(pkg){
   if(pkg.includes("Starter Free")){
     startLevelQuiz('math');
     return;
   }
-  alert("You selected: "+pkg+" for "+currentLevel+" ("+LEVELS_INFO+")\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nThen WhatsApp proof to 71823638 / 77980825!");
+  alert("You selected: "+pkg+" for "+currentLevel+" ("+LEVELS_INFO+")\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nEmail: "+HELPDESK_EMAIL+"\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nThen WhatsApp proof to 71823638 / 77980825 or Email to "+HELPDESK_EMAIL);
   whatsappOrder(pkg+" - "+currentLevel);
 }
 function whatsappOrder(pkg){
-  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_INFO+" - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel+" - "+LEVELS_INFO;
+  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_INFO+" - Education Lesedi Scholars Hub - Email: "+HELPDESK_EMAIL : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel+" - "+LEVELS_INFO+" - Email: "+HELPDESK_EMAIL;
   window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
 }
 function joinExam(name){alert("Joining "+name+" for "+currentLevel+" - Good luck!");showSection('takeExam');}
 function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML="✓ Answer saved"; }
-function submitExam(){alert("Exam submitted! Result will show at the end.");showSection('results');}
+function submitExam(){alert("Exam submitted! Result will show at the end. © 2026 Education Lesedi Scholars Hub");showSection('results');}
 </script>
 </body></html>
