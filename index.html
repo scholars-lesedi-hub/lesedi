@@ -50,9 +50,11 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .game-box{background:#f8fafc;border:2px dashed #16a34a;border-radius:12px;padding:14px;margin:10px 0;text-align:center}
 .quiz-opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid #e2e8f0;padding:11px;border-radius:10px;margin:6px 0;cursor:pointer;font-weight:bold}
 .quiz-opt:hover{border-color:#2563eb}
+.quiz-opt.selected{background:#dbeafe;border-color:#2563eb}
 .level-btn{background:#fff;border:2px solid #0a2463;padding:10px 12px;border-radius:12px;margin:4px;cursor:pointer;font-weight:bold;font-size:13px}
 .level-btn.active{background:#0a2463;color:#fff}
 .level-btn small{display:block;font-weight:normal;font-size:11px}
+.review-box{text-align:left;background:#fff;border:1px solid #e5e7eb;padding:10px;border-radius:8px;margin:6px 0;font-size:13px}
 @media(max-width:800px){.hero h2{white-space:normal;font-size:20px}.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
@@ -104,7 +106,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
 </div>
 
-<!-- 3 EDUCATION LEVELS -->
 <div class="card" style="border:2px solid #0a2463;background:#eff6ff">
 <h3>🎯 CHOOSE YOUR EDUCATION LEVEL</h3>
 <p style="font-size:13px;text-align:center;font-weight:bold">PSLE (Std 1 to 7) • JC (Form 1 to 3) • BGCSE (Form 4 to 5)</p>
@@ -123,15 +124,13 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS - <span class="lvlName">PSLE - Std 6</span> - 10 Qs FREE</button>
 <button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH - <span class="lvlName">PSLE - Std 6</span> - 10 Qs FREE</button>
 </div>
-<p style="font-size:12px;color:#555;margin-top:6px">Starter Free: 10 Questions / Two Topics per month for YOUR level. Need more? P10/Topic via Orange Money 77980825 / MyZaka 71823638</p>
+<p style="font-size:12px;color:#555;margin-top:6px">Starter Free: 10 Questions / Two Topics per month for YOUR level. Answers shown only at the end. Need more? P10/Topic via Orange Money 77980825 / MyZaka 71823638</p>
 </div>
 
-<!-- FREE EDUCATIONAL GAMES - NO LEVEL -->
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
 <h3>🎮 FREE EDUCATIONAL GAMES</h3>
 <p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center;margin:0">Label Scramble Naming</p>
 <p style="font-size:13px;color:#555;text-align:center">Free for all students! Tap to play. No payment needed.</p>
-
 <div class="game-box">
 <div style="font-size:13px;font-weight:bold;color:#16a34a">🏷️ LABEL</div>
 <div style="font-size:48px">🌱</div><b>Label the Plant</b><br><small>Where is the LEAF?</small><br>
@@ -140,7 +139,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <button class="label-btn" onclick="labelGame(this,false)">Stem</button>
 <p id="game1Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
-
 <div class="game-box" style="border-color:#2563eb;background:#eff6ff">
 <div style="font-size:13px;font-weight:bold;color:#2563eb">🔤 SCRAMBLE</div>
 <div style="font-size:48px">📖</div><b>Scramble: Unscramble the word</b><br><small>D E S E L I → What is correct?</small><br>
@@ -149,7 +147,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <button class="label-btn" onclick="labelGame2(this,false)">LESEDE</button>
 <p id="game2Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
-
 <div class="game-box" style="border-color:#facc15;background:#fffbeb">
 <div style="font-size:13px;font-weight:bold;color:#b45309">🗺️ NAMING</div>
 <div style="font-size:48px">🇧🇼</div><b>Naming: Capital of Botswana?</b><br><small>Which town is the capital?</small><br>
@@ -158,7 +155,6 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <button class="label-btn" onclick="labelGame3(this,false)">Maun</button>
 <p id="game3Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
-
 <button class="btn-blue" style="width:100%;background:#16a34a;padding:12px" onclick="showSection('labelling')">PLAY ALL FREE GAMES → Label Scramble Naming</button>
 </div>
 
@@ -183,16 +179,13 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <tr><td><b>Educator / Tutor</b></td><td><b>BWP 150 – 200</b></td><td>Per Month</td></tr>
 <tr><td><b>School / Center Hub</b><br><small>3 Months Free Trial min 3 tests</small></td><td><b>BWP 800 – 1,500</b></td><td>Per Term (Annual discount)</td></tr>
 </table>
-
 <div class="price-grid">
 <div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">10 Questions / Two Topics<br>per month - Your Level</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startLevelQuiz('math')">START FREE - NO PAYMENT</button></div>
 <div class="price-card"><h3>Pro Scholar</h3><div class="price">BWP 50-75</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Pro Scholar BWP 50-75')">BUY PRO</button></div>
 <div class="price-card"><h3>Educator / Tutor</h3><div class="price">BWP 150-200</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%;background:#7c3aed" onclick="buyPackage('Educator BWP 150-200')">BUY EDUCATOR</button></div>
 <div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term - Annual discount</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
 </div>
-
 <div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>Single assessment P10 • Essay P15 • Full Report P30 • Past Papers P100/term<br><small>NOTE: Starter Free = NO payment. Only Pro / Educator / School pay.</small></div>
-
 <div class="bank-box">
 <b>🔒 SECURE PAYMENT - For Schools / Center Hub</b><br>
 Pay securely - No bank details shown<br>
@@ -202,7 +195,6 @@ Pay securely - No bank details shown<br>
 <button class="btn-blue" style="width:100%;margin-top:6px;background:#16a34a" onclick="uploadProof()">📤 UPLOAD PROOF OF PAYMENT</button>
 <p id="proofStatus" style="font-size:12px"></p>
 </div>
-
 </div>
 
 <div class="two-col">
@@ -250,15 +242,16 @@ Pay securely - No bank details shown<br>
 <p style="font-size:13px">3. What do you want? <input id="examWantTopic" placeholder="e.g. Fractions, Verbs, Photosynthesis..."></p>
 <div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS - <span class="lvlName">PSLE - Std 6</span></button><button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH - <span class="lvlName">PSLE - Std 6</span></button><button class="btn-blue" style="flex:1;background:#16a34a" onclick="startLevelQuiz('sci')">🔬 SCIENCE - <span class="lvlName">PSLE - Std 6</span></button></div>
 <div style="background:#f8fafc;padding:14px;border-radius:10px">
-<p id="quizCounter" style="font-size:12px;font-weight:bold;color:#2563eb">Choose your level & subject to start your 10 FREE questions - No Payment</p>
+<p id="quizCounter" style="font-size:12px;font-weight:bold;color:#2563eb">Choose your level & subject to start your 10 FREE questions - No Payment - Answers at the end only</p>
 <b id="quizQ"></b>
 <div id="quizOpts"></div>
-<p id="quizFeedback" style="font-weight:bold"></p>
+<p id="quizFeedback" style="font-weight:bold;color:#0a2463"></p>
 <button id="quizNext" class="btn-blue" style="display:none;width:100%" onclick="nextQuizQ()">NEXT QUESTION →</button>
 </div>
 <div id="quizResult" style="display:none;text-align:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:10px">
 <h3 id="quizScoreText"></h3>
-<p style="font-size:13px">Starter Free used: 10 Questions. Want more for your level?</p>
+<div id="quizReview" style="text-align:left;margin-top:10px"></div>
+<p style="font-size:13px;margin-top:10px">Starter Free used: 10 Questions. Want more for your level?</p>
 <button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold" onclick="orderLevelTopic()">ORDER MORE FOR MY LEVEL - P10/Topic via WhatsApp</button>
 </div>
 <button class="btn-blue" onclick="showSection('home')" style="margin-top:10px">← Back to Home</button>
@@ -324,7 +317,7 @@ function getQuizFor(level, subject){
   let k=cat+"_"+subject;
   return QUIZ_BANK[k] || QUIZ_BANK["PSLE_"+subject];
 }
-let curQuiz=null,curIdx=0,curScore=0,curSubject="math";
+let curQuiz=null,curIdx=0,curScore=0,curSubject="math",userAnswers=[];
 function setLevel(lvl,btn){
   currentLevel=lvl;
   document.getElementById('selectedLevelText').innerHTML=lvl;
@@ -351,9 +344,9 @@ function startLevelQuiz(subject){
   let want=document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || "";
   showSection('takeExam');
   curQuiz=getQuizFor(currentLevel, subject);
-  curIdx=0;curScore=0;
+  curIdx=0;curScore=0;userAnswers=[];
   document.getElementById('quizResult').style.display='none';
-  if(want) document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" ("+LEVELS_INFO+") | Topic: <b>"+want+"</b>";
+  document.getElementById('quizReview').innerHTML="";
   showQuizQ();
 }
 function orderLevelTopic(){
@@ -362,7 +355,8 @@ function orderLevelTopic(){
 }
 function showQuizQ(){
   let item=curQuiz[curIdx];
-  document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" | Question "+(curIdx+1)+" / 10 - Starter Free - Score: "+curScore;
+  // NO SCORE SHOWN DURING EXAM - only question number
+  document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" | Question "+(curIdx+1)+" / 10 - Starter Free - Answers at the end";
   document.getElementById('quizQ').innerHTML="Q"+(curIdx+1)+": "+item.q;
   document.getElementById('quizFeedback').innerHTML="";
   document.getElementById('quizNext').style.display='none';
@@ -373,23 +367,38 @@ function showQuizQ(){
   document.getElementById('quizOpts').innerHTML=html;
 }
 function answerRealQuiz(i,el){
-  let correct=curQuiz[curIdx].a;
-  if(i===correct){curScore++;document.getElementById('quizFeedback').innerHTML="✅ Correct! +10 points";el.style.background="#dcfce7";el.style.borderColor="#16a34a";}
-  else{document.getElementById('quizFeedback').innerHTML="❌ Correct answer: "+curQuiz[curIdx].o[correct];el.style.background="#fee2e2";}
+  // FIXED: Do NOT reveal correct/incorrect, do NOT show answer. Just save and allow Next.
+  userAnswers[curIdx]=i;
+  if(i===curQuiz[curIdx].a) curScore++;
+  // Visual only: highlight selected, no green/red correct logic
+  document.querySelectorAll('.quiz-opt').forEach(b=>{b.classList.remove('selected'); b.disabled=true;});
+  el.classList.add('selected');
+  document.getElementById('quizFeedback').innerHTML="✓ Answer saved - Click NEXT QUESTION";
   document.getElementById('quizNext').style.display='block';
-  let btns=document.querySelectorAll('.quiz-opt');btns.forEach(b=>b.disabled=true);
 }
 function nextQuizQ(){
   curIdx++;
   if(curIdx>=10){
+    // END: Show total score + full review
     document.getElementById('quizQ').innerHTML="Finished - "+currentLevel+"!";
     document.getElementById('quizOpts').innerHTML="";
     document.getElementById('quizCounter').innerHTML="Done - 10 Questions Complete for "+currentLevel;
     document.getElementById('quizNext').style.display='none';
     document.getElementById('quizResult').style.display='block';
-    document.getElementById('quizScoreText').innerHTML="🎉 "+currentLevel+" Score: "+curScore+" / 10 = "+(curScore*10)+"%";
+    document.getElementById('quizScoreText').innerHTML="🎉 Your Result: "+curScore+" / 10 = "+(curScore*10)+"% - "+currentLevel;
     document.getElementById('quizFeedback').innerHTML="";
     document.getElementById('ringScore').innerHTML=(curScore*10)+"%";
+    // Build review with correct answers - ONLY at end
+    let review="<h4 style='text-align:center'>📋 Answers Review:</h4>";
+    curQuiz.forEach((item,idx)=>{
+      let myAns=userAnswers[idx];
+      let correct=item.a;
+      let icon = myAns===correct ? "✅" : "❌";
+      let myText = myAns!==undefined ? item.o[myAns] : "No answer";
+      let correctText = item.o[correct];
+      review+="<div class='review-box'>"+icon+" <b>Q"+(idx+1)+":</b> "+item.q+"<br>Your answer: <b>"+myText+"</b><br>Correct answer: <b style='color:#16a34a'>"+correctText+"</b></div>";
+    });
+    document.getElementById('quizReview').innerHTML=review;
   }else showQuizQ();
 }
 function securePay(){
@@ -495,7 +504,7 @@ function whatsappOrder(pkg){
   window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
 }
 function joinExam(name){alert("Joining "+name+" for "+currentLevel+" - Good luck!");showSection('takeExam');}
-function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML=correct?"✅ Correct!":"❌ Try again!";}
-function submitExam(){alert("Exam submitted! AI marking... Result: 85%");showSection('results');}
+function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML="✓ Answer saved"; }
+function submitExam(){alert("Exam submitted! Result will show at the end.");showSection('results');}
 </script>
 </body></html>
