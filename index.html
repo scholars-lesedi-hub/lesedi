@@ -50,6 +50,8 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .game-box{background:#f8fafc;border:2px dashed #16a34a;border-radius:12px;padding:14px;margin:10px 0;text-align:center}
 .quiz-opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid #e2e8f0;padding:11px;border-radius:10px;margin:6px 0;cursor:pointer;font-weight:bold}
 .quiz-opt:hover{border-color:#2563eb}
+.level-btn{background:#fff;border:2px solid #0a2463;padding:8px 10px;border-radius:20px;margin:3px;cursor:pointer;font-weight:bold;font-size:13px}
+.level-btn.active{background:#0a2463;color:#fff}
 @media(max-width:800px){.hero h2{white-space:normal;font-size:20px}.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
@@ -77,7 +79,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div class="main">
 <div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD</h3><p style="font-size:13px">3 Months FREE TRIAL - min 3 tests.</p><button class="btn-blue" onclick="showSection('upload')">+ Create Quiz/Test/Exam from PDF</button> <button class="btn-blue" style="background:#16a34a" onclick="showSection('aiTeacher')">🤖 AI Assessment Help</button><p id="teacherInfo"></p></div>
-<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD</h3><p style="font-size:13px">Starter Free - 10 Questions / Two Topics per month.</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM NOW - 10 FREE QUESTIONS</button><p id="studentInfo"></p></div>
+<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD</h3><p style="font-size:13px">Starter Free - 10 Questions / Two Topics per month - By Your Standard.</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM - CHOOSE YOUR STANDARD</button><p id="studentInfo"></p></div>
 <div id="privateDash" class="dash" style="background:#fdf2f8;border:2px solid #f472b6"><h3>🔒 PRIVATE DASHBOARD</h3><p style="font-size:13px">Private assessments only.</p><button class="btn-blue" style="background:#be185d" onclick="showSection('upload')">🔒 Private Assessment Upload</button><p id="privateInfo"></p></div>
 <div id="parentDash" class="dash" style="background:#f0fdf4;border:2px solid #22c55e"><h3>👨‍👩‍👧 PARENT DASHBOARD</h3><p style="font-size:13px">See your child's progress.</p><button class="btn-blue" style="background:#16a34a" onclick="showParentReport()">📄 My Child's Report - 85%</button><p id="parentInfo"></p></div>
 
@@ -95,54 +97,63 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div style="display:grid;grid-template-columns:1fr 260px;gap:10px;margin-top:12px">
 <div>
 <div class="grid4">
-<div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>10 FREE Questions</p></div>
+<div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>By Standard / Level</p></div>
 <div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Educational Games</h3><p>Label Scramble Naming</p></div>
 <div class="gcard purple" onclick="showSection('results')">📊<h3>View Results</h3><p>Check your scores</p></div>
 <div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
+</div>
+
+<!-- LEVEL SELECTOR -->
+<div class="card" style="border:2px solid #0a2463;background:#eff6ff">
+<h3>🎯 CHOOSE YOUR STANDARD / LEVEL - Questions Will Match Your Level</h3>
+<p style="font-size:13px">Example: Standard 6 learner gets Standard 6 questions only.</p>
+<div style="text-align:center">
+<button class="level-btn" onclick="setLevel('Std 5',this)">Std 5</button>
+<button class="level-btn active" onclick="setLevel('Std 6',this)">Std 6 ⭐</button>
+<button class="level-btn" onclick="setLevel('Std 7',this)">Std 7 (PSLE)</button>
+<button class="level-btn" onclick="setLevel('Form 1',this)">Form 1</button>
+<button class="level-btn" onclick="setLevel('Form 2',this)">Form 2</button>
+<button class="level-btn" onclick="setLevel('BGCSE',this)">BGCSE</button>
+</div>
+<p style="font-size:13px;text-align:center">Selected: <b id="selectedLevelText">Std 6</b> • <span id="levelDesc">PSLE Level - Fractions, Decimals, Grammar</span></p>
+<input id="wantTopic" placeholder="What do you want? e.g. Fractions, Photosynthesis, Verbs... (optional)">
+<div style="display:flex;gap:8px">
+<button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS - <span class="lvlName">Std 6</span> - 10 Qs FREE</button>
+<button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH - <span class="lvlName">Std 6</span> - 10 Qs FREE</button>
+</div>
+<p style="font-size:12px;color:#555;margin-top:6px">Starter Free: 10 Questions / Two Topics per month for YOUR level. Need more? P10/Topic via Orange Money 77980825 / MyZaka 71823638</p>
 </div>
 
 <!-- FREE EDUCATIONAL GAMES -->
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
 <h3>🎮 FREE EDUCATIONAL GAMES - PSLE / BGCSE</h3>
 <p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center;margin:0">Label Scramble Naming</p>
-<p style="font-size:13px;color:#555;text-align:center">Free for all students! Tap to play. No payment needed.</p>
-
+<p style="font-size:13px;color:#555;text-align:center">Free for all - Questions match your Standard: <b id="gameLevel">Std 6</b></p>
 <div class="game-box">
-<div style="font-size:13px;font-weight:bold;color:#16a34a">🏷️ LABEL - PSLE Science</div>
-<div style="font-size:48px">🌱</div><b>Label the Plant</b><br><small>Where is the LEAF?</small><br>
+<div style="font-size:13px;font-weight:bold;color:#16a34a">🏷️ LABEL - <span class="lvlName">Std 6</span> Science</div>
+<div style="font-size:48px">🌱</div><b>Label the Plant - Photosynthesis</b><br><small>Where is the LEAF?</small><br>
 <button class="label-btn" onclick="labelGame(this,true)">Leaf 🍃</button>
 <button class="label-btn" onclick="labelGame(this,false)">Root</button>
 <button class="label-btn" onclick="labelGame(this,false)">Stem</button>
 <p id="game1Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
-
 <div class="game-box" style="border-color:#2563eb;background:#eff6ff">
-<div style="font-size:13px;font-weight:bold;color:#2563eb">🔤 SCRAMBLE - BGCSE English</div>
+<div style="font-size:13px;font-weight:bold;color:#2563eb">🔤 SCRAMBLE - <span class="lvlName">Std 6</span> English</div>
 <div style="font-size:48px">📖</div><b>Scramble: Unscramble the word</b><br><small>D E S E L I → What is correct?</small><br>
 <button class="label-btn" onclick="labelGame2(this,false)">LESEDY</button>
 <button class="label-btn" onclick="labelGame2(this,true)">LESEDI ✅</button>
 <button class="label-btn" onclick="labelGame2(this,false)">LESEDE</button>
 <p id="game2Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
-
 <div class="game-box" style="border-color:#facc15;background:#fffbeb">
-<div style="font-size:13px;font-weight:bold;color:#b45309">🗺️ NAMING - Botswana Social Studies</div>
+<div style="font-size:13px;font-weight:bold;color:#b45309">🗺️ NAMING - <span class="lvlName">Std 6</span> Social Studies</div>
 <div style="font-size:48px">🇧🇼</div><b>Naming: Capital of Botswana?</b><br><small>PSLE Social Studies - Maps</small><br>
 <button class="label-btn" onclick="labelGame3(this,false)">Palapye</button>
 <button class="label-btn" onclick="labelGame3(this,true)">Gaborone ✅</button>
 <button class="label-btn" onclick="labelGame3(this,false)">Maun</button>
 <p id="game3Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
-
 <button class="btn-blue" style="width:100%;background:#16a34a;padding:12px" onclick="showSection('labelling')">PLAY ALL FREE GAMES → Label Scramble Naming</button>
-</div>
-
-<div class="card">
-<h3>📝 STARTER FREE - 10 QUESTIONS / TWO TOPICS - Try Now</h3>
-<p style="font-size:13px">Free: 10 Questions per month. Choose a topic:</p>
-<button class="btn-blue" style="width:48%;background:#2563eb" onclick="startRealQuiz('math')">📐 MATHS - 10 Questions</button>
-<button class="btn-blue" style="width:48%;background:#7c3aed" onclick="startRealQuiz('eng')">📖 ENGLISH - 10 Questions</button>
-<p style="font-size:12px;color:#555;margin-top:8px">After 10 free questions, order more for P10/Topic via Orange Money 77980825 / MyZaka 71823638</p>
 </div>
 
 <div class="card">
@@ -160,15 +171,14 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <h3>💰 PRICING & PACKAGES - Learn-Click-Press</h3>
 <table class="price-table">
 <tr><th>Package</th><th>Price (BWP)</th><th>Billing Cycle</th></tr>
-<tr><td><b>Starter / Student</b><br><small>10 Questions / Two Topics per month</small></td><td><b>Free</b></td><td>Always Free</td></tr>
+<tr><td><b>Starter / Student</b><br><small>10 Questions / Two Topics per month - By Standard</small></td><td><b>Free</b></td><td>Always Free</td></tr>
 <tr><td><b>Pro Scholar</b></td><td><b>BWP 50 – 75</b></td><td>Per Month</td></tr>
 <tr><td><b>Educator / Tutor</b></td><td><b>BWP 150 – 200</b></td><td>Per Month</td></tr>
 <tr><td><b>School / Center Hub</b><br><small>3 Months Free Trial min 3 tests</small></td><td><b>BWP 800 – 1,500</b></td><td>Per Term (Annual discount)</td></tr>
 </table>
 
 <div class="price-grid">
-<!-- FIXED: START FREE now goes to QUIZ, NOT payment -->
-<div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">10 Questions / Two Topics<br>per month</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startRealQuiz('math')">START FREE - NO PAYMENT</button></div>
+<div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">10 Questions / Two Topics<br>per month - Your Level</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startLevelQuiz('math')">START FREE - NO PAYMENT</button></div>
 <div class="price-card"><h3>Pro Scholar</h3><div class="price">BWP 50-75</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Pro Scholar BWP 50-75')">BUY PRO</button></div>
 <div class="price-card"><h3>Educator / Tutor</h3><div class="price">BWP 150-200</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%;background:#7c3aed" onclick="buyPackage('Educator BWP 150-200')">BUY EDUCATOR</button></div>
 <div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term - Annual discount</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
@@ -190,19 +200,19 @@ Pay securely - No bank details shown<br>
 
 <div class="two-col">
 <div class="card"><h3>📅 Upcoming Examinations <span style="float:right;color:#2563eb;font-size:12px;cursor:pointer">View All →</span></h3>
-<div class="exam-row"><div class="date-box">NOV<br>10</div><div style="flex:1;padding:0 8px"><b>Mathematics Test - 10 Qs FREE</b><br><small>Primary 6 • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="startRealQuiz('math')">Start Free</button></div>
-<div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English Language Test - 10 Qs FREE</b><br><small>Primary 6 • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="startRealQuiz('eng')">Start Free</button></div>
+<div class="exam-row"><div class="date-box">NOV<br>10</div><div style="flex:1;padding:0 8px"><b>Mathematics - <span class="lvlName">Std 6</span> - 10 Qs FREE</b><br><small>Your Level • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="startLevelQuiz('math')">Start Free</button></div>
+<div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English - <span class="lvlName">Std 6</span> - 10 Qs FREE</b><br><small>Your Level • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="startLevelQuiz('eng')">Start Free</button></div>
 </div>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
-<p style="font-size:13px">🎮 <b>NEW! Free Educational Games!</b><br><small>Label Scramble Naming - FREE for all!</small></p>
-<p style="font-size:13px">📝 <b>10 FREE Questions LIVE!</b><br><small>Maths + English - Two Topics per month!</small></p>
+<p style="font-size:13px">🎯 <b>NEW! By Standard / Level!</b><br><small>Std 6 gets Std 6 questions - Choose your level!</small></p>
+<p style="font-size:13px">🎮 <b>Free Educational Games!</b><br><small>Label Scramble Naming - FREE for all!</small></p>
 <p style="font-size:13px">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free!</small></p>
 </div>
 </div>
 </div>
 
 <div>
-<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner" id="ringScore">85%</div></div><p>Overall Performance</p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b id="examsTaken">12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button></div>
+<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner" id="ringScore">85%</div></div><p>Overall Performance - <span class="lvlName">Std 6</span></p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b id="examsTaken">12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button></div>
 <div class="card" style="margin-top:10px"><h3>🎮 Free Educational Games</h3><p style="font-size:13px;font-weight:bold;color:#16a34a">Label Scramble Naming</p><p style="font-size:13px">Free for all! No payment.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW</button></div>
 <div class="card" style="margin-top:10px"><h3>🔒 How to Pay?</h3><p style="font-size:13px">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment - Click Pay Securely - No details shown<br>4. WhatsApp proof to 71823638<br><br><b>Starter Free = NO PAYMENT</b></p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button></div>
 <div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">Parents can see progress & pay.</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
@@ -211,7 +221,7 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="labellingSection" style="display:none">
-<div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE EDUCATIONAL GAMES - PSLE / BGCSE</h3><p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center">Label Scramble Naming</p><p style="font-size:13px">Click the correct answer - FREE - No payment!</p>
+<div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE EDUCATIONAL GAMES - <span class="lvlName">Std 6</span></h3><p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center">Label Scramble Naming</p><p style="font-size:13px">Click the correct answer - FREE - No payment!</p>
 <div class="game-box"><div style="font-size:60px">🌱 🌼 🌿</div><b>🏷️ LABEL: Label the Plant - Photosynthesis</b><br><br>
 <button class="label-btn" onclick="alert('Correct! Leaf makes food!')">Leaf</button> <button class="label-btn" onclick="alert('Correct! Root takes water!')">Root</button> <button class="label-btn" onclick="alert('Correct! Stem holds plant!')">Stem</button><br><br>
 <b>🔤 SCRAMBLE - BGCSE:</b><br><button class="label-btn" onclick="alert('Correct! LESEDI!')">LESEDI</button> <button class="label-btn" onclick="alert('Try again!')">LESEDY</button><br><br>
@@ -222,10 +232,12 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="takeExamSection" style="display:none">
-<div class="card"><h3>📝 Take Examination - Starter Free: 10 Questions / Two Topics</h3>
-<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn-blue" style="flex:1" onclick="startRealQuiz('math')">📐 MATHS - 10 Qs</button><button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startRealQuiz('eng')">📖 ENGLISH - 10 Qs</button></div>
+<div class="card"><h3>📝 Take Examination - <span class="lvlName">Std 6</span> - Starter Free: 10 Questions / Two Topics</h3>
+<p style="font-size:13px;font-weight:bold">1. Choose your Standard: <select id="examLevelSelect" onchange="setLevel(this.value,null)"><option>Std 5</option><option selected>Std 6</option><option>Std 7</option><option>Form 1</option><option>Form 2</option><option>BGCSE</option></select></p>
+<p style="font-size:13px">2. What do you want? <input id="examWantTopic" placeholder="e.g. Fractions, Verbs, Photosynthesis..."></p>
+<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS - <span class="lvlName">Std 6</span></button><button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH - <span class="lvlName">Std 6</span></button><button class="btn-blue" style="flex:1;background:#16a34a" onclick="startLevelQuiz('sci')">🔬 SCIENCE - <span class="lvlName">Std 6</span></button></div>
 <div style="background:#f8fafc;padding:14px;border-radius:10px">
-<p id="quizCounter" style="font-size:12px;font-weight:bold;color:#2563eb">Choose Maths or English to start your 10 FREE questions - No Payment</p>
+<p id="quizCounter" style="font-size:12px;font-weight:bold;color:#2563eb">Choose your level & subject to start your 10 FREE questions - No Payment</p>
 <b id="quizQ"></b>
 <div id="quizOpts"></div>
 <p id="quizFeedback" style="font-weight:bold"></p>
@@ -233,8 +245,8 @@ Pay securely - No bank details shown<br>
 </div>
 <div id="quizResult" style="display:none;text-align:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:10px">
 <h3 id="quizScoreText"></h3>
-<p style="font-size:13px">Starter Free used: 10 Questions. Want more?</p>
-<button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold" onclick="buyPackage('ORDER ASSESSMENT - P10/Topic')">ORDER MORE - P10/Topic via WhatsApp</button>
+<p style="font-size:13px">Starter Free used: 10 Questions. Want more for your level?</p>
+<button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold" onclick="orderLevelTopic()">ORDER MORE FOR MY LEVEL - P10/Topic via WhatsApp</button>
 </div>
 <button class="btn-blue" onclick="showSection('home')" style="margin-top:10px">← Back to Home</button>
 </div>
@@ -245,7 +257,7 @@ Pay securely - No bank details shown<br>
 </div>
 
 <div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages</h3><p>Starter Free 10 Questions / Two Topics per month - NO PAYMENT • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
+<div class="card"><h3>💰 All Packages</h3><p>Starter Free 10 Questions / Two Topics per month - By Standard - NO PAYMENT • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Secure Bank Payment</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
 </div>
 
 <div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px"></p></div></div>
@@ -258,10 +270,10 @@ Pay securely - No bank details shown<br>
 <button class="wa-float" onclick="whatsappOrder()">💬 WhatsApp 71823638 - Order / Help</button>
 
 <div id="signupBox" class="popup"><div class="box">
-<h3>Signup - Create Account - 3 Months Free Trial</h3><input id="s_phone" placeholder="Phone - +267 7XXXXXXX"><input id="s_name" placeholder="Full Name"><input id="s_town" placeholder="Town"><input id="s_school" placeholder="School"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - START FREE TRIAL</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
+<h3>Signup - Create Account - 3 Months Free Trial</h3><input id="s_phone" placeholder="Phone - +267 7XXXXXXX"><input id="s_name" placeholder="Full Name"><input id="s_town" placeholder="Town"><input id="s_school" placeholder="School"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><select id="s_level"><option>Std 5</option><option selected>Std 6</option><option>Std 7</option><option>Form 1</option><option>Form 2</option><option>BGCSE</option></select><button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - START FREE TRIAL</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
 <div id="loginBox" class="popup"><div class="box">
-<h3>Login - Welcome Back</h3><input id="l_phone" placeholder="Phone"><input id="l_name" placeholder="Full Name"><select id="l_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><button class="btn-blue" style="width:100%;padding:13px" onclick="doLogin()">LOGIN TO DASHBOARD</button><p style="text-align:center;font-size:13px">No account? <b onclick="closeLogin();openSignup()" style="cursor:pointer">Signup - 3 Months Free</b></p><p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
+<h3>Login - Welcome Back</h3><input id="l_phone" placeholder="Phone"><input id="l_name" placeholder="Full Name"><select id="l_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><select id="l_level"><option>Std 5</option><option selected>Std 6</option><option>Std 7</option><option>Form 1</option><option>Form 2</option><option>BGCSE</option></select><button class="btn-blue" style="width:100%;padding:13px" onclick="doLogin()">LOGIN TO DASHBOARD</button><p style="text-align:center;font-size:13px">No account? <b onclick="closeLogin();openSignup()" style="cursor:pointer">Signup - 3 Months Free</b></p><p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
 </div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -269,42 +281,79 @@ Pay securely - No bank details shown<br>
 let db=null;
 try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
 const SECURE_ACC="62728369697";
-const QUIZZES={
-math:[
-{q:"What is 12 x 8?",o:["96","88","84","108"],a:0},
-{q:"What is 150 ÷ 5?",o:["30","25","35","20"],a:0},
-{q:"What is 25% of 200?",o:["50","25","75","100"],a:0},
-{q:"If a book costs P15, how much for 4 books?",o:["P60","P45","P50","P75"],a:0},
-{q:"What is the next number: 2,4,8,16,?",o:["32","20","24","30"],a:0},
-{q:"What is 7² ?",o:["49","14","21","77"],a:0},
-{q:"A triangle has how many sides?",o:["3","4","5","6"],a:0},
-{q:"What is 1km in metres?",o:["1000m","100m","10m","10000m"],a:0},
-{q:"What is 9 + 6 x 2?",o:["21","30","15","18"],a:0},
-{q:"What is 3/4 of 100?",o:["75","70","80","60"],a:0}
-],
-eng:[
-{q:"Choose correct spelling:",o:["Lesedi","Lesedy","Lesede","Lessedi"],a:0},
-{q:"What is plural of 'child'?",o:["children","childs","childes","childrens"],a:0},
-{q:"Choose correct sentence:",o:["She goes to school.","She go to school.","She going school.","She gone school."],a:0},
-{q:"What is opposite of 'hot'?",o:["cold","warm","heat","sun"],a:0},
-{q:"Past tense of 'go'?",o:["went","goed","going","gone to"],a:0},
-{q:"Which is a noun?",o:["Gaborone","quickly","run","beautiful"],a:0},
-{q:"Choose adjective: The ___ girl.",o:["beautiful","run","quickly","she"],a:0},
-{q:"What is synonym of 'happy'?",o:["joyful","sad","angry","tired"],a:0},
-{q:"Complete: I ___ reading a book.",o:["am","is","are","be"],a:0},
-{q:"Which is capital of Botswana?",o:["Gaborone","Maun","Francistown","Palapye"],a:0}
-]
+let currentLevel="Std 6";
+const LEVEL_DESC={"Std 5":"Fractions, Sentences, Plants","Std 6":"PSLE Level - Fractions, Decimals, Grammar","Std 7":"PSLE Final - Ratio, Tenses, Ecosystems","Form 1":"Algebra, Comprehension","Form 2":"Equations, Essay Writing","BGCSE":"Biology, Maths Paper 1, English Paper 2"};
+// QUIZ BANK BY LEVEL
+const QUIZ_BANK={
+"Std 5_math":[{q:"What is 10 x 5?",o:["50","40","60","15"],a:0},{q:"What is 1/2 of 10?",o:["5","2","10","4"],a:0},{q:"What is 20+15?",o:["35","25","30","45"],a:0},{q:"How many sides in a square?",o:["4","3","5","6"],a:0},{q:"What is 100 ÷ 10?",o:["10","20","5","100"],a:0},{q:"Next: 5,10,15,?",o:["20","25","18","30"],a:0},{q:"What is 3x3?",o:["9","6","12","3"],a:0},{q:"What is 1m in cm?",o:["100cm","10cm","1000cm","50cm"],a:0},{q:"What is 7+8?",o:["15","14","16","13"],a:0},{q:"Half of 100?",o:["50","25","75","20"],a:0}],
+"Std 6_math":[{q:"What is 12 x 8? (Std 6)",o:["96","88","84","108"],a:0},{q:"What is 150 ÷ 5?",o:["30","25","35","20"],a:0},{q:"What is 25% of 200?",o:["50","25","75","100"],a:0},{q:"If book P15, 4 books?",o:["P60","P45","P50","P75"],a:0},{q:"Next: 2,4,8,16,?",o:["32","20","24","30"],a:0},{q:"What is 7² ?",o:["49","14","21","77"],a:0},{q:"Triangle sides?",o:["3","4","5","6"],a:0},{q:"1km in metres?",o:["1000m","100m","10m","10000m"],a:0},{q:"9 + 6 x 2?",o:["21","30","15","18"],a:0},{q:"3/4 of 100?",o:["75","70","80","60"],a:0}],
+"Std 7_math":[{q:"Ratio 2:3, total 50, small share?",o:["20","30","25","15"],a:0},{q:"What is 0.5 x 20?",o:["10","5","20","15"],a:0},{q:"Average of 10,20,30?",o:["20","15","25","30"],a:0},{q:"15% of 200?",o:["30","25","20","40"],a:0},{q:"Area of 5x4 rectangle?",o:["20","18","9","25"],a:0},{q:"What is 2/3 + 1/3?",o:["1","2/6","1/3","5/3"],a:0},{q:"Solve x+5=12, x=?",o:["7","17","5","12"],a:0},{q:"Perimeter 4cm square?",o:["16cm","8cm","12cm","20cm"],a:0},{q:"What is 1000 ÷ 25?",o:["40","25","50","20"],a:0},{q:"Next prime after 7?",o:["11","9","13","10"],a:0}],
+"BGCSE_math":[{q:"Solve 2x+3=11, x=?",o:["4","5","3","7"],a:0},{q:"Gradient of y=3x+2?",o:["3","2","5","1"],a:0},{q:"√81?",o:["9","8","7","81"],a:0},{q:"Simplify 2² x 2³",o:["32","16","8","64"],a:0},{q:"What is 3! ?",o:["6","9","3","12"],a:0},{q:"Cos 0°?",o:["1","0","0.5","-1"],a:0},{q:"Mean 4,6,8,10?",o:["7","6","8","9"],a:0},{q:"Factorise x²-9?",o:["(x-3)(x+3)","(x-9)(x+1)","(x+3)²","(x-3)²"],a:0},{q:"Probability of head in coin?",o:["1/2","1","1/3","1/4"],a:0},{q:"Log 100 base 10?",o:["2","10","1","100"],a:0}],
+"Std 6_eng":[{q:"Choose correct spelling: (Std 6)",o:["Lesedi","Lesedy","Lesede","Lessedi"],a:0},{q:"Plural of 'child'?",o:["children","childs","childes","childrens"],a:0},{q:"Correct sentence:",o:["She goes to school.","She go to school.","She going school.","She gone school."],a:0},{q:"Opposite of 'hot'?",o:["cold","warm","heat","sun"],a:0},{q:"Past tense of 'go'?",o:["went","goed","going","gone to"],a:0},{q:"Which is a noun?",o:["Gaborone","quickly","run","beautiful"],a:0},{q:"Adjective: The ___ girl.",o:["beautiful","run","quickly","she"],a:0},{q:"Synonym of 'happy'?",o:["joyful","sad","angry","tired"],a:0},{q:"I ___ reading.",o:["am","is","are","be"],a:0},{q:"Capital of Botswana?",o:["Gaborone","Maun","Francistown","Palapye"],a:0}],
+"Std 5_eng":[{q:"I ___ a boy.",o:["am","is","are","be"],a:0},{q:"Plural of book?",o:["books","bookes","book","bookz"],a:0},{q:"Opposite of big?",o:["small","large","huge","tall"],a:0},{q:"She ___ to school.",o:["goes","go","going","gone"],a:0},{q:"What is a verb?",o:["doing word","naming word","describing word","joining word"],a:0},{q:"Past of play?",o:["played","plays","playing","play"],a:0},{q:"Choose correct: ___ apple",o:["an","a","the","is"],a:0},{q:"Which is animal?",o:["cow","table","car","book"],a:0},{q:"Synonym of big?",o:["large","small","tiny","short"],a:0},{q:"How are you?",o:["I am fine","I is fine","I are fine","I be fine"],a:0}],
+"Std 7_eng":[{q:"Choose correct tense: She ___ since morning.",o:["has been reading","have been reading","is reading","read"],a:0},{q:"Passive: He wrote a letter.",o:["A letter was written by him","A letter is written","He is wrote","Letter was write"],a:0},{q:"Synonym of 'brave'?",o:["courageous","fearful","weak","shy"],a:0},{q:"Antonym of 'ancient'?",o:["modern","old","past","early"],a:0},{q:"Choose idiom: Break the ___",o:["ice","glass","stone","egg"],a:0},{q:"Direct speech punctuation?",o:["\"Hello,\" she said","Hello she said","Hello, she said","Hello she said."],a:0},{q:"Which is abstract noun?",o:["love","table","Gaborone","dog"],a:0},{q:"Past perfect: I ___ finished.",o:["had","have","has","having"],a:0},{q:"Choose correct: Neither ___",o:["is","are","were","have"],a:0},{q:"Report writing greeting?",o:["Dear Sir/Madam","Hi bro","Hello there","Hey"],a:0}],
+"BGCSE_eng":[{q:"Choose correct: If I ___ rich, I would travel.",o:["were","was","am","are"],a:0},{q:"Essay: Introduction should?",o:["Introduce topic","Conclude","Give examples","List references"],a:0},{q:"What is metaphor?",o:["Comparing without like/as","Comparing with like","Exaggeration","Repetition"],a:0},{q:"Synonym of 'abandon'?",o:["leave","keep","hold","stay"],a:0},{q:"Choose formal: ",o:["I would be grateful","Give me now","I want it","Gimme"],a:0},{q:"Summary should be?",o:["Brief and own words","Copy all","Long","Add opinion"],a:0},{q:"What is alliteration?",o:["Same starting sound","Rhyme","Opposite","Question"],a:0},{q:"Correct: The committee ___ agreed.",o:["has","have","are","is have"],a:0},{q:"What is theme?",o:["Main idea","Character","Setting","Plot twist"],a:0},{q:"Comprehension skill: Inference means?",o:["Reading between lines","Copying","Skimming","Scanning"],a:0}],
+"Std 6_sci":[{q:"Which part makes food in plant?",o:["Leaf","Root","Stem","Flower"],a:0},{q:"What gas do plants take?",o:["Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],a:0},{q:"How many legs does insect have?",o:["6","8","4","10"],a:0},{q:"Water boils at?",o:["100°C","50°C","90°C","120°C"],a:0},{q:"Main source of energy?",o:["Sun","Moon","Wind","Coal"],a:0},{q:"What do bees give us?",o:["Honey","Milk","Eggs","Wool"],a:0},{q:"Which is living?",o:["Tree","Stone","Car","Chair"],a:0},{q:"Ecosystem includes?",o:["Living + non-living","Only animals","Only plants","Only water"],a:0},{q:"What is habitat?",o:["Place where organism lives","Food","Water","Air"],a:0},{q:"Which organ pumps blood?",o:["Heart","Liver","Lung","Kidney"],a:0}],
+"BGCSE_sci":[{q:"Photosynthesis equation produces?",o:["Glucose + Oxygen","Carbon + Water","Protein + Energy","Nitrogen + Oxygen"],a:0},{q:"Powerhouse of cell?",o:["Mitochondria","Nucleus","Ribosome","Vacuole"],a:0},{q:"pH of neutral?",o:["7","0","14","1"],a:0},{q:"Newton's 2nd law?",o:["F=ma","E=mc²","V=IR","P=IV"],a:0},{q:"What is DNA?",o:["Genetic material","Protein","Enzyme","Hormone"],a:0},{q:"Chemical symbol for water?",o:["H2O","CO2","O2","NaCl"],a:0},{q:"Which blood cells carry oxygen?",o:["Red","White","Platelets","Plasma"],a:0},{q:"What is osmosis?",o:["Water movement across membrane","Blood flow","Photosynthesis","Respiration"],a:0},{q:"Unit of current?",o:["Ampere","Volt","Ohm","Watt"],a:0},{q:"What causes day/night?",o:["Earth rotation","Moon orbit","Sun moving","Eclipse"],a:0}],
+"Form 1_math":[{q:"What is -5 + 8?",o:["3","-3","13","-13"],a:0},{q:"Simplify 3a+2a?",o:["5a","6a","5a²","a"],a:0},{q:"What is 1/2 + 1/4?",o:["3/4","2/6","1/6","1/2"],a:0},{q:"Solve x-3=7, x=?",o:["10","4","21","3"],a:0},{q:"What is 10% of 500?",o:["50","100","25","5"],a:0},{q:"Area of triangle base 6 height 4?",o:["12","24","10","20"],a:0},{q:"What is HCF of 6 and 9?",o:["3","2","18","9"],a:0},{q:"What is 2³?",o:["8","6","9","4"],a:0},{q:"Angle in straight line?",o:["180°","90°","360°","45°"],a:0},{q:"Next: 1,3,5,?",o:["7","6","8","9"],a:0}],
+"Form 2_math":[{q:"Solve 3x=18, x=?",o:["6","9","3","21"],a:0},{q:"What is gradient 2x+4?",o:["2","4","6","0"],a:0},{q:"Factorise 6x+12?",o:["6(x+2)","3(x+4)","6x+12","2(x+6)"],a:0},{q:"What is √144?",o:["12","14","16","11"],a:0},{q:"Expand (x+2)(x+3)?",o:["x²+5x+6","x²+6","x+5","x²+5"],a:0},{q:"What is 5² - 3²?",o:["16","4","25","34"],a:0},{q:"Mean 5,10,15?",o:["10","15","5","20"],a:0},{q:"What is 2/5 as %?",o:["40%","20%","25%","50%"],a:0},{q:"Angle sum triangle?",o:["180°","360°","90°","270°"],a:0},{q:"What is 7x0?",o:["0","7","1","70"],a:0}]
 };
-let curQuiz=null,curIdx=0,curScore=0;
-function startRealQuiz(topic){
+function getQuizFor(level, subject){
+  let key=level.replace(" ","")+"_"+subject;
+  // Try exact, fallback to Std 6
+  if(QUIZ_BANK[level+"_ "+subject]) return QUIZ_BANK[level+"_ "+subject];
+  // Normalize: Std 6 -> Std 6
+  let k=level+"_"+subject;
+  if(QUIZ_BANK[k]) return QUIZ_BANK[k];
+  // For levels without specific, map
+  if(subject==="math" && !QUIZ_BANK[k]) {
+    if(level==="Form 1") return QUIZ_BANK["Form 1_math"];
+    if(level==="Form 2") return QUIZ_BANK["Form 2_math"];
+    if(level==="BGCSE") return QUIZ_BANK["BGCSE_math"];
+    if(level==="Std 5") return QUIZ_BANK["Std 5_math"];
+    if(level==="Std 7") return QUIZ_BANK["Std 7_math"];
+    return QUIZ_BANK["Std 6_math"];
+  }
+  if(subject==="eng" && !QUIZ_BANK[k]) {
+    if(level==="Std 5") return QUIZ_BANK["Std 5_eng"];
+    if(level==="Std 7") return QUIZ_BANK["Std 7_eng"];
+    if(level==="BGCSE") return QUIZ_BANK["BGCSE_eng"];
+    return QUIZ_BANK["Std 6_eng"];
+  }
+  if(subject==="sci") {
+    if(level==="BGCSE") return QUIZ_BANK["BGCSE_sci"];
+    return QUIZ_BANK["Std 6_sci"];
+  }
+  return QUIZ_BANK["Std 6_math"];
+}
+let curQuiz=null,curIdx=0,curScore=0,curSubject="math";
+function setLevel(lvl,btn){
+  currentLevel=lvl;
+  document.getElementById('selectedLevelText').innerHTML=lvl;
+  document.getElementById('levelDesc').innerHTML=LEVEL_DESC[lvl]||lvl;
+  document.getElementById('gameLevel').innerHTML=lvl;
+  document.querySelectorAll('.lvlName').forEach(e=>e.innerHTML=lvl);
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  let sel=document.getElementById('examLevelSelect'); if(sel) sel.value=lvl;
+}
+function startLevelQuiz(subject){
+  curSubject=subject;
+  let want=document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || "";
   showSection('takeExam');
-  curQuiz=QUIZZES[topic];curIdx=0;curScore=0;
+  curQuiz=getQuizFor(currentLevel, subject);
+  curIdx=0;curScore=0;
   document.getElementById('quizResult').style.display='none';
+  if(want) document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" | Topic you want: <b>"+want+"</b> | Questions matched to your level";
   showQuizQ();
+}
+function orderLevelTopic(){
+  let want=document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || "General";
+  whatsappOrder("ORDER ASSESSMENT - "+currentLevel+" - "+curSubject+" - Topic: "+want+" - P10/Topic");
 }
 function showQuizQ(){
   let item=curQuiz[curIdx];
-  document.getElementById('quizCounter').innerHTML="Question "+(curIdx+1)+" / 10 - Starter Free - No Payment - Score: "+curScore;
+  document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" | Question "+(curIdx+1)+" / 10 - Starter Free - Score: "+curScore;
   document.getElementById('quizQ').innerHTML="Q"+(curIdx+1)+": "+item.q;
   document.getElementById('quizFeedback').innerHTML="";
   document.getElementById('quizNext').style.display='none';
@@ -324,12 +373,12 @@ function answerRealQuiz(i,el){
 function nextQuizQ(){
   curIdx++;
   if(curIdx>=10){
-    document.getElementById('quizQ').innerHTML="Finished!";
+    document.getElementById('quizQ').innerHTML="Finished - "+currentLevel+"!";
     document.getElementById('quizOpts').innerHTML="";
-    document.getElementById('quizCounter').innerHTML="Done - 10 Questions Complete";
+    document.getElementById('quizCounter').innerHTML="Done - 10 Questions Complete for "+currentLevel;
     document.getElementById('quizNext').style.display='none';
     document.getElementById('quizResult').style.display='block';
-    document.getElementById('quizScoreText').innerHTML="🎉 Your Score: "+curScore+" / 10 = "+(curScore*10)+"%";
+    document.getElementById('quizScoreText').innerHTML="🎉 "+currentLevel+" Score: "+curScore+" / 10 = "+(curScore*10)+"%";
     document.getElementById('quizFeedback').innerHTML="";
     document.getElementById('ringScore').innerHTML=(curScore*10)+"%";
   }else showQuizQ();
@@ -371,22 +420,22 @@ function showSection(sec){
   else if(sec==='upload'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>{document.getElementById('pdfFile').scrollIntoView()},100); }
   else{
     document.getElementById('otherSection').style.display='block';
-    let titles={results:"My Results - 85% Overall",reports:"Performance Reports - P30",account:"My Account",help:"Help & Support - WhatsApp 71823638 / 77980825"};
+    let titles={results:"My Results - 85% Overall - "+currentLevel,reports:"Performance Reports - P30",account:"My Account - "+currentLevel,help:"Help & Support - WhatsApp 71823638 / 77980825"};
     document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Educational Games - Label Scramble Naming available! 10 Free Questions per month - No payment for Starter.";
+    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Level: "+currentLevel+" - Pay Orange Money 77980825 / MyZaka 71823638 / Secure Payment. 3 Months Free Trial min 3 tests. Free Educational Games - Label Scramble Naming available! 10 Free Questions per month - By Standard.";
   }
 }
-function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q);}
+function searchExams(){let q=document.getElementById('searchInput').value; if(q) alert("Searching for: "+q+" for "+currentLevel);}
 function showDashboard(role,name){
   document.getElementById('teacherDash').style.display='none';
   document.getElementById('studentDash').style.display='none';
   document.getElementById('privateDash').style.display='none';
   document.getElementById('parentDash').style.display='none';
-  document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
-  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests.";}
-  else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready.";}
-  else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall.";}
-  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - NO PAYMENT.";}
+  document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+' • '+currentLevel+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
+  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. Level: "+currentLevel;}
+  else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready. Level: "+currentLevel;}
+  else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall. Level: "+currentLevel;}
+  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - Level: "+currentLevel+" - NO PAYMENT.";}
 }
 async function doSignup(){
   let phone=document.getElementById('s_phone').value.trim();
@@ -394,46 +443,49 @@ async function doSignup(){
   let town=document.getElementById('s_town').value.trim();
   let school=document.getElementById('s_school').value.trim()||"All Schools";
   let role=document.getElementById('s_role').value||"Student";
+  let lvl=document.getElementById('s_level')?.value||currentLevel;
+  setLevel(lvl,null);
   if(!phone||!name){alert("Enter phone and name");return;}
   const {error}=await db.from('lesedi_users').insert([{phone:phone,full_name:name,town:town,school:school,role:role}]);
   if(error) alert("Error: "+error.message);
-  else{alert("Dumela "+name+"! "+role+" account created! 3 Months FREE TRIAL for Schools - min 3 tests!");closeSignup();showDashboard(role,name);}
+  else{alert("Dumela "+name+"! "+role+" "+lvl+" account created! 3 Months FREE TRIAL for Schools - min 3 tests!");closeSignup();showDashboard(role,name);}
 }
 async function doLogin(){
   let phone=document.getElementById('l_phone').value.trim();
   let role=document.getElementById('l_role').value;
+  let lvl=document.getElementById('l_level')?.value||currentLevel;
+  setLevel(lvl,null);
   if(!phone){alert("Enter phone");return;}
   const {data,error}=await db.from('lesedi_users').select('*').eq('phone',phone).limit(1);
   if(error){alert(error.message);return;}
-  if(data&&data.length>0){alert("Dumela "+data[0].full_name+"! Login to "+role+" Dashboard!");closeLogin();showDashboard(role,data[0].full_name);}
+  if(data&&data.length>0){alert("Dumela "+data[0].full_name+"! Login to "+role+" "+lvl+" Dashboard!");closeLogin();showDashboard(role,data[0].full_name);}
   else{alert("No account for "+phone+" - Signup first - 3 Months Free Trial");closeLogin();openSignup();}
 }
 function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
   let type=document.getElementById('assessType').value;
   if(!f){alert("Choose PDF first - Learn-Click-Press");return;}
-  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b>... Your digital link is being created! Schools: 3 Months FREE TRIAL min 3 tests.";
+  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b>... Your digital link is being created! Schools: 3 Months FREE TRIAL min 3 tests.";
 }
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){alert("Type topic for AI Teacher");return;}
   let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for:</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words<br>3. Marking scheme: 2 marks definition, 3 example";
+  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+":</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+"<br>3. Marking scheme: 2 marks definition, 3 example";
 }
 function buyPackage(pkg){
-  // FIXED: Starter Free never shows payment
   if(pkg.includes("Starter Free")){
-    startRealQuiz('math');
+    startLevelQuiz('math');
     return;
   }
-  alert("You selected: "+pkg+"\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nThen WhatsApp proof to 71823638 / 77980825!");
-  whatsappOrder(pkg);
+  alert("You selected: "+pkg+" for "+currentLevel+"\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nSecure Bank Payment - Click PAY SECURELY NOW - No bank details shown\n\nThen WhatsApp proof to 71823638 / 77980825!");
+  whatsappOrder(pkg+" - "+currentLevel);
 }
 function whatsappOrder(pkg){
-  let msg = pkg ? "Dumela! I want "+pkg+" - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub";
+  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - Education Lesedi Scholars Hub" : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel;
   window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
 }
-function joinExam(name){alert("Joining "+name+" - Good luck!");showSection('takeExam');}
+function joinExam(name){alert("Joining "+name+" for "+currentLevel+" - Good luck!");showSection('takeExam');}
 function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML=correct?"✅ Correct!":"❌ Try again!";}
 function submitExam(){alert("Exam submitted! AI marking... Result: 85%");showSection('results');}
 </script>
