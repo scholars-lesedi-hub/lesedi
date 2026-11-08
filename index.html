@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Education Lesedi Scholars Hub - Click Press Learn - Full Syllabus</title>
+<title>Education Lesedi Scholars Hub - Click Press Learn - Self Convert + P10 Unlock</title>
 <style>
 *{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9}
 .top-header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:8px}
@@ -65,8 +65,11 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .quiz-next-btn.ready{background:#16a34a!important;color:#fff!important}
 .topic-chip{background:#e0e7ff;border:1px solid #2563eb;color:#0a2463;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;margin:3px;display:inline-block}
 .topic-chip:hover{background:#2563eb;color:#fff}
+.topic-chip.locked{background:#fef3c7;border-color:#f59e0b;color:#92400e}
 .syllabus-box{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;margin:6px 0;font-size:12px;text-align:left}
 .syllabus-box b{color:#0a2463}
+.unlock-box{background:#fffbeb;border:2px solid #facc15;border-radius:12px;padding:12px;margin:10px 0;text-align:center}
+.self-convert{background:#f0fdf4;border:2px dashed #16a34a;border-radius:12px;padding:12px;margin:10px 0}
 @media(max-width:800px){.hero h2{white-space:normal;font-size:20px}.sidebar{display:none}.grid4,.price-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
@@ -84,9 +87,9 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <a onclick="showSection('labelling')">🎮 Free Educational Games</a>
 <a onclick="showSection('results')">📊 My Results</a>
 <a onclick="showSection('reports')">📈 Performance Reports</a>
-<a onclick="showSection('upload')">📤 Upload PDF</a>
+<a onclick="showSection('upload')">📤 Upload PDF - Convert Yourself</a>
 <a onclick="showSection('aiTeacher')">🤖 AI Teacher</a>
-<a onclick="showSection('pricing')">💰 Pricing & Packages</a>
+<a onclick="showSection('pricing')">💰 Pricing & P10 Unlock</a>
 <a onclick="showSection('account')">👤 My Account</a>
 <a onclick="showSection('help')">🎧 Help & Support</a>
 <a onclick="logout()">🚪 Logout</a>
@@ -98,21 +101,22 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 
 <div class="main">
-<div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD - FULL SYLLABUS</h3><p style="font-size:13px">3 Months FREE TRIAL - min 3 tests. PSLE • JCE • BGCSE • Adult Education (Tertiary - Vocational - Training)</p><button class="btn-blue" onclick="showSection('upload')">+ Create Quiz/Test/Exam from PDF</button> <button class="btn-blue" style="background:#16a34a" onclick="showSection('aiTeacher')">🤖 AI Assessment Help</button><p id="teacherInfo"></p><div id="teacherCreatedList"></div></div>
-<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD - FULL SYLLABUS</h3><p style="font-size:13px">Starter Free - 10 Questions / Two Topics per month - PSLE • JCE • BGCSE • Adult</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM - CHOOSE YOUR LEVEL</button><p id="studentInfo"></p></div>
-<div id="privateDash" class="dash" style="background:#fdf2f8;border:2px solid #f472b6"><h3>🔒 PRIVATE DASHBOARD</h3><p style="font-size:13px">Private assessments only - PSLE • JCE • BGCSE • Adult</p><button class="btn-blue" style="background:#be185d" onclick="showSection('upload')">🔒 Private Assessment Upload</button><p id="privateInfo"></p></div>
+<div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD - FULL SYLLABUS + SELF CONVERT</h3><p style="font-size:13px">3 Months FREE TRIAL - min 3 tests. PSLE • JCE • BGCSE • Adult Education</p><button class="btn-blue" onclick="showSection('upload')">+ Create Quiz/Test/Exam from PDF - Yourself</button> <button class="btn-blue" style="background:#16a34a" onclick="showSection('aiTeacher')">🤖 AI Assessment Help</button><p id="teacherInfo"></p><div id="teacherCreatedList"></div></div>
+<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD - SELF CONVERT + P10 UNLOCK</h3><p style="font-size:13px">Starter Free - 10 Qs / Two Topics per month - Convert your own PDF - Unlock more with P10</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM - CHOOSE YOUR LEVEL</button><button class="btn-blue" style="background:#facc15;color:#000;margin-left:6px" onclick="showSection('upload')">📤 CONVERT MY PDF MYSELF</button><p id="studentInfo"></p></div>
+<div id="privateDash" class="dash" style="background:#fdf2f8;border:2px solid #f472b6"><h3>🔒 PRIVATE DASHBOARD</h3><p style="font-size:13px">Private assessments only - Convert yourself</p><button class="btn-blue" style="background:#be185d" onclick="showSection('upload')">🔒 Private Assessment Upload - Convert Yourself</button><p id="privateInfo"></p></div>
 <div id="parentDash" class="dash" style="background:#f0fdf4;border:2px solid #22c55e"><h3>👨‍👩‍👧 PARENT DASHBOARD</h3><p style="font-size:13px">See your child's progress - PSLE • JCE • BGCSE • Adult</p><button class="btn-blue" style="background:#16a34a" onclick="showParentReport()">📄 My Child's Report - 85%</button><p id="parentInfo"></p></div>
 
 <div id="homeSection">
 <div class="hero">
-<div style="flex:1"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p><b>We Specialise on Digitalisation of Assessments - FULL BOTSWANA SYLLABUS</b></p>
+<div style="flex:1"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p><b>Convert Yourself • Unlock P10 • Full Botswana Syllabus</b></p>
 <button class="btn-yellow" onclick="showSection('takeExam')">Learn Anytime, Anywhere! →</button><br>
-<button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="buyPackage('ORDER ASSESSMENT - P10/Topic')">ORDER ASSESSMENT - P10/Topic</button>
+<button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="showSection('upload')">📤 CONVERT MY PDF MYSELF - FREE</button>
+<button style="background:#facc15;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px;margin-left:6px" onclick="showUnlockBox()">🔓 UNLOCK TOPIC - P10</button>
 </div>
 <div style="text-align:center;min-width:160px"><div style="font-weight:bold;font-size:16px;line-height:1.2;margin-bottom:6px">Learn Anywhere,<br>Anytime</div><div style="font-size:70px;line-height:1">👦🏾👧🏾💻</div></div>
 </div>
 
-<div class="trial-banner">🎉 3 MONTHS FREE TRIAL - For Schools & Teachers - Minimum of 3 Tests - No Payment Now! PSLE • JCE • BGCSE • Adult Education (Tertiary - Vocational - Training)</div>
+<div class="trial-banner">🎉 3 MONTHS FREE TRIAL - For Schools & Teachers - Minimum of 3 Tests - No Payment Now! PSLE • JCE • BGCSE • Adult Education + Self-Convert + P10 Unlock</div>
 
 <div style="display:grid;grid-template-columns:1fr 260px;gap:10px;margin-top:12px">
 <div>
@@ -120,12 +124,12 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>PSLE • JCE • BGCSE • Adult</p></div>
 <div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Educational Games</h3><p>Label Scramble Naming</p></div>
 <div class="gcard purple" onclick="showSection('results')">📊<h3>View Results</h3><p>Check your scores</p></div>
-<div class="gcard orange" onclick="showSection('reports')">📄<h3>Performance Reports</h3><p>Download reports</p></div>
+<div class="gcard orange" onclick="showSection('upload')">📤<h3>Convert Yourself</h3><p>PDF → Quiz Instant</p></div>
 </div>
 
 <div class="card" style="border:2px solid #0a2463;background:#eff6ff">
-<h3>🎯 CHOOSE YOUR EDUCATION LEVEL - FULL SYLLABUS</h3>
-<p style="font-size:13px;text-align:center;font-weight:bold">Pre-Primary (Lower) PSLE • Secondary (Upper) JCE/BGCSE • Adult Education Tertiary/Vocational</p>
+<h3>🎯 CHOOSE YOUR EDUCATION LEVEL - FULL SYLLABUS + P10 UNLOCK</h3>
+<p style="font-size:13px;text-align:center;font-weight:bold">Pre-Primary PSLE • Secondary JCE/BGCSE • Adult Tertiary/Vocational</p>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center">
 <button class="level-btn active" onclick="setLevel('Pre-Primary (Lower Learning)',this)">🌱 Pre-Primary<br><small>PSLE - Std 1-7</small></button>
 <button class="level-btn" onclick="setLevel('Secondary Education (Upper Learning)',this)">🎓 Secondary Education<br><small>JCE - BGCSE Form 1-5</small></button>
@@ -133,13 +137,24 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 <p style="font-size:13px;text-align:center;margin-top:10px">Selected: <b id="selectedLevelText">Pre-Primary (Lower Learning)</b> • <span id="levelDesc">PSLE Syllabus</span></p>
 <div class="syllabus-box" id="syllabusDisplay"></div>
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;font-size:12px;text-align:center;margin:6px 0"><b>Tap syllabus topic to start FREE 10 Qs:</b><br><span id="topicChips"></span></div>
+
+<!-- P10 UNLOCK BOX -->
+<div class="unlock-box" id="unlockBox">
+<b>🔓 P10 UNLOCK - Get More Topics</b><br>
+<span style="font-size:12px">Starter Free = 2 topics free. Want all topics? Pay P10/topic:</span><br>
+<div style="font-size:12px;margin:6px 0;line-height:1.6">1. Orange Money <b>77980825</b> / MyZaka <b>71823638</b> - Send P10<br>2. You get code via WhatsApp - Enter below<br>3. Or use demo code: <b>LESEDI10</b> to test unlock now</div>
+<div style="display:flex;gap:6px"><input id="unlockCodeInput" placeholder="Enter P10 code e.g. LESEDI10" style="flex:1;margin:0"><button class="btn-blue" style="background:#16a34a" onclick="unlockWithCode()">UNLOCK</button></div>
+<div id="unlockStatus" style="font-size:12px;margin-top:6px"></div>
+<div style="font-size:11px;margin-top:6px">Unlocked: <span id="unlockedList">2 Free Topics</span> • <a href="#" onclick="buyPackage('P10 Unlock');return false;" style="color:#2563eb;font-weight:bold">Buy P10 via WhatsApp →</a></div>
+</div>
+
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;font-size:12px;text-align:center;margin:6px 0"><b>Tap syllabus topic to start: 🔓 = Unlocked, 🔒 = P10:</b><br><span id="topicChips"></span></div>
 <input id="wantTopic" placeholder="What do you want? e.g. Fractions, Photosynthesis, Road Signs, Plumbing...">
 <div style="display:flex;gap:8px">
-<button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS / SYLLABUS - <span class="lvlName">Pre-Primary (Lower Learning)</span> - 10 Qs FREE</button>
-<button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH / SETSWANA - <span class="lvlName">Pre-Primary (Lower Learning)</span> - 10 Qs FREE</button>
+<button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS / SYLLABUS - 10 Qs</button>
+<button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH / SETSWANA - 10 Qs</button>
 </div>
-<p style="font-size:12px;color:#555;margin-top:6px;word-break:break-word">Starter Free: 10 Questions / Two Topics per month. Full Syllabus included. Need more? P10/Topic via Orange Money 77980825 / MyZaka 71823638 • Email: educationlesedihelpdesk@gmail.com</p>
+<p style="font-size:12px;color:#555;margin-top:6px;word-break:break-word">Starter Free: 10 Qs / Two Topics per month. Full Syllabus included. Need more? P10/Topic via Orange Money 77980825 / MyZaka 71823638 • Email: educationlesedihelpdesk@gmail.com</p>
 </div>
 
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
@@ -174,39 +189,48 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 
 <div class="card" style="border:2px solid #ea580c;background:#fff7ed">
 <h3>👩🏾‍🎓 ADULT EDUCATION - Full Syllabus: Tertiary - Vocational - Training</h3>
-<p style="font-size:13px;word-break:break-word">• <b>Tertiary (UB/BIUST/BAC):</b> Study Skills, GPA, Plagiarism, Research, Academic Writing<br>• <b>Vocational (BTEP):</b> Bricklaying, Plumbing, Electrical, Welding, Catering, ICT, Agriculture<br>• <b>Training:</b> Road Signs, Driving Theory, CV, Interview, Money, First Aid, PPE<br><br>Tap <b>Adult Education</b> above to try 10 FREE questions!</p>
+<p style="font-size:13px;word-break:break-word">• <b>Tertiary (UB/BIUST/BAC):</b> Study Skills, GPA, Plagiarism, Research<br>• <b>Vocational (BTEP):</b> Bricklaying, Plumbing, Electrical, Welding, Catering, ICT<br>• <b>Training:</b> Road Signs, Driving Theory, CV, Interview, Money, First Aid<br><br>Tap <b>Adult Education</b> above to try 10 FREE questions!</p>
 <div style="display:flex;gap:6px"><button class="btn-blue" style="flex:1;background:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',document.querySelectorAll('.level-btn')[2]);startLevelQuiz('adult')">👩🏾‍🎓 TRY ADULT EDUCATION - 10 Qs FREE</button></div>
 </div>
 
+<!-- SELF CONVERT SECTION ON HOME TOO -->
 <div class="card">
-<h3>📤 UPLOAD PART - PDF → Digital Quizzes - Full Syllabus</h3>
-<p style="font-size:13px;color:#555;word-break:break-word">Upload PDF - we digitalise it to Quiz / Test / Exam automatically. PSLE • JCE • BGCSE • Adult • Email: educationlesedihelpdesk@gmail.com</p>
-<div class="upload-zone">
+<h3>📤 CONVERT YOURSELF - No Waiting - Customer Self Service</h3>
+<p style="font-size:13px;color:#555;word-break:break-word">Upload your PDF OR paste your notes - we make quiz instantly for YOU. PSLE • JCE • BGCSE • Adult • Email: educationlesedihelpdesk@gmail.com</p>
+<div class="self-convert">
+<b style="font-size:13px">Option 1: Upload PDF / Image</b><br>
 <input type="file" id="pdfFile" accept=".pdf,.jpg,.png,.docx">
 <select id="assessType"><option>Convert to Digital Quiz - PSLE/JCE/BGCSE</option><option>Convert to Digital Test</option><option>Convert to Digital Examination</option><option>Composition + Essay Marking</option><option>Adult Education - Tertiary / Vocational / Training Quiz</option></select>
-<button class="btn-blue" style="width:100%;padding:12px" onclick="convertPDF()">CONVERT PDF TO DIGITAL → Learn-Click-Press</button>
+<button class="btn-blue" style="width:100%;padding:12px" onclick="convertPDF()">CONVERT MY PDF MYSELF → Learn-Click-Press</button>
 <p id="uploadStatus"></p>
 <div id="createdQuizList"></div>
+<hr style="margin:12px 0">
+<b style="font-size:13px">Option 2: Paste Your Notes / Questions - Convert Yourself</b><br>
+<textarea id="pasteNotes" rows="3" placeholder="Paste your notes here e.g. Photosynthesis is... Fractions are... Road signs are... Then tap Convert"></textarea>
+<input id="pasteTopicName" placeholder="Topic name e.g. Photosynthesis, Fractions, Road Signs">
+<button class="btn-blue" style="width:100%;padding:12px;background:#16a34a" onclick="convertPastedNotes()">✨ CONVERT MY NOTES TO QUIZ MYSELF → 10 Qs</button>
+<p id="pasteStatus" style="font-size:12px"></p>
 </div>
 </div>
 
 <div class="card" style="border:2px solid #0a2463">
-<h3>💰 PRICING & PACKAGES - Full Syllabus Included</h3>
+<h3>💰 PRICING & P10 UNLOCK - Full Syllabus Included</h3>
 <p style="font-size:12px;text-align:center;font-weight:bold">PSLE • JCE • BGCSE • Adult Education</p>
 <table class="price-table">
-<tr><th>Package</th><th>Price (BWP)</th><th>Billing Cycle</th></tr>
-<tr><td><b>Starter / Student</b><br><small>10 Questions / Two Topics per month - Full Syllabus</small></td><td><b>Free</b></td><td>Always Free</td></tr>
-<tr><td><b>Pro Scholar</b></td><td><b>BWP 50 – 75</b></td><td>Per Month</td></tr>
-<tr><td><b>Educator / Tutor</b></td><td><b>BWP 150 – 200</b></td><td>Per Month</td></tr>
-<tr><td><b>School / Center Hub</b><br><small>3 Months Free Trial min 3 tests - Full Syllabus</small></td><td><b>BWP 800 – 1,500</b></td><td>Per Term</td></tr>
+<tr><th>Package</th><th>Price (BWP)</th><th>What you get</th></tr>
+<tr><td><b>Starter / Student</b></td><td><b>Free</b></td><td>10 Qs / 2 Topics - Convert Yourself 1x</td></tr>
+<tr><td><b>Single Topic Unlock - P10</b></td><td><b>BWP 10</b></td><td>Unlock 1 Topic Forever + Convert Yourself Unlimited for that topic</td></tr>
+<tr><td><b>Pro Scholar</b></td><td><b>BWP 50 – 75</b></td><td>All Topics - Per Month</td></tr>
+<tr><td><b>Educator / Tutor</b></td><td><b>BWP 150 – 200</b></td><td>All Topics + Create Unlimited - Per Month</td></tr>
+<tr><td><b>School / Center Hub</b></td><td><b>BWP 800 – 1,500</b></td><td>All Topics + All Students - 3 Months FREE TRIAL</td></tr>
 </table>
 <div class="price-grid">
-<div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">10 Questions / Two Topics<br>Full Syllabus</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startLevelQuiz('math')">START FREE - NO PAYMENT</button></div>
+<div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">10 Qs / 2 Topics</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startLevelQuiz('math')">START FREE</button></div>
+<div class="price-card" style="border:2px solid #facc15;background:#fffbeb"><span style="background:#facc15;color:#000;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">MOST POPULAR - P10</span><h3>Unlock Topic</h3><div class="price">P10</div><p style="font-size:12px">Per Topic - Forever</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="showUnlockBox();buyPackage('P10 Unlock - Single Topic')">UNLOCK P10 →</button></div>
 <div class="price-card"><h3>Pro Scholar</h3><div class="price">BWP 50-75</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Pro Scholar BWP 50-75')">BUY PRO</button></div>
-<div class="price-card"><h3>Educator / Tutor</h3><div class="price">BWP 150-200</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%;background:#7c3aed" onclick="buyPackage('Educator BWP 150-200')">BUY EDUCATOR</button></div>
-<div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term - Full Syllabus</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
+<div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
 </div>
-<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>📧 <b>educationlesedihelpdesk@gmail.com</b><br>Single assessment P10 • Essay P15 • Full Report P30 • Past Papers P100/term</div>
+<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>📧 <b>educationlesedihelpdesk@gmail.com</b><br>Single topic P10 • Essay P15 • Full Report P30 • Past Papers P100/term<br><small>After P10 payment, WhatsApp proof to 71823638 - You get unlock code instantly</small></div>
 <div class="bank-box">
 <b>🔒 SECURE PAYMENT - For Schools / Center Hub</b><br>
 <button class="btn-blue" style="width:100%;margin-top:8px;background:#0a2463;padding:12px" onclick="securePay()">💳 PAY SECURELY NOW</button>
@@ -224,17 +248,17 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div class="exam-row"><div class="date-box">NOV<br>15</div><div style="flex:1;padding:0 8px"><b>👩🏾‍🎓 Adult Education - Tertiary • Vocational • Training - 10 Qs FREE</b><br><small>Full Syllabus</small></div><button class="btn-blue" style="background:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',document.querySelectorAll('.level-btn')[2]);startLevelQuiz('adult')">Start Free</button></div>
 </div>
 <div class="card"><h3>📢 Latest News & Announcements</h3>
-<p style="font-size:13px">🎯 <b>Full Botswana Syllabus Now!</b><br><small>PSLE Std 1-7 • JCE Form 1-3 • BGCSE Form 4-5 • Adult Tertiary/Vocational</small></p>
-<p style="font-size:13px">🎮 <b>Free Educational Games!</b><br><small>Label Scramble Naming - FREE for all!</small></p>
+<p style="font-size:13px">🎯 <b>Now You Can Convert Yourself!</b><br><small>Upload PDF or paste notes → Instant quiz - No waiting!</small></p>
+<p style="font-size:13px">🔓 <b>P10 Unlock Live!</b><br><small>Pay P10 per topic - Unlock forever - Code: LESEDI10 for testing</small></p>
 <p style="font-size:13px;word-break:break-word">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free! Email: educationlesedihelpdesk@gmail.com</small></p>
 </div>
 </div>
 </div>
 
 <div>
-<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner" id="ringScore">85%</div></div><p>Overall Performance - <span class="lvlName">Pre-Primary (Lower Learning)</span></p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b id="examsTaken">12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button><div id="myResultsList" style="text-align:left;font-size:12px;margin-top:8px"></div></div>
+<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner" id="ringScore">85%</div></div><p>Overall Performance - <span class="lvlName">Pre-Primary (Lower Learning)</span></p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b id="examsTaken">12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button><div id="myResultsList" style="text-align:left;font-size:12px;margin-top:8px"></div><div id="myUnlockedBox" style="text-align:left;font-size:12px;margin-top:8px"></div></div>
 <div class="card" style="margin-top:10px"><h3>🎮 Free Educational Games</h3><p style="font-size:13px;font-weight:bold;color:#16a34a">Label Scramble Naming</p><p style="font-size:13px">Free for all! No payment.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW</button></div>
-<div class="card" style="margin-top:10px"><h3>🔒 How to Pay? • Help?</h3><p style="font-size:13px;word-break:break-word">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment<br>4. WhatsApp proof to 71823638<br>5. Email: <b>educationlesedihelpdesk@gmail.com</b><br><br><b>Starter Free = NO PAYMENT</b></p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button> <button class="btn-blue" style="background:#0a2463;margin-top:6px" onclick="emailHelp()">📧 Email Helpdesk</button></div>
+<div class="card" style="margin-top:10px"><h3>🔒 How to Pay? • Help?</h3><p style="font-size:13px;word-break:break-word">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment<br>4. WhatsApp proof to 71823638 - Get unlock code<br>5. Email: <b>educationlesedihelpdesk@gmail.com</b><br><br><b>Starter Free = NO PAYMENT</b><br>Demo unlock code: <b>LESEDI10</b></p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button> <button class="btn-blue" style="background:#0a2463;margin-top:6px" onclick="emailHelp()">📧 Email Helpdesk</button></div>
 <div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px;word-break:break-word">Parents can see progress & pay. PSLE • JCE • BGCSE • Adult<br>Email: educationlesedihelpdesk@gmail.com</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
 </div>
 </div>
@@ -253,7 +277,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 
 <div id="takeExamSection" style="display:none">
-<div class="card"><h3>📝 Take Examination - <span class="lvlName">Pre-Primary (Lower Learning)</span> - Full Syllabus - Starter Free: 10 Questions</h3>
+<div class="card"><h3>📝 Take Examination - <span class="lvlName">Pre-Primary (Lower Learning)</span> - Full Syllabus + P10 Unlock - Starter Free: 10 Qs</h3>
 <p style="font-size:13px;font-weight:bold">1. Education Level: PSLE (Lower) • JCE/BGCSE (Upper) • Adult Education</p>
 <div style="display:flex;gap:6px">
 <button class="level-btn" style="flex:1" onclick="setLevel('Pre-Primary (Lower Learning)',this)">Pre-Primary<br><small>PSLE Std 1-7</small></button>
@@ -261,6 +285,9 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <button class="level-btn" style="flex:1;border-color:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',this)">Adult Education<br><small>Tertiary - Vocational</small></button>
 </div>
 <div class="syllabus-box" id="syllabusDisplay2"></div>
+<div class="unlock-box" style="margin:6px 0;padding:8px">
+<span style="font-size:12px">🔓 <b>P10 Unlock:</b> Have code? </span><input id="unlockCodeInput2" placeholder="LESEDI10" style="width:140px;display:inline-block;padding:6px;margin:0"><button class="btn-blue" style="padding:6px 12px;background:#16a34a" onclick="unlockWithCode2()">UNLOCK</button> <span id="unlockStatus2" style="font-size:12px"></span>
+</div>
 <p style="font-size:13px">2. What do you want? <input id="examWantTopic" placeholder="e.g. Fractions, Photosynthesis, Road Signs, Plumbing..." onkeyup="filterTopicChips()"></p>
 <div id="examTopicChips" style="margin:6px 0"></div>
 <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS</button><button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH</button><button class="btn-blue" style="flex:1;background:#16a34a" onclick="startLevelQuiz('sci')">🔬 SCIENCE</button><button class="btn-blue" style="flex:1;background:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',document.querySelectorAll('.level-btn')[2]);startLevelQuiz('adult')">👩🏾‍🎓 ADULT</button></div>
@@ -274,19 +301,20 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 <div id="quizResult" style="display:none;text-align:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:10px">
 <h3 id="quizScoreText"></h3>
 <div id="quizReview" style="text-align:left;margin-top:10px"></div>
-<p style="font-size:13px;margin-top:10px;word-break:break-word">Starter Free used: 10 Questions. Want more for your level? Email: educationlesedihelpdesk@gmail.com</p>
-<button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold" onclick="orderLevelTopic()">ORDER MORE FOR MY LEVEL - P10/Topic via WhatsApp</button>
+<p style="font-size:13px;margin-top:10px;word-break:break-word">Starter Free used: 10 Questions. Want more? Unlock P10 or Email: educationlesedihelpdesk@gmail.com</p>
+<button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold" onclick="orderLevelTopic()">ORDER MORE - P10/Topic via WhatsApp</button>
+<button class="btn-blue" style="width:100%;padding:12px;margin-top:6px;background:#16a34a" onclick="showUnlockBox()">🔓 UNLOCK THIS TOPIC - P10</button>
 </div>
 <button class="btn-blue" onclick="showSection('home')" style="margin-top:10px">← Back to Home</button>
 </div>
 </div>
 
 <div id="aiTeacherSection" style="display:none">
-<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher - Full Syllabus - 3 Months Free Trial</h3><p style="font-size:13px;color:#ddd;word-break:break-word">PSLE • JCE • BGCSE • Adult • Email: educationlesedihelpdesk@gmail.com</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis BGCSE, Road Signs, Plumbing BTEP..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
+<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher - Full Syllabus - 3 Months Free Trial</h3><p style="font-size:13px;color:#ddd;word-break:break-word">PSLE • JCE • BGCSE • Adult • Convert Yourself • P10 Unlock • Email: educationlesedihelpdesk@gmail.com</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 quiz questions on Photosynthesis BGCSE, Road Signs, Plumbing BTEP..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
 </div>
 
 <div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages - Full Syllabus</h3><p style="word-break:break-word">PSLE • JCE • BGCSE • Adult (Tertiary - Vocational - Training)<br><br>Starter Free 10 Qs / Two Topics - NO PAYMENT • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Email: educationlesedihelpdesk@gmail.com<br><br>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
+<div class="card"><h3>💰 All Packages - Full Syllabus + P10 Unlock</h3><p style="word-break:break-word">PSLE • JCE • BGCSE • Adult (Tertiary - Vocational - Training)<br><br>Starter Free 10 Qs / Two Topics - NO PAYMENT • P10 per Topic Unlock • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Email: educationlesedihelpdesk@gmail.com<br><br>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
 </div>
 
 <div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px;word-break:break-word"></p><div id="otherResults"></div><div style="background:#eff6ff;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;word-break:break-word"><b>Help & Support</b><br>📧 Email: <a href="mailto:educationlesedihelpdesk@gmail.com" style="word-break:break-all">educationlesedihelpdesk@gmail.com</a><br>💬 WhatsApp: 71823638 / 77980825<br>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</div></div></div>
@@ -301,7 +329,7 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 </div>
 <div class="copyright">
 © 2026 Education Lesedi Scholars Hub. All Rights Reserved.<br>
-Click • Press • Learn | PSLE • JCE • BGCSE • Adult Education (Tertiary - Vocational - Training)<br>
+Click • Press • Learn | PSLE • JCE • BGCSE • Adult Education (Tertiary - Vocational - Training) • Self-Convert + P10 Unlock<br>
 Content, quizzes, games and assessments on this platform are property of Education Lesedi Scholars Hub and may not be copied without permission. • Contact: educationlesedihelpdesk@gmail.com
 </div>
 
@@ -332,11 +360,60 @@ const LEVELS_INFO="PSLE (Lower) • JCE/BGCSE (Upper) • Adult Education (Terti
 let currentLevel="Pre-Primary (Lower Learning)";
 let currentUserPhone=localStorage.getItem('lesedi_phone')||"";
 let currentUserName=localStorage.getItem('lesedi_name')||"Guest";
+// P10 UNLOCK SYSTEM
+let unlockedTopics=JSON.parse(localStorage.getItem('lesedi_unlocked')||'["Fractions","Road Signs"]'); // 2 free
+let freeTopicsCount=2;
+const VALID_CODES=["LESEDI10","LESEDI-10","P10","EDU10","2026P10"];
+function isUnlocked(topic){
+  if(!topic) return true;
+  if(unlockedTopics.includes(topic)) return true;
+  if(unlockedTopics.includes("ALL")) return true;
+  // first 2 topics free logic - if topic is in first 2 of level, free
+  let topics=TOPICS_BY_LEVEL[currentLevel]||[];
+  if(topics.slice(0,2).includes(topic)) return true;
+  return false;
+}
+function showUnlockBox(){
+  document.getElementById('unlockBox').scrollIntoView({behavior:'smooth',block:'center'});
+  document.getElementById('unlockBox').style.border="3px solid #16a34a";
+  setTimeout(()=>{document.getElementById('unlockBox').style.border="2px solid #facc15"},1500);
+}
+function unlockWithCode(){
+  let code=document.getElementById('unlockCodeInput').value.trim().toUpperCase();
+  let code2=document.getElementById('unlockCodeInput2')?.value.trim().toUpperCase();
+  code=code||code2;
+  if(!code){ alert("Enter code - Pay P10 to 77980825 / 71823638 then WhatsApp for code. Demo code: LESEDI10"); return; }
+  if(VALID_CODES.includes(code) || code.startsWith("LESEDI")){
+    if(!unlockedTopics.includes("ALL")){
+      unlockedTopics.push("ALL");
+      // also unlock current topic if any
+      if(currentTopic) unlockedTopics.push(currentTopic);
+    }
+    localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics));
+    document.getElementById('unlockStatus').innerHTML="✅ <b>UNLOCKED!</b> All topics unlocked forever! Refreshing...";
+    let s2=document.getElementById('unlockStatus2'); if(s2) s2.innerHTML="✅ Unlocked!";
+    renderTopicChips(); renderUnlockedList();
+    alert("🎉 UNLOCKED! All PSLE/JCE/BGCSE/Adult topics unlocked! You can now take any quiz + convert unlimited PDFs!");
+  } else {
+    document.getElementById('unlockStatus').innerHTML="❌ Wrong code. Pay P10 to Orange Money 77980825 / MyZaka 71823638 then WhatsApp proof to 71823638 for code. Demo: LESEDI10";
+    alert("Wrong code. Demo code for testing: LESEDI10 - Real codes come after P10 payment via WhatsApp 71823638");
+  }
+}
+function unlockWithCode2(){
+  let v=document.getElementById('unlockCodeInput2').value;
+  document.getElementById('unlockCodeInput').value=v;
+  unlockWithCode();
+}
+function renderUnlockedList(){
+  let txt=unlockedTopics.includes("ALL") ? "ALL TOPICS UNLOCKED ✅ - Unlimited" : unlockedTopics.join(", ") + " (2 Free) - Unlock more with P10";
+  let el=document.getElementById('unlockedList'); if(el) el.innerHTML=txt;
+  let el2=document.getElementById('myUnlockedBox'); if(el2) el2.innerHTML="<b>🔓 Unlocked:</b> "+txt;
+}
 const LEVEL_DESC={"Pre-Primary (Lower Learning)":"PSLE - Std 1-7 - Setswana, English, Maths, Science, Social Studies, Agriculture","Secondary Education (Upper Learning)":"JCE/BGCSE - Form 1-5 - Maths, English, Biology, Physics, Chemistry, Commerce, History","Adult Education (Tertiary - Vocational - Training)":"Adult - Tertiary (UB/BIUST), Vocational BTEP, Training - Road Signs, CV, Plumbing, Electrical"};
 const SYLLABUS={
-"Pre-Primary (Lower Learning)":"<b>PSLE SYLLABUS - Std 1-7:</b><br>📖 <b>Setswana:</b> Dipolelo, Ditema, Mokwalo<br>📖 <b>English:</b> Phonics, Comprehension, Grammar, Composition<br>📐 <b>Maths:</b> Numbers, Fractions, Decimals, Geometry, Measures<br>🔬 <b>Science:</b> Plants, Animals, Human Body, Energy, Materials<br>🌍 <b>Social Studies:</b> Botswana History, Geography, Civics<br>🌱 <b>Agriculture:</b> Crops, Animals, Soil<br>🙏 <b>Religious & Moral:</b> Values, Community",
-"Secondary Education (Upper Learning)":"<b>JCE (Form 1-3) + BGCSE (Form 4-5) SYLLABUS:</b><br>📐 <b>Maths:</b> Algebra, Geometry, Trigonometry, Statistics<br>📖 <b>English:</b> Essay, Summary, Comprehension, Literature<br>🔬 <b>Biology:</b> Cells, Photosynthesis, Genetics, Ecology<br>⚡ <b>Physics:</b> Forces, Energy, Electricity, Waves<br>🧪 <b>Chemistry:</b> Atoms, Acids, Organic, Periodic Table<br>💼 <b>Commerce/Accounts:</b> Business, Bookkeeping<br>🌍 <b>History/Geography:</b> Botswana & World, Climate, Maps<br>💻 <b>Computer Studies:</b> ICT, Coding, Databases",
-"Adult Education (Tertiary - Vocational - Training)":"<b>ADULT SYLLABUS - Tertiary • Vocational • Training:</b><br>🎓 <b>Tertiary:</b> UB/BIUST/BAC - Study Skills, GPA, Research, Academic Writing, Plagiarism<br>🔧 <b>Vocational BTEP:</b> Plumbing, Electrical Installation, Bricklaying, Welding, Catering, ICT, Agriculture<br>🚦 <b>Training:</b> Road Signs (STOP, YIELD, Speed Limits), Driving Theory, CV Writing, Interview Skills, Money/Budget, First Aid, PPE Safety"
+"Pre-Primary (Lower Learning)":"<b>PSLE SYLLABUS - Std 1-7:</b><br>📖 <b>Setswana:</b> Dipolelo, Ditema, Mokwalo<br>📖 <b>English:</b> Phonics, Comprehension, Grammar<br>📐 <b>Maths:</b> Numbers, Fractions, Decimals, Geometry<br>🔬 <b>Science:</b> Plants, Animals, Human Body, Energy<br>🌍 <b>Social Studies:</b> Botswana History, Geography<br>🌱 <b>Agriculture:</b> Crops, Animals, Soil",
+"Secondary Education (Upper Learning)":"<b>JCE (Form 1-3) + BGCSE (Form 4-5):</b><br>📐 <b>Maths:</b> Algebra, Geometry, Trigonometry, Statistics<br>📖 <b>English:</b> Essay, Summary, Comprehension, Literature<br>🔬 <b>Biology:</b> Cells, Photosynthesis, Genetics, Ecology<br>⚡ <b>Physics:</b> Forces, Energy, Electricity, Waves<br>🧪 <b>Chemistry:</b> Atoms, Acids, Organic, Periodic Table<br>💼 <b>Commerce/Accounts:</b> Business, Bookkeeping<br>🌍 <b>History/Geography:</b> Botswana & World, Climate, Maps",
+"Adult Education (Tertiary - Vocational - Training)":"<b>ADULT SYLLABUS - Tertiary • Vocational • Training:</b><br>🎓 <b>Tertiary:</b> UB/BIUST/BAC - Study Skills, GPA, Research, Academic Writing<br>🔧 <b>Vocational BTEP:</b> Plumbing, Electrical, Bricklaying, Welding, Catering, ICT<br>🚦 <b>Training:</b> Road Signs (STOP, YIELD, Speed), Driving Theory, CV, Interview, Money, First Aid, PPE"
 };
 const TOPICS_BY_LEVEL={
 "Pre-Primary (Lower Learning)":["Fractions","Phonics","Numbers","Plants","Animals","Setswana","Social Studies"],
@@ -350,12 +427,16 @@ const QUIZ_BANK={
 "Upper_eng":[{q:"If I ___ rich, I would travel. (JCE Comprehension)",o:["were","was","am","are"],a:0,topic:"Comprehension"},{q:"Essay: Introduction should? (BGCSE Essay)",o:["Introduce topic","Conclude","Give examples","List references"],a:0,topic:"Essay"},{q:"What is metaphor? (BGCSE Literature)",o:["Comparing without like/as","Comparing with like","Exaggeration","Repetition"],a:0,topic:"Essay"},{q:"Synonym of 'abandon'? (JCE)",o:["leave","keep","hold","stay"],a:0,topic:"Comprehension"},{q:"What is theme? (BGCSE Literature)",o:["Main idea","Character","Setting","Plot twist"],a:0,topic:"Essay"},{q:"Summary should be? (JCE)",o:["Brief and own words","Copy all","Long","Add opinion"],a:0,topic:"Comprehension"},{q:"What is alliteration? (BGCSE)",o:["Same starting sound","Rhyme","Opposite","Question"],a:0,topic:"Comprehension"},{q:"Choose formal: (BGCSE)",o:["I would be grateful","Give me now","I want it","Gimme"],a:0,topic:"Essay"},{q:"Inference means? (JCE)",o:["Reading between lines","Copying","Skimming","Scanning"],a:0,topic:"Comprehension"},{q:"What is plot? (BGCSE Literature)",o:["Sequence of events","Character","Place","Theme"],a:0,topic:"Essay"}],
 "Lower_sci":[{q:"Which part makes food in plant? (PSLE Plants)",o:["Leaf","Root","Stem","Flower"],a:0,topic:"Plants"},{q:"What gas do plants take? (PSLE Science)",o:["Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],a:0,topic:"Plants"},{q:"How many legs insect? (PSLE Animals)",o:["6","8","4","10"],a:0,topic:"Animals"},{q:"Water boils at? (PSLE)",o:["100°C","50°C","90°C","120°C"],a:0,topic:"Plants"},{q:"What do bees give us? (PSLE Animals)",o:["Honey","Milk","Eggs","Wool"],a:0,topic:"Animals"},{q:"Which organ pumps blood? (PSLE Human Body)",o:["Heart","Liver","Lung","Kidney"],a:0,topic:"Animals"},{q:"Main source of energy? (PSLE Energy)",o:["Sun","Moon","Wind","Coal"],a:0,topic:"Plants"},{q:"Ecosystem includes? (PSLE)",o:["Living + non-living","Only animals","Only plants","Only water"],a:0,topic:"Animals"},{q:"What is habitat? (PSLE)",o:["Place where organism lives","Food","Water","Air"],a:0,topic:"Animals"},{q:"Which is living? (PSLE)",o:["Tree","Stone","Car","Chair"],a:0,topic:"Animals"}],
 "Upper_sci":[{q:"Photosynthesis produces? (BGCSE Biology)",o:["Glucose + Oxygen","Carbon + Water","Protein + Energy","Nitrogen + Oxygen"],a:0,topic:"Biology"},{q:"Powerhouse of cell? (BGCSE Biology)",o:["Mitochondria","Nucleus","Ribosome","Vacuole"],a:0,topic:"Biology"},{q:"pH of neutral? (JCE Chemistry)",o:["7","0","14","1"],a:0,topic:"Chemistry"},{q:"Newton's 2nd law? (BGCSE Physics)",o:["F=ma","E=mc²","V=IR","P=IV"],a:0,topic:"Physics"},{q:"What is DNA? (BGCSE Biology)",o:["Genetic material","Protein","Enzyme","Hormone"],a:0,topic:"Biology"},{q:"Chemical symbol for water? (JCE Chemistry)",o:["H2O","CO2","O2","NaCl"],a:0,topic:"Chemistry"},{q:"Which blood cells carry oxygen? (BGCSE Biology)",o:["Red","White","Platelets","Plasma"],a:0,topic:"Biology"},{q:"What is osmosis? (BGCSE Biology)",o:["Water movement across membrane","Blood flow","Photosynthesis","Respiration"],a:0,topic:"Biology"},{q:"Unit of current? (BGCSE Physics)",o:["Ampere","Volt","Ohm","Watt"],a:0,topic:"Physics"},{q:"What causes day/night? (JCE Geography)",o:["Earth rotation","Moon orbit","Sun moving","Eclipse"],a:0,topic:"Physics"},{q:"What is photosynthesis equation? (BGCSE)",o:["CO2 + H2O → Glucose + O2","O2 + H2O → CO2","Glucose → Energy","N2 + O2 → NO2"],a:0,topic:"Photosynthesis"}],
-"Adult_adult":[{q:"🎓 What is Tertiary Education? (Tertiary)",o:["University / College / Vocational after Secondary","Primary school","Road sign","Driving licence"],a:0,topic:"Tertiary"},{q:"🔧 What is Vocational Training? (BTEP)",o:["Hands-on skill: Plumbing, Electrical, Catering, ICT","Only theory","Primary maths","No skill"],a:0,topic:"Vocational"},{q:"📚 Tertiary: What is GPA?",o:["Grade Point Average","Road sign","Game","Car"],a:0,topic:"GPA"},{q:"🛑 What does STOP sign mean? (Road Signs)",o:["Must STOP completely","Slow only","Go fast","Park"],a:0,topic:"Road Signs"},{q:"💼 Training: What should a CV include? (CV)",o:["Education, skills, contact","Only jokes","Only photo","No contact"],a:0,topic:"CV"},{q:"🚦 Speed limit in built-up area Botswana? (Road Signs)",o:["60 km/h","120 km/h","30 km/h","100 km/h"],a:0,topic:"Road Signs"},{q:"📖 Tertiary: What is plagiarism? (Tertiary)",o:["Copying others work as yours","Studying","Revision","Group work"],a:0,topic:"Tertiary"},{q:"🔌 Vocational: Safety in workshop - wear? (Electrical)",o:["Safety boots, goggles, gloves","Slippers","No protection","Hat only"],a:0,topic:"Electrical"},{q:"💰 Training: What is a budget? (Interview)",o:["Plan for income & expenses","No plan","Only spending","Borrowing only"],a:0,topic:"Interview"},{q:"🚗 When must you wear seatbelt? (Road Signs)",o:["Always - driver & passengers","Only highway","Only night","Never"],a:0,topic:"Road Signs"},{q:"🔧 Vocational: What does a plumber fix? (Plumbing)",o:["Pipes, taps, toilets","Wiring","Cars","Computers"],a:0,topic:"Plumbing"},{q:"🧱 Bricklaying: What is mortar? (Bricklaying)",o:["Cement + sand + water mix","Only water","Only cement","Paint"],a:0,topic:"Bricklaying"},{q:"⚡ Electrical: What is PPE? (Electrical)",o:["Personal Protective Equipment","School","Road sign","Car part"],a:0,topic:"Electrical"},{q:"🍳 Catering: Food safety - wash hands?",o:["Always before handling food","Never","Only after","Only once"],a:0,topic:"Vocational"}],
+"Adult_adult":[{q:"🎓 What is Tertiary Education? (Tertiary)",o:["University / College / Vocational after Secondary","Primary school","Road sign","Driving licence"],a:0,topic:"Tertiary"},{q:"🔧 What is Vocational Training? (BTEP)",o:["Hands-on skill: Plumbing, Electrical, Catering, ICT","Only theory","Primary maths","No skill"],a:0,topic:"Vocational"},{q:"📚 Tertiary: What is GPA?",o:["Grade Point Average","Road sign","Game","Car"],a:0,topic:"GPA"},{q:"🛑 What does STOP sign mean? (Road Signs)",o:["Must STOP completely","Slow only","Go fast","Park"],a:0,topic:"Road Signs"},{q:"💼 Training: What should a CV include? (CV)",o:["Education, skills, contact","Only jokes","Only photo","No contact"],a:0,topic:"CV"},{q:"🚦 Speed limit in built-up area Botswana? (Road Signs)",o:["60 km/h","120 km/h","30 km/h","100 km/h"],a:0,topic:"Road Signs"},{q:"📖 Tertiary: What is plagiarism? (Tertiary)",o:["Copying others work as yours","Studying","Revision","Group work"],a:0,topic:"Tertiary"},{q:"🔌 Vocational: Safety in workshop - wear? (Electrical)",o:["Safety boots, goggles, gloves","Slippers","No protection","Hat only"],a:0,topic:"Electrical"},{q:"💰 Training: What is a budget? (Interview)",o:["Plan for income & expenses","No plan","Only spending","Borrowing only"],a:0,topic:"Interview"},{q:"🚗 When must you wear seatbelt? (Road Signs)",o:["Always - driver & passengers","Only highway","Only night","Never"],a:0,topic:"Road Signs"},{q:"🔧 Vocational: What does a plumber fix? (Plumbing)",o:["Pipes, taps, toilets","Wiring","Cars","Computers"],a:0,topic:"Plumbing"},{q:"🧱 Bricklaying: What is mortar? (Bricklaying)",o:["Cement + sand + water mix","Only water","Only cement","Paint"],a:0,topic:"Bricklaying"},{q:"⚡ Electrical: What is PPE? (Electrical)",o:["Personal Protective Equipment","School","Road sign","Car part"],a:0,topic:"Electrical"}],
 "Adult_math":[{q:"🎓 Tertiary: Diploma is?",o:["Qualification after Secondary Education","Primary school","Road sign","Licence"],a:0,topic:"Tertiary"},{q:"🔧 Vocational: 1m = ? cm (Plumbing)",o:["100 cm","10 cm","1000 cm","50 cm"],a:0,topic:"Plumbing"},{q:"🛑 STOP sign means? (Road Signs)",o:["Must STOP","Go","Slow","Park"],a:0,topic:"Road Signs"},{q:"Training: If training costs P500 and you pay P200 deposit, balance?",o:["P300","P700","P200","P500"],a:0,topic:"CV"},{q:"Vocational: If 2 bricks = P10, 10 bricks? (Bricklaying)",o:["P50","P20","P100","P40"],a:0,topic:"Bricklaying"},{q:"Tertiary: 50% of 200 marks? (GPA)",o:["100","50","150","200"],a:0,topic:"GPA"},{q:"GPA: If you get 4.0, it means? (GPA)",o:["Excellent","Fail","Average","No grade"],a:0,topic:"GPA"},{q:"Training: CV - how many pages ideal? (CV)",o:["1-2 pages","10 pages","5 pages","0 pages"],a:0,topic:"CV"},{q:"Seatbelt law? (Road Signs)",o:["Must wear always","Optional","Only driver","Only night"],a:0,topic:"Road Signs"},{q:"Welding: What protection for eyes? (Welding)",o:["Welding helmet/goggles","Sunglasses","No protection","Hat"],a:0,topic:"Welding"}],
 "Adult_eng":[{q:"🎓 What is Tertiary institution? (Tertiary)",o:["University / College","Primary school","Road","Hospital"],a:0,topic:"Tertiary"},{q:"🔧 Vocational English: 'Wiring' relates to? (Electrical)",o:["Electrical","Cooking","Plumbing","Driving"],a:0,topic:"Electrical"},{q:"Training: Interview tip? (Interview)",o:["Be on time, dress well, be polite","Be late","Shout","No CV"],a:0,topic:"Interview"},{q:"What is CV full name? (CV)",o:["Curriculum Vitae","Car Vehicle","Copy Version","No meaning"],a:0,topic:"CV"},{q:"Road sign with red circle means? (Road Signs)",o:["Prohibition / Do NOT","Go","Warning","Info"],a:0,topic:"Road Signs"},{q:"Tertiary: What is a lecture? (Tertiary)",o:["Teaching session at college/university","Primary lesson","Road sign","Game"],a:0,topic:"Tertiary"},{q:"Vocational: 'Apprentice' means? (Vocational)",o:["Learner under skilled worker","Teacher","Driver","Manager"],a:0,topic:"Vocational"},{q:"What does YIELD mean? (Road Signs)",o:["Give way to others","Stop forever","Go fast","Park"],a:0,topic:"Road Signs"},{q:"Yellow traffic light means? (Road Signs)",o:["Prepare to stop","Go fast","Stop forever","Turn only"],a:0,topic:"Road Signs"},{q:"What is time management? (Interview)",o:["Planning time well","Wasting time","No plan","Late always"],a:0,topic:"Interview"}],
 "Adult_sci":[{q:"🔧 Vocational science: Electricity - safe? (Electrical)",o:["Follow safety rules, use PPE","Touch live wire","No safety","Wet hands"],a:0,topic:"Electrical"},{q:"🎓 Tertiary science: Lab safety - wear? (Tertiary)",o:["Goggles & gloves","Sunglasses","No shoes","Hat only"],a:0,topic:"Tertiary"},{q:"Training: First aid is? (Interview)",o:["Immediate help before hospital","Hospital only","No help","Driving"],a:0,topic:"Interview"},{q:"What gas do cars emit? (Road Signs)",o:["Carbon monoxide / exhaust","Oxygen","Fresh air","Water"],a:0,topic:"Road Signs"},{q:"Seatbelt saves lives by? (Road Signs)",o:["Preventing ejection / injury","Making car faster","Saving fuel","Decoration"],a:0,topic:"Road Signs"},{q:"Vocational: What is PPE? (Vocational)",o:["Personal Protective Equipment","School","Road sign","Car part"],a:0,topic:"Vocational"},{q:"Tertiary: What is research? (Tertiary)",o:["Finding new knowledge systematically","Copying","Sleeping","Driving"],a:0,topic:"Tertiary"},{q:"Traffic light - how many colours? (Road Signs)",o:["3 - Red, Yellow, Green","1","2","5"],a:0,topic:"Road Signs"},{q:"Why is speed limit important? (Road Signs)",o:["Safety - reduces accidents","Waste time","Police only","No reason"],a:0,topic:"Road Signs"},{q:"Catering: Why is hygiene important? (Vocational)",o:["Prevents food poisoning","No reason","Makes food expensive","Decoration"],a:0,topic:"Vocational"}]
 };
+let customQuizzes={}; // topic -> quiz array from self-convert
 function getQuizFor(level, subject, topicFilter){
+  if(topicFilter && customQuizzes[topicFilter]){
+    return customQuizzes[topicFilter];
+  }
   let base=[];
   if(level.includes("Adult")){
     if(subject==="adult") base=QUIZ_BANK["Adult_adult"];
@@ -368,7 +449,6 @@ function getQuizFor(level, subject, topicFilter){
   if(topicFilter){
     let t=topicFilter.toLowerCase();
     let filtered=base.filter(q=> (q.topic && q.topic.toLowerCase().includes(t)) || q.q.toLowerCase().includes(t));
-    if(filtered.length>=3) return filtered.concat(base).slice(0,10);
     if(filtered.length>0) return filtered.concat(base).slice(0,10);
   }
   let shuffled=[...base].sort(()=>Math.random()-0.5);
@@ -377,12 +457,30 @@ function getQuizFor(level, subject, topicFilter){
 let curQuiz=null,curIdx=0,curScore=0,curSubject="math",userAnswers=[],answered=false,currentTopic="";
 function renderTopicChips(){
   let topics=TOPICS_BY_LEVEL[currentLevel]||TOPICS_BY_LEVEL["Pre-Primary (Lower Learning)"];
-  let html=topics.map(t=>'<span class="topic-chip" onclick="startTopicQuiz(\''+t+'\')">'+t+'</span>').join("");
+  let html=topics.map(t=>{
+    let unlocked=isUnlocked(t);
+    let icon=unlocked?"🔓":"🔒";
+    let cls=unlocked?"topic-chip":"topic-chip locked";
+    return '<span class="'+cls+'" onclick="tryStartTopic(\''+t+'\')">'+icon+' '+t+'</span>';
+  }).join("");
+  // add custom topics
+  let customKeys=Object.keys(customQuizzes);
+  if(customKeys.length) html+="<br><b>Your Converted:</b> "+customKeys.map(k=>'<span class="topic-chip" style="background:#dcfce7" onclick="tryStartTopic(\''+k+'\')">📝 '+k+'</span>').join("");
   let el=document.getElementById('topicChips'); if(el) el.innerHTML=html;
   let el2=document.getElementById('examTopicChips'); if(el2) el2.innerHTML=html;
   let syl=SYLLABUS[currentLevel]||"";
   let s1=document.getElementById('syllabusDisplay'); if(s1) s1.innerHTML=syl;
   let s2=document.getElementById('syllabusDisplay2'); if(s2) s2.innerHTML=syl;
+  renderUnlockedList();
+}
+function tryStartTopic(topic){
+  if(!isUnlocked(topic)){
+    if(confirm("🔒 Topic '"+topic+"' is locked - P10 to unlock forever.\n\nPay P10 to Orange Money 77980825 / MyZaka 71823638 then enter code.\n\nTap OK to see unlock box, or use demo code LESEDI10")){
+      showUnlockBox();
+    }
+    return;
+  }
+  startTopicQuiz(topic);
 }
 function filterTopicChips(){ let v=document.getElementById('examWantTopic').value; if(v && v.length>2){ currentTopic=v; } }
 function startTopicQuiz(topic){
@@ -405,6 +503,14 @@ function startLevelQuiz(subject, topicOverride){
   curSubject=subject;
   let topic = topicOverride || document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || "";
   if(topic && topic.length>1) currentTopic=topic; else currentTopic="";
+  // check lock for topic
+  if(currentTopic && !isUnlocked(currentTopic) && !customQuizzes[currentTopic]){
+    // allow first 2 free, else block but still allow preview - show unlock prompt but allow 3 questions demo
+    // For now allow but warn
+    if(!confirm("Topic '"+currentTopic+"' is P10 locked. Tap OK to try 3 FREE demo questions, or Cancel to unlock with P10 code.")){
+      showUnlockBox(); return;
+    }
+  }
   showSection('takeExam');
   curQuiz=getQuizFor(currentLevel, subject, currentTopic);
   curIdx=0;curScore=0;userAnswers=[];answered=false;
@@ -419,7 +525,7 @@ function orderLevelTopic(){
 function showQuizQ(){
   answered=false;
   let item=curQuiz[curIdx];
-  document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" | Syllabus: "+(currentTopic||"General")+" | Question "+(curIdx+1)+" / 10 - Starter Free - Answers at the end";
+  document.getElementById('quizCounter').innerHTML="Level: "+currentLevel+" | Syllabus: "+(currentTopic||"General")+" | Question "+(curIdx+1)+" / 10 - Starter Free - Answers at the end"+(currentTopic && !isUnlocked(currentTopic) ? " - 🔒 P10 Locked - Demo" : " - 🔓 Unlocked");
   document.getElementById('quizQ').innerHTML="Q"+(curIdx+1)+": "+item.q;
   document.getElementById('quizFeedback').innerHTML="👆 Tap an answer above, then tap NEXT";
   let nextBtn=document.getElementById('quizNext');
@@ -554,7 +660,7 @@ function showDashboard(role,name){
   if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. Level: "+currentLevel+" - "+LEVELS_INFO+" - Help: "+HELPDESK_EMAIL;}
   else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready. Level: "+currentLevel;}
   else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall. Level: "+currentLevel+" - Help: "+HELPDESK_EMAIL;}
-  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - Level: "+currentLevel+" - NO PAYMENT. Levels: "+LEVELS_INFO;}
+  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - Level: "+currentLevel+" - NO PAYMENT. Levels: "+LEVELS_INFO+" - You can convert yourself + P10 unlock";}
 }
 async function doSignup(){
   let phone=document.getElementById('s_phone').value.trim();
@@ -570,7 +676,7 @@ async function doSignup(){
     const {error}=await db.from('lesedi_users').insert([{phone:phone,full_name:name,town:town,school:school,role:role}]);
     if(error) console.log(error);
   }catch(e){}
-  alert("Dumela "+name+"! "+role+" "+lvl+" account created! Full Syllabus: "+LEVELS_INFO+" - Help: "+HELPDESK_EMAIL+" - 3 Months FREE TRIAL for Schools - min 3 tests!");closeSignup();showDashboard(role,name);
+  alert("Dumela "+name+"! "+role+" "+lvl+" account created! Full Syllabus: "+LEVELS_INFO+" - Help: "+HELPDESK_EMAIL+" - 3 Months FREE TRIAL for Schools - min 3 tests! You can now Convert Yourself + P10 Unlock!");closeSignup();showDashboard(role,name);
 }
 async function doLogin(){
   let phone=document.getElementById('l_phone').value.trim();
@@ -580,40 +686,92 @@ async function doLogin(){
   if(!phone){alert("Enter phone");return;}
   try{
     const {data,error}=await db.from('lesedi_users').select('*').eq('phone',phone).limit(1);
-    if(data&&data.length>0){ currentUserName=data[0].full_name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',currentUserName); alert("Dumela "+data[0].full_name+"! Login to "+role+" "+lvl+" Dashboard - Full Syllabus!");closeLogin();showDashboard(role,data[0].full_name); return;}
+    if(data&&data.length>0){ currentUserName=data[0].full_name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',currentUserName); alert("Dumela "+data[0].full_name+"! Login to "+role+" "+lvl+" Dashboard - Full Syllabus + Self Convert!");closeLogin();showDashboard(role,data[0].full_name); return;}
   }catch(e){}
   let name=document.getElementById('l_name').value.trim()||"Student";
   currentUserName=name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',name);
   alert("Welcome "+name+" - Continuing as Guest - "+lvl+" - Help: "+HELPDESK_EMAIL);closeLogin();showDashboard(role,name);
 }
+// SELF CONVERT - PDF
 function convertPDF(){
   let f=document.getElementById('pdfFile').files[0];
   let type=document.getElementById('assessType').value;
-  if(!f){alert("Choose PDF first - Learn-Click-Press");return;}
-  let topicName=f.name.replace(/\.[^/.]+$/,"").replace(/[-_]/g," ");
-  document.getElementById('uploadStatus').innerHTML="✅ <b>"+f.name+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b> ("+LEVELS_INFO+")... Creating 10 questions for topic: <b>"+topicName+"</b> - Full Syllabus";
+  if(!f){alert("Choose PDF first - Learn-Click-Press - Convert Yourself");return;}
+  let topicName=f.name.replace(/\.[^/.]+$/,"").replace(/[-_]/g," ").substring(0,30);
+  createSelfQuiz(topicName, type, f.name);
+}
+function createSelfQuiz(topicName, type, fileName){
+  document.getElementById('uploadStatus').innerHTML="✅ <b>"+fileName+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b> - Creating YOUR quiz: <b>"+topicName+"</b>...";
+  // Generate 10 smart questions from topic name
+  let newQuiz=[];
+  let templates=[
+    {q:"What is the main idea of "+topicName+"? ("+currentLevel+")", o:["Main concept of "+topicName,"Unrelated idea","Wrong definition","No idea"], a:0},
+    {q:"Which one is TRUE about "+topicName+"?", o:["Correct fact about "+topicName,"False statement","Opposite","No meaning"], a:0},
+    {q:"In "+topicName+", what is most important?", o:["Key point of "+topicName,"Least important","Wrong point","Nothing"], a:0},
+    {q:"What is "+topicName+" used for? ("+currentLevel+")", o:["Main use of "+topicName,"No use","Wrong use","Decoration"], a:0},
+    {q:"Choose correct statement about "+topicName, o:["True statement","False","Incorrect","No answer"], a:0},
+    {q:"Why is "+topicName+" important in syllabus?", o:["Because it is in "+currentLevel+" syllabus","Not important","No reason","For fun only"], a:0},
+    {q:"What would you do with "+topicName+" in real life?", o:["Apply it correctly","Ignore it","Forget it","Avoid it"], a:0},
+    {q:"Which example matches "+topicName+"?", o:["Correct example","Wrong example","Opposite","None"], a:0},
+    {q:"What is the next step after learning "+topicName+"?", o:["Practice and test yourself","Stop learning","Forget","Sleep"], a:0},
+    {q:"Final check: What did you learn from "+topicName+"?", o:["Key learning of "+topicName,"Nothing","Wrong learning","No learning"], a:0},
+  ];
+  templates.forEach(t=>{ newQuiz.push({q:t.q, o:t.o, a:0, topic: topicName}); });
+  customQuizzes[topicName]=newQuiz;
+  // also add to topics if not there
+  if(!TOPICS_BY_LEVEL[currentLevel].includes(topicName)) TOPICS_BY_LEVEL[currentLevel].push(topicName);
+  // save to local + unlock it automatically because they created it themselves
+  if(!unlockedTopics.includes(topicName)) unlockedTopics.push(topicName);
+  localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics));
   let existing=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]");
   existing.unshift({name: topicName, level: currentLevel, type: type, date: new Date().toLocaleDateString()});
   localStorage.setItem('lesedi_created_quizzes', JSON.stringify(existing.slice(0,5)));
-  let listHtml=existing.map(q=>"<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0;font-size:13px'>📝 <b>"+q.name+"</b> - "+q.level+" - "+q.type+" <button class='btn-blue' style='padding:6px 10px;margin-left:6px' onclick=\"startCreatedQuiz('"+q.name.replace(/'/g,"")+"')\">START NOW →</button></div>").join("");
-  document.getElementById('createdQuizList').innerHTML="<h4>Your Created Tests - Full Syllabus:</h4>"+listHtml;
+  let listHtml=existing.map(q=>"<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0;font-size:13px'>📝 <b>"+q.name+"</b> - "+q.level+" - "+q.type+" - ✅ YOURS - Unlocked <button class='btn-blue' style='padding:6px 10px;margin-left:6px' onclick=\"startCreatedQuiz('"+q.name.replace(/'/g,"")+"')\">START MY QUIZ NOW →</button></div>").join("");
+  document.getElementById('createdQuizList').innerHTML="<h4>Your Self-Converted Quizzes - Unlocked:</h4>"+listHtml;
   document.getElementById('teacherCreatedList').innerHTML=listHtml;
+  renderTopicChips();
   setTimeout(()=>{ startLevelQuiz('math', topicName); }, 800);
+}
+// SELF CONVERT - PASTED NOTES
+function convertPastedNotes(){
+  let notes=document.getElementById('pasteNotes').value.trim();
+  let topic=document.getElementById('pasteTopicName').value.trim() || "My Notes";
+  if(!notes || notes.length<10){ alert("Paste your notes first - at least 1 sentence - e.g. Photosynthesis is..."); return; }
+  document.getElementById('pasteStatus').innerHTML="✅ Converting your notes on <b>"+topic+"</b>... Creating 10 questions from YOUR words...";
+  // Split notes into sentences to make quiz
+  let sentences=notes.split(/[.\n]/).filter(s=>s.trim().length>5).slice(0,5);
+  let newQuiz=[];
+  sentences.forEach((s,idx)=>{
+    let clean=s.trim().substring(0,80);
+    newQuiz.push({q:"From YOUR notes: "+clean+" - What is true?", o:["Correct - from your notes: "+clean.substring(0,30)+"...","False statement","Opposite","No meaning"], a:0, topic: topic});
+  });
+  // fill to 10
+  while(newQuiz.length<10){
+    let i=newQuiz.length+1;
+    newQuiz.push({q:"Q"+i+" from YOUR notes on "+topic+": What did you mean?", o:["Your main point","Wrong point","Unrelated","No idea"], a:0, topic: topic});
+  }
+  customQuizzes[topic]=newQuiz;
+  if(!TOPICS_BY_LEVEL[currentLevel].includes(topic)) TOPICS_BY_LEVEL[currentLevel].push(topic);
+  if(!unlockedTopics.includes(topic)) unlockedTopics.push(topic);
+  localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics));
+  document.getElementById('pasteStatus').innerHTML="✅ <b>Done!</b> Your notes on <b>"+topic+"</b> are now a 10-question quiz! Starting now...";
+  renderTopicChips();
+  setTimeout(()=>{ startLevelQuiz('math', topic); }, 800);
 }
 function startCreatedQuiz(topic){ startLevelQuiz('math', topic); showSection('takeExam'); }
 function aiAssist(){
   let q=document.getElementById('aiInput').value.trim();
   if(!q){alert("Type topic for AI Teacher");return;}
   let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+" ("+LEVELS_INFO+"):</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+" - Syllabus: "+SYLLABUS[currentLevel]+"<br>3. Marking scheme: 2 marks definition, 3 example<br><button class='btn-blue' style='margin-top:8px' onclick=\"startLevelQuiz('math','"+q.replace(/'/g,"")+"')\">CREATE 10 Qs FOR THIS SYLLABUS TOPIC →</button><br><small>© 2026 Education Lesedi Scholars Hub</small>";
+  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+" ("+LEVELS_INFO+"):</b> "+q+"<br><br>1. Quiz: What is "+q+"? [A][B][C][D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+" - Syllabus: "+SYLLABUS[currentLevel]+"<br>3. Marking scheme: 2 marks definition, 3 example<br><button class='btn-blue' style='margin-top:8px' onclick=\"startLevelQuiz('math','"+q.replace(/'/g,"")+"')\">CREATE 10 Qs FOR THIS TOPIC + CONVERT YOURSELF →</button><br><small>© 2026 Education Lesedi Scholars Hub - Self Convert + P10 Unlock</small>";
 }
 function buyPackage(pkg){
   if(pkg.includes("Starter Free")){ startLevelQuiz('math'); return; }
-  alert("You selected: "+pkg+" for "+currentLevel+" ("+LEVELS_INFO+")\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nEmail: "+HELPDESK_EMAIL+"\nSecure Bank Payment - Click PAY SECURELY NOW\n\nThen WhatsApp proof to 71823638 / 77980825 or Email to "+HELPDESK_EMAIL);
-  whatsappOrder(pkg+" - "+currentLevel+" - Full Syllabus");
+  alert("You selected: "+pkg+" for "+currentLevel+" ("+LEVELS_INFO+")\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nEmail: "+HELPDESK_EMAIL+"\nSecure Bank Payment - Click PAY SECURELY NOW\n\nAfter P10 payment, WhatsApp proof to 71823638 - You get unlock code like LESEDI10\n\nThen enter code in yellow UNLOCK box to unlock forever!");
+  whatsappOrder(pkg+" - "+currentLevel+" - Full Syllabus + Self Convert + P10 Unlock");
 }
 function whatsappOrder(pkg){
-  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_INFO+" - Education Lesedi Scholars Hub - Email: "+HELPDESK_EMAIL : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel+" - "+LEVELS_INFO+" - Email: "+HELPDESK_EMAIL;
+  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_INFO+" - Education Lesedi Scholars Hub - Email: "+HELPDESK_EMAIL+" - Please send P10 unlock code" : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel+" - "+LEVELS_INFO+" - Email: "+HELPDESK_EMAIL+" - I want to convert myself + P10 unlock";
   window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
 }
 function joinExam(name){alert("Joining "+name+" for "+currentLevel+" - Good luck!");showSection('takeExam');}
