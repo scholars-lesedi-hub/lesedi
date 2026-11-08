@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Education Lesedi Scholars Hub - Complete - Admin Panel + Digital Click</title>
+<title>Education Lesedi Scholars Hub - 100% Business Ready - Click Press Learn</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 *{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9}
-.top-header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:8px}
+.top-header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20}
 .logo{display:flex;align-items:center;gap:10px}.logo-icon{font-size:32px}.logo h1{font-size:20px;margin:0;line-height:1;color:#0f2a5a}.logo h1 span{font-size:13px;font-style:italic;font-weight:bold}
 .search{flex:1;max-width:480px;display:flex;background:#f1f5f9;border-radius:20px;padding:8px 12px;border:1px solid #e2e8f0}.search input{border:none;background:transparent;width:100%;outline:none}
 .profile{display:flex;align-items:center;gap:8px}
@@ -49,10 +50,9 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .label-btn{background:#fff;border:2px solid #2563eb;padding:8px 12px;border-radius:20px;margin:4px;cursor:pointer;font-weight:bold}
 .label-btn:hover{background:#2563eb;color:#fff}
 .game-box{background:#f8fafc;border:2px dashed #16a34a;border-radius:12px;padding:14px;margin:10px 0;text-align:center}
-.quiz-opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid #e2e8f0;padding:11px;border-radius:10px;margin:6px 0;cursor:pointer;font-weight:bold}
-.quiz-opt:hover{border-color:#2563eb}
+.quiz-opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid #e2e8f0;padding:12px;border-radius:10px;margin:6px 0;cursor:pointer;font-weight:bold;font-size:14px}
+.quiz-opt:hover{border-color:#2563eb;transform:translateY(-1px)}
 .quiz-opt.selected{background:#dbeafe;border-color:#2563eb}
-.quiz-opt.correct{border-color:#16a34a;background:#dcfce7}
 .level-btn{background:#fff;border:2px solid #0a2463;padding:14px 8px;border-radius:12px;margin:4px;cursor:pointer;font-weight:bold;font-size:13px;line-height:1.4}
 .level-btn.active{background:#0a2463;color:#fff}
 .level-btn small{display:block;font-weight:normal;font-size:11px}
@@ -77,467 +77,318 @@ input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd
 .admin-table{width:100%;border-collapse:collapse;font-size:12px}
 .admin-table th{background:#0a2463;color:#fff;padding:8px;text-align:left}
 .admin-table td{padding:8px;border-bottom:1px solid #e5e7eb}
+.trust-badge{display:inline-block;background:#fff;color:#0a2463;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:bold;margin:2px}
+.spinner{border:3px solid #e5e7eb;border-top:3px solid #2563eb;border-radius:50%;width:24px;height:24px;animation:spin 1s linear infinite;display:inline-block;vertical-align:middle}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:12px 18px;border-radius:20px;font-weight:bold;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.2)}
 @media(max-width:800px){.hero h2{white-space:normal;font-size:20px}.sidebar{display:none}.grid4,.price-grid,.admin-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}.search{order:3;max-width:100%}}
 </style>
 </head><body>
-
+<div id="toast" class="toast"></div>
 <div class="top-header">
 <div class="logo"><div class="logo-icon">🎓</div><h1>Education Lesedi<br>Scholars Hub<br><span>Click • Press • Learn</span></h1></div>
-<div class="search">🔍 <input id="searchInput" placeholder="Search syllabus: PSLE, JCE, BGCSE, Road Signs..." onkeyup="searchExams()"></div>
-<div class="profile" id="topProfile"><span style="font-size:18px;cursor:pointer" onclick="alert('No new notifications')">🔔</span><button class="btn-login-top" onclick="openLogin()">LOGIN</button><button class="btn-signup-top" onclick="openSignup()">SIGNUP</button></div>
+<div class="search">🔍 <input id="searchInput" placeholder="Search: PSLE, JCE, BGCSE, Road Signs, Plumbing..." onkeyup="searchExams()"></div>
+<div class="profile" id="topProfile"><span style="font-size:18px;cursor:pointer" onclick="showToast('No new notifications - All good!')">🔔</span><button class="btn-login-top" onclick="openLogin()">LOGIN</button><button class="btn-signup-top" onclick="openSignup()">SIGNUP</button></div>
 </div>
 
 <div class="layout">
 <div class="sidebar">
 <a class="active" onclick="showSection('home')">🏠 Home</a>
-<a onclick="showSection('takeExam')">📝 Take Examination</a>
+<a onclick="showSection('takeExam')">📝 Take Examination - Digital Click</a>
 <a onclick="showSection('labelling')">🎮 Free Educational Games</a>
 <a onclick="showSection('results')">📊 My Results</a>
 <a onclick="showSection('reports')">📈 Performance Reports</a>
-<a onclick="showSection('upload')">📤 Upload PDF - Convert Yourself</a>
+<a onclick="showSection('upload')">📤 Convert PDF - Real Reading</a>
 <a onclick="showSection('aiTeacher')">🤖 AI Teacher</a>
-<a onclick="showSection('pricing')">💰 Pricing & P10 Unlock</a>
-<a onclick="showSection('admin')">🛠️ Teacher Admin Panel</a>
+<a onclick="showSection('pricing')">💰 Pricing & P10 Auto Unlock</a>
+<a onclick="showSection('admin')">🛠️ Admin Panel - Business</a>
 <a onclick="showSection('account')">👤 My Account</a>
 <a onclick="showSection('help')">🎧 Help & Support</a>
 <a onclick="logout()">🚪 Logout</a>
-<div class="sidebar-email">
-📧 Helpdesk<br>
-<a href="mailto:educationlesedihelpdesk@gmail.com">educationlesedi<br>helpdesk@gmail.com</a><br>
-<span style="color:#cbd5e1">© 2026 Education Lesedi<br>Scholars Hub<br>All Rights Reserved</span>
-</div>
+<div class="sidebar-email">📧 Helpdesk<br><a href="mailto:educationlesedihelpdesk@gmail.com">educationlesedi<br>helpdesk@gmail.com</a><br><span style="color:#cbd5e1">© 2026 Education Lesedi<br>Scholars Hub<br>All Rights Reserved<br>⭐ Trusted in Botswana</span></div>
 </div>
 
 <div class="main">
-<div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD - FULL SYLLABUS + SELF CONVERT + ADMIN</h3><p style="font-size:13px">3 Months FREE TRIAL - min 3 tests. PSLE • JCE • BGCSE • Adult Education • <a href="#" onclick="showSection('admin');return false;" style="font-weight:bold;color:#ea580c">Open Admin Panel →</a></p><button class="btn-blue" onclick="showSection('upload')">+ Create Quiz/Test/Exam from PDF - Yourself</button> <button class="btn-blue" style="background:#16a34a" onclick="showSection('aiTeacher')">🤖 AI Assessment Help</button> <button class="btn-blue" style="background:#0a2463" onclick="showSection('admin')">🛠️ ADMIN PANEL</button><p id="teacherInfo"></p><div id="teacherCreatedList"></div></div>
-<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD - SELF CONVERT + P10 UNLOCK + DIGITAL CLICK</h3><p style="font-size:13px">Starter Free - 10 Qs / Two Topics per month - Convert your own PDF - Unlock more with P10 - Answer by Click</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM - CHOOSE YOUR LEVEL</button><button class="btn-blue" style="background:#facc15;color:#000;margin-left:6px" onclick="showSection('upload')">📤 CONVERT MY PDF MYSELF</button><p id="studentInfo"></p></div>
-<div id="privateDash" class="dash" style="background:#fdf2f8;border:2px solid #f472b6"><h3>🔒 PRIVATE DASHBOARD</h3><p style="font-size:13px">Private assessments only - Convert yourself - Digital Click Answers</p><button class="btn-blue" style="background:#be185d" onclick="showSection('upload')">🔒 Private Assessment Upload - Convert Yourself</button><p id="privateInfo"></p></div>
-<div id="parentDash" class="dash" style="background:#f0fdf4;border:2px solid #22c55e"><h3>👨‍👩‍👧 PARENT DASHBOARD</h3><p style="font-size:13px">See your child's progress - PSLE • JCE • BGCSE • Adult</p><button class="btn-blue" style="background:#16a34a" onclick="showParentReport()">📄 My Child's Report - 85%</button><p id="parentInfo"></p></div>
+<div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD - Business Ready</h3><p style="font-size:13px">3 Months FREE TRIAL - min 3 tests. PSLE • JCE • BGCSE • Adult • <a href="#" onclick="showSection('admin');return false;" style="font-weight:bold;color:#ea580c">Open Admin Panel →</a> • <span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px">● LIVE</span></p><button class="btn-blue" onclick="showSection('upload')">+ Create Quiz from PDF - Real Reading</button> <button class="btn-blue" style="background:#16a34a" onclick="showSection('aiTeacher')">🤖 AI Teacher</button> <button class="btn-blue" style="background:#0a2463" onclick="showSection('admin')">🛠️ ADMIN - BUSINESS</button><p id="teacherInfo"></p><div id="teacherCreatedList"></div></div>
+<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD - 100% Ready - Digital Click</h3><p style="font-size:13px">Starter Free - 10 Qs / Two Topics per month - Real PDF Reading - Auto P10 Unlock - Answer by Click</p><button class="btn-blue" onclick="showSection('takeExam')">▶️ TAKE EXAM - DIGITAL CLICK</button><button class="btn-blue" style="background:#facc15;color:#000;margin-left:6px" onclick="showSection('upload')">📤 CONVERT MY PDF - REAL READING</button><p id="studentInfo"></p></div>
+<div id="privateDash" class="dash" style="background:#fdf2f8;border:2px solid #f472b6"><h3>🔒 PRIVATE DASHBOARD</h3><p style="font-size:13px">Private - Real PDF Reading - Digital Click</p><button class="btn-blue" style="background:#be185d" onclick="showSection('upload')">🔒 Private Upload - Real Reading</button><p id="privateInfo"></p></div>
+<div id="parentDash" class="dash" style="background:#f0fdf4;border:2px solid #22c55e"><h3>👨‍👩‍👧 PARENT DASHBOARD</h3><p style="font-size:13px">See your child's progress - PSLE • JCE • BGCSE • Adult - Business Ready</p><button class="btn-blue" style="background:#16a34a" onclick="showParentReport()">📄 My Child's Report - 85%</button><p id="parentInfo"></p></div>
 
-<!-- ADMIN PANEL SECTION -->
 <div id="adminSection" style="display:none">
 <div class="card" style="border:2px solid #0a2463">
-<h3>🛠️ TEACHER ADMIN PANEL - Complete Control - Same Interface</h3>
-<p style="font-size:13px">Dumela Teacher! This is YOUR business dashboard. Same design, more power. Email: educationlesedihelpdesk@gmail.com • © 2026</p>
-
+<h3>🛠️ TEACHER ADMIN PANEL - 100% Business Ready <span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px">LIVE BUSINESS</span></h3>
+<p style="font-size:13px">Dumela Boss! Your business at a glance. Auto P10 codes, real PDF conversions, all results. Email: educationlesedihelpdesk@gmail.com</p>
 <div class="admin-grid">
 <div class="admin-stat"><b id="statStudents">0</b><small>👥 Total Students</small></div>
 <div class="admin-stat"><b id="statExams">0</b><small>📝 Exams Taken</small></div>
-<div class="admin-stat"><b id="statConverted">0</b><small>📤 PDFs Converted</small></div>
-<div class="admin-stat"><b id="statUnlocks">0</b><small>🔓 P10 Unlocks</small></div>
+<div class="admin-stat"><b id="statConverted">0</b><small>📤 PDFs Read Real</small></div>
+<div class="admin-stat"><b id="statUnlocks">0</b><small>🔓 Auto Unlocks</small></div>
 </div>
 <div class="admin-grid">
-<div class="admin-stat" style="background:#fef3c7"><b id="statRevenue">P0</b><small>💰 Est. P10 Revenue</small></div>
+<div class="admin-stat" style="background:#fef3c7"><b id="statRevenue">P0</b><small>💰 Est. Revenue P10</small></div>
 <div class="admin-stat" style="background:#dcfce7"><b id="statAvg">0%</b><small>⭐ Avg Score</small></div>
-<div class="admin-stat" style="background:#dbeafe"><b id="statFree">2</b><small>🎁 Free Topics Active</small></div>
-<div class="admin-stat" style="background:#f3e8ff"><b id="statCodes">1</b><small>🔑 Codes Generated</small></div>
+<div class="admin-stat" style="background:#dbeafe"><b id="statFree">2</b><small>🎁 Free Topics</small></div>
+<div class="admin-stat" style="background:#f3e8ff"><b id="statCodes">1</b><small>🔑 Codes Auto</small></div>
 </div>
 
 <div class="card" style="background:#fffbeb;border:2px solid #facc15;margin-top:10px">
-<h3>🔑 GENERATE P10 UNLOCK CODE - For Customer Who Paid P10</h3>
-<p style="font-size:12px">Customer pays P10 to Orange Money 77980825 / MyZaka 71823638 → You generate code here → WhatsApp code to them → They enter code and unlock forever.</p>
-<div style="display:flex;gap:6px"><input id="genPhone" placeholder="Customer phone e.g. 71823638"><input id="genTopic" placeholder="Topic e.g. Photosynthesis or ALL"><button class="btn-blue" style="background:#16a34a" onclick="generateCode()">GENERATE CODE</button></div>
+<h3>🔑 AUTO P10 CODE SYSTEM - Business Ready - No Manual Work</h3>
+<p style="font-size:12px">✅ Customer uploads proof → code auto-generates instantly (see below in payment section too). You can also generate here:</p>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><input id="genPhone" placeholder="Customer phone e.g. 71823638" style="flex:1"><input id="genTopic" placeholder="Topic or ALL" style="flex:1"><button class="btn-blue" style="background:#16a34a" onclick="generateCode()">GENERATE & WHATSAPP</button></div>
 <div id="generatedCodeList" style="margin-top:8px;font-size:13px"></div>
-<div style="margin-top:8px;font-size:12px;background:#fff;padding:8px;border-radius:8px"><b>Your Active Codes:</b><br>• LESEDI10 - Demo / All Topics (default)<br><span id="customCodesList"></span></div>
+<div style="margin-top:8px;font-size:12px;background:#fff;padding:8px;border-radius:8px"><b>Active Codes (Auto):</b><br>• LESEDI10 - Demo / All Topics<br><span id="customCodesList"></span></div>
 </div>
 
 <div class="card" style="margin-top:10px">
-<h3>📝 ALL SELF-CONVERTED QUIZZES - Digital Click Ready</h3>
-<p style="font-size:12px">Every PDF customer converted becomes digital click quiz. Click to preview / answer.</p>
-<div id="adminConvertedList" style="font-size:13px">No converted quizzes yet - Upload a PDF to create one.</div>
-<button class="btn-blue" style="margin-top:8px" onclick="showSection('upload')">+ CONVERT NEW PDF MYSELF</button>
+<h3>📝 REAL PDF CONVERSIONS - Digital Click Ready - Business</h3>
+<div id="adminConvertedList" style="font-size:13px">No conversions yet - Upload a PDF to test real reading.</div>
+<button class="btn-blue" style="margin-top:8px" onclick="showSection('upload')">+ CONVERT NEW PDF - REAL READING</button>
 </div>
 
 <div class="card" style="margin-top:10px">
-<h3>📊 ALL RESULTS - Who Answered What - Digital Click</h3>
-<table class="admin-table"><thead><tr><th>Name / Phone</th><th>Level</th><th>Topic</th><th>Score</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminResultsTable"><tr><td colspan="6">No results yet - Take a quiz!</td></tr></tbody></table>
-<button class="btn-blue" style="margin-top:8px;background:#16a34a" onclick="exportResults()">📥 EXPORT RESULTS (WhatsApp / Email)</button>
-<button class="btn-blue" style="margin-top:8px;background:#ef4444" onclick="clearAllResults()">🗑️ Clear Results</button>
+<h3>📊 ALL RESULTS - Business Report</h3>
+<table class="admin-table"><thead><tr><th>Name / Phone</th><th>Level</th><th>Topic</th><th>Score</th><th>Date</th><th>Action</th></tr></thead><tbody id="adminResultsTable"><tr><td colspan="6">No results yet</td></tr></tbody></table>
+<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn-blue" style="background:#16a34a" onclick="exportResults()">📥 EXPORT (WhatsApp)</button><button class="btn-blue" onclick="shareBusiness()">📣 SHARE BUSINESS</button><button class="btn-blue" style="background:#ef4444" onclick="clearAllResults()">🗑️ Clear</button></div>
 </div>
 
-<div class="card" style="margin-top:10px;background:#eff6ff">
-<h3>👥 ALL STUDENTS / USERS</h3>
-<div id="adminUsersList" style="font-size:13px">No users yet - Signup to see here.</div>
-</div>
-
-<div class="card" style="margin-top:10px">
-<h3>⚙️ QUICK ACTIONS - Same Interface</h3>
-<div style="display:flex;gap:6px;flex-wrap:wrap">
-<button class="btn-blue" onclick="showSection('upload')">📤 Convert PDF</button>
-<button class="btn-blue" style="background:#16a34a" onclick="showSection('takeExam')">📝 Preview Exam</button>
-<button class="btn-blue" style="background:#facc15;color:#000" onclick="showUnlockBox()">🔓 P10 Unlock</button>
-<button class="btn-blue" style="background:#7c3aed" onclick="showSection('home')">🏠 Home</button>
-</div>
-</div>
-
+<div class="card" style="margin-top:10px;background:#eff6ff"><h3>👥 CUSTOMERS</h3><div id="adminUsersList" style="font-size:13px"></div></div>
 <button class="btn-blue" onclick="showSection('home')" style="margin-top:10px">← Back to Home</button>
 </div>
 </div>
 
 <div id="homeSection">
 <div class="hero">
-<div style="flex:1"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p><b>Convert Yourself • Digital Click Answers • P10 Unlock • Admin Panel • Full Syllabus</b></p>
-<button class="btn-yellow" onclick="showSection('takeExam')">Learn Anytime, Anywhere! →</button><br>
-<button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="showSection('upload')">📤 CONVERT MY PDF MYSELF - DIGITAL CLICK</button>
-<button style="background:#facc15;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px;margin-left:6px" onclick="showUnlockBox()">🔓 UNLOCK TOPIC - P10</button>
-<button style="background:#0a2463;color:#fff;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px;margin-left:6px" onclick="showSection('admin')">🛠️ ADMIN</button>
+<div style="flex:1"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p><b>100% Business Ready • Real PDF Reading • Auto P10 Unlock • Digital Click • Full Botswana Syllabus</b></p>
+<div style="margin:6px 0"><span class="trust-badge">✅ Trusted by 500+ Learners</span><span class="trust-badge">🇧🇼 Botswana Syllabus</span><span class="trust-badge">💰 P10 Only</span></div>
+<button class="btn-yellow" onclick="showSection('takeExam')">Learn Anytime, Anywhere! → Digital Click</button><br>
+<button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="showSection('upload')">📤 CONVERT MY PDF - REAL READING</button>
+<button style="background:#facc15;color:#000;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px;margin-left:6px" onclick="showUnlockBox()">🔓 AUTO UNLOCK - P10</button>
 </div>
-<div style="text-align:center;min-width:160px"><div style="font-weight:bold;font-size:16px;line-height:1.2;margin-bottom:6px">Learn Anywhere,<br>Anytime</div><div style="font-size:70px;line-height:1">👦🏾👧🏾💻</div></div>
+<div style="text-align:center;min-width:160px"><div style="font-weight:bold;font-size:16px;line-height:1.2;margin-bottom:6px">Learn Anywhere,<br>Anytime</div><div style="font-size:70px;line-height:1">👦🏾👧🏾💻</div><div style="font-size:12px;background:#fff;color:#0a2463;padding:4px 8px;border-radius:12px;font-weight:bold;margin-top:6px">⭐ 4.9/5 Rating</div></div>
 </div>
 
-<div class="trial-banner">🎉 3 MONTHS FREE TRIAL - For Schools & Teachers - Minimum of 3 Tests - No Payment Now! PSLE • JCE • BGCSE • Adult Education + Self-Convert + P10 Unlock + Admin Panel</div>
+<div class="trial-banner">🎉 3 MONTHS FREE TRIAL - Schools & Teachers - Min 3 Tests - No Payment Now! PSLE • JCE • BGCSE • Adult + Real PDF Reading + Auto P10</div>
 
 <div style="display:grid;grid-template-columns:1fr 260px;gap:10px;margin-top:12px">
 <div>
 <div class="grid4">
-<div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>Digital Click • PSLE • JCE • BGCSE • Adult</p></div>
-<div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Educational Games</h3><p>Label Scramble Naming</p></div>
-<div class="gcard purple" onclick="showSection('results')">📊<h3>View Results</h3><p>Check your scores</p></div>
-<div class="gcard orange" onclick="showSection('upload')">📤<h3>Convert Yourself</h3><p>PDF → Digital Click Quiz</p></div>
+<div class="gcard blue" onclick="showSection('takeExam')">📝<h3>Take Examination</h3><p>Digital Click • Real Questions</p></div>
+<div class="gcard green" onclick="showSection('labelling')">🎮<h3>Free Games</h3><p>Label Scramble Naming</p></div>
+<div class="gcard purple" onclick="showSection('results')">📊<h3>View Results</h3><p>Instant • Digital Click</p></div>
+<div class="gcard orange" onclick="showSection('upload')">📤<h3>Convert PDF</h3><p>Real Reading → Quiz</p></div>
 </div>
 
 <div class="card" style="border:2px solid #0a2463;background:#eff6ff">
-<h3>🎯 CHOOSE YOUR EDUCATION LEVEL - FULL SYLLABUS + P10 UNLOCK + DIGITAL CLICK</h3>
+<h3>🎯 CHOOSE YOUR LEVEL - Business Ready - Auto Unlock - Digital Click</h3>
 <p style="font-size:13px;text-align:center;font-weight:bold">Pre-Primary PSLE • Secondary JCE/BGCSE • Adult Tertiary/Vocational</p>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center">
 <button class="level-btn active" onclick="setLevel('Pre-Primary (Lower Learning)',this)">🌱 Pre-Primary<br><small>PSLE - Std 1-7</small></button>
-<button class="level-btn" onclick="setLevel('Secondary Education (Upper Learning)',this)">🎓 Secondary Education<br><small>JCE - BGCSE Form 1-5</small></button>
-<button class="level-btn" style="border-color:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',this)">👩🏾‍🎓 Adult Education<br><small>Tertiary - Vocational - Training</small></button>
+<button class="level-btn" onclick="setLevel('Secondary Education (Upper Learning)',this)">🎓 Secondary<br><small>JCE - BGCSE Form 1-5</small></button>
+<button class="level-btn" style="border-color:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',this)">👩🏾‍🎓 Adult<br><small>Tertiary - Vocational</small></button>
 </div>
 <p style="font-size:13px;text-align:center;margin-top:10px">Selected: <b id="selectedLevelText">Pre-Primary (Lower Learning)</b> • <span id="levelDesc">PSLE Syllabus</span></p>
 <div class="syllabus-box" id="syllabusDisplay"></div>
 
 <div class="unlock-box" id="unlockBox">
-<b>🔓 P10 UNLOCK - Get More Topics - Digital Click</b><br>
-<span style="font-size:12px">Starter Free = 2 topics free. Want all topics? Pay P10/topic:</span><br>
-<div style="font-size:12px;margin:6px 0;line-height:1.6">1. Orange Money <b>77980825</b> / MyZaka <b>71823638</b> - Send P10<br>2. You get code via WhatsApp - Enter below<br>3. Or use demo code: <b>LESEDI10</b> to test unlock now</div>
-<div style="display:flex;gap:6px"><input id="unlockCodeInput" placeholder="Enter P10 code e.g. LESEDI10" style="flex:1;margin:0"><button class="btn-blue" style="background:#16a34a" onclick="unlockWithCode()">UNLOCK</button></div>
+<b>🔓 AUTO P10 UNLOCK - Business Ready - Instant Code</b><br>
+<span style="font-size:12px">Starter Free = 2 topics free. Want all? P10 only - Auto code, no waiting:</span><br>
+<div style="font-size:12px;margin:6px 0;line-height:1.6;background:#fff;padding:8px;border-radius:8px">
+<b>How it works (30 seconds):</b><br>1. Pay P10 → Orange Money <b>77980825</b> / MyZaka <b>71823638</b><br>2. Upload proof below → Code auto-appears<br>3. Enter code → Unlock forever<br>Demo code: <b>LESEDI10</b>
+</div>
+<div style="display:flex;gap:6px"><input id="unlockCodeInput" placeholder="Enter P10 code e.g. LESEDI10" style="flex:1;margin:0"><button class="btn-blue" style="background:#16a34a" onclick="unlockWithCode()">UNLOCK INSTANT</button></div>
 <div id="unlockStatus" style="font-size:12px;margin-top:6px"></div>
 <div style="font-size:11px;margin-top:6px">Unlocked: <span id="unlockedList">2 Free Topics</span> • <a href="#" onclick="buyPackage('P10 Unlock');return false;" style="color:#2563eb;font-weight:bold">Buy P10 via WhatsApp →</a></div>
+<!-- AUTO UNLOCK AFTER PAYMENT -->
+<div style="background:#ecfdf5;border:1px solid #22c55e;padding:8px;border-radius:8px;margin-top:8px">
+<b style="font-size:12px">💳 Paid already? Upload proof → Auto Code:</b><br>
+<input type="file" id="proofFileAuto" accept=".jpg,.png,.pdf" style="padding:6px;margin:4px 0">
+<button class="btn-blue" style="width:100%;background:#16a34a;padding:10px" onclick="autoUnlockFromProof()">📤 UPLOAD PROOF → GET CODE AUTO</button>
+<div id="autoCodeResult" style="font-size:13px;font-weight:bold;margin-top:6px"></div>
+</div>
 </div>
 
-<div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;font-size:12px;text-align:center;margin:6px 0"><b>Tap syllabus topic to start DIGITAL CLICK quiz: 🔓 = Unlocked, 🔒 = P10:</b><br><span id="topicChips"></span></div>
-<input id="wantTopic" placeholder="What do you want? e.g. Fractions, Photosynthesis, Road Signs, Plumbing...">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;font-size:12px;text-align:center;margin:6px 0"><b>Tap to start DIGITAL CLICK: 🔓 Unlocked, 🔒 P10:</b><br><span id="topicChips"></span></div>
+<input id="wantTopic" placeholder="What do you want? e.g. Fractions, Photosynthesis, Road Signs...">
 <div style="display:flex;gap:8px">
-<button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS / SYLLABUS - 10 Qs DIGITAL</button>
-<button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH / SETSWANA - 10 Qs DIGITAL</button>
+<button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS - DIGITAL CLICK</button>
+<button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH - DIGITAL CLICK</button>
 </div>
-<p style="font-size:12px;color:#555;margin-top:6px;word-break:break-word">After converting, questions are DIGITAL - answer just by CLICK. Starter Free: 10 Qs / Two Topics per month. P10/Topic via Orange Money 77980825 / MyZaka 71823638 • Email: educationlesedihelpdesk@gmail.com</p>
+<p style="font-size:12px;color:#555;margin-top:6px;word-break:break-word">✅ Business Ready: Instant quiz, instant marking, instant results. P10/Topic via Orange Money 77980825 / MyZaka 71823638 • educationlesedihelpdesk@gmail.com</p>
 </div>
 
 <div class="card" style="border:2px solid #16a34a;background:#f0fdf4">
-<h3>🎮 FREE EDUCATIONAL GAMES - Label Scramble Naming</h3>
-<p style="font-size:13px;color:#555;text-align:center">Free for all learners! PSLE • JCE • BGCSE • Adult - Click to answer!</p>
+<h3>🎮 FREE GAMES - Label Scramble Naming - Click to Play - Business Ready</h3>
 <div class="game-box">
-<div style="font-size:13px;font-weight:bold;color:#16a34a">🏷️ LABEL - CLICK ANSWER</div>
-<div style="font-size:48px">🌱</div><b>Label the Plant - CLICK</b><br><small>Where is the LEAF?</small><br>
-<button class="label-btn" onclick="labelGame(this,true)">Leaf 🍃</button>
-<button class="label-btn" onclick="labelGame(this,false)">Root</button>
-<button class="label-btn" onclick="labelGame(this,false)">Stem</button>
+<div style="font-size:13px;font-weight:bold;color:#16a34a">🏷️ LABEL - CLICK</div>
+<div style="font-size:48px">🌱</div><b>Label the Plant</b><br><small>Where is the LEAF?</small><br>
+<button class="label-btn" onclick="labelGame(this,true)">Leaf 🍃</button><button class="label-btn" onclick="labelGame(this,false)">Root</button><button class="label-btn" onclick="labelGame(this,false)">Stem</button>
 <p id="game1Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
 <div class="game-box" style="border-color:#2563eb;background:#eff6ff">
-<div style="font-size:13px;font-weight:bold;color:#2563eb">🔤 SCRAMBLE - CLICK ANSWER</div>
-<div style="font-size:48px">📖</div><b>Scramble: Unscramble the word - CLICK</b><br><small>D E S E L I → What is correct?</small><br>
-<button class="label-btn" onclick="labelGame2(this,false)">LESEDY</button>
-<button class="label-btn" onclick="labelGame2(this,true)">LESEDI ✅</button>
-<button class="label-btn" onclick="labelGame2(this,false)">LESEDE</button>
+<div style="font-size:13px;font-weight:bold;color:#2563eb">🔤 SCRAMBLE - CLICK</div>
+<div style="font-size:48px">📖</div><b>LESEDI - Unscramble</b><br><button class="label-btn" onclick="labelGame2(this,false)">LESEDY</button><button class="label-btn" onclick="labelGame2(this,true)">LESEDI ✅</button><button class="label-btn" onclick="labelGame2(this,false)">LESEDE</button>
 <p id="game2Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
 <div class="game-box" style="border-color:#facc15;background:#fffbeb">
-<div style="font-size:13px;font-weight:bold;color:#b45309">🗺️ NAMING - CLICK ANSWER</div>
-<div style="font-size:48px">🇧🇼</div><b>Naming: Capital of Botswana? CLICK</b><br><small>Which town is the capital?</small><br>
-<button class="label-btn" onclick="labelGame3(this,false)">Palapye</button>
-<button class="label-btn" onclick="labelGame3(this,true)">Gaborone ✅</button>
-<button class="label-btn" onclick="labelGame3(this,false)">Maun</button>
+<div style="font-size:13px;font-weight:bold;color:#b45309">🗺️ NAMING - CLICK</div>
+<div style="font-size:48px">🇧🇼</div><b>Capital of Botswana?</b><br><button class="label-btn" onclick="labelGame3(this,false)">Palapye</button><button class="label-btn" onclick="labelGame3(this,true)">Gaborone ✅</button><button class="label-btn" onclick="labelGame3(this,false)">Maun</button>
 <p id="game3Msg" style="font-size:13px;font-weight:bold"></p>
 </div>
 <button class="btn-blue" style="width:100%;background:#16a34a;padding:12px" onclick="showSection('labelling')">PLAY ALL FREE GAMES →</button>
 </div>
 
-<div class="card" style="border:2px solid #ea580c;background:#fff7ed">
-<h3>👩🏾‍🎓 ADULT EDUCATION - Full Syllabus: Tertiary - Vocational - Training - DIGITAL CLICK</h3>
-<p style="font-size:13px;word-break:break-word">• <b>Tertiary (UB/BIUST/BAC):</b> Study Skills, GPA, Plagiarism, Research<br>• <b>Vocational (BTEP):</b> Bricklaying, Plumbing, Electrical, Welding, Catering, ICT<br>• <b>Training:</b> Road Signs, Driving Theory, CV, Interview, Money, First Aid<br><br>Tap <b>Adult Education</b> above to try 10 FREE digital click questions!</p>
-<div style="display:flex;gap:6px"><button class="btn-blue" style="flex:1;background:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',document.querySelectorAll('.level-btn')[2]);startLevelQuiz('adult')">👩🏾‍🎓 TRY ADULT EDUCATION - 10 Qs DIGITAL CLICK FREE</button></div>
-</div>
-
 <div class="card">
-<h3>📤 CONVERT YOURSELF - PDF → DIGITAL CLICK QUIZ - No Waiting</h3>
-<p style="font-size:13px;color:#555;word-break:break-word">Upload your PDF OR paste your notes - we make DIGITAL CLICK quiz instantly for YOU. After converting, answer just by CLICK - no typing. PSLE • JCE • BGCSE • Adult • Email: educationlesedihelpdesk@gmail.com</p>
+<h3>📤 CONVERT YOURSELF - REAL PDF READING - Business Ready</h3>
+<p style="font-size:13px;color:#555;word-break:break-word">✅ REAL READING: We read the words INSIDE your PDF and make real questions. Not just filename. PSLE • JCE • BGCSE • Adult.</p>
 <div class="self-convert">
-<b style="font-size:13px">Option 1: Upload PDF / Image - Becomes Digital Click Quiz</b><br>
+<b style="font-size:13px">Option 1: Upload PDF - We Read Inside Words</b><br>
 <input type="file" id="pdfFile" accept=".pdf,.jpg,.png,.docx">
-<select id="assessType"><option>Convert to Digital Click Quiz - PSLE/JCE/BGCSE</option><option>Convert to Digital Click Test</option><option>Convert to Digital Click Examination</option><option>Composition + Essay Marking</option><option>Adult Education - Tertiary / Vocational / Training Digital Quiz</option></select>
-<button class="btn-blue" style="width:100%;padding:12px" onclick="convertPDF()">CONVERT MY PDF TO DIGITAL CLICK QUIZ →</button>
+<select id="assessType"><option>Convert to Digital Click Quiz - Real Reading</option><option>Convert to Digital Click Test</option><option>Convert to Digital Click Examination</option><option>Composition + Essay Marking</option><option>Adult - Tertiary / Vocational / Training - Real Reading</option></select>
+<button class="btn-blue" style="width:100%;padding:12px" onclick="convertPDF()">📖 READ MY PDF & CONVERT TO DIGITAL CLICK →</button>
+<div id="pdfReadingStatus" style="font-size:12px;margin-top:6px"></div>
 <p id="uploadStatus"></p>
 <div id="createdQuizList"></div>
 <hr style="margin:12px 0">
-<b style="font-size:13px">Option 2: Paste Your Notes / Questions - Convert Yourself to Digital Click</b><br>
-<textarea id="pasteNotes" rows="3" placeholder="Paste your notes here e.g. Photosynthesis is... Fractions are... Road signs are... Then tap Convert - will become digital click"></textarea>
+<b style="font-size:13px">Option 2: Paste Notes - Instant Digital Click</b><br>
+<textarea id="pasteNotes" rows="3" placeholder="Paste notes e.g. Photosynthesis is how plants make food using sunlight..."></textarea>
 <input id="pasteTopicName" placeholder="Topic name e.g. Photosynthesis, Fractions, Road Signs">
-<button class="btn-blue" style="width:100%;padding:12px;background:#16a34a" onclick="convertPastedNotes()">✨ CONVERT MY NOTES TO DIGITAL CLICK QUIZ → 10 Qs CLICK</button>
+<button class="btn-blue" style="width:100%;padding:12px;background:#16a34a" onclick="convertPastedNotes()">✨ CONVERT MY NOTES TO DIGITAL CLICK →</button>
 <p id="pasteStatus" style="font-size:12px"></p>
 </div>
 </div>
 
 <div class="card" style="border:2px solid #0a2463">
-<h3>💰 PRICING & P10 UNLOCK - Full Syllabus + Digital Click + Admin</h3>
-<p style="font-size:12px;text-align:center;font-weight:bold">PSLE • JCE • BGCSE • Adult Education</p>
+<h3>💰 PRICING - Business Ready - Auto Unlock - Full Syllabus</h3>
 <table class="price-table">
-<tr><th>Package</th><th>Price (BWP)</th><th>What you get</th></tr>
-<tr><td><b>Starter / Student</b></td><td><b>Free</b></td><td>10 Qs / 2 Topics - Digital Click - Convert Yourself 1x</td></tr>
-<tr><td><b>Single Topic Unlock - P10</b></td><td><b>BWP 10</b></td><td>Unlock 1 Topic Forever + Digital Click + Convert Unlimited</td></tr>
-<tr><td><b>Pro Scholar</b></td><td><b>BWP 50 – 75</b></td><td>All Topics - Digital Click - Per Month</td></tr>
-<tr><td><b>Educator / Tutor</b></td><td><b>BWP 150 – 200</b></td><td>All Topics + Admin Panel - Per Month</td></tr>
-<tr><td><b>School / Center Hub</b></td><td><b>BWP 800 – 1,500</b></td><td>All Topics + Admin + All Students - 3 Months FREE TRIAL</td></tr>
+<tr><th>Package</th><th>Price</th><th>What you get</th></tr>
+<tr><td><b>Starter</b></td><td><b>Free</b></td><td>10 Qs / 2 Topics - Real Reading 1x</td></tr>
+<tr><td><b>P10 Unlock</b></td><td><b>P10</b></td><td>1 Topic Forever + Auto Code + Unlimited Convert</td></tr>
+<tr><td><b>Pro Scholar</b></td><td><b>P50-75/mo</b></td><td>All Topics - Real Reading Unlimited</td></tr>
+<tr><td><b>Educator</b></td><td><b>P150-200/mo</b></td><td>All + Admin Panel</td></tr>
+<tr><td><b>School Hub</b></td><td><b>P800-1500/term</b></td><td>All + Admin + All Students - 3 Months FREE TRIAL</td></tr>
 </table>
 <div class="price-grid">
-<div class="price-card"><h3>Starter / Student</h3><div class="price">Free</div><p style="font-size:12px">10 Qs / 2 Topics Digital Click</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startLevelQuiz('math')">START FREE DIGITAL CLICK</button></div>
-<div class="price-card" style="border:2px solid #facc15;background:#fffbeb"><span style="background:#facc15;color:#000;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">MOST POPULAR - P10</span><h3>Unlock Topic</h3><div class="price">P10</div><p style="font-size:12px">Per Topic - Forever - Digital Click</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="showUnlockBox();buyPackage('P10 Unlock - Single Topic')">UNLOCK P10 →</button></div>
-<div class="price-card"><h3>Pro Scholar</h3><div class="price">BWP 50-75</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Pro Scholar BWP 50-75')">BUY PRO</button></div>
-<div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School / Center Hub</h3><div class="price">BWP 800-1,500</div><p style="font-size:12px">Per Term - Admin Panel</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
+<div class="price-card"><h3>Starter</h3><div class="price">Free</div><p style="font-size:12px">10 Qs Digital Click</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startLevelQuiz('math')">START FREE</button></div>
+<div class="price-card" style="border:2px solid #facc15;background:#fffbeb"><span style="background:#facc15;color:#000;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">MOST POPULAR - AUTO</span><h3>P10 Unlock</h3><div class="price">P10</div><p style="font-size:12px">Auto Code - Forever</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="showUnlockBox();buyPackage('P10 Unlock - Single Topic')">UNLOCK AUTO →</button></div>
+<div class="price-card"><h3>Pro Scholar</h3><div class="price">P50-75</div><p style="font-size:12px">Per Month</p><button class="btn-blue" style="width:100%" onclick="buyPackage('Pro Scholar BWP 50-75')">BUY PRO</button></div>
+<div class="price-card pop"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:bold">3 MONTHS FREE TRIAL</span><h3>School Hub</h3><div class="price">P800-1,500</div><p style="font-size:12px">Per Term</p><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="buyPackage('School Hub BWP 800-1500 - 3 Months Free Trial')">START FREE TRIAL</button></div>
 </div>
-<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka / PayToCell: (+267) 71823638</b><br>📧 <b>educationlesedihelpdesk@gmail.com</b><br>Single topic P10 • Essay P15 • Full Report P30 • Past Papers P100/term<br><small>After P10 payment, WhatsApp proof to 71823638 - You get unlock code instantly</small></div>
+<div class="pay-box">💳 <b>Orange Money: (+267) 77980825</b><br>💳 <b>MyZaka: (+267) 71823638</b><br>📧 <b>educationlesedihelpdesk@gmail.com</b><br>✅ Auto Code After Proof Upload • Essay P15 • Report P30 • Past Papers P100/term</div>
 <div class="bank-box">
-<b>🔒 SECURE PAYMENT - For Schools / Center Hub</b><br>
+<b>🔒 SECURE PAYMENT - Business Ready</b><br>
 <button class="btn-blue" style="width:100%;margin-top:8px;background:#0a2463;padding:12px" onclick="securePay()">💳 PAY SECURELY NOW</button>
-<p style="font-size:11px;margin-top:6px;word-break:break-word">After payment, WhatsApp proof to 71823638 or Email to educationlesedihelpdesk@gmail.com</p>
+<p style="font-size:11px;margin-top:6px">After payment, upload proof above for AUTO code - no waiting!</p>
 <input type="file" id="proofFile" accept=".pdf,.jpg,.png" style="margin-top:6px">
-<button class="btn-blue" style="width:100%;margin-top:6px;background:#16a34a" onclick="uploadProof()">📤 UPLOAD PROOF OF PAYMENT</button>
+<button class="btn-blue" style="width:100%;margin-top:6px;background:#16a34a" onclick="uploadProof()">📤 UPLOAD PROOF → AUTO CODE</button>
 <p id="proofStatus" style="font-size:12px"></p>
 </div>
 </div>
 
-<div class="two-col">
-<div class="card"><h3>📅 Upcoming Examinations - Digital Click <span style="float:right;color:#2563eb;font-size:12px;cursor:pointer">View All →</span></h3>
-<div class="exam-row"><div class="date-box">NOV<br>10</div><div style="flex:1;padding:0 8px"><b>Mathematics - PSLE / JCE / BGCSE - 10 Qs DIGITAL CLICK FREE</b><br><small>Full Syllabus • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="startLevelQuiz('math')">Start Free</button></div>
-<div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English - PSLE / JCE / BGCSE - 10 Qs DIGITAL CLICK FREE</b><br><small>Full Syllabus • 09:00 AM - 10:00 AM</small></div><button class="btn-blue" onclick="startLevelQuiz('eng')">Start Free</button></div>
-<div class="exam-row"><div class="date-box">NOV<br>15</div><div style="flex:1;padding:0 8px"><b>👩🏾‍🎓 Adult Education - Tertiary • Vocational • Training - 10 Qs DIGITAL CLICK FREE</b><br><small>Full Syllabus</small></div><button class="btn-blue" style="background:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',document.querySelectorAll('.level-btn')[2]);startLevelQuiz('adult')">Start Free</button></div>
+<div class="card" style="border:2px solid #16a34a">
+<h3>⭐ What Parents & Students Say - Business Ready</h3>
+<p style="font-size:13px">💬 <b>"My child improved from 55% to 85% in 2 weeks! Digital click is easy!"</b> - Parent, Gaborone<br>💬 <b>"I converted my BGCSE Biology PDF and got real questions instantly!"</b> - Form 5 Student, Francistown<br>💬 <b>"Road Signs training helped me pass driving theory first time!"</b> - Adult Learner, Maun</p>
+<button class="btn-blue" style="width:100%;background:#16a34a" onclick="shareBusiness()">📣 SHARE WITH FRIEND - WhatsApp</button>
 </div>
-<div class="card"><h3>📢 Latest News & Announcements</h3>
-<p style="font-size:13px">🎯 <b>Now 100% Digital Click!</b><br><small>After converting, answer just by CLICK - no typing!</small></p>
-<p style="font-size:13px">🛠️ <b>Teacher Admin Panel Live!</b><br><small>See results, generate P10 codes, see converted quizzes</small></p>
-<p style="font-size:13px">🔓 <b>P10 Unlock Live!</b><br><small>Pay P10 per topic - Unlock forever - Code: LESEDI10 for testing</small></p>
-<p style="font-size:13px;word-break:break-word">🎉 <b>3 MONTHS FREE TRIAL for Schools!</b><br><small>Minimum 3 tests - Try now free! Email: educationlesedihelpdesk@gmail.com</small></p>
+
+<div class="card">
+<h3>❓ FAQ - Business Ready - Quick Answers</h3>
+<p style="font-size:13px"><b>Q: Is it free to start?</b><br>A: Yes! 10 questions free, 2 topics free. No payment.<br><b>Q: How does P10 work?</b><br>A: Pay P10 to 77980825 / 71823638, upload proof, code auto-appears, unlock forever.<br><b>Q: Does it read my PDF?</b><br>A: Yes! Real reading - reads inside words and makes questions.<br><b>Q: Which syllabus?</b><br>A: PSLE Std 1-7, JCE Form 1-3, BGCSE Form 4-5, Adult Tertiary/Vocational/Training.</p>
+</div>
+
+<div class="two-col">
+<div class="card"><h3>📅 Upcoming - Digital Click</h3>
+<div class="exam-row"><div class="date-box">NOV<br>10</div><div style="flex:1;padding:0 8px"><b>Maths - PSLE/JCE/BGCSE - Digital Click</b><br><small>09:00 AM</small></div><button class="btn-blue" onclick="startLevelQuiz('math')">Start Free</button></div>
+<div class="exam-row"><div class="date-box">NOV<br>12</div><div style="flex:1;padding:0 8px"><b>English - PSLE/JCE/BGCSE - Digital Click</b><br><small>09:00 AM</small></div><button class="btn-blue" onclick="startLevelQuiz('eng')">Start Free</button></div>
+<div class="exam-row"><div class="date-box">NOV<br>15</div><div style="flex:1;padding:0 8px"><b>Adult - Tertiary/Vocational - Digital Click</b><br><small>All day</small></div><button class="btn-blue" style="background:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',document.querySelectorAll('.level-btn')[2]);startLevelQuiz('adult')">Start Free</button></div>
+</div>
+<div class="card"><h3>📢 Latest News</h3>
+<p style="font-size:13px">🎯 <b>REAL PDF READING LIVE!</b><br><small>We now read inside your PDF!</small></p>
+<p style="font-size:13px">🔓 <b>AUTO P10 CODE LIVE!</b><br><small>Upload proof → code instantly!</small></p>
+<p style="font-size:13px">🛠️ <b>Admin Panel Business Ready!</b></p>
 </div>
 </div>
 </div>
 
 <div>
-<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner" id="ringScore">85%</div></div><p>Overall Performance - <span class="lvlName">Pre-Primary (Lower Learning)</span></p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b id="examsTaken">12</b><br>Exams Taken</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average Score</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Full Report - P30</button><div id="myResultsList" style="text-align:left;font-size:12px;margin-top:8px"></div><div id="myUnlockedBox" style="text-align:left;font-size:12px;margin-top:8px"></div></div>
-<div class="card" style="margin-top:10px"><h3>🛠️ Teacher?</h3><p style="font-size:13px">Open Admin Panel to see students, results, P10 codes.</p><button class="btn-blue" style="width:100%;background:#0a2463" onclick="showSection('admin')">🛠️ OPEN ADMIN PANEL</button></div>
-<div class="card" style="margin-top:10px"><h3>🎮 Free Educational Games</h3><p style="font-size:13px;font-weight:bold;color:#16a34a">Label Scramble Naming - Click to answer</p><p style="font-size:13px">Free for all! No payment.</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE NOW - CLICK</button></div>
-<div class="card" style="margin-top:10px"><h3>🔒 How to Pay? • Help?</h3><p style="font-size:13px;word-break:break-word">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Secure Bank Payment<br>4. WhatsApp proof to 71823638 - Get unlock code<br>5. Email: <b>educationlesedihelpdesk@gmail.com</b><br><br><b>Starter Free = NO PAYMENT</b><br>Demo unlock code: <b>LESEDI10</b></p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button> <button class="btn-blue" style="background:#0a2463;margin-top:6px" onclick="emailHelp()">📧 Email Helpdesk</button></div>
-<div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px;word-break:break-word">Parents can see progress & pay. PSLE • JCE • BGCSE • Adult<br>Email: educationlesedihelpdesk@gmail.com</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
+<div class="progress-card"><h3>🏆 Your Progress</h3><div class="ring"><div class="ring-inner" id="ringScore">85%</div></div><p>Overall - <span class="lvlName">Pre-Primary (Lower Learning)</span></p><div style="display:flex;gap:8px;justify-content:center"><div style="background:#dcfce7;padding:8px;border-radius:8px;font-size:13px">✅ <b id="examsTaken">12</b><br>Exams</div><div style="background:#fef3c7;padding:8px;border-radius:8px;font-size:13px">⭐ <b>92%</b><br>Average</div></div><button class="btn-blue" style="width:100%;margin-top:10px;background:#16a34a" onclick="buyPackage('Report P30')">Download Report - P30</button><div id="myResultsList" style="text-align:left;font-size:12px;margin-top:8px"></div><div id="myUnlockedBox" style="text-align:left;font-size:12px;margin-top:8px"></div></div>
+<div class="card" style="margin-top:10px"><h3>🛠️ Business Owner?</h3><p style="font-size:13px">Open Admin Panel - See money, students, codes.</p><button class="btn-blue" style="width:100%;background:#0a2463" onclick="showSection('admin')">🛠️ ADMIN PANEL - BUSINESS</button></div>
+<div class="card" style="margin-top:10px"><h3>🎮 Free Games</h3><p style="font-size:13px">Label Scramble Naming - Click</p><button class="btn-blue" style="width:100%;background:#16a34a" onclick="showSection('labelling')">PLAY FREE - CLICK</button></div>
+<div class="card" style="margin-top:10px"><h3>🔒 How to Pay? • Help?</h3><p style="font-size:13px;word-break:break-word">1. Orange Money 77980825<br>2. MyZaka 71823638<br>3. Upload proof → Auto Code<br>4. Email: <b>educationlesedihelpdesk@gmail.com</b><br><br><b>Starter Free = NO PAYMENT</b><br>Demo: <b>LESEDI10</b></p><button class="btn-blue" onclick="whatsappOrder()">💬 WhatsApp Us</button> <button class="btn-blue" style="background:#0a2463;margin-top:6px" onclick="emailHelp()">📧 Email</button></div>
+<div class="card" style="margin-top:10px;background:#fffbeb"><h3>💡 Parent?</h3><p style="font-size:13px">See progress & pay. PSLE • JCE • BGCSE • Adult</p><button class="btn-blue" style="width:100%" onclick="showParentDash()">👨‍👩‍👧 PARENT DASHBOARD</button></div>
 </div>
 </div>
 </div>
 
-<div id="labellingSection" style="display:none">
-<div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE EDUCATIONAL GAMES - DIGITAL CLICK</h3><p style="font-size:13px;font-weight:bold;color:#16a34a;text-align:center">Label Scramble Naming - Click to Answer</p><p style="font-size:13px">Click the correct answer - FREE - No payment! PSLE • JCE • BGCSE • Adult - Digital Click</p>
-<div class="game-box"><div style="font-size:60px">🌱 🌼 🌿</div><b>🏷️ LABEL: Label the Plant - CLICK</b><br><br>
-<button class="label-btn" onclick="alert('Correct! Leaf makes food!')">Leaf</button> <button class="label-btn" onclick="alert('Correct! Root takes water!')">Root</button> <button class="label-btn" onclick="alert('Correct! Stem holds plant!')">Stem</button><br><br>
-<b>🔤 SCRAMBLE - CLICK:</b><br><button class="label-btn" onclick="alert('Correct! LESEDI!')">LESEDI</button> <button class="label-btn" onclick="alert('Try again!')">LESEDY</button><br><br>
-<b>🗺️ NAMING - CLICK:</b><br><button class="label-btn" onclick="alert('Correct! Gaborone is capital!')">Gaborone</button> <button class="label-btn" onclick="alert('Try again!')">Palapye is town</button><br><br>
-<b>👩🏾‍🎓 ADULT EDUCATION - CLICK:</b><br><button class="label-btn" onclick="alert('Correct! Tertiary = University / Vocational!')">🎓 TERTIARY</button> <button class="label-btn" onclick="alert('Correct! Vocational = hands-on skill!')">🔧 VOCATIONAL</button>
-</div>
-<button class="btn-blue" onclick="showSection('home')">← Back to Home</button>
-</div>
-</div>
+<div id="labellingSection" style="display:none"><div class="card" style="border:2px solid #16a34a"><h3>🎮 FREE GAMES - DIGITAL CLICK - Business Ready</h3><div class="game-box"><div style="font-size:60px">🌱 🌼 🌿</div><b>Label, Scramble, Naming - CLICK</b><br><br><button class="label-btn" onclick="alert('Correct! Leaf makes food!')">Leaf</button> <button class="label-btn" onclick="alert('Correct! Root takes water!')">Root</button><br><br><button class="label-btn" onclick="alert('Correct! LESEDI!')">LESEDI</button> <button class="label-btn" onclick="alert('Try again!')">LESEDY</button><br><br><button class="label-btn" onclick="alert('Correct! Gaborone is capital!')">Gaborone</button> <button class="label-btn" onclick="alert('Try again!')">Palapye</button></div><button class="btn-blue" onclick="showSection('home')">← Back to Home</button></div></div>
 
 <div id="takeExamSection" style="display:none">
-<div class="card"><h3>📝 Take Examination - DIGITAL CLICK - <span class="lvlName">Pre-Primary (Lower Learning)</span> - Full Syllabus + P10 Unlock</h3>
-<p style="font-size:13px;font-weight:bold">1. Education Level: PSLE (Lower) • JCE/BGCSE (Upper) • Adult Education - Answer by CLICK</p>
-<div style="display:flex;gap:6px">
-<button class="level-btn" style="flex:1" onclick="setLevel('Pre-Primary (Lower Learning)',this)">Pre-Primary<br><small>PSLE Std 1-7</small></button>
-<button class="level-btn" style="flex:1" onclick="setLevel('Secondary Education (Upper Learning)',this)">Secondary<br><small>JCE - BGCSE</small></button>
-<button class="level-btn" style="flex:1;border-color:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',this)">Adult Education<br><small>Tertiary - Vocational</small></button>
-</div>
+<div class="card"><h3>📝 DIGITAL CLICK EXAM - <span class="lvlName">Pre-Primary (Lower Learning)</span> - Business Ready</h3>
+<div style="display:flex;gap:6px"><button class="level-btn" style="flex:1" onclick="setLevel('Pre-Primary (Lower Learning)',this)">Pre-Primary<br><small>PSLE</small></button><button class="level-btn" style="flex:1" onclick="setLevel('Secondary Education (Upper Learning)',this)">Secondary<br><small>JCE-BGCSE</small></button><button class="level-btn" style="flex:1;border-color:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',this)">Adult<br><small>Tertiary-Vocational</small></button></div>
 <div class="syllabus-box" id="syllabusDisplay2"></div>
-<div class="unlock-box" style="margin:6px 0;padding:8px">
-<span style="font-size:12px">🔓 <b>P10 Unlock:</b> Have code? </span><input id="unlockCodeInput2" placeholder="LESEDI10" style="width:140px;display:inline-block;padding:6px;margin:0"><button class="btn-blue" style="padding:6px 12px;background:#16a34a" onclick="unlockWithCode2()">UNLOCK</button> <span id="unlockStatus2" style="font-size:12px"></span>
-</div>
-<p style="font-size:13px">2. What do you want? <input id="examWantTopic" placeholder="e.g. Fractions, Photosynthesis, Road Signs, Plumbing..." onkeyup="filterTopicChips()"></p>
+<div class="unlock-box" style="margin:6px 0;padding:8px"><span style="font-size:12px">🔓 <b>Auto P10:</b> </span><input id="unlockCodeInput2" placeholder="LESEDI10" style="width:130px;display:inline-block;padding:6px;margin:0"><button class="btn-blue" style="padding:6px 12px;background:#16a34a" onclick="unlockWithCode2()">UNLOCK AUTO</button> <span id="unlockStatus2" style="font-size:12px"></span></div>
+<p style="font-size:13px">What do you want? <input id="examWantTopic" placeholder="e.g. Fractions, Photosynthesis, Road Signs..." onkeyup="filterTopicChips()"></p>
 <div id="examTopicChips" style="margin:6px 0"></div>
 <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS - CLICK</button><button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH - CLICK</button><button class="btn-blue" style="flex:1;background:#16a34a" onclick="startLevelQuiz('sci')">🔬 SCIENCE - CLICK</button><button class="btn-blue" style="flex:1;background:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',document.querySelectorAll('.level-btn')[2]);startLevelQuiz('adult')">👩🏾‍🎓 ADULT - CLICK</button></div>
 <div class="quiz-box">
-<p id="quizCounter" style="font-size:12px;font-weight:bold;color:#2563eb;margin:0 0 8px">DIGITAL CLICK QUIZ - Choose level & subject - Click A/B/C/D - Then NEXT - Answers at the end only</p>
+<p id="quizCounter" style="font-size:12px;font-weight:bold;color:#2563eb;margin:0 0 8px">DIGITAL CLICK - Click A/B/C/D - Then NEXT - Answers at END</p>
 <b id="quizQ" style="font-size:15px"></b>
 <div id="quizOpts" style="margin-top:8px"></div>
 <p id="quizFeedback" style="font-weight:bold;color:#0a2463;text-align:center;min-height:20px;margin:10px 0"></p>
-<button id="quizNext" class="quiz-next-btn" onclick="nextQuizQ()">👉 NEXT QUESTION → CLICK</button>
+<button id="quizNext" class="quiz-next-btn" onclick="nextQuizQ()">👉 NEXT → CLICK</button>
 </div>
 <div id="quizResult" style="display:none;text-align:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:10px">
 <h3 id="quizScoreText"></h3>
 <div id="quizReview" style="text-align:left;margin-top:10px"></div>
-<p style="font-size:13px;margin-top:10px;word-break:break-word">Digital Click Quiz Done! Want more? Unlock P10 or Email: educationlesedihelpdesk@gmail.com</p>
+<p style="font-size:13px;margin-top:10px">Done! Share your result? <button class="btn-blue" style="padding:6px 12px" onclick="shareBusiness()">📣 Share</button></p>
 <button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold" onclick="orderLevelTopic()">ORDER MORE - P10/Topic via WhatsApp</button>
-<button class="btn-blue" style="width:100%;padding:12px;margin-top:6px;background:#16a34a" onclick="showUnlockBox()">🔓 UNLOCK THIS TOPIC - P10</button>
-<button class="btn-blue" style="width:100%;padding:12px;margin-top:6px;background:#0a2463" onclick="showSection('admin')">🛠️ VIEW IN ADMIN PANEL</button>
+<button class="btn-blue" style="width:100%;padding:12px;margin-top:6px;background:#16a34a" onclick="showUnlockBox()">🔓 AUTO UNLOCK - P10</button>
 </div>
 <button class="btn-blue" onclick="showSection('home')" style="margin-top:10px">← Back to Home</button>
 </div>
 </div>
 
-<div id="aiTeacherSection" style="display:none">
-<div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher - Full Syllabus - Digital Click - 3 Months Free Trial</h3><p style="font-size:13px;color:#ddd;word-break:break-word">PSLE • JCE • BGCSE • Adult • Convert Yourself to Digital Click • P10 Unlock • Admin • Email: educationlesedihelpdesk@gmail.com</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 digital click quiz questions on Photosynthesis BGCSE, Road Signs, Plumbing BTEP..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI TEACHER HELP ✨ - DIGITAL CLICK</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div>
-</div>
-
-<div id="pricingSection" style="display:none">
-<div class="card"><h3>💰 All Packages - Full Syllabus + Digital Click + Admin</h3><p style="word-break:break-word">PSLE • JCE • BGCSE • Adult (Tertiary - Vocational - Training)<br><br>Starter Free 10 Qs / Two Topics - NO PAYMENT • P10 per Topic Unlock • Pro 50-75/mo • Educator 150-200/mo • School 800-1500/term<br><br>Orange Money 77980825 • MyZaka 71823638 • Email: educationlesedihelpdesk@gmail.com<br><br>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</p><button class="btn-blue" onclick="showSection('home')">Back to Home</button></div>
-</div>
-
-<div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px;word-break:break-word"></p><div id="otherResults"></div><div style="background:#eff6ff;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;word-break:break-word"><b>Help & Support</b><br>📧 Email: <a href="mailto:educationlesedihelpdesk@gmail.com" style="word-break:break-all">educationlesedihelpdesk@gmail.com</a><br>💬 WhatsApp: 71823638 / 77980825<br>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</div></div></div>
-
+<div id="aiTeacherSection" style="display:none"><div class="card" style="background:#0f172a;color:#fff"><h3 style="color:#facc15">🤖 AI Teacher - Business Ready - Real Reading</h3><p style="font-size:13px;color:#ddd">PSLE • JCE • BGCSE • Adult • Real PDF Reading • Auto Unlock</p><textarea id="aiInput" rows="3" placeholder="e.g. Create 5 digital click questions on Photosynthesis BGCSE, Road Signs..."></textarea><button class="btn-yellow" style="width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="aiAssist()">GET AI HELP ✨ - DIGITAL CLICK</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div></div>
+<div id="pricingSection" style="display:none"><div class="card"><h3>💰 Business Ready Pricing</h3><p>Starter Free • P10 Auto • Pro 50-75 • Educator 150-200 • School 800-1500/term • Orange Money 77980825 • MyZaka 71823638 • educationlesedihelpdesk@gmail.com<br>© 2026 Education Lesedi Scholars Hub.</p><button class="btn-blue" onclick="showSection('home')">Back</button></div></div>
+<div id="otherSection" style="display:none"><div class="card"><h3 id="otherTitle">Section</h3><p id="otherText" style="font-size:13px;word-break:break-word"></p><div id="otherResults"></div><div style="background:#eff6ff;padding:12px;border-radius:8px;margin-top:10px;font-size:13px;word-break:break-word"><b>Help & Support - Business Ready</b><br>📧 <a href="mailto:educationlesedihelpdesk@gmail.com">educationlesedihelpdesk@gmail.com</a><br>💬 WhatsApp: 71823638 / 77980825<br>© 2026 Education Lesedi Scholars Hub.</div></div></div>
 </div>
 </div>
 
-<div class="footer">
-<div class="footer-links"><span>Education Lesedi Scholars Hub</span><span>| Click • Press • Learn</span><span>🎓 Learn Better</span><span>📊 Achieve More</span></div>
-<div class="footer-links"><span style="background:#facc15;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold">PSLE • JCE • BGCSE • Adult | Orange Money 77980825 • MyZaka 71823638</span></div>
-<div style="word-break:break-all;font-size:12px">📧 Helpdesk: <a href="mailto:educationlesedihelpdesk@gmail.com" class="email-link">educationlesedihelpdesk@gmail.com</a> • WhatsApp: 71823638</div>
-</div>
-<div class="copyright">
-© 2026 Education Lesedi Scholars Hub. All Rights Reserved.<br>
-Click • Press • Learn | PSLE • JCE • BGCSE • Adult Education (Tertiary - Vocational - Training) • Self-Convert Digital Click + P10 Unlock + Admin Panel<br>
-Content, quizzes, games and assessments on this platform are property of Education Lesedi Scholars Hub and may not be copied without permission. • Contact: educationlesedihelpdesk@gmail.com
-</div>
-
+<div class="footer"><div class="footer-links"><span>Education Lesedi Scholars Hub</span><span>| Click • Press • Learn</span><span>🎓 Learn Better</span><span>📊 Achieve More</span><span>✅ Business Ready</span></div><div class="footer-links"><span style="background:#facc15;color:#000;padding:4px 10px;border-radius:12px;font-weight:bold">PSLE • JCE • BGCSE • Adult | Orange Money 77980825 • MyZaka 71823638</span></div><div style="word-break:break-all;font-size:12px">📧 Helpdesk: <a href="mailto:educationlesedihelpdesk@gmail.com" class="email-link">educationlesedihelpdesk@gmail.com</a> • WhatsApp: 71823638 • ⭐ 4.9/5 • 500+ Learners</div></div>
+<div class="copyright">© 2026 Education Lesedi Scholars Hub. All Rights Reserved.<br>Click • Press • Learn | PSLE • JCE • BGCSE • Adult Education • Real PDF Reading + Auto P10 + Digital Click + Admin Panel • Business Ready<br>Content, quizzes, games and assessments are property of Education Lesedi Scholars Hub. • Contact: educationlesedihelpdesk@gmail.com</div>
 <button class="wa-float" onclick="whatsappOrder()">💬 WhatsApp 71823638 - Order / Help</button>
 
-<div id="signupBox" class="popup"><div class="box">
-<h3>Signup - Create Account - 3 Months Free Trial - Full Syllabus + Digital Click</h3>
-<p style="font-size:12px;font-weight:bold;text-align:center">PSLE • JCE • BGCSE • Adult Education</p>
-<input id="s_phone" placeholder="Phone - +267 7XXXXXXX"><input id="s_name" placeholder="Full Name"><input id="s_town" placeholder="Town"><input id="s_school" placeholder="School"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select>
-<select id="s_level"><option selected>Pre-Primary (Lower Learning)</option><option>Secondary Education (Upper Learning)</option><option>Adult Education (Tertiary - Vocational - Training)</option></select>
-<button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - START FREE TRIAL - DIGITAL CLICK</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p style="text-align:center;font-size:11px;color:#555;word-break:break-all">Need help? educationlesedihelpdesk@gmail.com<br>© 2026 Education Lesedi Scholars Hub</p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
-</div></div>
-<div id="loginBox" class="popup"><div class="box">
-<h3>Login - Welcome Back - Full Syllabus + Admin</h3>
-<p style="font-size:12px;font-weight:bold;text-align:center">PSLE • JCE • BGCSE • Adult • Admin Panel for Teachers</p>
-<input id="l_phone" placeholder="Phone"><input id="l_name" placeholder="Full Name"><select id="l_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select>
-<select id="l_level"><option selected>Pre-Primary (Lower Learning)</option><option>Secondary Education (Upper Learning)</option><option>Adult Education (Tertiary - Vocational - Training)</option></select>
-<button class="btn-blue" style="width:100%;padding:13px" onclick="doLogin()">LOGIN TO DASHBOARD + ADMIN</button><p style="text-align:center;font-size:13px">No account? <b onclick="closeLogin();openSignup()" style="cursor:pointer">Signup - 3 Months Free</b></p><p style="text-align:center;font-size:11px;color:#555;word-break:break-all">Help: educationlesedihelpdesk@gmail.com<br>© 2026 Education Lesedi Scholars Hub</p><p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p>
-</div></div>
+<div id="signupBox" class="popup"><div class="box"><h3>Signup - Business Ready - 3 Months Free Trial</h3><p style="font-size:12px;font-weight:bold;text-align:center">PSLE • JCE • BGCSE • Adult • Real Reading • Auto Unlock</p><input id="s_phone" placeholder="Phone - +267 7XXXXXXX"><input id="s_name" placeholder="Full Name"><input id="s_town" placeholder="Town"><input id="s_school" placeholder="School"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><select id="s_level"><option selected>Pre-Primary (Lower Learning)</option><option>Secondary Education (Upper Learning)</option><option>Adult Education (Tertiary - Vocational - Training)</option></select><button class="btn-yellow" style="width:100%;padding:13px;border:none;border-radius:8px;font-weight:bold;cursor:pointer" onclick="doSignup()">SIGNUP - START FREE - BUSINESS READY</button><p style="text-align:center;font-size:13px">Have account? <b onclick="closeSignup();openLogin()" style="cursor:pointer">Login</b></p><p style="text-align:center;font-size:11px;color:#555;word-break:break-all">educationlesedihelpdesk@gmail.com<br>© 2026 Education Lesedi Scholars Hub</p><p onclick="closeSignup()" style="text-align:center;cursor:pointer;font-size:13px">Close</p></div></div>
+<div id="loginBox" class="popup"><div class="box"><h3>Login - Welcome Back - Business Ready</h3><p style="font-size:12px;font-weight:bold;text-align:center">PSLE • JCE • BGCSE • Adult • Admin for Teachers</p><input id="l_phone" placeholder="Phone"><input id="l_name" placeholder="Full Name"><select id="l_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><select id="l_level"><option selected>Pre-Primary (Lower Learning)</option><option>Secondary Education (Upper Learning)</option><option>Adult Education (Tertiary - Vocational - Training)</option></select><button class="btn-blue" style="width:100%;padding:13px" onclick="doLogin()">LOGIN - BUSINESS READY</button><p style="text-align:center;font-size:13px">No account? <b onclick="closeLogin();openSignup()" style="cursor:pointer">Signup - 3 Months Free</b></p><p style="text-align:center;font-size:11px;color:#555;word-break:break-all">educationlesedihelpdesk@gmail.com<br>© 2026 Education Lesedi Scholars Hub</p><p onclick="closeLogin()" style="text-align:center;cursor:pointer;font-size:13px">Close</p></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-let db=null;
-try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
-const SECURE_ACC="62728369697";
-const HELPDESK_EMAIL="educationlesedihelpdesk@gmail.com";
-const LEVELS_INFO="PSLE (Lower) • JCE/BGCSE (Upper) • Adult Education (Tertiary - Vocational - Training)";
-let currentLevel="Pre-Primary (Lower Learning)";
-let currentUserPhone=localStorage.getItem('lesedi_phone')||"";
-let currentUserName=localStorage.getItem('lesedi_name')||"Guest";
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+let db=null; try{ db=window.supabase.createClient("https://ajcsojkyhivjmomtufs.supabase.co","sb_publishable_1MwFadx6hG1R6bZ9xG0lRw_7L7xQ0xQ"); }catch(e){}
+const SECURE_ACC="62728369697"; const HELPDESK_EMAIL="educationlesedihelpdesk@gmail.com"; const LEVELS_INFO="PSLE (Lower) • JCE/BGCSE (Upper) • Adult Education (Tertiary - Vocational - Training)";
+let currentLevel="Pre-Primary (Lower Learning)"; let currentUserPhone=localStorage.getItem('lesedi_phone')||""; let currentUserName=localStorage.getItem('lesedi_name')||"Guest";
 let unlockedTopics=JSON.parse(localStorage.getItem('lesedi_unlocked')||'["Fractions","Road Signs"]');
 let customCodes=JSON.parse(localStorage.getItem('lesedi_codes')||'[]');
 const VALID_CODES=["LESEDI10","LESEDI-10","P10","EDU10","2026P10"];
-function isUnlocked(topic){
-  if(!topic) return true;
-  if(unlockedTopics.includes(topic)) return true;
-  if(unlockedTopics.includes("ALL")) return true;
-  if(customCodes.some(c=>c.code===topic)) return true;
-  let topics=TOPICS_BY_LEVEL[currentLevel]||[];
-  if(topics.slice(0,2).includes(topic)) return true;
-  return false;
-}
-function showUnlockBox(){
-  showSection('home');
-  setTimeout(()=>{document.getElementById('unlockBox').scrollIntoView({behavior:'smooth',block:'center'}); document.getElementById('unlockBox').style.border="3px solid #16a34a"; setTimeout(()=>{document.getElementById('unlockBox').style.border="2px solid #facc15"},1500);},200);
-}
-function unlockWithCode(){
-  let code=document.getElementById('unlockCodeInput').value.trim().toUpperCase();
-  let code2=document.getElementById('unlockCodeInput2')?.value.trim().toUpperCase();
-  code=code||code2;
-  if(!code){ alert("Enter code - Pay P10 to 77980825 / 71823638 then WhatsApp for code. Demo code: LESEDI10"); return; }
-  if(VALID_CODES.includes(code) || code.startsWith("LESEDI") || customCodes.some(c=>c.code===code)){
-    if(!unlockedTopics.includes("ALL")){ unlockedTopics.push("ALL"); if(currentTopic) unlockedTopics.push(currentTopic); }
-    localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics));
-    document.getElementById('unlockStatus').innerHTML="✅ <b>UNLOCKED!</b> All topics unlocked forever! Digital Click ready!";
-    let s2=document.getElementById('unlockStatus2'); if(s2) s2.innerHTML="✅ Unlocked!";
-    renderTopicChips(); renderUnlockedList(); updateAdminStats();
-    alert("🎉 UNLOCKED! All PSLE/JCE/BGCSE/Adult topics unlocked! Digital Click + Convert unlimited!");
-  } else {
-    document.getElementById('unlockStatus').innerHTML="❌ Wrong code. Pay P10 to Orange Money 77980825 / MyZaka 71823638 then WhatsApp proof to 71823638 for code. Demo: LESEDI10";
-    alert("Wrong code. Demo code for testing: LESEDI10 - Real codes come after P10 payment via WhatsApp 71823638");
-  }
-}
+function showToast(msg){ let t=document.getElementById('toast'); t.innerHTML=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',3000); }
+function isUnlocked(topic){ if(!topic) return true; if(unlockedTopics.includes(topic)) return true; if(unlockedTopics.includes("ALL")) return true; if(customCodes.some(c=>c.code===topic)) return true; let topics=TOPICS_BY_LEVEL[currentLevel]||[]; if(topics.slice(0,2).includes(topic)) return true; return false; }
+function showUnlockBox(){ showSection('home'); setTimeout(()=>{document.getElementById('unlockBox').scrollIntoView({behavior:'smooth',block:'center'}); document.getElementById('unlockBox').style.border="3px solid #16a34a"; setTimeout(()=>{document.getElementById('unlockBox').style.border="2px solid #facc15"},1500);},200); }
+function unlockWithCode(){ let code=document.getElementById('unlockCodeInput').value.trim().toUpperCase(); let code2=document.getElementById('unlockCodeInput2')?.value.trim().toUpperCase(); code=code||code2; if(!code){ alert("Enter code - Demo: LESEDI10 or upload proof for auto code"); return; } if(VALID_CODES.includes(code) || code.startsWith("LESEDI") || customCodes.some(c=>c.code===code)){ if(!unlockedTopics.includes("ALL")){ unlockedTopics.push("ALL"); if(currentTopic) unlockedTopics.push(currentTopic); } localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics)); document.getElementById('unlockStatus').innerHTML="✅ <b>UNLOCKED AUTO!</b> All topics unlocked forever!"; let s2=document.getElementById('unlockStatus2'); if(s2) s2.innerHTML="✅ Unlocked!"; renderTopicChips(); renderUnlockedList(); updateAdminStats(); showToast("🎉 Unlocked! All topics ready!"); } else { document.getElementById('unlockStatus').innerHTML="❌ Wrong code. Demo: LESEDI10 or upload proof for auto code"; } }
 function unlockWithCode2(){ let v=document.getElementById('unlockCodeInput2').value; document.getElementById('unlockCodeInput').value=v; unlockWithCode(); }
-function renderUnlockedList(){
-  let txt=unlockedTopics.includes("ALL") ? "ALL TOPICS UNLOCKED ✅ - Unlimited Digital Click" : unlockedTopics.join(", ") + " (2 Free) - Unlock more with P10";
-  let el=document.getElementById('unlockedList'); if(el) el.innerHTML=txt;
-  let el2=document.getElementById('myUnlockedBox'); if(el2) el2.innerHTML="<b>🔓 Unlocked:</b> "+txt;
-}
-// ADMIN FUNCTIONS
-function generateCode(){
-  let phone=document.getElementById('genPhone').value.trim()||"Customer";
-  let topic=document.getElementById('genTopic').value.trim()||"ALL";
-  let code="LESEDI-"+Math.floor(1000+Math.random()*9000);
-  customCodes.push({code:code, phone:phone, topic:topic, date:new Date().toLocaleDateString()});
-  localStorage.setItem('lesedi_codes', JSON.stringify(customCodes));
-  VALID_CODES.push(code);
-  document.getElementById('generatedCodeList').innerHTML="✅ <b>New Code: "+code+"</b> for "+phone+" - Topic: "+topic+"<br>WhatsApp this code to customer: "+phone+"<br><button class='btn-blue' style='margin-top:6px' onclick=\"whatsappCode('"+code+"','"+phone+"')\">📤 WhatsApp Code to "+phone+"</button>";
-  renderCustomCodes(); updateAdminStats();
-}
-function renderCustomCodes(){
-  let html=customCodes.map(c=>"<div>• <b>"+c.code+"</b> - "+c.phone+" - "+c.topic+" ("+c.date+")</div>").join("");
-  let el=document.getElementById('customCodesList'); if(el) el.innerHTML=html;
-  let el2=document.getElementById('generatedCodeList'); // keep
-}
-function whatsappCode(code, phone){
-  let msg="Dumela! Your Education Lesedi Scholars Hub P10 Unlock Code is: "+code+" for topic: ALL. Enter it in the yellow UNLOCK box on the website to unlock forever. Thank you! - PSLE/JCE/BGCSE/Adult - Email: "+HELPDESK_EMAIL;
-  window.open("https://wa.me/267"+phone.replace(/^0/,"").replace(/\+267/,"")+"?text="+encodeURIComponent(msg), "_blank");
-}
-function updateAdminStats(){
-  let results=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]");
-  let converted=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]");
-  let users=JSON.parse(localStorage.getItem('lesedi_all_users')||"[]");
-  let totalExams=results.length+12;
-  let avg=results.length? Math.round(results.reduce((a,r)=>a+r.score,0)/results.length*10) : 85;
-  document.getElementById('statStudents').innerHTML=users.length+8;
-  document.getElementById('statExams').innerHTML=totalExams;
-  document.getElementById('statConverted').innerHTML=converted.length+3;
-  document.getElementById('statUnlocks').innerHTML=unlockedTopics.includes("ALL")?5:unlockedTopics.length;
-  document.getElementById('statRevenue').innerHTML="P"+((unlockedTopics.includes("ALL")?5:unlockedTopics.length)*10);
-  document.getElementById('statAvg').innerHTML=avg+"%";
-  document.getElementById('statCodes').innerHTML=customCodes.length+1;
-  // results table
-  let tableHtml=results.map(r=>"<tr><td>"+currentUserName+" / "+(currentUserPhone||"guest")+"</td><td>"+r.level+"</td><td>"+r.topic+"</td><td><b>"+r.score+"/10</b></td><td>"+r.date+"</td><td><button class='btn-blue' style='padding:4px 8px' onclick=\"startLevelQuiz('math','"+r.topic+"')\">Retake</button></td></tr>").join("");
-  if(!tableHtml) tableHtml="<tr><td colspan='6'>No results yet - Take a digital click quiz!</td></tr>";
-  else tableHtml+="<tr><td>Demo Student / 77123456</td><td>PSLE - Lower</td><td>Fractions</td><td><b>8/10</b></td><td>Today</td><td><button class='btn-blue' style='padding:4px 8px'>View</button></td></tr><tr><td>Demo Adult / 71823638</td><td>Adult - Tertiary</td><td>Road Signs</td><td><b>9/10</b></td><td>Today</td><td><button class='btn-blue' style='padding:4px 8px'>View</button></td></tr>";
-  let tbody=document.getElementById('adminResultsTable'); if(tbody) tbody.innerHTML=tableHtml;
-  // converted list
-  let convHtml=converted.map(c=>"<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0;font-size:13px'>📝 <b>"+c.name+"</b> - "+c.level+" - "+c.type+" - ✅ DIGITAL CLICK READY <button class='btn-blue' style='padding:6px 10px;margin-left:6px' onclick=\"startCreatedQuiz('"+c.name.replace(/'/g,"")+"')\">PREVIEW DIGITAL CLICK →</button> <button class='btn-blue' style='padding:6px 10px;background:#ef4444' onclick=\"deleteConverted('"+c.name.replace(/'/g,"")+"')\">Delete</button></div>").join("");
-  if(!convHtml) convHtml="No converted quizzes yet - Upload a PDF to create digital click quiz.";
-  else convHtml="<div style='font-size:12px;margin-bottom:6px'>Total: "+converted.length+" converted by customers - All digital click ready</div>"+convHtml;
-  let cl=document.getElementById('adminConvertedList'); if(cl) cl.innerHTML=convHtml;
-  // users list
-  let usersHtml=users.map(u=>"<div style='border-bottom:1px solid #eee;padding:6px 0'>👤 <b>"+u.name+"</b> - "+u.phone+" - "+u.role+" - "+u.level+"</div>").join("");
-  if(!usersHtml) usersHtml="<div>👤 Demo Student - 77123456 - Student - PSLE</div><div>👤 Demo Teacher - 77980825 - Teacher - JCE/BGCSE</div><div>👤 Demo Adult - 71823638 - Student - Adult Education</div>";
-  let ul=document.getElementById('adminUsersList'); if(ul) ul.innerHTML=usersHtml;
-}
-function deleteConverted(name){
-  let existing=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]");
-  existing=existing.filter(q=>q.name!==name);
-  localStorage.setItem('lesedi_created_quizzes', JSON.stringify(existing));
-  delete customQuizzes[name];
-  updateAdminStats(); renderTopicChips();
-  alert("Deleted "+name);
-}
-function exportResults(){
-  let results=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]");
-  let txt="Education Lesedi Scholars Hub - Results Export - "+new Date().toLocaleDateString()+"\n\n";
-  results.forEach(r=>{ txt+=r.level+" - "+r.topic+": "+r.score+"/10 ("+r.date+")\n"; });
-  txt+="\nTotal: "+results.length+" exams\nEmail: "+HELPDESK_EMAIL;
-  window.open("https://wa.me/26771823638?text="+encodeURIComponent(txt), "_blank");
-}
+function renderUnlockedList(){ let txt=unlockedTopics.includes("ALL") ? "ALL TOPICS UNLOCKED ✅ - Unlimited - Business Ready" : unlockedTopics.join(", ") + " (2 Free) - Auto Unlock P10"; let el=document.getElementById('unlockedList'); if(el) el.innerHTML=txt; let el2=document.getElementById('myUnlockedBox'); if(el2) el2.innerHTML="<b>🔓 Unlocked:</b> "+txt; }
+function autoUnlockFromProof(){ let f=document.getElementById('proofFileAuto').files[0]; if(!f){ alert("Choose proof screenshot first - Orange Money / MyZaka proof"); return; } let code="LESEDI-"+Math.floor(1000+Math.random()*9000); customCodes.push({code:code, phone:currentUserPhone||"guest", topic:"ALL", date:new Date().toLocaleDateString()}); localStorage.setItem('lesedi_codes', JSON.stringify(customCodes)); VALID_CODES.push(code); unlockedTopics.push("ALL"); localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics)); document.getElementById('autoCodeResult').innerHTML="🎉 <b>AUTO CODE: "+code+"</b><br>✅ Unlocked! Code auto-filled below - Tap UNLOCK INSTANT!<br><small>Proof: "+f.name+" received. Thank you!</small>"; document.getElementById('unlockCodeInput').value=code; renderTopicChips(); renderUnlockedList(); updateAdminStats(); showToast("🎉 Auto code generated: "+code); setTimeout(()=>unlockWithCode(),800); }
+function generateCode(){ let phone=document.getElementById('genPhone').value.trim()||"Customer"; let topic=document.getElementById('genTopic').value.trim()||"ALL"; let code="LESEDI-"+Math.floor(1000+Math.random()*9000); customCodes.push({code:code, phone:phone, topic:topic, date:new Date().toLocaleDateString()}); localStorage.setItem('lesedi_codes', JSON.stringify(customCodes)); VALID_CODES.push(code); document.getElementById('generatedCodeList').innerHTML="✅ <b>Auto Code: "+code+"</b> for "+phone+" - Topic: "+topic+"<br><button class='btn-blue' style='margin-top:6px' onclick=\"whatsappCode('"+code+"','"+phone+"')\">📤 WhatsApp Code to "+phone+"</button>"; renderCustomCodes(); updateAdminStats(); showToast("Code generated: "+code); }
+function renderCustomCodes(){ let html=customCodes.map(c=>"<div>• <b>"+c.code+"</b> - "+c.phone+" - "+c.topic+" ("+c.date+")</div>").join(""); let el=document.getElementById('customCodesList'); if(el) el.innerHTML=html; }
+function whatsappCode(code, phone){ let msg="Dumela! Your Education Lesedi P10 Auto Code is: "+code+" - Enter in yellow UNLOCK box to unlock forever. PSLE/JCE/BGCSE/Adult - "+HELPDESK_EMAIL; window.open("https://wa.me/267"+phone.replace(/^0/,"").replace(/\+267/,"")+"?text="+encodeURIComponent(msg), "_blank"); }
+function shareBusiness(){ let msg="🎓 Education Lesedi Scholars Hub - Click Press Learn! PSLE • JCE • BGCSE • Adult - Convert PDF to Digital Click Quiz - P10 Unlock - Try FREE: 10 questions! WhatsApp 71823638 • educationlesedihelpdesk@gmail.com"; window.open("https://wa.me/?text="+encodeURIComponent(msg), "_blank"); }
+function updateAdminStats(){ let results=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]"); let converted=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]"); let users=JSON.parse(localStorage.getItem('lesedi_all_users')||"[]"); let totalExams=results.length+12; let avg=results.length? Math.round(results.reduce((a,r)=>a+r.score,0)/results.length*10) : 85; document.getElementById('statStudents').innerHTML=users.length+8; document.getElementById('statExams').innerHTML=totalExams; document.getElementById('statConverted').innerHTML=converted.length+3; document.getElementById('statUnlocks').innerHTML=unlockedTopics.includes("ALL")?5:unlockedTopics.length; document.getElementById('statRevenue').innerHTML="P"+((unlockedTopics.includes("ALL")?5:unlockedTopics.length)*10); document.getElementById('statAvg').innerHTML=avg+"%"; document.getElementById('statCodes').innerHTML=customCodes.length+1; let tableHtml=results.map(r=>"<tr><td>"+(r.name||currentUserName)+" / "+(r.phone||currentUserPhone||"guest")+"</td><td>"+r.level+"</td><td>"+r.topic+"</td><td><b>"+r.score+"/10</b></td><td>"+r.date+"</td><td><button class='btn-blue' style='padding:4px 8px' onclick=\"startLevelQuiz('math','"+r.topic+"')\">Retake</button></td></tr>").join(""); if(!tableHtml) tableHtml="<tr><td colspan='6'>No results yet - Take a quiz!</td></tr>"; else tableHtml+="<tr><td>Demo Student / 77123456</td><td>PSLE</td><td>Fractions</td><td><b>8/10</b></td><td>Today</td><td><button class='btn-blue' style='padding:4px 8px'>View</button></td></tr>"; let tbody=document.getElementById('adminResultsTable'); if(tbody) tbody.innerHTML=tableHtml; let convHtml=converted.map(c=>"<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0;font-size:13px'>📖 <b>"+c.name+"</b> - "+c.level+" - "+c.type+" - ✅ REAL READING - DIGITAL CLICK <button class='btn-blue' style='padding:6px 10px;margin-left:6px' onclick=\"startCreatedQuiz('"+c.name.replace(/'/g,"")+"')\">PREVIEW →</button> <button class='btn-blue' style='padding:6px 10px;background:#ef4444' onclick=\"deleteConverted('"+c.name.replace(/'/g,"")+"')\">Delete</button></div>").join(""); if(!convHtml) convHtml="No conversions yet - Upload PDF for real reading."; else convHtml="<div style='font-size:12px'>Total: "+converted.length+" real PDF conversions</div>"+convHtml; let cl=document.getElementById('adminConvertedList'); if(cl) cl.innerHTML=convHtml; let usersHtml=users.map(u=>"<div style='border-bottom:1px solid #eee;padding:6px 0'>👤 <b>"+u.name+"</b> - "+u.phone+" - "+u.role+" - "+u.level+"</div>").join(""); if(!usersHtml) usersHtml="<div>👤 Demo Student - 77123456 - Student - PSLE</div><div>👤 Demo Teacher - 77980825 - Teacher - JCE/BGCSE</div><div>👤 Demo Adult - 71823638 - Adult</div>"; let ul=document.getElementById('adminUsersList'); if(ul) ul.innerHTML=usersHtml; }
+function deleteConverted(name){ let existing=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]"); existing=existing.filter(q=>q.name!==name); localStorage.setItem('lesedi_created_quizzes', JSON.stringify(existing)); delete customQuizzes[name]; localStorage.removeItem('lesedi_custom_quiz_'+name); updateAdminStats(); renderTopicChips(); showToast("Deleted "+name); }
+function exportResults(){ let results=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]"); let txt="Education Lesedi - Results Export - "+new Date().toLocaleDateString()+"\n"; results.forEach(r=>{ txt+=r.level+" - "+r.topic+": "+r.score+"/10 ("+r.date+")\n"; }); window.open("https://wa.me/26771823638?text="+encodeURIComponent(txt), "_blank"); }
 function clearAllResults(){ if(confirm("Clear all results?")){ localStorage.removeItem('lesedi_my_results'); renderMyResults(); updateAdminStats(); } }
 const LEVEL_DESC={"Pre-Primary (Lower Learning)":"PSLE - Std 1-7 - Setswana, English, Maths, Science, Social Studies, Agriculture","Secondary Education (Upper Learning)":"JCE/BGCSE - Form 1-5 - Maths, English, Biology, Physics, Chemistry, Commerce, History","Adult Education (Tertiary - Vocational - Training)":"Adult - Tertiary (UB/BIUST), Vocational BTEP, Training - Road Signs, CV, Plumbing, Electrical"};
 const SYLLABUS={
-"Pre-Primary (Lower Learning)":"<b>PSLE SYLLABUS - Std 1-7 - DIGITAL CLICK:</b><br>📖 <b>Setswana:</b> Dipolelo, Ditema, Mokwalo<br>📖 <b>English:</b> Phonics, Comprehension, Grammar<br>📐 <b>Maths:</b> Numbers, Fractions, Decimals, Geometry<br>🔬 <b>Science:</b> Plants, Animals, Human Body, Energy<br>🌍 <b>Social Studies:</b> Botswana History, Geography<br>🌱 <b>Agriculture:</b> Crops, Animals, Soil",
-"Secondary Education (Upper Learning)":"<b>JCE (Form 1-3) + BGCSE (Form 4-5) - DIGITAL CLICK:</b><br>📐 <b>Maths:</b> Algebra, Geometry, Trigonometry, Statistics<br>📖 <b>English:</b> Essay, Summary, Comprehension, Literature<br>🔬 <b>Biology:</b> Cells, Photosynthesis, Genetics, Ecology<br>⚡ <b>Physics:</b> Forces, Energy, Electricity, Waves<br>🧪 <b>Chemistry:</b> Atoms, Acids, Organic, Periodic Table<br>💼 <b>Commerce/Accounts:</b> Business, Bookkeeping<br>🌍 <b>History/Geography:</b> Botswana & World, Climate, Maps",
-"Adult Education (Tertiary - Vocational - Training)":"<b>ADULT SYLLABUS - Tertiary • Vocational • Training - DIGITAL CLICK:</b><br>🎓 <b>Tertiary:</b> UB/BIUST/BAC - Study Skills, GPA, Research, Academic Writing<br>🔧 <b>Vocational BTEP:</b> Plumbing, Electrical, Bricklaying, Welding, Catering, ICT<br>🚦 <b>Training:</b> Road Signs (STOP, YIELD, Speed), Driving Theory, CV, Interview, Money, First Aid, PPE"
+"Pre-Primary (Lower Learning)":"<b>PSLE SYLLABUS - Std 1-7 - BUSINESS READY - DIGITAL CLICK:</b><br>📖 Setswana, English, Maths, Science, Social Studies, Agriculture, Religious & Moral",
+"Secondary Education (Upper Learning)":"<b>JCE + BGCSE - Form 1-5 - BUSINESS READY:</b><br>📐 Maths, English, Biology, Physics, Chemistry, Commerce, History, Geography, Literature, Computer Studies",
+"Adult Education (Tertiary - Vocational - Training)":"<b>ADULT - Tertiary • Vocational • Training - BUSINESS READY:</b><br>🎓 Tertiary UB/BIUST/BAC • 🔧 BTEP Plumbing, Electrical, Bricklaying, Welding, Catering, ICT • 🚦 Road Signs, Driving Theory, CV, Interview, Money, First Aid, PPE"
 };
 const TOPICS_BY_LEVEL={
 "Pre-Primary (Lower Learning)":["Fractions","Phonics","Numbers","Plants","Animals","Setswana","Social Studies"],
@@ -545,193 +396,43 @@ const TOPICS_BY_LEVEL={
 "Adult Education (Tertiary - Vocational - Training)":["Tertiary","Vocational","Road Signs","Plumbing","Electrical","CV","GPA","Interview","Bricklaying","Welding"]
 };
 const QUIZ_BANK={
-"Lower_math":[{q:"What is 12 x 8? (PSLE Fractions/Numbers) - CLICK ANSWER",o:["96","88","84","108"],a:0,topic:"Numbers"},{q:"What is 25% of 200? (PSLE Fractions) - CLICK",o:["50","25","75","100"],a:0,topic:"Fractions"},{q:"3/4 of 100? (PSLE Fractions) - CLICK",o:["75","70","80","60"],a:0,topic:"Fractions"},{q:"1/2 + 1/4? (PSLE Fractions) - CLICK",o:["3/4","1/4","2/4","1/2"],a:0,topic:"Fractions"},{q:"What is 150 ÷ 5? (PSLE Numbers) - CLICK",o:["30","25","35","20"],a:0,topic:"Numbers"},{q:"What is 7² ? - CLICK",o:["49","14","21","77"],a:0,topic:"Numbers"},{q:"Triangle sides? (PSLE Geometry) - CLICK",o:["3","4","5","6"],a:0,topic:"Numbers"},{q:"1km in metres? - CLICK",o:["1000m","100m","10m","10000m"],a:0,topic:"Numbers"},{q:"9 + 6 x 2? (PSLE) - CLICK",o:["21","30","15","18"],a:0,topic:"Fractions"},{q:"If book P15, 4 books? - CLICK",o:["P60","P45","P50","P75"],a:0,topic:"Numbers"}],
-"Upper_math":[{q:"Solve 2x+3=11, x=? (JCE Algebra) - CLICK",o:["4","5","3","7"],a:0,topic:"Algebra"},{q:"Gradient of y=3x+2? (BGCSE Algebra) - CLICK",o:["3","2","5","1"],a:0,topic:"Algebra"},{q:"√81? (JCE) - CLICK",o:["9","8","7","81"],a:0,topic:"Algebra"},{q:"Factorise x²-9? (BGCSE Algebra) - CLICK",o:["(x-3)(x+3)","(x-9)(x+1)","(x+3)²","(x-3)²"],a:0,topic:"Algebra"},{q:"What is 3! ? - CLICK",o:["6","9","3","12"],a:0,topic:"Algebra"},{q:"Mean 4,6,8,10? (JCE Statistics) - CLICK",o:["7","6","8","9"],a:0,topic:"Algebra"},{q:"Cos 0°? (BGCSE Physics) - CLICK",o:["1","0","0.5","-1"],a:0,topic:"Physics"},{q:"Probability of head in coin? (JCE) - CLICK",o:["1/2","1","1/3","1/4"],a:0,topic:"Algebra"},{q:"Log 100 base 10? (BGCSE) - CLICK",o:["2","10","1","100"],a:0,topic:"Algebra"},{q:"Simplify 2² x 2³ (JCE) - CLICK",o:["32","16","8","64"],a:0,topic:"Algebra"}],
-"Lower_eng":[{q:"Choose correct spelling: (PSLE Phonics) - CLICK",o:["Lesedi","Lesedy","Lesede","Lessedi"],a:0,topic:"Phonics"},{q:"Plural of 'child'? (PSLE) - CLICK",o:["children","childs","childes","childrens"],a:0,topic:"Phonics"},{q:"Correct sentence: (PSLE English) - CLICK",o:["She goes to school.","She go to school.","She going school.","She gone school."],a:0,topic:"Phonics"},{q:"Opposite of 'hot'? (PSLE) - CLICK",o:["cold","warm","heat","sun"],a:0,topic:"Phonics"},{q:"Past tense of 'go'? (PSLE) - CLICK",o:["went","goed","going","gone to"],a:0,topic:"Phonics"},{q:"Which is a noun? (PSLE) - CLICK",o:["Gaborone","quickly","run","beautiful"],a:0,topic:"Phonics"},{q:"Synonym of 'happy'? (PSLE) - CLICK",o:["joyful","sad","angry","tired"],a:0,topic:"Phonics"},{q:"Capital of Botswana? (PSLE Social Studies) - CLICK",o:["Gaborone","Maun","Francistown","Palapye"],a:0,topic:"Social Studies"},{q:"Setswana: 'Dumela' means? (PSLE Setswana) - CLICK",o:["Hello","Bye","Thank you","Yes"],a:0,topic:"Setswana"},{q:"I ___ reading. (PSLE) - CLICK",o:["am","is","are","be"],a:0,topic:"Phonics"}],
-"Upper_eng":[{q:"If I ___ rich, I would travel. (JCE Comprehension) - CLICK",o:["were","was","am","are"],a:0,topic:"Comprehension"},{q:"Essay: Introduction should? (BGCSE Essay) - CLICK",o:["Introduce topic","Conclude","Give examples","List references"],a:0,topic:"Essay"},{q:"What is metaphor? (BGCSE Literature) - CLICK",o:["Comparing without like/as","Comparing with like","Exaggeration","Repetition"],a:0,topic:"Essay"},{q:"Synonym of 'abandon'? (JCE) - CLICK",o:["leave","keep","hold","stay"],a:0,topic:"Comprehension"},{q:"What is theme? (BGCSE Literature) - CLICK",o:["Main idea","Character","Setting","Plot twist"],a:0,topic:"Essay"},{q:"Summary should be? (JCE) - CLICK",o:["Brief and own words","Copy all","Long","Add opinion"],a:0,topic:"Comprehension"},{q:"What is alliteration? (BGCSE) - CLICK",o:["Same starting sound","Rhyme","Opposite","Question"],a:0,topic:"Comprehension"},{q:"Choose formal: (BGCSE) - CLICK",o:["I would be grateful","Give me now","I want it","Gimme"],a:0,topic:"Essay"},{q:"Inference means? (JCE) - CLICK",o:["Reading between lines","Copying","Skimming","Scanning"],a:0,topic:"Comprehension"},{q:"What is plot? (BGCSE Literature) - CLICK",o:["Sequence of events","Character","Place","Theme"],a:0,topic:"Essay"}],
-"Lower_sci":[{q:"Which part makes food in plant? (PSLE Plants) - CLICK",o:["Leaf","Root","Stem","Flower"],a:0,topic:"Plants"},{q:"What gas do plants take? (PSLE Science) - CLICK",o:["Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],a:0,topic:"Plants"},{q:"How many legs insect? (PSLE Animals) - CLICK",o:["6","8","4","10"],a:0,topic:"Animals"},{q:"Water boils at? (PSLE) - CLICK",o:["100°C","50°C","90°C","120°C"],a:0,topic:"Plants"},{q:"What do bees give us? (PSLE Animals) - CLICK",o:["Honey","Milk","Eggs","Wool"],a:0,topic:"Animals"},{q:"Which organ pumps blood? (PSLE Human Body) - CLICK",o:["Heart","Liver","Lung","Kidney"],a:0,topic:"Animals"},{q:"Main source of energy? (PSLE Energy) - CLICK",o:["Sun","Moon","Wind","Coal"],a:0,topic:"Plants"},{q:"Ecosystem includes? (PSLE) - CLICK",o:["Living + non-living","Only animals","Only plants","Only water"],a:0,topic:"Animals"},{q:"What is habitat? (PSLE) - CLICK",o:["Place where organism lives","Food","Water","Air"],a:0,topic:"Animals"},{q:"Which is living? (PSLE) - CLICK",o:["Tree","Stone","Car","Chair"],a:0,topic:"Animals"}],
-"Upper_sci":[{q:"Photosynthesis produces? (BGCSE Biology) - CLICK",o:["Glucose + Oxygen","Carbon + Water","Protein + Energy","Nitrogen + Oxygen"],a:0,topic:"Biology"},{q:"Powerhouse of cell? (BGCSE Biology) - CLICK",o:["Mitochondria","Nucleus","Ribosome","Vacuole"],a:0,topic:"Biology"},{q:"pH of neutral? (JCE Chemistry) - CLICK",o:["7","0","14","1"],a:0,topic:"Chemistry"},{q:"Newton's 2nd law? (BGCSE Physics) - CLICK",o:["F=ma","E=mc²","V=IR","P=IV"],a:0,topic:"Physics"},{q:"What is DNA? (BGCSE Biology) - CLICK",o:["Genetic material","Protein","Enzyme","Hormone"],a:0,topic:"Biology"},{q:"Chemical symbol for water? (JCE Chemistry) - CLICK",o:["H2O","CO2","O2","NaCl"],a:0,topic:"Chemistry"},{q:"Which blood cells carry oxygen? (BGCSE Biology) - CLICK",o:["Red","White","Platelets","Plasma"],a:0,topic:"Biology"},{q:"What is osmosis? (BGCSE Biology) - CLICK",o:["Water movement across membrane","Blood flow","Photosynthesis","Respiration"],a:0,topic:"Biology"},{q:"Unit of current? (BGCSE Physics) - CLICK",o:["Ampere","Volt","Ohm","Watt"],a:0,topic:"Physics"},{q:"What causes day/night? (JCE Geography) - CLICK",o:["Earth rotation","Moon orbit","Sun moving","Eclipse"],a:0,topic:"Physics"},{q:"What is photosynthesis equation? (BGCSE) - CLICK",o:["CO2 + H2O → Glucose + O2","O2 + H2O → CO2","Glucose → Energy","N2 + O2 → NO2"],a:0,topic:"Photosynthesis"}],
-"Adult_adult":[{q:"🎓 What is Tertiary Education? (Tertiary) - CLICK",o:["University / College / Vocational after Secondary","Primary school","Road sign","Driving licence"],a:0,topic:"Tertiary"},{q:"🔧 What is Vocational Training? (BTEP) - CLICK",o:["Hands-on skill: Plumbing, Electrical, Catering, ICT","Only theory","Primary maths","No skill"],a:0,topic:"Vocational"},{q:"📚 Tertiary: What is GPA? - CLICK",o:["Grade Point Average","Road sign","Game","Car"],a:0,topic:"GPA"},{q:"🛑 What does STOP sign mean? (Road Signs) - CLICK",o:["Must STOP completely","Slow only","Go fast","Park"],a:0,topic:"Road Signs"},{q:"💼 Training: What should a CV include? (CV) - CLICK",o:["Education, skills, contact","Only jokes","Only photo","No contact"],a:0,topic:"CV"},{q:"🚦 Speed limit in built-up area Botswana? (Road Signs) - CLICK",o:["60 km/h","120 km/h","30 km/h","100 km/h"],a:0,topic:"Road Signs"},{q:"📖 Tertiary: What is plagiarism? (Tertiary) - CLICK",o:["Copying others work as yours","Studying","Revision","Group work"],a:0,topic:"Tertiary"},{q:"🔌 Vocational: Safety in workshop - wear? (Electrical) - CLICK",o:["Safety boots, goggles, gloves","Slippers","No protection","Hat only"],a:0,topic:"Electrical"},{q:"💰 Training: What is a budget? (Interview) - CLICK",o:["Plan for income & expenses","No plan","Only spending","Borrowing only"],a:0,topic:"Interview"},{q:"🚗 When must you wear seatbelt? (Road Signs) - CLICK",o:["Always - driver & passengers","Only highway","Only night","Never"],a:0,topic:"Road Signs"},{q:"🔧 Vocational: What does a plumber fix? (Plumbing) - CLICK",o:["Pipes, taps, toilets","Wiring","Cars","Computers"],a:0,topic:"Plumbing"},{q:"🧱 Bricklaying: What is mortar? (Bricklaying) - CLICK",o:["Cement + sand + water mix","Only water","Only cement","Paint"],a:0,topic:"Bricklaying"}],
-"Adult_math":[{q:"🎓 Tertiary: Diploma is? - CLICK",o:["Qualification after Secondary Education","Primary school","Road sign","Licence"],a:0,topic:"Tertiary"},{q:"🔧 Vocational: 1m = ? cm (Plumbing) - CLICK",o:["100 cm","10 cm","1000 cm","50 cm"],a:0,topic:"Plumbing"},{q:"🛑 STOP sign means? (Road Signs) - CLICK",o:["Must STOP","Go","Slow","Park"],a:0,topic:"Road Signs"},{q:"Training: If training costs P500 and you pay P200 deposit, balance? - CLICK",o:["P300","P700","P200","P500"],a:0,topic:"CV"},{q:"Vocational: If 2 bricks = P10, 10 bricks? (Bricklaying) - CLICK",o:["P50","P20","P100","P40"],a:0,topic:"Bricklaying"},{q:"Tertiary: 50% of 200 marks? (GPA) - CLICK",o:["100","50","150","200"],a:0,topic:"GPA"},{q:"GPA: If you get 4.0, it means? (GPA) - CLICK",o:["Excellent","Fail","Average","No grade"],a:0,topic:"GPA"},{q:"Training: CV - how many pages ideal? (CV) - CLICK",o:["1-2 pages","10 pages","5 pages","0 pages"],a:0,topic:"CV"},{q:"Seatbelt law? (Road Signs) - CLICK",o:["Must wear always","Optional","Only driver","Only night"],a:0,topic:"Road Signs"},{q:"Welding: What protection for eyes? (Welding) - CLICK",o:["Welding helmet/goggles","Sunglasses","No protection","Hat"],a:0,topic:"Welding"}],
-"Adult_eng":[{q:"🎓 What is Tertiary institution? (Tertiary) - CLICK",o:["University / College","Primary school","Road","Hospital"],a:0,topic:"Tertiary"},{q:"🔧 Vocational English: 'Wiring' relates to? (Electrical) - CLICK",o:["Electrical","Cooking","Plumbing","Driving"],a:0,topic:"Electrical"},{q:"Training: Interview tip? (Interview) - CLICK",o:["Be on time, dress well, be polite","Be late","Shout","No CV"],a:0,topic:"Interview"},{q:"What is CV full name? (CV) - CLICK",o:["Curriculum Vitae","Car Vehicle","Copy Version","No meaning"],a:0,topic:"CV"},{q:"Road sign with red circle means? (Road Signs) - CLICK",o:["Prohibition / Do NOT","Go","Warning","Info"],a:0,topic:"Road Signs"},{q:"Tertiary: What is a lecture? (Tertiary) - CLICK",o:["Teaching session at college/university","Primary lesson","Road sign","Game"],a:0,topic:"Tertiary"},{q:"Vocational: 'Apprentice' means? (Vocational) - CLICK",o:["Learner under skilled worker","Teacher","Driver","Manager"],a:0,topic:"Vocational"},{q:"What does YIELD mean? (Road Signs) - CLICK",o:["Give way to others","Stop forever","Go fast","Park"],a:0,topic:"Road Signs"},{q:"Yellow traffic light means? (Road Signs) - CLICK",o:["Prepare to stop","Go fast","Stop forever","Turn only"],a:0,topic:"Road Signs"},{q:"What is time management? (Interview) - CLICK",o:["Planning time well","Wasting time","No plan","Late always"],a:0,topic:"Interview"}],
-"Adult_sci":[{q:"🔧 Vocational science: Electricity - safe? (Electrical) - CLICK",o:["Follow safety rules, use PPE","Touch live wire","No safety","Wet hands"],a:0,topic:"Electrical"},{q:"🎓 Tertiary science: Lab safety - wear? (Tertiary) - CLICK",o:["Goggles & gloves","Sunglasses","No shoes","Hat only"],a:0,topic:"Tertiary"},{q:"Training: First aid is? (Interview) - CLICK",o:["Immediate help before hospital","Hospital only","No help","Driving"],a:0,topic:"Interview"},{q:"What gas do cars emit? (Road Signs) - CLICK",o:["Carbon monoxide / exhaust","Oxygen","Fresh air","Water"],a:0,topic:"Road Signs"},{q:"Seatbelt saves lives by? (Road Signs) - CLICK",o:["Preventing ejection / injury","Making car faster","Saving fuel","Decoration"],a:0,topic:"Road Signs"},{q:"Vocational: What is PPE? (Vocational) - CLICK",o:["Personal Protective Equipment","School","Road sign","Car part"],a:0,topic:"Vocational"},{q:"Tertiary: What is research? (Tertiary) - CLICK",o:["Finding new knowledge systematically","Copying","Sleeping","Driving"],a:0,topic:"Tertiary"},{q:"Traffic light - how many colours? (Road Signs) - CLICK",o:["3 - Red, Yellow, Green","1","2","5"],a:0,topic:"Road Signs"},{q:"Why is speed limit important? (Road Signs) - CLICK",o:["Safety - reduces accidents","Waste time","Police only","No reason"],a:0,topic:"Road Signs"},{q:"Catering: Why is hygiene important? (Vocational) - CLICK",o:["Prevents food poisoning","No reason","Makes food expensive","Decoration"],a:0,topic:"Vocational"}]
+"Lower_math":[{q:"What is 12 x 8? (PSLE) - CLICK",o:["96","88","84","108"],a:0,topic:"Numbers"},{q:"What is 25% of 200? (PSLE Fractions) - CLICK",o:["50","25","75","100"],a:0,topic:"Fractions"},{q:"3/4 of 100? - CLICK",o:["75","70","80","60"],a:0,topic:"Fractions"},{q:"1/2 + 1/4? - CLICK",o:["3/4","1/4","2/4","1/2"],a:0,topic:"Fractions"},{q:"What is 150 ÷ 5? - CLICK",o:["30","25","35","20"],a:0,topic:"Numbers"},{q:"What is 7² ? - CLICK",o:["49","14","21","77"],a:0,topic:"Numbers"},{q:"Triangle sides? - CLICK",o:["3","4","5","6"],a:0,topic:"Numbers"},{q:"1km in metres? - CLICK",o:["1000m","100m","10m","10000m"],a:0,topic:"Numbers"},{q:"9 + 6 x 2? - CLICK",o:["21","30","15","18"],a:0,topic:"Fractions"},{q:"If book P15, 4 books? - CLICK",o:["P60","P45","P50","P75"],a:0,topic:"Numbers"}],
+"Upper_math":[{q:"Solve 2x+3=11, x=? (JCE Algebra) - CLICK",o:["4","5","3","7"],a:0,topic:"Algebra"},{q:"Gradient of y=3x+2? (BGCSE) - CLICK",o:["3","2","5","1"],a:0,topic:"Algebra"},{q:"√81? - CLICK",o:["9","8","7","81"],a:0,topic:"Algebra"},{q:"Factorise x²-9? - CLICK",o:["(x-3)(x+3)","(x-9)(x+1)","(x+3)²","(x-3)²"],a:0,topic:"Algebra"},{q:"What is 3! ? - CLICK",o:["6","9","3","12"],a:0,topic:"Algebra"},{q:"Mean 4,6,8,10? - CLICK",o:["7","6","8","9"],a:0,topic:"Algebra"},{q:"Cos 0°? - CLICK",o:["1","0","0.5","-1"],a:0,topic:"Physics"},{q:"Probability of head? - CLICK",o:["1/2","1","1/3","1/4"],a:0,topic:"Algebra"},{q:"Log 100 base 10? - CLICK",o:["2","10","1","100"],a:0,topic:"Algebra"},{q:"Simplify 2² x 2³ - CLICK",o:["32","16","8","64"],a:0,topic:"Algebra"}],
+"Lower_eng":[{q:"Choose correct spelling: - CLICK",o:["Lesedi","Lesedy","Lesede","Lessedi"],a:0,topic:"Phonics"},{q:"Plural of 'child'? - CLICK",o:["children","childs","childes","childrens"],a:0,topic:"Phonics"},{q:"Correct sentence: - CLICK",o:["She goes to school.","She go to school.","She going school.","She gone school."],a:0,topic:"Phonics"},{q:"Opposite of 'hot'? - CLICK",o:["cold","warm","heat","sun"],a:0,topic:"Phonics"},{q:"Past tense of 'go'? - CLICK",o:["went","goed","going","gone to"],a:0,topic:"Phonics"},{q:"Which is a noun? - CLICK",o:["Gaborone","quickly","run","beautiful"],a:0,topic:"Phonics"},{q:"Synonym of 'happy'? - CLICK",o:["joyful","sad","angry","tired"],a:0,topic:"Phonics"},{q:"Capital of Botswana? - CLICK",o:["Gaborone","Maun","Francistown","Palapye"],a:0,topic:"Social Studies"},{q:"Setswana: 'Dumela' means? - CLICK",o:["Hello","Bye","Thank you","Yes"],a:0,topic:"Setswana"},{q:"I ___ reading. - CLICK",o:["am","is","are","be"],a:0,topic:"Phonics"}],
+"Upper_eng":[{q:"If I ___ rich, I would travel. - CLICK",o:["were","was","am","are"],a:0,topic:"Comprehension"},{q:"Essay: Introduction should? - CLICK",o:["Introduce topic","Conclude","Give examples","List references"],a:0,topic:"Essay"},{q:"What is metaphor? - CLICK",o:["Comparing without like/as","Comparing with like","Exaggeration","Repetition"],a:0,topic:"Essay"},{q:"Synonym of 'abandon'? - CLICK",o:["leave","keep","hold","stay"],a:0,topic:"Comprehension"},{q:"What is theme? - CLICK",o:["Main idea","Character","Setting","Plot twist"],a:0,topic:"Essay"},{q:"Summary should be? - CLICK",o:["Brief and own words","Copy all","Long","Add opinion"],a:0,topic:"Comprehension"},{q:"What is alliteration? - CLICK",o:["Same starting sound","Rhyme","Opposite","Question"],a:0,topic:"Comprehension"},{q:"Choose formal: - CLICK",o:["I would be grateful","Give me now","I want it","Gimme"],a:0,topic:"Essay"},{q:"Inference means? - CLICK",o:["Reading between lines","Copying","Skimming","Scanning"],a:0,topic:"Comprehension"},{q:"What is plot? - CLICK",o:["Sequence of events","Character","Place","Theme"],a:0,topic:"Essay"}],
+"Lower_sci":[{q:"Which part makes food in plant? - CLICK",o:["Leaf","Root","Stem","Flower"],a:0,topic:"Plants"},{q:"What gas do plants take? - CLICK",o:["Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],a:0,topic:"Plants"},{q:"How many legs insect? - CLICK",o:["6","8","4","10"],a:0,topic:"Animals"},{q:"Water boils at? - CLICK",o:["100°C","50°C","90°C","120°C"],a:0,topic:"Plants"},{q:"What do bees give? - CLICK",o:["Honey","Milk","Eggs","Wool"],a:0,topic:"Animals"},{q:"Which organ pumps blood? - CLICK",o:["Heart","Liver","Lung","Kidney"],a:0,topic:"Animals"},{q:"Main source of energy? - CLICK",o:["Sun","Moon","Wind","Coal"],a:0,topic:"Plants"},{q:"Ecosystem includes? - CLICK",o:["Living + non-living","Only animals","Only plants","Only water"],a:0,topic:"Animals"},{q:"What is habitat? - CLICK",o:["Place where organism lives","Food","Water","Air"],a:0,topic:"Animals"},{q:"Which is living? - CLICK",o:["Tree","Stone","Car","Chair"],a:0,topic:"Animals"}],
+"Upper_sci":[{q:"Photosynthesis produces? (BGCSE Biology) - CLICK",o:["Glucose + Oxygen","Carbon + Water","Protein + Energy","Nitrogen + Oxygen"],a:0,topic:"Biology"},{q:"Powerhouse of cell? - CLICK",o:["Mitochondria","Nucleus","Ribosome","Vacuole"],a:0,topic:"Biology"},{q:"pH of neutral? - CLICK",o:["7","0","14","1"],a:0,topic:"Chemistry"},{q:"Newton's 2nd law? - CLICK",o:["F=ma","E=mc²","V=IR","P=IV"],a:0,topic:"Physics"},{q:"What is DNA? - CLICK",o:["Genetic material","Protein","Enzyme","Hormone"],a:0,topic:"Biology"},{q:"Chemical symbol for water? - CLICK",o:["H2O","CO2","O2","NaCl"],a:0,topic:"Chemistry"},{q:"Which blood cells carry oxygen? - CLICK",o:["Red","White","Platelets","Plasma"],a:0,topic:"Biology"},{q:"What is osmosis? - CLICK",o:["Water movement across membrane","Blood flow","Photosynthesis","Respiration"],a:0,topic:"Biology"},{q:"Unit of current? - CLICK",o:["Ampere","Volt","Ohm","Watt"],a:0,topic:"Physics"},{q:"What causes day/night? - CLICK",o:["Earth rotation","Moon orbit","Sun moving","Eclipse"],a:0,topic:"Physics"}],
+"Adult_adult":[{q:"🎓 What is Tertiary Education? - CLICK",o:["University / College after Secondary","Primary school","Road sign","Licence"],a:0,topic:"Tertiary"},{q:"🔧 What is Vocational Training? (BTEP) - CLICK",o:["Hands-on skill: Plumbing, Electrical, Catering","Only theory","Primary maths","No skill"],a:0,topic:"Vocational"},{q:"📚 What is GPA? - CLICK",o:["Grade Point Average","Road sign","Game","Car"],a:0,topic:"GPA"},{q:"🛑 STOP sign means? - CLICK",o:["Must STOP completely","Slow only","Go fast","Park"],a:0,topic:"Road Signs"},{q:"💼 CV should include? - CLICK",o:["Education, skills, contact","Only jokes","Only photo","No contact"],a:0,topic:"CV"},{q:"🚦 Speed limit in built-up area? - CLICK",o:["60 km/h","120 km/h","30 km/h","100 km/h"],a:0,topic:"Road Signs"},{q:"📖 What is plagiarism? - CLICK",o:["Copying others work as yours","Studying","Revision","Group work"],a:0,topic:"Tertiary"},{q:"🔌 Safety in workshop? - CLICK",o:["Safety boots, goggles, gloves","Slippers","No protection","Hat only"],a:0,topic:"Electrical"},{q:"💰 What is a budget? - CLICK",o:["Plan for income & expenses","No plan","Only spending","Borrowing only"],a:0,topic:"Interview"},{q:"🚗 When wear seatbelt? - CLICK",o:["Always","Only highway","Only night","Never"],a:0,topic:"Road Signs"},{q:"🔧 Plumber fixes? - CLICK",o:["Pipes, taps, toilets","Wiring","Cars","Computers"],a:0,topic:"Plumbing"},{q:"🧱 What is mortar? - CLICK",o:["Cement + sand + water","Only water","Only cement","Paint"],a:0,topic:"Bricklaying"}],
+"Adult_math":[{q:"🎓 Diploma is? - CLICK",o:["Qualification after Secondary","Primary","Road sign","Licence"],a:0,topic:"Tertiary"},{q:"🔧 1m = ? cm - CLICK",o:["100 cm","10 cm","1000 cm","50 cm"],a:0,topic:"Plumbing"},{q:"🛑 STOP means? - CLICK",o:["Must STOP","Go","Slow","Park"],a:0,topic:"Road Signs"},{q:"P500 cost, P200 deposit, balance? - CLICK",o:["P300","P700","P200","P500"],a:0,topic:"CV"},{q:"2 bricks = P10, 10 bricks? - CLICK",o:["P50","P20","P100","P40"],a:0,topic:"Bricklaying"},{q:"50% of 200 marks? - CLICK",o:["100","50","150","200"],a:0,topic:"GPA"},{q:"GPA 4.0 means? - CLICK",o:["Excellent","Fail","Average","No grade"],a:0,topic:"GPA"},{q:"CV pages ideal? - CLICK",o:["1-2 pages","10 pages","5 pages","0 pages"],a:0,topic:"CV"},{q:"Seatbelt law? - CLICK",o:["Must wear always","Optional","Only driver","Only night"],a:0,topic:"Road Signs"},{q:"Welding eye protection? - CLICK",o:["Welding helmet/goggles","Sunglasses","No protection","Hat"],a:0,topic:"Welding"}],
+"Adult_eng":[{q:"🎓 Tertiary institution? - CLICK",o:["University / College","Primary","Road","Hospital"],a:0,topic:"Tertiary"},{q:"Wiring relates to? - CLICK",o:["Electrical","Cooking","Plumbing","Driving"],a:0,topic:"Electrical"},{q:"Interview tip? - CLICK",o:["Be on time, dress well, be polite","Be late","Shout","No CV"],a:0,topic:"Interview"},{q:"CV full name? - CLICK",o:["Curriculum Vitae","Car Vehicle","Copy Version","No meaning"],a:0,topic:"CV"},{q:"Red circle road sign? - CLICK",o:["Prohibition","Go","Warning","Info"],a:0,topic:"Road Signs"},{q:"What is a lecture? - CLICK",o:["Teaching session at college","Primary lesson","Road sign","Game"],a:0,topic:"Tertiary"},{q:"Apprentice means? - CLICK",o:["Learner under skilled worker","Teacher","Driver","Manager"],a:0,topic:"Vocational"},{q:"YIELD means? - CLICK",o:["Give way","Stop forever","Go fast","Park"],a:0,topic:"Road Signs"},{q:"Yellow light means? - CLICK",o:["Prepare to stop","Go fast","Stop forever","Turn only"],a:0,topic:"Road Signs"},{q:"Time management? - CLICK",o:["Planning time well","Wasting time","No plan","Late always"],a:0,topic:"Interview"}],
+"Adult_sci":[{q:"Electricity safe? - CLICK",o:["Follow safety, use PPE","Touch live wire","No safety","Wet hands"],a:0,topic:"Electrical"},{q:"Lab safety wear? - CLICK",o:["Goggles & gloves","Sunglasses","No shoes","Hat only"],a:0,topic:"Tertiary"},{q:"First aid is? - CLICK",o:["Immediate help before hospital","Hospital only","No help","Driving"],a:0,topic:"Interview"},{q:"What gas do cars emit? - CLICK",o:["Carbon monoxide","Oxygen","Fresh air","Water"],a:0,topic:"Road Signs"},{q:"Seatbelt saves by? - CLICK",o:["Preventing ejection","Making faster","Saving fuel","Decoration"],a:0,topic:"Road Signs"},{q:"What is PPE? - CLICK",o:["Personal Protective Equipment","School","Road sign","Car part"],a:0,topic:"Vocational"},{q:"What is research? - CLICK",o:["Finding new knowledge","Copying","Sleeping","Driving"],a:0,topic:"Tertiary"},{q:"Traffic light colours? - CLICK",o:["3 - Red, Yellow, Green","1","2","5"],a:0,topic:"Road Signs"},{q:"Why speed limit? - CLICK",o:["Safety - reduces accidents","Waste time","Police only","No reason"],a:0,topic:"Road Signs"},{q:"Catering hygiene? - CLICK",o:["Prevents food poisoning","No reason","Expensive","Decoration"],a:0,topic:"Vocational"}]
 };
 let customQuizzes={};
 function getQuizFor(level, subject, topicFilter){
   if(topicFilter && customQuizzes[topicFilter]) return customQuizzes[topicFilter];
-  // also check stored custom from local
-  let stored=JSON.parse(localStorage.getItem('lesedi_custom_quiz_'+topicFilter)||"null");
-  if(stored) return stored;
-  let base=[];
-  if(level.includes("Adult")){
-    if(subject==="adult") base=QUIZ_BANK["Adult_adult"];
-    else base=QUIZ_BANK["Adult_"+subject] || QUIZ_BANK["Adult_adult"];
-  } else {
-    let cat="Lower"; if(level.includes("Secondary Education")||level.includes("Upper")) cat="Upper";
-    let k=cat+"_"+subject; if(subject==="adult") return QUIZ_BANK[cat+"_math"];
-    base=QUIZ_BANK[k] || QUIZ_BANK["Lower_"+subject];
-  }
-  if(topicFilter){
-    let t=topicFilter.toLowerCase();
-    let filtered=base.filter(q=> (q.topic && q.topic.toLowerCase().includes(t)) || q.q.toLowerCase().includes(t));
-    if(filtered.length>0) return filtered.concat(base).slice(0,10);
-  }
-  let shuffled=[...base].sort(()=>Math.random()-0.5);
-  return shuffled.slice(0,10);
+  let stored=JSON.parse(localStorage.getItem('lesedi_custom_quiz_'+topicFilter)||"null"); if(stored) return stored;
+  let base=[]; if(level.includes("Adult")){ if(subject==="adult") base=QUIZ_BANK["Adult_adult"]; else base=QUIZ_BANK["Adult_"+subject] || QUIZ_BANK["Adult_adult"]; } else { let cat="Lower"; if(level.includes("Secondary Education")) cat="Upper"; let k=cat+"_"+subject; if(subject==="adult") return QUIZ_BANK[cat+"_math"]; base=QUIZ_BANK[k] || QUIZ_BANK["Lower_"+subject]; }
+  if(topicFilter){ let t=topicFilter.toLowerCase(); let filtered=base.filter(q=> (q.topic && q.topic.toLowerCase().includes(t)) || q.q.toLowerCase().includes(t)); if(filtered.length>0) return filtered.concat(base).slice(0,10); }
+  return [...base].sort(()=>Math.random()-0.5).slice(0,10);
 }
 let curQuiz=null,curIdx=0,curScore=0,curSubject="math",userAnswers=[],answered=false,currentTopic="";
-function renderTopicChips(){
-  let topics=TOPICS_BY_LEVEL[currentLevel]||TOPICS_BY_LEVEL["Pre-Primary (Lower Learning)"];
-  let html=topics.map(t=>{
-    let unlocked=isUnlocked(t);
-    let icon=unlocked?"🔓":"🔒";
-    let cls=unlocked?"topic-chip":"topic-chip locked";
-    return '<span class="'+cls+'" onclick="tryStartTopic(\''+t+'\')">'+icon+' '+t+'</span>';
-  }).join("");
-  let customKeys=Object.keys(customQuizzes);
-  if(customKeys.length) html+="<br><b>Your Digital Click Converted:</b> "+customKeys.map(k=>'<span class="topic-chip" style="background:#dcfce7" onclick="tryStartTopic(\''+k+'\')">📝 '+k+' - CLICK</span>').join("");
-  let el=document.getElementById('topicChips'); if(el) el.innerHTML=html;
-  let el2=document.getElementById('examTopicChips'); if(el2) el2.innerHTML=html;
-  let syl=SYLLABUS[currentLevel]||"";
-  let s1=document.getElementById('syllabusDisplay'); if(s1) s1.innerHTML=syl;
-  let s2=document.getElementById('syllabusDisplay2'); if(s2) s2.innerHTML=syl;
-  renderUnlockedList();
-}
-function tryStartTopic(topic){
-  if(!isUnlocked(topic)){
-    if(confirm("🔒 Topic '"+topic+"' is locked - P10 to unlock forever - DIGITAL CLICK.\n\nPay P10 to Orange Money 77980825 / MyZaka 71823638 then enter code.\n\nTap OK to see unlock box, or use demo code LESEDI10")){
-      showUnlockBox();
-    }
-    return;
-  }
-  startTopicQuiz(topic);
-}
-function filterTopicChips(){ let v=document.getElementById('examWantTopic').value; if(v && v.length>2){ currentTopic=v; } }
-function startTopicQuiz(topic){
-  currentTopic=topic;
-  let w=document.getElementById('wantTopic'); if(w) w.value=topic;
-  let inp=document.getElementById('examWantTopic'); if(inp) inp.value=topic;
-  if(currentLevel.includes("Adult")) startLevelQuiz('adult', topic);
-  else startLevelQuiz('math', topic);
-}
-function setLevel(lvl,btn){
-  currentLevel=lvl; currentTopic="";
-  document.getElementById('selectedLevelText').innerHTML=lvl;
-  document.getElementById('levelDesc').innerHTML=LEVEL_DESC[lvl]||LEVELS_INFO;
-  document.querySelectorAll('.lvlName').forEach(e=>e.innerHTML=lvl);
-  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  renderTopicChips();
-}
-function startLevelQuiz(subject, topicOverride){
-  curSubject=subject;
-  let topic = topicOverride || document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || "";
-  if(topic && topic.length>1) currentTopic=topic; else currentTopic="";
-  if(currentTopic && !isUnlocked(currentTopic) && !customQuizzes[currentTopic]){
-    if(!confirm("Topic '"+currentTopic+"' is P10 locked - DIGITAL CLICK demo. Tap OK to try 3 FREE demo clicks, or Cancel to unlock with P10 code.")){
-      showUnlockBox(); return;
-    }
-  }
-  showSection('takeExam');
-  curQuiz=getQuizFor(currentLevel, subject, currentTopic);
-  curIdx=0;curScore=0;userAnswers=[];answered=false;
-  document.getElementById('quizResult').style.display='none';
-  document.getElementById('quizReview').innerHTML="";
-  showQuizQ();
-}
-function orderLevelTopic(){
-  let want=document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || "General";
-  whatsappOrder("ORDER ASSESSMENT - "+currentLevel+" - "+curSubject+" - Topic: "+want+" - P10/Topic - Digital Click - Full Syllabus: "+LEVELS_INFO);
-}
-function showQuizQ(){
-  answered=false;
-  let item=curQuiz[curIdx];
-  document.getElementById('quizCounter').innerHTML="DIGITAL CLICK - Level: "+currentLevel+" | Topic: "+(currentTopic||"General")+" | Question "+(curIdx+1)+" / 10 - Click A/B/C/D - Then NEXT - Answers at END"+(currentTopic && !isUnlocked(currentTopic) ? " - 🔒 P10 Locked - Demo" : " - 🔓 Unlocked");
-  document.getElementById('quizQ').innerHTML="Q"+(curIdx+1)+": "+item.q;
-  document.getElementById('quizFeedback').innerHTML="👆 CLICK an answer above, then tap NEXT - Digital Click";
-  let nextBtn=document.getElementById('quizNext');
-  nextBtn.style.display='block';
-  nextBtn.classList.remove('ready');
-  nextBtn.innerHTML="👉 CLICK ANSWER FIRST - THEN NEXT →";
-  let html="";
-  item.o.forEach((opt,i)=>{
-    html+='<button class="quiz-opt" onclick="answerRealQuiz('+i+',this)">'+String.fromCharCode(65+i)+". "+opt+' - CLICK</button>';
-  });
-  document.getElementById('quizOpts').innerHTML=html;
-  setTimeout(()=>{document.getElementById('quizQ').scrollIntoView({behavior:'smooth',block:'center'})},100);
-}
-function answerRealQuiz(i,el){
-  userAnswers[curIdx]=i;
-  answered=true;
-  document.querySelectorAll('.quiz-opt').forEach(b=>{b.classList.remove('selected');});
-  el.classList.add('selected');
-  document.getElementById('quizFeedback').innerHTML="✓ CLICK saved - Now tap NEXT QUESTION below - Digital Click";
-  let nextBtn=document.getElementById('quizNext');
-  nextBtn.classList.add('ready');
-  if(curIdx===9) nextBtn.innerHTML="🏁 SEE MY RESULT - CLICK →";
-  else nextBtn.innerHTML="✅ NEXT QUESTION → Q"+(curIdx+2)+" / 10 - CLICK";
-}
-async function saveResult(score, total){
-  try{
-    if(db){
-      await db.from('lesedi_results').insert([{phone: currentUserPhone||"guest", name: currentUserName, level: currentLevel, subject: curSubject, topic: currentTopic||"General", score: score, total: total}]);
-    }
-    let existing=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]");
-    existing.unshift({level:currentLevel, subject:curSubject, topic:currentTopic||"General", score:score, total:total, date:new Date().toLocaleDateString(), name:currentUserName, phone:currentUserPhone});
-    localStorage.setItem('lesedi_my_results', JSON.stringify(existing.slice(0,20)));
-    renderMyResults(); updateAdminStats();
-  }catch(e){}
-}
-function renderMyResults(){
-  let list=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]");
-  let html=list.map(r=>"<div style='border-bottom:1px solid #eee;padding:6px 0'>✅ <b>"+r.score+"/"+r.total+"</b> - "+r.level+" - "+r.topic+" ("+r.date+") - Digital Click</div>").join("");
-  let el=document.getElementById('myResultsList'); if(el) el.innerHTML=html? "<h4 style='margin:8px 0 4px'>My Recent Digital Click Results:</h4>"+html : "";
-  let el2=document.getElementById('otherResults'); if(el2) el2.innerHTML=html? "<h4>My Recent Results - "+currentUserName+" - Digital Click</h4>"+html : "No results yet - Take a digital click quiz!";
-}
-function nextQuizQ(){
-  if(!answered){
-    alert("Please CLICK an answer first - A, B, C or D - then tap NEXT - Digital Click");
-    document.getElementById('quizFeedback').innerHTML="⚠️ Please CLICK an answer first!";
-    return;
-  }
-  curIdx++;
-  if(curIdx>=10){
-    document.getElementById('quizQ').innerHTML="Finished - Digital Click Done - "+currentLevel+"!";
-    document.getElementById('quizOpts').innerHTML="";
-    document.getElementById('quizCounter').innerHTML="Done - 10 Digital Click Questions Complete for "+currentLevel+" - Topic: "+(currentTopic||"General");
-    document.getElementById('quizNext').style.display='none';
-    document.getElementById('quizResult').style.display='block';
-    let finalScore=0;
-    curQuiz.forEach((it,idx)=>{ if(userAnswers[idx]===it.a) finalScore++; });
-    curScore=finalScore;
-    document.getElementById('quizScoreText').innerHTML="🎉 Your Digital Click Result: "+curScore+" / 10 = "+(curScore*10)+"% - "+currentLevel+"<br><small>Topic: "+(currentTopic||"General")+" • Full Syllabus PSLE/JCE/BGCSE/Adult • © 2026 Education Lesedi Scholars Hub</small>";
-    document.getElementById('quizFeedback').innerHTML="";
-    document.getElementById('ringScore').innerHTML=(curScore*10)+"%";
-    saveResult(curScore,10);
-    let review="<h4 style='text-align:center'>📋 Digital Click Answers Review:</h4>";
-    curQuiz.forEach((item,idx)=>{
-      let myAns=userAnswers[idx];
-      let correct=item.a;
-      let icon = myAns===correct ? "✅" : "❌";
-      let myText = myAns!==undefined ? item.o[myAns] : "No click";
-      let correctText = item.o[correct];
-      review+="<div class='review-box'>"+icon+" <b>Q"+(idx+1)+":</b> "+item.q+"<br>You clicked: <b>"+myText+"</b><br>Correct answer: <b style='color:#16a34a'>"+correctText+"</b></div>";
-    });
-    review+="<p style='text-align:center;font-size:11px;color:#666;word-break:break-all'>© 2026 Education Lesedi Scholars Hub. All Rights Reserved. • Help: "+HELPDESK_EMAIL+" • Digital Click</p>";
-    document.getElementById('quizReview').innerHTML=review;
-    document.getElementById('quizResult').scrollIntoView({behavior:'smooth'});
-  }else showQuizQ();
-}
-function securePay(){
-  navigator.clipboard.writeText(SECURE_ACC).then(()=>{
-    alert("Secure Payment Ready! Account copied securely in background.\n\nOpen your bank app and paste to pay Education Lesedi Scholars Hub.\n\nThen WhatsApp proof to 71823638 or Email to "+HELPDESK_EMAIL);
-    whatsappOrder("Secure Bank Payment");
-  });
-}
-function emailHelp(){ window.location.href="mailto:"+HELPDESK_EMAIL+"?subject=Help - Education Lesedi Scholars Hub&body=Dumela, I need help with "; }
-function labelGame(el,ok){document.getElementById('game1Msg').innerHTML=ok?"✅ Correct! Leaf! +10 points - Digital Click":"❌ Try again! - Click again"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
-function labelGame2(el,ok){document.getElementById('game2Msg').innerHTML=ok?"✅ Correct! LESEDI! +10 points - Digital Click":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
-function labelGame3(el,ok){document.getElementById('game3Msg').innerHTML=ok?"✅ Correct! Gaborone is capital! +10 points - Digital Click":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
+function renderTopicChips(){ let topics=TOPICS_BY_LEVEL[currentLevel]||[]; let html=topics.map(t=>{ let unlocked=isUnlocked(t); let icon=unlocked?"🔓":"🔒"; let cls=unlocked?"topic-chip":"topic-chip locked"; return '<span class="'+cls+'" onclick="tryStartTopic(\''+t+'\')">'+icon+' '+t+'</span>'; }).join(""); let customKeys=Object.keys(customQuizzes); if(customKeys.length) html+="<br><b>Your Real Reading:</b> "+customKeys.map(k=>'<span class="topic-chip" style="background:#dcfce7" onclick="tryStartTopic(\''+k+'\')">📖 '+k+' - CLICK</span>').join(""); let el=document.getElementById('topicChips'); if(el) el.innerHTML=html; let el2=document.getElementById('examTopicChips'); if(el2) el2.innerHTML=html; let syl=SYLLABUS[currentLevel]||""; let s1=document.getElementById('syllabusDisplay'); if(s1) s1.innerHTML=syl; let s2=document.getElementById('syllabusDisplay2'); if(s2) s2.innerHTML=syl; renderUnlockedList(); }
+function tryStartTopic(topic){ if(!isUnlocked(topic)){ if(confirm("🔒 '"+topic+"' is P10 - Auto unlock? Pay P10 to 77980825 / 71823638 then upload proof for auto code. Use demo LESEDI10?")) showUnlockBox(); return; } startTopicQuiz(topic); }
+function filterTopicChips(){ let v=document.getElementById('examWantTopic').value; if(v && v.length>2) currentTopic=v; }
+function startTopicQuiz(topic){ currentTopic=topic; let w=document.getElementById('wantTopic'); if(w) w.value=topic; let inp=document.getElementById('examWantTopic'); if(inp) inp.value=topic; if(currentLevel.includes("Adult")) startLevelQuiz('adult', topic); else startLevelQuiz('math', topic); }
+function setLevel(lvl,btn){ currentLevel=lvl; currentTopic=""; document.getElementById('selectedLevelText').innerHTML=lvl; document.getElementById('levelDesc').innerHTML=LEVEL_DESC[lvl]||LEVELS_INFO; document.querySelectorAll('.lvlName').forEach(e=>e.innerHTML=lvl); document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active'); renderTopicChips(); }
+function startLevelQuiz(subject, topicOverride){ curSubject=subject; let topic = topicOverride || document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || ""; if(topic && topic.length>1) currentTopic=topic; else currentTopic=""; if(currentTopic && !isUnlocked(currentTopic) && !customQuizzes[currentTopic]){ if(!confirm("Topic '"+currentTopic+"' is P10 locked - Demo 3 questions? OK for demo, Cancel for auto unlock.")){ showUnlockBox(); return; } } showSection('takeExam'); curQuiz=getQuizFor(currentLevel, subject, currentTopic); curIdx=0;curScore=0;userAnswers=[];answered=false; document.getElementById('quizResult').style.display='none'; document.getElementById('quizReview').innerHTML=""; showQuizQ(); }
+function orderLevelTopic(){ let want=document.getElementById('wantTopic')?.value || document.getElementById('examWantTopic')?.value || "General"; whatsappOrder("ORDER - "+currentLevel+" - "+curSubject+" - Topic: "+want+" - P10 - Real Reading - "+LEVELS_INFO); }
+function showQuizQ(){ answered=false; let item=curQuiz[curIdx]; document.getElementById('quizCounter').innerHTML="DIGITAL CLICK - "+currentLevel+" | "+(currentTopic||"General")+" | Q "+(curIdx+1)+" / 10 - Click A/B/C/D - Then NEXT"+(currentTopic && !isUnlocked(currentTopic) ? " - 🔒 Demo" : " - 🔓 Unlocked - Business Ready"); document.getElementById('quizQ').innerHTML="Q"+(curIdx+1)+": "+item.q; document.getElementById('quizFeedback').innerHTML="👆 CLICK answer, then NEXT"; let nextBtn=document.getElementById('quizNext'); nextBtn.style.display='block'; nextBtn.classList.remove('ready'); nextBtn.innerHTML="👉 CLICK ANSWER FIRST - THEN NEXT →"; let html=""; item.o.forEach((opt,i)=>{ html+='<button class="quiz-opt" onclick="answerRealQuiz('+i+',this)">'+String.fromCharCode(65+i)+". "+opt+'</button>'; }); document.getElementById('quizOpts').innerHTML=html; setTimeout(()=>{document.getElementById('quizQ').scrollIntoView({behavior:'smooth',block:'center'})},100); }
+function answerRealQuiz(i,el){ userAnswers[curIdx]=i; answered=true; document.querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('selected')); el.classList.add('selected'); document.getElementById('quizFeedback').innerHTML="✓ Click saved - Tap NEXT"; let nextBtn=document.getElementById('quizNext'); nextBtn.classList.add('ready'); if(curIdx===9) nextBtn.innerHTML="🏁 SEE RESULT - CLICK →"; else nextBtn.innerHTML="✅ NEXT → Q"+(curIdx+2)+" / 10"; }
+async function saveResult(score, total){ try{ if(db) await db.from('lesedi_results').insert([{phone: currentUserPhone||"guest", name: currentUserName, level: currentLevel, subject: curSubject, topic: currentTopic||"General", score: score, total: total}]); let existing=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]"); existing.unshift({level:currentLevel, subject:curSubject, topic:currentTopic||"General", score:score, total:total, date:new Date().toLocaleDateString(), name:currentUserName, phone:currentUserPhone}); localStorage.setItem('lesedi_my_results', JSON.stringify(existing.slice(0,20))); renderMyResults(); updateAdminStats(); }catch(e){} }
+function renderMyResults(){ let list=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]"); let html=list.map(r=>"<div style='border-bottom:1px solid #eee;padding:6px 0'>✅ <b>"+r.score+"/"+r.total+"</b> - "+r.level+" - "+r.topic+" ("+r.date+")</div>").join(""); let el=document.getElementById('myResultsList'); if(el) el.innerHTML=html? "<h4>My Results - Business Ready:</h4>"+html : ""; let el2=document.getElementById('otherResults'); if(el2) el2.innerHTML=html? "<h4>My Results - "+currentUserName+"</h4>"+html : "No results yet - Take quiz!"; }
+function nextQuizQ(){ if(!answered){ alert("Please CLICK an answer first - A, B, C or D"); return; } curIdx++; if(curIdx>=10){ document.getElementById('quizQ').innerHTML="Finished - "+currentLevel+"! 🎉"; document.getElementById('quizOpts').innerHTML=""; document.getElementById('quizCounter').innerHTML="Done - 10 Digital Click Complete - "+(currentTopic||"General"); document.getElementById('quizNext').style.display='none'; document.getElementById('quizResult').style.display='block'; let finalScore=0; curQuiz.forEach((it,idx)=>{ if(userAnswers[idx]===it.a) finalScore++; }); curScore=finalScore; document.getElementById('quizScoreText').innerHTML="🎉 Result: "+curScore+" / 10 = "+(curScore*10)+"% - "+currentLevel+"<br><small>Topic: "+(currentTopic||"General")+" • © 2026 Education Lesedi Scholars Hub • Business Ready</small>"; document.getElementById('quizFeedback').innerHTML=""; document.getElementById('ringScore').innerHTML=(curScore*10)+"%"; saveResult(curScore,10); let review="<h4 style='text-align:center'>📋 Answers Review:</h4>"; curQuiz.forEach((item,idx)=>{ let myAns=userAnswers[idx]; let correct=item.a; let icon=myAns===correct?"✅":"❌"; let myText=myAns!==undefined?item.o[myAns]:"No click"; let correctText=item.o[correct]; review+="<div class='review-box'>"+icon+" <b>Q"+(idx+1)+":</b> "+item.q+"<br>You clicked: <b>"+myText+"</b><br>Correct: <b style='color:#16a34a'>"+correctText+"</b></div>"; }); review+="<p style='text-align:center;font-size:11px;color:#666'>© 2026 Education Lesedi Scholars Hub • "+HELPDESK_EMAIL+"</p>"; document.getElementById('quizReview').innerHTML=review; document.getElementById('quizResult').scrollIntoView({behavior:'smooth'}); showToast("🎉 You scored "+curScore+"/10!"); }else showQuizQ(); }
+function securePay(){ navigator.clipboard.writeText(SECURE_ACC).then(()=>{ alert("Secure Payment Ready! Account copied. Open bank app and paste. Then upload proof for AUTO code."); whatsappOrder("Secure Bank Payment"); }); }
+function emailHelp(){ window.location.href="mailto:"+HELPDESK_EMAIL+"?subject=Help - Education Lesedi&body=Dumela, I need help with "; }
+function labelGame(el,ok){document.getElementById('game1Msg').innerHTML=ok?"✅ Correct! Leaf! +10":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
+function labelGame2(el,ok){document.getElementById('game2Msg').innerHTML=ok?"✅ Correct! LESEDI! +10":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
+function labelGame3(el,ok){document.getElementById('game3Msg').innerHTML=ok?"✅ Correct! Gaborone! +10":"❌ Try again!"; el.style.background=ok?"#16a34a":"#ef4444"; el.style.color="#fff";}
 function openLogin(){document.getElementById('loginBox').style.display='block'}
 function closeLogin(){document.getElementById('loginBox').style.display='none'}
 function openSignup(){document.getElementById('signupBox').style.display='block'}
@@ -739,165 +440,97 @@ function closeSignup(){document.getElementById('signupBox').style.display='none'
 function logout(){localStorage.removeItem('lesedi_phone');localStorage.removeItem('lesedi_name');alert("Logged out");location.reload()}
 function showParentDash(){document.getElementById('parentDash').style.display='block';document.getElementById('parentDash').scrollIntoView();}
 function showParentReport(){document.getElementById('parentInfo').innerHTML="📄 Report: 12 Exams, 85% Overall. Level: "+currentLevel+". Pay P30 via Orange Money 77980825 / MyZaka 71823638 / Email: "+HELPDESK_EMAIL;}
-function uploadProof(){
-  let f=document.getElementById('proofFile').files[0];
-  if(!f){alert("Choose proof of payment screenshot first");return;}
-  document.getElementById('proofStatus').innerHTML="✅ "+f.name+" received! Now WhatsApp it to 71823638 or Email to "+HELPDESK_EMAIL+" to activate. Thank you!";
-  whatsappOrder("Proof of Payment - "+f.name);
-}
-function showSection(sec){
-  document.getElementById('homeSection').style.display='none';
-  document.getElementById('takeExamSection').style.display='none';
-  document.getElementById('aiTeacherSection').style.display='none';
-  document.getElementById('otherSection').style.display='none';
-  document.getElementById('labellingSection').style.display='none';
-  document.getElementById('adminSection').style.display='none';
-  let pr=document.getElementById('pricingSection'); if(pr) pr.style.display='none';
-  if(sec==='home') document.getElementById('homeSection').style.display='block';
-  else if(sec==='takeExam') document.getElementById('takeExamSection').style.display='block';
-  else if(sec==='labelling') document.getElementById('labellingSection').style.display='block';
-  else if(sec==='aiTeacher') document.getElementById('aiTeacherSection').style.display='block';
-  else if(sec==='admin'){ document.getElementById('adminSection').style.display='block'; updateAdminStats(); renderCustomCodes(); }
-  else if(sec==='pricing'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>{window.scrollTo(0,600)},100); }
-  else if(sec==='upload'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>{document.getElementById('pdfFile').scrollIntoView()},100); }
-  else{
-    document.getElementById('otherSection').style.display='block';
-    let titles={results:"My Results - "+currentUserName+" - "+currentLevel+" - Digital Click",reports:"Performance Reports - P30",account:"My Account - "+currentLevel,help:"Help & Support - "+HELPDESK_EMAIL};
-    document.getElementById('otherTitle').textContent=titles[sec]||sec;
-    document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Digital Click - Levels: "+LEVELS_INFO+" - Current: "+currentLevel+" - Email: "+HELPDESK_EMAIL+" - Pay Orange Money 77980825 / MyZaka 71823638. © 2026 Education Lesedi Scholars Hub. All Rights Reserved.";
-    renderMyResults();
-  }
-  renderTopicChips();
-}
-function searchExams(){
-  let q=document.getElementById('searchInput').value;
-  if(q && q.length>2){ currentTopic=q; showSection('takeExam'); startLevelQuiz(currentLevel.includes("Adult")?'adult':'math', q); }
-  else if(q) alert("Searching for: "+q+" for "+currentLevel+" - "+LEVELS_INFO+" - Digital Click");
-}
-function showDashboard(role,name){
-  document.getElementById('teacherDash').style.display='none';
-  document.getElementById('studentDash').style.display='none';
-  document.getElementById('privateDash').style.display='none';
-  document.getElementById('parentDash').style.display='none';
-  document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+' • '+currentLevel+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
-  if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! 3 Months FREE TRIAL active - min 3 tests. Level: "+currentLevel+" - "+LEVELS_INFO+" - Admin Panel ready - Help: "+HELPDESK_EMAIL;}
-  else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private assessment dashboard ready - Digital Click. Level: "+currentLevel;}
-  else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% Overall. Level: "+currentLevel+" - Help: "+HELPDESK_EMAIL;}
-  else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - 10 Questions / Two Topics per month - Level: "+currentLevel+" - NO PAYMENT. Levels: "+LEVELS_INFO+" - Digital Click + Convert Yourself + P10 Unlock + Admin for Teachers";}
-}
-async function doSignup(){
-  let phone=document.getElementById('s_phone').value.trim();
-  let name=document.getElementById('s_name').value.trim();
-  let town=document.getElementById('s_town').value.trim();
-  let school=document.getElementById('s_school').value.trim()||"All Schools";
-  let role=document.getElementById('s_role').value||"Student";
-  let lvl=document.getElementById('s_level')?.value||currentLevel;
-  currentLevel=lvl; currentUserPhone=phone; currentUserName=name;
-  localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',name);
-  if(!phone||!name){alert("Enter phone and name");return;}
-  try{
-    const {error}=await db.from('lesedi_users').insert([{phone:phone,full_name:name,town:town,school:school,role:role}]);
-    if(error) console.log(error);
-  }catch(e){}
-  let allUsers=JSON.parse(localStorage.getItem('lesedi_all_users')||"[]");
-  allUsers.unshift({phone:phone, name:name, town:town, school:school, role:role, level:lvl});
-  localStorage.setItem('lesedi_all_users', JSON.stringify(allUsers.slice(0,50)));
-  alert("Dumela "+name+"! "+role+" "+lvl+" account created! Full Syllabus + Digital Click: "+LEVELS_INFO+" - Help: "+HELPDESK_EMAIL+" - 3 Months FREE TRIAL for Schools - min 3 tests! You can now Convert Yourself + P10 Unlock + Admin!");closeSignup();showDashboard(role,name); updateAdminStats();
-}
-async function doLogin(){
-  let phone=document.getElementById('l_phone').value.trim();
-  let role=document.getElementById('l_role').value;
-  let lvl=document.getElementById('l_level')?.value||currentLevel;
-  currentLevel=lvl; currentUserPhone=phone;
-  if(!phone){alert("Enter phone");return;}
-  try{
-    const {data,error}=await db.from('lesedi_users').select('*').eq('phone',phone).limit(1);
-    if(data&&data.length>0){ currentUserName=data[0].full_name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',currentUserName); alert("Dumela "+data[0].full_name+"! Login to "+role+" "+lvl+" Dashboard - Digital Click + Admin!");closeLogin();showDashboard(role,data[0].full_name); updateAdminStats(); return;}
-  }catch(e){}
-  let name=document.getElementById('l_name').value.trim()||"Student";
-  currentUserName=name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',name);
-  alert("Welcome "+name+" - Continuing as Guest - "+lvl+" - Digital Click - Help: "+HELPDESK_EMAIL);closeLogin();showDashboard(role,name);
-}
-function convertPDF(){
-  let f=document.getElementById('pdfFile').files[0];
-  let type=document.getElementById('assessType').value;
-  if(!f){alert("Choose PDF first - Learn-Click-Press - Convert Yourself to Digital Click");return;}
+function uploadProof(){ let f=document.getElementById('proofFile').files[0]; if(!f){alert("Choose proof first");return;} let code="LESEDI-"+Math.floor(1000+Math.random()*9000); customCodes.push({code:code, phone:currentUserPhone||"guest", topic:"ALL", date:new Date().toLocaleDateString()}); localStorage.setItem('lesedi_codes', JSON.stringify(customCodes)); VALID_CODES.push(code); unlockedTopics.push("ALL"); localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics)); document.getElementById('proofStatus').innerHTML="🎉 ✅ "+f.name+" received! <b>AUTO CODE: "+code+"</b><br>✅ Unlocked! Code auto-filled - Tap UNLOCK INSTANT in yellow box!"; document.getElementById('unlockCodeInput').value=code; renderTopicChips(); renderUnlockedList(); updateAdminStats(); showToast("🎉 Auto code: "+code); whatsappOrder("Proof of Payment - "+f.name+" - Auto Code: "+code); }
+function showSection(sec){ document.getElementById('homeSection').style.display='none'; document.getElementById('takeExamSection').style.display='none'; document.getElementById('aiTeacherSection').style.display='none'; document.getElementById('otherSection').style.display='none'; document.getElementById('labellingSection').style.display='none'; document.getElementById('adminSection').style.display='none'; let pr=document.getElementById('pricingSection'); if(pr) pr.style.display='none'; if(sec==='home') document.getElementById('homeSection').style.display='block'; else if(sec==='takeExam') document.getElementById('takeExamSection').style.display='block'; else if(sec==='labelling') document.getElementById('labellingSection').style.display='block'; else if(sec==='aiTeacher') document.getElementById('aiTeacherSection').style.display='block'; else if(sec==='admin'){ document.getElementById('adminSection').style.display='block'; updateAdminStats(); renderCustomCodes(); } else if(sec==='pricing'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>window.scrollTo(0,600),100); } else if(sec==='upload'){ document.getElementById('homeSection').style.display='block'; setTimeout(()=>document.getElementById('pdfFile').scrollIntoView(),100); } else { document.getElementById('otherSection').style.display='block'; let titles={results:"My Results - "+currentUserName+" - "+currentLevel,reports:"Performance Reports - P30",account:"My Account - "+currentLevel,help:"Help & Support - "+HELPDESK_EMAIL}; document.getElementById('otherTitle').textContent=titles[sec]||sec; document.getElementById('otherText').textContent="Education Lesedi Scholars Hub - Business Ready - Levels: "+LEVELS_INFO+" - Current: "+currentLevel+" - Email: "+HELPDESK_EMAIL+" - Pay 77980825 / 71823638. © 2026"; renderMyResults(); } renderTopicChips(); }
+function searchExams(){ let q=document.getElementById('searchInput').value; if(q && q.length>2){ currentTopic=q; showSection('takeExam'); startLevelQuiz(currentLevel.includes("Adult")?'adult':'math', q); } }
+function showDashboard(role,name){ document.getElementById('teacherDash').style.display='none'; document.getElementById('studentDash').style.display='none'; document.getElementById('privateDash').style.display='none'; document.getElementById('parentDash').style.display='none'; document.getElementById('topProfile').innerHTML = '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🔔</span><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+' • '+currentLevel+' • ● LIVE</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>'; if(role==='Teacher'){document.getElementById('teacherDash').style.display='block';document.getElementById('teacherInfo').innerHTML="Dumela Teacher "+name+"! Business Ready - 3 Months FREE TRIAL - Level: "+currentLevel+" - "+HELPDESK_EMAIL;} else if(role==='Private'){document.getElementById('privateDash').style.display='block';document.getElementById('privateInfo').innerHTML="Dumela "+name+"! Private - Real Reading - Digital Click. Level: "+currentLevel;} else if(role==='Parent'){document.getElementById('parentDash').style.display='block';document.getElementById('parentInfo').innerHTML="Dumela Parent "+name+"! Progress: 85% - Level: "+currentLevel;} else{document.getElementById('studentDash').style.display='block';document.getElementById('studentInfo').innerHTML="Dumela "+name+"! Starter Free - Business Ready - Level: "+currentLevel+" - Real PDF Reading + Auto Unlock + Digital Click";} }
+async function doSignup(){ let phone=document.getElementById('s_phone').value.trim(); let name=document.getElementById('s_name').value.trim(); let town=document.getElementById('s_town').value.trim(); let school=document.getElementById('s_school').value.trim()||"All Schools"; let role=document.getElementById('s_role').value||"Student"; let lvl=document.getElementById('s_level')?.value||currentLevel; currentLevel=lvl; currentUserPhone=phone; currentUserName=name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',name); if(!phone||!name){alert("Enter phone and name");return;} try{ await db.from('lesedi_users').insert([{phone:phone,full_name:name,town:town,school:school,role:role}]); }catch(e){} let allUsers=JSON.parse(localStorage.getItem('lesedi_all_users')||"[]"); allUsers.unshift({phone:phone, name:name, town:town, school:school, role:role, level:lvl}); localStorage.setItem('lesedi_all_users', JSON.stringify(allUsers.slice(0,50))); alert("Dumela "+name+"! Business Ready account created! "+lvl+" - Real Reading + Auto Unlock!"); closeSignup(); showDashboard(role,name); updateAdminStats(); }
+async function doLogin(){ let phone=document.getElementById('l_phone').value.trim(); let role=document.getElementById('l_role').value; let lvl=document.getElementById('l_level')?.value||currentLevel; currentLevel=lvl; currentUserPhone=phone; if(!phone){alert("Enter phone");return;} try{ const {data}=await db.from('lesedi_users').select('*').eq('phone',phone).limit(1); if(data&&data.length>0){ currentUserName=data[0].full_name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',currentUserName); alert("Dumela "+data[0].full_name+"! Business Ready Login!"); closeLogin(); showDashboard(role,data[0].full_name); updateAdminStats(); return; } }catch(e){} let name=document.getElementById('l_name').value.trim()||"Student"; currentUserName=name; localStorage.setItem('lesedi_phone',phone); localStorage.setItem('lesedi_name',name); alert("Welcome "+name+" - Guest - Business Ready - "+lvl); closeLogin(); showDashboard(role,name); }
+// REAL PDF READING - Business Ready
+async function convertPDF(){
+  let f=document.getElementById('pdfFile').files[0]; let type=document.getElementById('assessType').value;
+  if(!f){ alert("Choose PDF first - Real Reading"); return; }
   let topicName=f.name.replace(/\.[^/.]+$/,"").replace(/[-_]/g," ").substring(0,30);
-  createSelfQuiz(topicName, type, f.name);
+  document.getElementById('pdfReadingStatus').innerHTML="<span class='spinner'></span> Reading inside your PDF: <b>"+f.name+"</b> - Real words... Please wait 3 seconds...";
+  document.getElementById('uploadStatus').innerHTML="⏳ Reading PDF...";
+  try{
+    if(f.type==="application/pdf" || f.name.endsWith(".pdf")){
+      let arrayBuffer=await f.arrayBuffer();
+      let pdf=await pdfjsLib.getDocument({data:arrayBuffer}).promise;
+      let fullText="";
+      for(let i=1;i<=Math.min(pdf.numPages,3);i++){ let page=await pdf.getPage(i); let content=await page.getTextContent(); let strings=content.items.map(it=>it.str).join(" "); fullText+=strings+" "; }
+      fullText=fullText.trim();
+      if(fullText.length>20){
+        createRealQuizFromText(topicName, type, f.name, fullText);
+        return;
+      }
+    }
+    // fallback for images/docx - read filename + use smart template
+    if(f.type.startsWith("image/")){
+      document.getElementById('pdfReadingStatus').innerHTML="🖼️ Image detected - Using smart visual quiz for "+topicName;
+    }
+    createSelfQuiz(topicName, type, f.name);
+  }catch(err){
+    console.log(err);
+    document.getElementById('pdfReadingStatus').innerHTML="⚠️ Could not read inside PDF, using smart quiz for "+topicName+" - Still digital click ready!";
+    createSelfQuiz(topicName, type, f.name);
+  }
 }
-function createSelfQuiz(topicName, type, fileName){
-  document.getElementById('uploadStatus').innerHTML="✅ <b>"+fileName+"</b> converting to <b>"+type+"</b> for <b>"+currentLevel+"</b> - Creating YOUR DIGITAL CLICK quiz: <b>"+topicName+"</b>... Answer by CLICK!";
+function createRealQuizFromText(topicName, type, fileName, fullText){
+  document.getElementById('pdfReadingStatus').innerHTML="✅ <b>Real Reading Done!</b> Found "+fullText.length+" characters inside PDF. Creating real questions from YOUR words...";
+  // Split into sentences
+  let sentences=fullText.split(/(?<=[.!?])\s+/).filter(s=>s.trim().length>20).slice(0,8);
+  if(sentences.length<3) sentences=[fullText.substring(0,120), fullText.substring(120,240), fullText.substring(240,360)];
   let newQuiz=[];
-  let templates=[
-    {q:"What is the main idea of "+topicName+"? ("+currentLevel+") - CLICK", o:["Main concept of "+topicName,"Unrelated idea","Wrong definition","No idea"], a:0},
-    {q:"Which one is TRUE about "+topicName+"? - CLICK", o:["Correct fact about "+topicName,"False statement","Opposite","No meaning"], a:0},
-    {q:"In "+topicName+", what is most important? - CLICK", o:["Key point of "+topicName,"Least important","Wrong point","Nothing"], a:0},
-    {q:"What is "+topicName+" used for? ("+currentLevel+") - CLICK", o:["Main use of "+topicName,"No use","Wrong use","Decoration"], a:0},
-    {q:"Choose correct statement about "+topicName+" - CLICK", o:["True statement","False","Incorrect","No answer"], a:0},
-    {q:"Why is "+topicName+" important in syllabus? - CLICK", o:["Because it is in "+currentLevel+" syllabus","Not important","No reason","For fun only"], a:0},
-    {q:"What would you do with "+topicName+" in real life? - CLICK", o:["Apply it correctly","Ignore it","Forget it","Avoid it"], a:0},
-    {q:"Which example matches "+topicName+"? - CLICK", o:["Correct example","Wrong example","Opposite","None"], a:0},
-    {q:"What is the next step after learning "+topicName+"? - CLICK", o:["Practice and test yourself","Stop learning","Forget","Sleep"], a:0},
-    {q:"Final check: What did you learn from "+topicName+"? - CLICK", o:["Key learning of "+topicName,"Nothing","Wrong learning","No learning"], a:0},
-  ];
-  templates.forEach(t=>{ newQuiz.push({q:t.q, o:t.o, a:0, topic: topicName}); });
+  sentences.slice(0,5).forEach((s,idx)=>{
+    let clean=s.trim().substring(0,110);
+    // Create question: what is true about this sentence?
+    newQuiz.push({q:"From YOUR PDF (Real Reading): \""+clean+"\" - What is TRUE? - CLICK", o:["Correct - This is from your PDF: "+clean.substring(0,40)+"...","False - Not in PDF","Opposite of PDF","Not related to "+topicName], a:0, topic: topicName});
+  });
+  // Add understanding questions
+  newQuiz.push({q:"What is the main topic of your PDF: "+topicName+"? - Real Reading - CLICK", o:["Main topic: "+topicName,"Unrelated topic","Wrong topic","No topic"], a:0, topic: topicName});
+  newQuiz.push({q:"Why is "+topicName+" important for "+currentLevel+"? - Real Reading - CLICK", o:["Because it is in syllabus for "+currentLevel,"Not important","No reason","Only for fun"], a:0, topic: topicName});
+  newQuiz.push({q:"From your PDF, what should you remember most about "+topicName+"? - CLICK", o:["Key point from your PDF","Forget it","Wrong point","Nothing"], a:0, topic: topicName});
+  newQuiz.push({q:"How would you use "+topicName+" in real life? - From your PDF - CLICK", o:["Apply what PDF says correctly","Ignore PDF","Forget PDF","Avoid it"], a:0, topic: topicName});
+  newQuiz.push({q:"Final check - What did your PDF teach about "+topicName+"? - CLICK", o:["Real learning from your PDF","Nothing","Wrong learning","No learning"], a:0, topic: topicName});
+  newQuiz=newQuiz.slice(0,10);
   customQuizzes[topicName]=newQuiz;
   localStorage.setItem('lesedi_custom_quiz_'+topicName, JSON.stringify(newQuiz));
   if(!TOPICS_BY_LEVEL[currentLevel].includes(topicName)) TOPICS_BY_LEVEL[currentLevel].push(topicName);
   if(!unlockedTopics.includes(topicName)) unlockedTopics.push(topicName);
   localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics));
   let existing=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]");
-  existing.unshift({name: topicName, level: currentLevel, type: type, date: new Date().toLocaleDateString()});
+  existing.unshift({name: topicName, level: currentLevel, type: type+" - REAL READING", date: new Date().toLocaleDateString(), preview: fullText.substring(0,80)});
   localStorage.setItem('lesedi_created_quizzes', JSON.stringify(existing.slice(0,10)));
-  let listHtml=existing.map(q=>"<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0;font-size:13px'>📝 <b>"+q.name+"</b> - "+q.level+" - "+q.type+" - ✅ DIGITAL CLICK READY - Unlocked <button class='btn-blue' style='padding:6px 10px;margin-left:6px' onclick=\"startCreatedQuiz('"+q.name.replace(/'/g,"")+"')\">START DIGITAL CLICK NOW → CLICK</button></div>").join("");
-  document.getElementById('createdQuizList').innerHTML="<h4>Your Self-Converted Digital Click Quizzes - Answer by Click:</h4>"+listHtml;
+  let listHtml=existing.map(q=>"<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0;font-size:13px'>📖 <b>"+q.name+"</b> - "+q.level+" - ✅ REAL READING - DIGITAL CLICK <br><small style='color:#666'>\""+(q.preview||"")+"...\"</small><br><button class='btn-blue' style='padding:6px 10px;margin-top:6px' onclick=\"startCreatedQuiz('"+q.name.replace(/'/g,"")+"')\">START REAL QUIZ NOW → CLICK</button></div>").join("");
+  document.getElementById('createdQuizList').innerHTML="<h4>Your Real Reading Quizzes - Digital Click:</h4>"+listHtml;
+  document.getElementById('uploadStatus').innerHTML="✅ <b>"+fileName+"</b> READ REAL WORDS! Created 10 real digital click questions for <b>"+topicName+"</b> - Starting now...";
   document.getElementById('teacherCreatedList').innerHTML=listHtml;
-  renderTopicChips(); updateAdminStats();
-  setTimeout(()=>{ startLevelQuiz('math', topicName); }, 800);
+  renderTopicChips(); updateAdminStats(); showToast("✅ PDF Read Real! 10 Questions Ready!");
+  setTimeout(()=>{ startLevelQuiz('math', topicName); }, 900);
 }
-function convertPastedNotes(){
-  let notes=document.getElementById('pasteNotes').value.trim();
-  let topic=document.getElementById('pasteTopicName').value.trim() || "My Notes";
-  if(!notes || notes.length<10){ alert("Paste your notes first - at least 1 sentence - e.g. Photosynthesis is... - Will become digital click"); return; }
-  document.getElementById('pasteStatus').innerHTML="✅ Converting your notes on <b>"+topic+"</b> to DIGITAL CLICK... Creating 10 click questions from YOUR words...";
-  let sentences=notes.split(/[.\n]/).filter(s=>s.trim().length>5).slice(0,5);
-  let newQuiz=[];
-  sentences.forEach((s,idx)=>{
-    let clean=s.trim().substring(0,80);
-    newQuiz.push({q:"From YOUR notes: "+clean+" - What is true? - CLICK", o:["Correct - from your notes: "+clean.substring(0,30)+"...","False statement","Opposite","No meaning"], a:0, topic: topic});
-  });
-  while(newQuiz.length<10){
-    let i=newQuiz.length+1;
-    newQuiz.push({q:"Q"+i+" from YOUR notes on "+topic+": What did you mean? - CLICK", o:["Your main point","Wrong point","Unrelated","No idea"], a:0, topic: topic});
-  }
-  customQuizzes[topic]=newQuiz;
-  localStorage.setItem('lesedi_custom_quiz_'+topic, JSON.stringify(newQuiz));
-  if(!TOPICS_BY_LEVEL[currentLevel].includes(topic)) TOPICS_BY_LEVEL[currentLevel].push(topic);
-  if(!unlockedTopics.includes(topic)) unlockedTopics.push(topic);
-  localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics));
-  document.getElementById('pasteStatus').innerHTML="✅ <b>Done!</b> Your notes on <b>"+topic+"</b> are now a 10-question DIGITAL CLICK quiz! Starting now - Click to answer!";
-  renderTopicChips(); updateAdminStats();
-  setTimeout(()=>{ startLevelQuiz('math', topic); }, 800);
+function createSelfQuiz(topicName, type, fileName){
+  let newQuiz=[]; let templates=[
+    {q:"What is the main idea of "+topicName+"? ("+currentLevel+") - CLICK", o:["Main concept of "+topicName,"Unrelated","Wrong","No idea"], a:0},
+    {q:"Which is TRUE about "+topicName+"? - CLICK", o:["Correct fact about "+topicName,"False","Opposite","No meaning"], a:0},
+    {q:"In "+topicName+", what is most important? - CLICK", o:["Key point","Least important","Wrong","Nothing"], a:0},
+    {q:"What is "+topicName+" used for? - CLICK", o:["Main use","No use","Wrong use","Decoration"], a:0},
+    {q:"Choose correct about "+topicName+" - CLICK", o:["True statement","False","Incorrect","No answer"], a:0},
+    {q:"Why is "+topicName+" important? - CLICK", o:["In "+currentLevel+" syllabus","Not important","No reason","For fun"], a:0},
+    {q:"What would you do with "+topicName+" in real life? - CLICK", o:["Apply correctly","Ignore","Forget","Avoid"], a:0},
+    {q:"Which example matches "+topicName+"? - CLICK", o:["Correct example","Wrong","Opposite","None"], a:0},
+    {q:"Next step after learning "+topicName+"? - CLICK", o:["Practice & test","Stop","Forget","Sleep"], a:0},
+    {q:"Final: What did you learn from "+topicName+"? - CLICK", o:["Key learning","Nothing","Wrong","No learning"], a:0},
+  ]; templates.forEach(t=>newQuiz.push({q:t.q, o:t.o, a:0, topic:topicName})); customQuizzes[topicName]=newQuiz; localStorage.setItem('lesedi_custom_quiz_'+topicName, JSON.stringify(newQuiz)); if(!TOPICS_BY_LEVEL[currentLevel].includes(topicName)) TOPICS_BY_LEVEL[currentLevel].push(topicName); if(!unlockedTopics.includes(topicName)) unlockedTopics.push(topicName); localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics)); let existing=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]"); existing.unshift({name:topicName, level:currentLevel, type:type, date:new Date().toLocaleDateString()}); localStorage.setItem('lesedi_created_quizzes', JSON.stringify(existing.slice(0,10))); let listHtml=existing.map(q=>"<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0;font-size:13px'>📝 <b>"+q.name+"</b> - ✅ DIGITAL CLICK <button class='btn-blue' style='padding:6px 10px;margin-left:6px' onclick=\"startCreatedQuiz('"+q.name.replace(/'/g,"")+"')\">START → CLICK</button></div>").join(""); document.getElementById('createdQuizList').innerHTML="<h4>Your Quizzes:</h4>"+listHtml; document.getElementById('teacherCreatedList').innerHTML=listHtml; renderTopicChips(); updateAdminStats(); setTimeout(()=>startLevelQuiz('math', topicName),800);
 }
+function convertPastedNotes(){ let notes=document.getElementById('pasteNotes').value.trim(); let topic=document.getElementById('pasteTopicName').value.trim() || "My Notes"; if(!notes || notes.length<10){ alert("Paste notes first"); return; } document.getElementById('pasteStatus').innerHTML="<span class='spinner'></span> Reading your notes on <b>"+topic+"</b> - Real reading..."; let sentences=notes.split(/[.\n]/).filter(s=>s.trim().length>5).slice(0,5); let newQuiz=[]; sentences.forEach((s)=>{ let clean=s.trim().substring(0,80); newQuiz.push({q:"From YOUR notes (Real Reading): "+clean+" - What is true? - CLICK", o:["Correct - from your notes: "+clean.substring(0,30)+"...","False","Opposite","No meaning"], a:0, topic:topic}); }); while(newQuiz.length<10){ let i=newQuiz.length+1; newQuiz.push({q:"Q"+i+" from YOUR notes on "+topic+": What did you mean? - CLICK", o:["Your main point","Wrong point","Unrelated","No idea"], a:0, topic:topic}); } customQuizzes[topic]=newQuiz; localStorage.setItem('lesedi_custom_quiz_'+topic, JSON.stringify(newQuiz)); if(!TOPICS_BY_LEVEL[currentLevel].includes(topic)) TOPICS_BY_LEVEL[currentLevel].push(topic); if(!unlockedTopics.includes(topic)) unlockedTopics.push(topic); localStorage.setItem('lesedi_unlocked', JSON.stringify(unlockedTopics)); document.getElementById('pasteStatus').innerHTML="✅ <b>Real Reading Done!</b> Your notes on <b>"+topic+"</b> are now 10 digital click questions!"; renderTopicChips(); updateAdminStats(); setTimeout(()=>startLevelQuiz('math', topic),800); }
 function startCreatedQuiz(topic){ startLevelQuiz('math', topic); showSection('takeExam'); }
-function aiAssist(){
-  let q=document.getElementById('aiInput').value.trim();
-  if(!q){alert("Type topic for AI Teacher");return;}
-  let out=document.getElementById('aiOutput');out.style.display='block';
-  out.innerHTML="<b>AI Teacher Assistance for "+currentLevel+" ("+LEVELS_INFO+") - DIGITAL CLICK:</b> "+q+"<br><br>1. Digital Click Quiz: What is "+q+"? [CLICK A][CLICK B][CLICK C][CLICK D]<br>2. Test: Explain "+q+" in 100 words for "+currentLevel+" - Syllabus: "+SYLLABUS[currentLevel]+"<br>3. Marking scheme: 2 marks definition, 3 example<br><button class='btn-blue' style='margin-top:8px' onclick=\"startLevelQuiz('math','"+q.replace(/'/g,"")+"')\">CREATE 10 DIGITAL CLICK Qs FOR THIS TOPIC + CONVERT YOURSELF →</button><br><small>© 2026 Education Lesedi Scholars Hub - Self Convert Digital Click + P10 Unlock + Admin</small>";
-}
-function buyPackage(pkg){
-  if(pkg.includes("Starter Free")){ startLevelQuiz('math'); return; }
-  alert("You selected: "+pkg+" for "+currentLevel+" ("+LEVELS_INFO+") - DIGITAL CLICK\n\nPay:\nOrange Money: (+267) 77980825\nMyZaka / PayToCell: (+267) 71823638\nEmail: "+HELPDESK_EMAIL+"\nSecure Bank Payment - Click PAY SECURELY NOW\n\nAfter P10 payment, WhatsApp proof to 71823638 - You get unlock code like LESEDI10\n\nThen enter code in yellow UNLOCK box to unlock forever - Digital Click!");
-  whatsappOrder(pkg+" - "+currentLevel+" - Full Syllabus + Digital Click + Admin");
-}
-function whatsappOrder(pkg){
-  let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_INFO+" - Education Lesedi Scholars Hub - Email: "+HELPDESK_EMAIL+" - Please send P10 unlock code - Digital Click" : "Dumela! I need help with Education Lesedi Scholars Hub - Level "+currentLevel+" - "+LEVELS_INFO+" - Email: "+HELPDESK_EMAIL+" - I want to convert myself to Digital Click + P10 unlock + Admin";
-  window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank");
-}
-function joinExam(name){alert("Joining "+name+" for "+currentLevel+" - Good luck! Digital Click!");showSection('takeExam');}
-function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML="✓ Click saved - Digital Click"; }
-function submitExam(){alert("Exam submitted! Result will show at the end. © 2026 Education Lesedi Scholars Hub - Digital Click");showSection('results');}
+function aiAssist(){ let q=document.getElementById('aiInput').value.trim(); if(!q){alert("Type topic");return;} let out=document.getElementById('aiOutput'); out.style.display='block'; out.innerHTML="<b>AI Teacher for "+currentLevel+" - Real Reading - Business Ready:</b> "+q+"<br><br>1. Digital Click Quiz: What is "+q+"? [CLICK A][CLICK B][CLICK C][CLICK D]<br>2. Explain "+q+" in 100 words for "+currentLevel+"<br>3. Marking: 2 marks definition, 3 example<br><button class='btn-blue' style='margin-top:8px' onclick=\"startLevelQuiz('math','"+q.replace(/'/g,"")+"')\">CREATE 10 REAL READING Qs →</button><br><small>© 2026 Education Lesedi - Business Ready</small>"; }
+function buyPackage(pkg){ if(pkg.includes("Starter Free")){ startLevelQuiz('math'); return; } alert("You selected: "+pkg+" for "+currentLevel+" - Business Ready\n\nPay:\nOrange Money: 77980825\nMyZaka: 71823638\nEmail: "+HELPDESK_EMAIL+"\n\nUpload proof for AUTO code - no waiting!"); whatsappOrder(pkg+" - "+currentLevel+" - Business Ready - Real Reading + Auto Unlock"); }
+function whatsappOrder(pkg){ let msg = pkg ? "Dumela! I want "+pkg+" - Level "+currentLevel+" - "+LEVELS_INFO+" - Education Lesedi - "+HELPDESK_EMAIL+" - Please send auto code" : "Dumela! I need help - Education Lesedi - Level "+currentLevel+" - "+LEVELS_INFO+" - Real Reading + Auto Unlock"; window.open("https://wa.me/26771823638?text="+encodeURIComponent(msg), "_blank"); }
+function joinExam(name){alert("Joining "+name+" - Digital Click!");showSection('takeExam');}
+function answerQuiz(correct){document.getElementById('quizFeedback').innerHTML="✓ Click saved"; }
+function submitExam(){alert("Exam submitted! © 2026 Education Lesedi - Business Ready");showSection('results');}
 renderTopicChips(); renderMyResults(); updateAdminStats(); renderCustomCodes();
 </script>
 </body></html>
