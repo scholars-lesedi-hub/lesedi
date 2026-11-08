@@ -31,11 +31,9 @@
 .pay-option{border:2px solid #e5e7eb;border-radius:12px;padding:12px;margin:6px 0;cursor:pointer;background:#fff}.pay-option.selected{border-color:#16a34a;background:#f0fdf4}
 .ai-chat{background:#fff;color:#000;border-radius:12px;padding:12px;margin-top:10px;font-size:13px;max-height:400px;overflow:auto}.ai-msg{margin:8px 0;padding:10px;border-radius:10px}.ai-user{background:#dbeafe;text-align:right}.ai-bot{background:#f1f5f9}
 .sec{display:none}.sec.active{display:block}.copyright{background:#071a4a;color:#cbd5e1;text-align:center;padding:10px;font-size:12px}
-/* FIXED EMAIL LEFT PANEL - FITS WELL */
 .sidebar-email{margin-top:20px;padding:10px 8px;background:#071a4a;border-radius:8px;font-size:11px;line-height:1.5;text-align:center;width:100%;max-width:100%;overflow:hidden;box-sizing:border-box}
 .sidebar-email a{color:#facc15;text-decoration:none;font-weight:bold;word-break:break-all;overflow-wrap:break-word;display:block;font-size:11px;line-height:1.4;max-width:100%}
 .sidebar-email span{word-break:break-word}
-/* AI LIVE FEEDBACK - BOTTOM RIGHT */
 #liveChatBtn{position:fixed;bottom:20px;right:20px;z-index:9999;background:#0a2463;color:#fff;border:3px solid #facc15;padding:13px 16px;border-radius:50px;font-weight:bold;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35);font-size:14px}
 #liveChatPanel{position:fixed;bottom:80px;right:18px;width:360px;max-width:92vw;height:500px;max-height:75vh;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);z-index:9999;display:none;flex-direction:column;overflow:hidden;border:2px solid #0a2463}
 #liveChatPanel.open{display:flex}
@@ -76,9 +74,9 @@
 <div id="parentDash" class="dash" style="background:#f0fdf4;border:2px solid #22c55e"><h3>👨‍👩‍👧 PARENT DASHBOARD</h3><button class="btn-blue" style="background:#16a34a" onclick="showParentReport()">📄 My Child's Report - 85%</button><p id="parentInfo"></p></div>
 <div id="guestDash" class="dash" style="background:#fffbeb;border:2px solid #facc15;display:block"><h3>Welcome - Please SIGNUP or LOGIN</h3><button class="btn-yellow" onclick="openSignup()">SIGNUP FREE</button> <button class="btn-blue" onclick="openLogin()">LOGIN</button></div>
 
-<!-- HOME - LEARN ANYWHERE ANYTIME REMOVED -->
+<!-- HOME -->
 <div id="sec-home" class="sec active">
-<div class="hero"><div style="flex:1"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p><b>Real PDF Reading • Auto P10 Unlock • Digital Click • AI Teacher Working</b></p><div><span class="trust-badge">✅ Trusted 500+ Learners</span><span class="trust-badge">🇧🇼 Botswana Syllabus</span><span class="trust-badge">💰 P10 Only</span><span class="trust-badge">🤖 AI Teacher LIVE</span></div><button class="btn-yellow" onclick="go('takeExam')">Learn Anytime, Anywhere! →</button><br><button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="go('upload')">📤 CONVERT MY PDF - REAL READING</button> <button style="background:#facc15;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="showUnlockBox()">🔓 AUTO UNLOCK - P10</button></div></div>
+<div class="hero"><div style="flex:1"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p><b>Real PDF Reading • Auto P10 Unlock • Digital Click • AI Teacher Working</b></p><div><span class="trust-badge">✅ Trusted 500+ Learners</span><span class="trust-badge">🇧🇼 Botswana Syllabus</span><span class="trust-badge">💰 P10 Only</span><span class="trust-badge">🤖 AI Teacher LIVE</span></div><br><button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="go('upload')">📤 CONVERT MY PDF - REAL READING</button> <button style="background:#facc15;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer;margin-top:8px" onclick="showUnlockBox()">🔓 AUTO UNLOCK - P10</button></div><div style="text-align:center;min-width:160px"><div style="font-weight:bold">Learn Anywhere,<br>Anytime</div><div style="font-size:70px">👦🏾👧🏾💻</div><div style="font-size:12px;background:#fff;color:#0a2463;padding:4px 8px;border-radius:12px;font-weight:bold">⭐ 4.9/5 • AI Working</div></div></div>
 <div class="trial-banner">🎉 3 MONTHS FREE TRIAL - PSLE • JCE • BGCSE • Adult + Real PDF Reading + Auto P10 + AI Teacher + LIVE FEEDBACK</div>
 <div style="display:grid;grid-template-columns:1fr 260px;gap:10px"><div>
 <div class="grid4"><button class="gcard blue" onclick="go('takeExam')">📝<h3>Take Examination</h3><p>Digital Click</p></button><button class="gcard green" onclick="go('labelling')">🎮<h3>Free Games</h3><p>Label Scramble</p></button><button class="gcard purple" onclick="go('results')">📊<h3>View Results</h3><p>Instant</p></button><button class="gcard orange" onclick="go('upload')">📤<h3>Convert PDF</h3><p>Real Reading</p></button></div>
@@ -118,7 +116,6 @@
 <div class="copyright">© 2026 Education Lesedi Scholars Hub. All Rights Reserved.<br>Contact: educationlesedihelpdesk@gmail.com • PayPal Accepted</div>
 <button class="wa-float" onclick="whatsappOrder()">💬 WhatsApp 71823638</button>
 
-<!-- AI LIVE FEEDBACK -->
 <button id="liveChatBtn" onclick="toggleLiveChat()">🟢 💬 AI LIVE FEEDBACK</button>
 <div id="liveChatPanel">
 <div class="chat-head"><div><b>💬 AI LIVE FEEDBACK</b><br><small style="font-size:11px">● Online - Admin AI • Replies instantly • Goes to Admin</small></div><button onclick="toggleLiveChat()" style="background:#fff;border:none;border-radius:50%;width:26px;height:26px;font-weight:bold;cursor:pointer">X</button></div>
