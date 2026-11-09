@@ -1,439 +1,512 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#081a3a">
-<meta name="description" content="Education Lesedi Scholars Hub — turn educational documents into digital teaching and assessment resources.">
-<title>Education Lesedi Scholars Hub</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102b5c">
+<title>Education Lesedi Scholars Hub | Click • Press • Learn</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--navy:#081a3a;--blue:#174ea6;--blue2:#2563eb;--gold:#f3bd38;--ink:#17243b;--muted:#68758b;--bg:#f4f7fc;--line:#e3e9f2;--white:#fff;--green:#16845b;--shadow:0 18px 50px rgba(12,35,75,.09)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{display:grid;grid-template-columns:258px 1fr;min-height:100vh}.sidebar{background:var(--navy);color:white;padding:24px 17px;position:sticky;top:0;height:100vh;overflow:auto}.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 25px}.logo{width:43px;height:43px;border-radius:13px;background:linear-gradient(145deg,var(--gold),#fff0b7);color:var(--navy);display:grid;place-items:center;font-weight:950;font-size:21px}.brand strong{display:block;font-size:14px;line-height:1.25}.brand small{color:#b7c7e2;font-size:10px;letter-spacing:1.6px}.nav-label{font-size:10px;color:#91a5c8;text-transform:uppercase;letter-spacing:1.5px;padding:17px 11px 7px}.nav button{display:flex;gap:12px;align-items:center;width:100%;border:0;background:transparent;color:#d7e2f5;padding:11px 12px;border-radius:10px;text-align:left;margin:2px 0}.nav button:hover,.nav button.active{background:#173b72;color:white}.nav .ico{width:20px;text-align:center;font-size:17px}.side-foot{margin-top:35px;border-top:1px solid #25416a;padding:17px 9px;color:#aebfda;font-size:11px}.main{min-width:0}.topbar{height:74px;background:#ffffffeb;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}.crumb{font-weight:750}.top-actions{display:flex;align-items:center;gap:13px}.trial-pill{background:#fff6dc;color:#825d00;padding:7px 12px;border-radius:30px;font-size:12px;font-weight:800}.avatar{width:36px;height:36px;border-radius:50%;background:#e5edff;color:var(--blue);display:grid;place-items:center;font-weight:800}.content{max-width:1420px;margin:auto;padding:30px 34px 60px}.welcome{background:linear-gradient(115deg,#0a2047,#174b9d);color:white;border-radius:20px;padding:30px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}.welcome:after{content:"";position:absolute;width:280px;height:280px;border:1px solid #ffffff22;border-radius:50%;right:9%;top:-160px;box-shadow:0 0 0 35px #ffffff09,0 0 0 70px #ffffff06}.welcome>*{position:relative;z-index:1}.welcome h1{font-size:clamp(24px,3vw,34px);line-height:1.15;margin:0 0 9px}.welcome p{color:#d2def3;margin:0;max-width:650px}.welcome .btn{background:var(--gold);color:#18243b}.eyebrow{font-size:11px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:9px}.btn{border:0;border-radius:10px;padding:11px 16px;background:var(--blue2);color:white;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}.btn.secondary{background:#edf3ff;color:#194a96}.btn.outline{background:white;color:var(--blue);border:1px solid #cbd8ee}.btn.dark{background:var(--navy)}.btn.small{padding:8px 12px;font-size:12px}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:22px 0}.stat,.panel,.plan{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 20px #17365d08}.stat{padding:18px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:26px;margin-top:8px}.stat .sicon{width:35px;height:35px;border-radius:10px;background:#edf3ff;display:grid;place-items:center}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:30px 0 14px}.section-head h2{margin:0;font-size:20px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:17px}.panel{padding:21px}.panel h3{margin:0 0 6px;font-size:16px}.sub{color:var(--muted);font-size:12px;margin:0 0 17px}.upload{border:2px dashed #b9cbe8;background:#f8faff;border-radius:14px;padding:27px 18px;text-align:center}.upload .bigico{font-size:32px}.upload h3{margin:8px 0 4px}.upload p{color:var(--muted);font-size:12px;margin:0 0 14px}.file-name{font-size:12px;color:var(--green);margin-top:10px;overflow-wrap:anywhere}.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.quick{border:1px solid var(--line);border-radius:13px;padding:15px;text-align:left;background:white;color:var(--ink)}.quick:hover{border-color:#9bb8e8;background:#f8faff}.quick .qico{font-size:21px}.quick strong{display:block;margin:7px 0 2px;font-size:13px}.quick small{color:var(--muted);font-size:11px}.activity{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.activity:last-child{border:0}.dot{width:9px;height:9px;background:var(--gold);border-radius:50%;margin-top:6px}.activity strong{font-size:12px;display:block}.activity small{font-size:11px;color:var(--muted)}.page{display:none}.page.active{display:block}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.plan{padding:21px;position:relative;display:flex;flex-direction:column}.plan.featured{border:2px solid var(--blue2);box-shadow:0 12px 32px #2563eb18}.tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:850;color:var(--blue);background:#edf3ff;padding:5px 8px;border-radius:30px;align-self:flex-start}.plan h3{font-size:17px;margin:13px 0 4px}.price{font-size:28px;font-weight:900;letter-spacing:-1px}.price span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0}.plan p{color:var(--muted);font-size:12px;min-height:38px}.plan ul{list-style:none;padding:0;margin:10px 0 18px;flex:1}.plan li{font-size:12px;margin:9px 0;color:#3e4d64}.plan li:before{content:"✓";color:var(--green);font-weight:900;margin-right:8px}.plan .btn{width:100%}.notice{padding:13px 15px;border-radius:12px;background:#fff7e4;border:1px solid #f3dfaa;color:#765600;font-size:12px;margin:17px 0}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750}.field input,.field select,.field textarea{border:1px solid #d8e1ef;border-radius:9px;padding:11px 12px;background:white;color:var(--ink);outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:#6e9ce8;box-shadow:0 0 0 3px #2563eb14}.field textarea{min-height:95px;resize:vertical}.result{background:#f8faff;border:1px solid var(--line);border-radius:12px;padding:17px;margin-top:15px;white-space:pre-wrap;font-size:13px}.muted{color:var(--muted)}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:750;background:#f8faff}.status{padding:4px 8px;border-radius:20px;background:#fff4d6;color:#856000;font-size:10px;font-weight:800}.footer{text-align:center;color:#8390a5;font-size:11px;padding:35px 0 5px}.mobile-menu{display:none}.toast{position:fixed;bottom:22px;right:22px;background:#10284e;color:white;padding:13px 17px;border-radius:11px;box-shadow:var(--shadow);z-index:20;display:none;max-width:340px;font-size:13px}.modal-back{display:none;position:fixed;inset:0;background:#081a3acc;z-index:15;align-items:center;justify-content:center;padding:18px}.modal{background:white;border-radius:18px;max-width:490px;width:100%;padding:25px;box-shadow:var(--shadow)}.modal h2{margin:0 0 6px}.modal p{color:var(--muted);font-size:13px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
-@media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:760px){.shell{display:block}.sidebar{position:fixed;left:-270px;z-index:12;width:258px;transition:left .2s}.sidebar.open{left:0}.topbar{padding:0 17px;height:64px}.mobile-menu{display:inline-flex}.content{padding:19px 16px 45px}.welcome{padding:23px;align-items:flex-start;flex-direction:column}.grid2{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.top-actions .trial-pill{display:none}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.section-head{align-items:flex-start;flex-direction:column}}
+:root{--navy:#102b5c;--blue:#2457c5;--gold:#f5c842;--ink:#17243b;--muted:#64748b;--bg:#f4f7fb;--line:#e2e8f0;--green:#13845b;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.5 Inter,Arial,sans-serif;color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+header{height:auto;min-height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--blue));display:grid;place-items:center;color:var(--gold);font-size:25px}
+.brand h1{font-size:17px;line-height:1.15;margin:0;color:var(--navy)}.brand small{color:var(--muted);font-weight:700;letter-spacing:.5px}
+.header-actions{display:flex;align-items:center;gap:10px}.user-pill{font-size:13px;color:var(--muted);background:#f1f5f9;padding:8px 12px;border-radius:30px}
+.shell{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:calc(100vh - 76px)}
+aside{background:var(--navy);color:#fff;padding:20px 14px;min-height:calc(100vh - 76px)}
+.nav-label{font-size:10px;letter-spacing:1.5px;color:#a9b9d8;font-weight:800;padding:16px 12px 6px}
+nav button{width:100%;border:0;background:transparent;color:#e8eefb;text-align:left;padding:11px 13px;border-radius:10px;margin:2px 0;font-weight:600}
+nav button:hover,nav button.active{background:#244b91;color:#fff}nav button .ico{display:inline-block;width:25px}
+.aside-foot{margin-top:28px;border-top:1px solid #36517f;padding:16px 10px;color:#d5def0;font-size:12px;overflow-wrap:anywhere}
+main{padding:26px;min-width:0;max-width:1600px;width:100%;margin:auto}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(115deg,#102b5c,#2457c5);color:white;border-radius:20px;padding:30px;display:flex;align-items:center;justify-content:space-between;gap:24px;box-shadow:0 12px 30px #102b5c20}
+.hero h2{font-size:clamp(24px,3vw,34px);line-height:1.15;margin:0 0 10px}.hero p{max-width:680px;color:#e5edff;margin:0 0 18px}.hero-art{font-size:70px;min-width:150px;text-align:center}
+.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;color:var(--gold);text-transform:uppercase}
+.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn.primary{background:var(--blue);color:#fff}.btn.gold{background:var(--gold);color:#17243b}.btn.light{background:#edf3ff;color:var(--navy)}.btn.outline{border:1px solid var(--line);background:#fff;color:var(--ink)}.btn.danger{background:#fee2e2;color:#991b1b}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:26px 0 12px}.section-head h2{margin:0;font-size:20px}.section-head p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.stat,.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:0 3px 12px #102b5c08}
+.stat .number{font-size:27px;font-weight:850;color:var(--navy)}.stat small{color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.tile{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;text-align:left;min-height:145px;transition:.15s}.tile:hover{border-color:#9db5ee;transform:translateY(-2px)}.tile .tile-icon{font-size:25px}.tile h3{margin:8px 0 3px;font-size:16px}.tile p{margin:0;color:var(--muted);font-size:13px}
+.card h3{margin:0 0 12px;font-size:17px}.muted{color:var(--muted)}.small{font-size:12px}
+.field{margin:12px 0}.field label{display:block;font-size:13px;font-weight:750;margin-bottom:5px}.field input,.field select,.field textarea,input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 12px;background:white;color:var(--ink)}textarea{resize:vertical;min-height:100px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.dropzone{border:2px dashed #9db5d7;border-radius:14px;padding:25px;text-align:center;background:#f8fbff}.dropzone strong{display:block;font-size:16px;color:var(--navy)}.dropzone input{max-width:360px;margin:12px auto 0}
+.notice{background:#fff8df;border:1px solid #f1d77c;color:#735a0c;padding:12px 14px;border-radius:10px;font-size:13px;margin:12px 0}.success{background:#eaf8f1;border:1px solid #b5e5cd;color:#17613f;padding:12px;border-radius:10px;margin:12px 0}
+.preview{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:14px;white-space:pre-wrap;max-height:300px;overflow:auto;font:13px/1.55 ui-monospace,monospace}
+.list-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.list-item:last-child{border-bottom:0}
+.pill{display:inline-block;border-radius:30px;background:#edf3ff;color:#214b9a;padding:4px 9px;font-size:11px;font-weight:800}
+.lesson-output{border:1px solid var(--line);border-radius:12px;padding:20px;background:white}
+.pay-method{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff;display:flex;gap:12px;align-items:flex-start}.pay-method input{width:auto;margin-top:5px}.pay-method strong{display:block;color:var(--navy)}.price-card{border:1px solid var(--line);border-radius:14px;padding:17px;background:#fff}.price-card h3{margin:0 0 5px}.price{font-size:26px;font-weight:850;color:var(--navy)}.qr-preview{max-width:250px;max-height:250px;object-fit:contain;border:1px dashed #94a3b8;border-radius:12px;padding:8px;background:#fff}.payment-step{padding:13px;border-radius:10px;background:#f8fafc;margin:9px 0;border:1px solid var(--line)}.payment-step b{color:var(--navy)}.lesson-output h2{color:var(--navy)}.lesson-block{padding:12px;margin:10px 0;background:#f8fafc;border-radius:9px}.lesson-block h4{margin:0 0 6px;color:var(--navy)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+.toast{position:fixed;right:20px;bottom:20px;background:#102b5c;color:white;padding:12px 18px;border-radius:10px;display:none;z-index:50;box-shadow:0 5px 20px #0002}
+@media(max-width:1000px){.shell{grid-template-columns:210px 1fr}main{padding:18px}.stats{grid-template-columns:repeat(2,1fr)}.tiles{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){header{padding:10px 14px}.brand h1{font-size:14px}.header-actions .user-pill{display:none}.shell{display:block}aside{min-height:0;padding:8px;position:sticky;top:70px;z-index:15}nav{display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto;padding:9px 11px;font-size:12px}.nav-label,.aside-foot{display:none}main{padding:14px}.hero{padding:22px;display:block}.hero-art{display:none}.stats{gap:8px}.stat{padding:12px}.stat .number{font-size:22px}.tiles,.two-col,.three-col{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}}
+@media print{header,aside,.no-print,footer{display:none!important}.shell{display:block}main{padding:0}.page{display:none!important}#lesson.page.active{display:block!important}.lesson-output{border:0}}
 </style>
 </head>
 <body>
+<header>
+  <div class="brand"><div class="brand-mark">✦</div><div><h1>Education Lesedi Scholars Hub</h1><small>CLICK • PRESS • LEARN</small></div></div>
+  <div class="header-actions"><span class="user-pill">Botswana • Learning & Teaching Platform</span><button class="btn outline" onclick="go('account')">Sign in</button><button class="btn gold" onclick="go('account');showRegisterForm()">Create account</button></div>
+</header>
 <div class="shell">
-<aside class="sidebar" id="sidebar">
- <div class="brand"><div class="logo">EL</div><div><strong>EDUCATION LESEDI<br>SCHOLARS HUB</strong><small>CLICK · PRESS · LEARN</small></div></div>
- <div class="nav-label">Workspace</div><nav class="nav">
- <button class="active" data-page="overview"><span class="ico">⌂</span>Overview</button>
- <button data-page="converter"><span class="ico">⇧</span>Hardcopy Converter</button>
- <button data-page="lesson"><span class="ico">▤</span>Lesson Plan Studio</button>
- <button data-page="scheme"><span class="ico">▦</span>Scheme of Work</button>
- <button data-page="resources"><span class="ico">✧</span>Teaching Resources</button>
- <button data-page="exams"><span class="ico">✎</span>Examination Studio</button>
- <button data-page="results"><span class="ico">▥</span>Results & Reports</button>
- </nav>
- <div class="nav-label">Business</div><nav class="nav">
- <button data-page="packages"><span class="ico">◇</span>Packages & Pricing</button>
- <button data-page="account"><span class="ico">◎</span>Account & Trial</button>
- <button data-page="help"><span class="ico">?</span>Help & Contact</button>
- </nav>
- <div class="side-foot">Education Lesedi Scholars Hub<br>© <span id="year"></span> · Botswana & beyond</div>
+<aside>
+  <nav>
+    <div class="nav-label">WORKSPACE</div>
+    <button class="active" data-page="home"><span class="ico">⌂</span>Overview</button>
+    <button data-page="convert"><span class="ico">⇧</span>Hardcopy Converter</button>
+    <button data-page="lesson"><span class="ico">▤</span>Lesson Plan Studio</button>
+    <button data-page="scheme"><span class="ico">▦</span>Scheme of Work</button>
+    <button data-page="exam"><span class="ico">✓</span>Examination Studio</button>
+    <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
+    <button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
+    <button data-page="assistant"><span class="ico">✧</span>AI Teacher Assistant</button>
+    <button data-page="payments"><span class="ico">💳</span>Packages & Payments</button>
+    <div class="nav-label">MANAGEMENT</div>
+    <button data-page="analytics"><span class="ico">▥</span>Results & Analytics</button>
+    <button data-page="school"><span class="ico">⌂</span>School & Classes</button>
+    <button data-page="library"><span class="ico">▤</span>My Resource Library</button>
+    <button data-page="account"><span class="ico">👤</span>Customer Login</button>
+    <button data-page="settings"><span class="ico">⚙</span>Platform Setup</button>
+  </nav>
+  <div class="aside-foot"><b>Education Lesedi Scholars Hub</b><br>Click • Press • Learn<br><br>Helpdesk<br>educationlesedihelpdesk@gmail.com<br>Orange Money: +267 77980825<br>MyZaka: +267 71823638</div>
 </aside>
-<main class="main">
-<header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="btn secondary small mobile-menu" id="menuBtn">☰</button><span class="crumb" id="crumb">Overview</span></div><div class="top-actions"><span class="trial-pill" id="trialBadge">30-DAY FREE TRIAL</span><div class="avatar" id="avatar">EL</div></div></header>
-<div class="content">
-<section class="page active" id="overview">
- <div class="welcome"><div><div class="eyebrow">Your teaching & assessment workspace</div><h1>Turn learning materials<br>into learning opportunities.</h1><p>Convert educational documents, prepare lesson plans, build assessments and organise teaching resources in one place.</p></div><button class="btn" onclick="showPage('converter')">＋ Upload a document</button></div>
- <div class="stats">
-  <div class="stat"><div class="stat-top">Documents uploaded <span class="sicon">⇧</span></div><strong id="docCount">0</strong></div>
-  <div class="stat"><div class="stat-top">Lesson plans saved <span class="sicon">▤</span></div><strong id="planCount">0</strong></div>
-  <div class="stat"><div class="stat-top">Exams created <span class="sicon">✎</span></div><strong id="examCount">0</strong></div>
-  <div class="stat"><div class="stat-top">Trial access <span class="sicon">◷</span></div><strong>30 days</strong></div>
- </div>
- <div class="section-head"><div><h2>Start creating</h2><p>Choose a tool to begin working.</p></div></div>
- <div class="grid2">
-  <div class="panel"><h3>Upload hardcopy or digital material</h3><p class="sub">Start with a PDF, Word document or text file. Scanned-image OCR requires a connected OCR service.</p>
-   <div class="upload"><div class="bigico">📄</div><h3>Bring your teaching material</h3><p>PDF, DOCX or TXT · Max 15 MB in this demo</p><input type="file" id="homeFile" accept=".pdf,.docx,.txt" hidden><button class="btn" onclick="document.getElementById('homeFile').click()">Choose a file</button><div class="file-name" id="homeFileName"></div></div>
-   <div style="display:flex;gap:9px;margin-top:13px;flex-wrap:wrap"><button class="btn secondary small" onclick="showPage('lesson')">Create lesson plan</button><button class="btn outline small" onclick="showPage('exams')">Create examination</button></div>
+<main>
+<section class="page active" id="home">
+  <div class="hero"><div><div class="eyebrow">Your digital education workspace</div><h2>Turn teaching materials into powerful learning experiences.</h2><p>Upload a paper, extract its content, prepare lesson plans and teaching resources, then build digital assessments — all from one workspace.</p><button class="btn gold" onclick="go('convert')">⇧ Start converting materials</button> <button class="btn light" onclick="go('lesson')">Create a lesson plan</button></div><div class="hero-art">📚 ✦ 🎓</div></div>
+  <div class="stats">
+    <div class="stat"><div class="number" id="statDocs">0</div><small>Documents processed on this device</small></div>
+    <div class="stat"><div class="number" id="statPlans">0</div><small>Saved lesson plans on this device</small></div>
+    <div class="stat"><div class="number">8</div><small>Education pathways</small></div>
+    <div class="stat"><div class="number">24/7</div><small>Access to your workspace</small></div>
   </div>
-  <div class="panel"><h3>Quick access</h3><p class="sub">Your most-used tools.</p><div class="quick-grid">
-   <button class="quick" onclick="showPage('converter')"><span class="qico">🔄</span><strong>Document converter</strong><small>Extract supported document text</small></button>
-   <button class="quick" onclick="showPage('lesson')"><span class="qico">📚</span><strong>Lesson plans</strong><small>Prepare a structured draft</small></button>
-   <button class="quick" onclick="showPage('scheme')"><span class="qico">🗓️</span><strong>Scheme of work</strong><small>Plan topics by week</small></button>
-   <button class="quick" onclick="showPage('resources')"><span class="qico">💡</span><strong>Teaching resources</strong><small>Outline notes and worksheets</small></button>
-  </div></div>
- </div>
- <div class="section-head"><div><h2>Recent activity</h2><p>Activity saved in this browser on this device.</p></div></div>
- <div class="panel" id="activity"><div class="muted" style="font-size:12px">No activity yet. Upload a document or create your first resource.</div></div>
+  <div class="section-head"><div><h2>What would you like to create?</h2><p>Choose a tool to get started.</p></div></div>
+  <div class="tiles">
+    <button class="tile" onclick="go('convert')"><div class="tile-icon">📄</div><h3>Convert hardcopies</h3><p>Read PDF and Word files, review extracted text and prepare it for editing.</p></button>
+    <button class="tile" onclick="go('lesson')"><div class="tile-icon">📝</div><h3>Generate lesson plans</h3><p>Prepare objectives, activities, assessment and homework.</p></button>
+    <button class="tile" onclick="go('scheme')"><div class="tile-icon">🗓️</div><h3>Scheme of work</h3><p>Organise topics, weeks, terms and learning outcomes.</p></button>
+    <button class="tile" onclick="go('exam')"><div class="tile-icon">🧠</div><h3>Create examinations</h3><p>Build digital questions and mark schemes with teacher verification.</p></button>
+    <button class="tile" onclick="go('resources')"><div class="tile-icon">📚</div><h3>Teaching resources</h3><p>Prepare worksheets, revision notes, summaries and flashcards.</p></button>
+    <button class="tile" onclick="go('assistant')"><div class="tile-icon">✨</div><h3>AI teacher assistant</h3><p>Connect an AI service to help draft and adapt teaching materials.</p></button>
+  </div>
+  <div class="notice"><b>Important:</b> This is an upgraded front-end prototype. Real AI generation, secure accounts, cloud storage, OCR for scanned pages and payment verification require backend services before public launch.</div>
 </section>
 
-<section class="page" id="converter">
- <div class="section-head"><div><h2>Hardcopy & document converter</h2><p>Upload a source document and inspect its contents before using it.</p></div></div>
- <div class="grid2"><div class="panel"><h3>Upload source material</h3><p class="sub">This starter interface accepts PDF, DOCX and TXT. It does not perform OCR or AI conversion yet.</p><div class="upload"><div class="bigico">📥</div><h3>Select your document</h3><p>PDF · DOCX · TXT · 15 MB maximum</p><input type="file" id="sourceFile" accept=".pdf,.docx,.txt" hidden><button class="btn" onclick="document.getElementById('sourceFile').click()">Browse files</button><div id="sourceName" class="file-name"></div></div><div class="notice">Scanned PDFs and photographs need OCR (optical character recognition). This version will not pretend to read them. Connect an OCR service before offering scan conversion to paying customers.</div></div>
- <div class="panel"><h3>What happens next?</h3><div class="activity"><div class="dot"></div><div><strong>1. Upload</strong><small>Choose a source document.</small></div></div><div class="activity"><div class="dot"></div><div><strong>2. Extract</strong><small>Text extraction requires a real PDF/DOCX processing service.</small></div></div><div class="activity"><div class="dot"></div><div><strong>3. Review</strong><small>A teacher checks extracted text, questions and answer keys.</small></div></div><div class="activity"><div class="dot"></div><div><strong>4. Create</strong><small>Use verified source content to prepare a lesson, worksheet or examination.</small></div></div></div></div>
- <div class="panel" style="margin-top:17px"><h3>Selected file</h3><p id="selectedFileDetails" class="muted" style="font-size:13px">No file selected.</p><button class="btn secondary small" onclick="showPage('lesson')">Continue to Lesson Plan Studio</button></div>
+<section class="page" id="convert">
+  <div class="section-head"><div><h2>Hardcopy-to-Digital Converter</h2><p>Upload a document, extract its text and review it before creating resources.</p></div><span class="pill">DOCUMENT WORKSPACE</span></div>
+  <div class="card">
+    <div class="dropzone"><div style="font-size:35px">📤</div><strong>Upload your teaching or examination material</strong><p class="muted small">Supported in this prototype: PDF, DOCX and TXT. Image OCR and scanned-PDF recognition need an OCR service.</p><input id="fileInput" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"></div>
+    <div class="two-col">
+      <div class="field"><label>Resource title</label><input id="docTitle" placeholder="e.g. Standard 7 Mathematics Test"></div>
+      <div class="field"><label>What do you want to create?</label><select id="docPurpose"><option>Extract and organise text</option><option>Lesson plan</option><option>Scheme of work</option><option>Worksheet</option><option>Digital examination</option><option>Revision notes</option><option>Study summary</option></select></div>
+    </div>
+    <button class="btn primary" id="extractBtn" onclick="extractDocument()">Read and extract document</button>
+    <div id="extractStatus" aria-live="polite"></div>
+    <div class="field"><label>Extracted text — review and correct before using</label><textarea id="extractedText" rows="12" placeholder="Your extracted document text will appear here. You can also paste text directly."></textarea></div>
+    <div class="notice">The converter does not invent missing questions or answer keys. Scanned pages may need OCR. Always compare extracted content with the original document.</div>
+    <button class="btn gold" onclick="useTextForLesson()">Use content for lesson plan</button>
+    <button class="btn outline" onclick="useTextForExam()">Prepare examination draft</button>
+    <button class="btn outline" onclick="saveDocument()">Save to this device</button>
+  </div>
 </section>
 
 <section class="page" id="lesson">
- <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable lesson-plan draft. Review it against your curriculum before teaching.</p></div></div>
- <div class="panel"><div class="form-grid">
-  <div class="field"><label>Subject</label><input id="lpSubject" placeholder="e.g. Mathematics"></div>
-  <div class="field"><label>Grade / class</label><input id="lpGrade" placeholder="e.g. Standard 5"></div>
-  <div class="field"><label>Topic</label><input id="lpTopic" placeholder="e.g. Fractions"></div>
-  <div class="field"><label>Duration</label><input id="lpDuration" placeholder="e.g. 40 minutes"></div>
-  <div class="field"><label>Learning objectives</label><textarea id="lpObjectives" placeholder="What should learners know or do?"></textarea></div>
-  <div class="field"><label>Source / teaching materials</label><textarea id="lpMaterials" placeholder="Textbook chapter, uploaded source, teaching aids..."></textarea></div>
-  <div class="field full"><label>Teaching approach / notes</label><textarea id="lpApproach" placeholder="Explain, demonstrate, group work, practical activity..."></textarea></div>
- </div><div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap"><button class="btn" onclick="makeLesson()">Prepare lesson-plan draft</button><button class="btn secondary" onclick="saveLesson()">Save draft</button><button class="btn outline" onclick="printResult('lessonOutput')">Print / Save PDF</button></div><div id="lessonOutput" class="result" style="display:none"></div><p class="muted" style="font-size:11px;margin-top:12px">This creates a structured template from the information you enter. It is not AI-generated curriculum advice.</p></div>
+  <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable teaching plan using your topic or extracted document.</p></div></div>
+  <div class="card">
+    <div class="two-col">
+      <div class="field"><label>Lesson topic</label><input id="lpTopic" placeholder="e.g. Photosynthesis"></div>
+      <div class="field"><label>Education level</label><select id="lpLevel"><option>Pre-primary</option><option>Primary (Standards 1–7)</option><option>Junior secondary (Forms 1–3)</option><option>Senior secondary (Forms 4–5)</option><option>Adult education</option><option>Technical and vocational</option><option>Tertiary education</option><option>Teacher development</option><option>Special and inclusive education</option></select></div>
+      <div class="field"><label>Subject</label><input id="lpSubject" placeholder="e.g. Integrated Science"></div>
+      <div class="field"><label>Class / Form</label><input id="lpClass" placeholder="e.g. Standard 7"></div>
+      <div class="field"><label>Duration</label><select id="lpDuration"><option>40 minutes</option><option>60 minutes</option><option>80 minutes</option><option>Double period</option><option>Other / flexible</option></select></div>
+      <div class="field"><label>Class size</label><input id="lpSize" type="number" min="1" placeholder="e.g. 35"></div>
+    </div>
+    <div class="field"><label>Learning outcomes / curriculum requirements (optional)</label><textarea id="lpOutcomes" placeholder="Paste the relevant syllabus outcomes or learning objectives."></textarea></div>
+    <div class="field"><label>Source content (optional — from your converted document)</label><textarea id="lpSource" placeholder="Paste notes or extracted source content here."></textarea></div>
+    <button class="btn primary" onclick="generatePlan()">Create editable lesson plan</button>
+  </div>
+  <div id="lessonResult" style="margin-top:16px"></div>
+  <div class="card" style="margin-top:16px"><h3>Saved lesson plans</h3><div id="savedPlans" class="muted small">No plans saved on this device yet.</div></div>
 </section>
 
 <section class="page" id="scheme">
- <div class="section-head"><div><h2>Scheme of Work Planner</h2><p>Organise teaching topics and activities across a term.</p></div></div>
- <div class="panel"><div class="form-grid"><div class="field"><label>Subject</label><input id="swSubject" placeholder="e.g. English"></div><div class="field"><label>Class</label><input id="swClass" placeholder="e.g. Form 2"></div><div class="field"><label>Term</label><input id="swTerm" placeholder="e.g. Term 1"></div><div class="field"><label>Number of weeks</label><input id="swWeeks" type="number" min="1" max="20" value="10"></div><div class="field full"><label>Topics (one per line)</label><textarea id="swTopics" placeholder="Reading comprehension&#10;Grammar&#10;Writing skills"></textarea></div></div><button class="btn" style="margin-top:14px" onclick="makeScheme()">Build scheme table</button><div id="schemeOutput" class="result" style="display:none"></div><button class="btn outline small" style="margin-top:10px" onclick="printResult('schemeOutput')">Print / Save PDF</button></div>
+  <div class="section-head"><div><h2>Scheme of Work Planner</h2><p>Organise a subject into a sequence of teachable units.</p></div></div>
+  <div class="card">
+    <div class="two-col"><div class="field"><label>Subject</label><input id="swSubject" placeholder="e.g. Mathematics"></div><div class="field"><label>Class / level</label><input id="swClass" placeholder="e.g. Form 2"></div><div class="field"><label>Term</label><select id="swTerm"><option>Term 1</option><option>Term 2</option><option>Term 3</option><option>Annual plan</option></select></div><div class="field"><label>Number of weeks</label><input id="swWeeks" type="number" min="1" max="20" value="10"></div></div>
+    <div class="field"><label>Topics (one topic per line)</label><textarea id="swTopics" placeholder="Whole numbers&#10;Fractions&#10;Decimals&#10;Percentages"></textarea></div>
+    <button class="btn primary" onclick="buildScheme()">Build scheme table</button>
+    <div id="schemeOutput"></div>
+  </div>
+</section>
+
+<section class="page" id="exam">
+  <div class="section-head"><div><h2>Examination Studio</h2><p>Prepare a digital assessment draft from reviewed questions.</p></div></div>
+  <div class="card">
+    <div class="two-col"><div class="field"><label>Assessment title</label><input id="examTitle" placeholder="e.g. End of Term Science Test"></div><div class="field"><label>Subject / class</label><input id="examClass" placeholder="e.g. Standard 7 Science"></div></div>
+    <div class="field"><label>Question text</label><textarea id="examQuestions" placeholder="Paste or type questions here."></textarea></div>
+    <div class="field"><label>Teacher-verified answer key (optional)</label><textarea id="examKey" placeholder="Enter verified answers separately. Leave blank if not yet checked."></textarea></div>
+    <div class="notice">No answer is assumed to be correct. Questions and answer keys must be checked by an authorised teacher before an examination is published. Essays and long answers require teacher review or teacher-approved marking.</div>
+    <button class="btn primary" onclick="saveExamDraft()">Save examination draft</button>
+    <div id="examStatus"></div>
+  </div>
 </section>
 
 <section class="page" id="resources">
- <div class="section-head"><div><h2>Teaching Resources</h2><p>Build a clear outline for notes, worksheets and revision materials.</p></div></div>
- <div class="panel"><div class="form-grid"><div class="field"><label>Resource type</label><select id="resType"><option>Class notes</option><option>Worksheet</option><option>Revision guide</option><option>Homework activity</option><option>Practical activity</option></select></div><div class="field"><label>Subject & level</label><input id="resLevel" placeholder="e.g. Science, Standard 7"></div><div class="field full"><label>Topic / learning focus</label><input id="resTopic" placeholder="Enter topic"></div><div class="field full"><label>Key points or source notes</label><textarea id="resNotes" placeholder="Paste verified content or key points here"></textarea></div></div><button class="btn" style="margin-top:14px" onclick="makeResource()">Prepare resource outline</button><div id="resourceOutput" class="result" style="display:none"></div><button class="btn outline small" style="margin-top:10px" onclick="printResult('resourceOutput')">Print / Save PDF</button></div>
+  <div class="section-head"><div><h2>Teaching Resources Studio</h2><p>Prepare classroom materials from your topic and source notes.</p></div></div>
+  <div class="card">
+    <div class="field"><label>Topic</label><input id="resTopic" placeholder="Enter a topic"></div>
+    <div class="field"><label>Resource type</label><select id="resType"><option>Revision notes outline</option><option>Worksheet outline</option><option>Flashcards outline</option><option>Study summary outline</option><option>Class activity outline</option><option>Homework outline</option></select></div>
+    <div class="field"><label>Source information</label><textarea id="resSource" placeholder="Paste source material, syllabus notes or key points."></textarea></div>
+    <button class="btn primary" onclick="makeResource()">Create resource outline</button>
+    <div id="resourceOutput"></div>
+  </div>
 </section>
 
-<section class="page" id="exams">
- <div class="section-head"><div><h2>Examination Studio</h2><p>Prepare an examination draft and keep answer verification under teacher control.</p></div></div>
- <div class="panel"><div class="form-grid"><div class="field"><label>Examination title</label><input id="exTitle" placeholder="e.g. End of term test"></div><div class="field"><label>Subject & level</label><input id="exLevel" placeholder="e.g. Mathematics, Standard 6"></div><div class="field"><label>Duration</label><input id="exDuration" placeholder="e.g. 1 hour"></div><div class="field"><label>Total marks</label><input id="exMarks" type="number" min="1" placeholder="e.g. 50"></div><div class="field full"><label>Questions (enter one per line)</label><textarea id="exQuestions" placeholder="1. ...&#10;2. ..."></textarea></div></div><button class="btn" style="margin-top:14px" onclick="makeExam()">Prepare examination draft</button><button class="btn secondary" style="margin-top:14px" onclick="saveExam()">Save examination draft</button><div id="examOutput" class="result" style="display:none"></div><div class="notice">No answer key is invented. Do not publish until a qualified teacher/examiner verifies every question, mark allocation and answer key. Essays and long answers require human review before final marks are released.</div></div>
-</section>
-
-<section class="page" id="results">
- <div class="section-head"><div><h2>Results & Reports</h2><p>Reporting tools will become available after learner accounts and assessment records are connected.</p></div></div>
- <div class="panel"><h3>Reporting module — setup required</h3><p class="muted">This GitHub starter does not collect real learner submissions or calculate live school performance. A secure database, learner authentication and verified assessment records must be connected before reports can be generated.</p><div class="notice">Protect learner names, marks and school records. Do not upload confidential learner data to this public demo.</div></div>
-</section>
-
-<section class="page" id="packages">
- <div class="section-head"><div><h2>Packages & Pricing</h2><p>Four service levels for individuals, teachers, schools and institutions.</p></div></div>
- <div class="notice"><strong>30-day trial for every customer type.</strong> The trial should begin once a customer creates and verifies an account. This static GitHub version displays the offer but cannot securely enforce trial dates or activate paid subscriptions without a backend.</div>
- <div class="cards">
-  <article class="plan"><span class="tag">Individuals</span><h3>Personal & Private</h3><div class="price">From P25 <span>/ service</span></div><p>For parents, private tutors, individuals and independent learners.</p><ul><li>Personal document preparation</li><li>Digital quiz creation</li><li>Revision exercises</li><li>Private lesson-plan drafts</li><li>Pay per requested service</li></ul><button class="btn secondary" onclick="choosePlan('Personal & Private')">Choose package</button></article>
-  <article class="plan featured"><span class="tag">For educators</span><h3>Teacher Professional</h3><div class="price">P100 <span>/ month · proposed</span></div><p>Tools for teachers preparing lessons and assessments.</p><ul><li>Lesson-plan and scheme templates</li><li>Teaching resource outlines</li><li>Digital exam drafts</li><li>Document conversion workflow</li><li>Teacher review controls</li></ul><button class="btn" onclick="choosePlan('Teacher Professional')">Choose package</button></article>
-  <article class="plan"><span class="tag">For schools</span><h3>School</h3><div class="price">P350 <span>/ month · proposed</span></div><p>Centralised teaching and assessment tools for a school.</p><ul><li>School workspace</li><li>Multiple teacher accounts*</li><li>Examination management</li><li>Results reporting*</li><li>Administration tools*</li></ul><button class="btn secondary" onclick="choosePlan('School')">Choose package</button></article>
-  <article class="plan"><span class="tag">Advanced</span><h3>Institution & Enterprise</h3><div class="price">Custom <span>/ quotation</span></div><p>For education institutions and larger organisations.</p><ul><li>Multi-department setup*</li><li>Bulk conversion workflow*</li><li>Examiner and admin roles*</li><li>Advanced reporting*</li><li>Custom configuration*</li></ul><button class="btn secondary" onclick="choosePlan('Institution & Enterprise')">Request quotation</button></article>
- </div><p class="muted" style="font-size:11px;margin-top:12px">*These multi-user and reporting features require the production backend. Prices are suggested launch prices and should be confirmed before taking payment.</p>
- <div class="panel" style="margin-top:18px"><h3>Payment methods planned</h3><div class="grid2"><div><strong>Orange Money</strong><p class="muted" style="font-size:13px">Merchant number: +267 77980825</p></div><div><strong>MyZaka</strong><p class="muted" style="font-size:13px">Merchant number: +267 71823638</p></div><div><strong>International payments</strong><p class="muted" style="font-size:13px">Visa / Mastercard through an approved gateway.</p></div><div><strong>QR and OTP payments</strong><p class="muted" style="font-size:13px">Official merchant QR, provider OTP and server-side payment verification must be integrated.</p></div></div><div class="notice">Payment details are displayed for planning only. This website does not collect payments, generate OTPs or verify transactions. Never treat a screenshot or customer-entered reference as proof of payment.</div></div>
+<section class="page" id="botswana-exams">
+  <div class="section-head"><div><h2>Botswana Examination Library</h2><p>Browse syllabus-aligned practice areas for PSLE, JCE and BGCSE.</p></div><span class="pill">BOTSWANA</span></div>
+  <div class="notice"><b>Important:</b> This catalogue is a starter structure with sample practice sets. It is not a complete collection of official BEC past papers. Official examination papers and answer keys may only be uploaded or distributed where Education Lesedi has permission. Teachers and examiners must verify every question and answer key before use.</div>
+  <div class="card">
+    <div class="two-col">
+      <div class="field"><label>Examination level</label><select id="becLevel" onchange="renderBotswanaExams()"><option value="all">All levels</option><option value="PSLE">PSLE — Standards 1–7</option><option value="JCE">JCE — Forms 1–3</option><option value="BGCSE">BGCSE — Forms 4–5</option></select></div>
+      <div class="field"><label>Search subject or topic</label><input id="becSearch" oninput="renderBotswanaExams()" placeholder="e.g. Mathematics, fractions, biology"></div>
+    </div>
+    <div id="becCards" class="tiles"></div>
+    <div id="becPreview" style="margin-top:16px"></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>Examination coverage planned</h3><div class="three-col">
+    <div class="tile"><div class="tile-icon">📘</div><h3>PSLE</h3><p>Standards 1–7: Mathematics, English, Setswana, Science and other approved primary learning areas.</p></div>
+    <div class="tile"><div class="tile-icon">📗</div><h3>JCE</h3><p>Forms 1–3: Mathematics, English, Setswana, Sciences, Social Studies, Commerce and other subjects.</p></div>
+    <div class="tile"><div class="tile-icon">📕</div><h3>BGCSE</h3><p>Forms 4–5: Mathematics, English, Biology, Chemistry, Physics, Geography, Accounting and other subjects.</p></div>
+  </div></div>
 </section>
 
 <section class="page" id="account">
- <div class="section-head"><div><h2>Account & 30-day trial</h2><p>Trial terms and account setup information.</p></div></div>
- <div class="grid2"><div class="panel"><h3>One month free for every user type</h3><p class="sub">Personal · Teacher · School · Institution</p><div style="font-size:38px;font-weight:900;color:var(--blue)">30 days</div><p class="muted" style="font-size:13px">Recommended production rule: one trial per verified account or organisation, starting at successful email/phone verification. Trial expiry and package permissions must be enforced by the server.</p></div><div class="panel"><h3>Trial setup checklist</h3><div class="activity"><div class="dot"></div><div><strong>Create account</strong><small>Customer chooses their account type.</small></div></div><div class="activity"><div class="dot"></div><div><strong>Verify email or mobile</strong><small>Send a real one-time verification code through a provider.</small></div></div><div class="activity"><div class="dot"></div><div><strong>Start 30-day trial</strong><small>Server records start and expiry timestamps.</small></div></div><div class="activity"><div class="dot"></div><div><strong>Choose a package</strong><small>Customer pays after trial or selects an available service.</small></div></div></div></div>
- <div class="notice">This is a front-end starter, not a live registration system. Do not enter real passwords or confidential information here. Authentication and trial enforcement are not implemented in this static version.</div>
-</section>
-
-<section class="page" id="help">
- <div class="section-head"><div><h2>Help & Contact</h2><p>Customer support information.</p></div></div>
- <div class="grid2"><div class="panel"><h3>Education Lesedi Scholars Hub</h3><p class="muted">CLICK · PRESS · LEARN</p><p>Digital teaching resources, document conversion workflows and online assessment services.</p><p><strong>Orange Money:</strong> +267 77980825</p><p><strong>MyZaka:</strong> +267 71823638</p></div><div class="panel"><h3>Before going live</h3><ul style="padding-left:18px;color:#53627a;font-size:13px;line-height:1.9"><li>Connect secure user accounts and database.</li><li>Connect OCR for scanned papers and photos.</li><li>Connect a real AI service through a protected server.</li><li>Integrate merchant-approved payment APIs.</li><li>Test backups, privacy and access controls.</li></ul></div></div>
-</section>
-<div class="footer">Education Lesedi Scholars Hub · CLICK · PRESS · LEARN · Built for Botswana and international growth</div>
-</div></main></div>
-<div class="toast" id="toast"></div>
-<div class="modal-back" id="modal"><div class="modal"><h2 id="modalTitle">Continue</h2><p id="modalText"></p><div class="modal-actions"><button class="btn outline" onclick="closeModal()">Close</button><button class="btn" onclick="closeModal();showPage('help')">View setup requirements</button></div></div></div>
-<script>
-const pages=['overview','converter','lesson','scheme','resources','exams','results','packages','account','help'];
-const labels={overview:'Overview',converter:'Hardcopy Converter',lesson:'Lesson Plan Studio',scheme:'Scheme of Work',resources:'Teaching Resources',exams:'Examination Studio',results:'Results & Reports',packages:'Packages & Pricing',account:'Account & Trial',help:'Help & Contact'};
-let selectedFile=null, activity=[];
-const $=id=>document.getElementById(id);
-$('year').textContent=new Date().getFullYear();
-function toast(msg){let t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',3600)}
-function showPage(p){if(!pages.includes(p))return;pages.forEach(x=>$(x).classList.toggle('active',x===p));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=labels[p];$('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-$('menuBtn').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
-function addActivity(title,detail){activity.unshift({title,detail,time:new Date().toLocaleString()});activity=activity.slice(0,8);renderActivity()}
-function renderActivity(){$('activity').innerHTML=activity.length?activity.map(a=>`<div class="activity"><div class="dot"></div><div><strong>${escapeHtml(a.title)}</strong><small>${escapeHtml(a.detail)} · ${escapeHtml(a.time)}</small></div></div>`).join(''):'<div class="muted" style="font-size:12px">No activity yet.</div>'}
-function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function handleFile(file){if(!file)return;if(file.size>15*1024*1024){toast('File is larger than the 15 MB demo limit.');return}let ext=file.name.split('.').pop().toLowerCase();if(!['pdf','docx','txt'].includes(ext)){toast('Please choose a PDF, DOCX or TXT file.');return}selectedFile=file;$('homeFileName').textContent=file.name;$('sourceName').textContent=file.name;$('selectedFileDetails').textContent=`${file.name} · ${(file.size/1024).toFixed(1)} KB · ${ext.toUpperCase()}. File selected; extraction service is not connected.`;$('docCount').textContent='1';addActivity('Document selected',file.name);toast('File selected. Extraction is not yet connected.')}
-$('homeFile').addEventListener('change',e=>handleFile(e.target.files[0]));$('sourceFile').addEventListener('change',e=>handleFile(e.target.files[0]));
-function makeLesson(){let v={subject:$('lpSubject').value,grade:$('lpGrade').value,topic:$('lpTopic').value,duration:$('lpDuration').value,objectives:$('lpObjectives').value,materials:$('lpMaterials').value,approach:$('lpApproach').value};if(!v.subject||!v.topic){toast('Enter at least a subject and topic.');return}let s=`LESSON PLAN DRAFT\n\nSubject: ${v.subject}\nClass: ${v.grade||'Not specified'}\nTopic: ${v.topic}\nDuration: ${v.duration||'Not specified'}\n\nLEARNING OBJECTIVES\n${v.objectives||'Teacher to add measurable learning objectives.'}\n\nTEACHING & LEARNING MATERIALS\n${v.materials||'Teacher to list required materials.'}\n\nLESSON SEQUENCE\n1. Introduction / prior knowledge: Connect the topic to learners’ existing knowledge.\n2. Teacher instruction: Explain and demonstrate the key concept using verified content.\n3. Guided practice: Work through examples with learners.\n4. Learner activity: Learners complete an appropriate task individually or in groups.\n5. Assessment: Check understanding against the stated objectives.\n6. Conclusion: Summarise key learning and give follow-up work.\n\nTEACHING APPROACH / NOTES\n${v.approach||'Teacher to complete this section.'}\n\nREVIEW CHECKLIST\n- Confirm curriculum alignment and correct terminology.\n- Check accuracy of all examples and answers.\n- Adapt activities for learner needs.\n- Add references to the source material.`;$('lessonOutput').style.display='block';$('lessonOutput').textContent=s;addActivity('Lesson plan draft prepared',v.subject+' — '+v.topic);toast('Lesson-plan draft prepared. Please review it.')}
-function saveLesson(){if(!$('lessonOutput').textContent){toast('Prepare a lesson plan first.');return}let a=JSON.parse(localStorage.getItem('el_lessons')||'[]');a.push({text:$('lessonOutput').textContent,date:new Date().toISOString()});localStorage.setItem('el_lessons',JSON.stringify(a));$('planCount').textContent=a.length;toast('Saved in this browser only. It is not backed up online.')}
-function makeScheme(){let subject=$('swSubject').value,cl=$('swClass').value,term=$('swTerm').value,weeks=Math.min(20,Math.max(1,Number($('swWeeks').value)||1)),topics=$('swTopics').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!subject||!topics.length){toast('Enter a subject and at least one topic.');return}let rows=Array.from({length:weeks},(_,i)=>`Week ${i+1} | ${topics[i%topics.length]} | Teacher to add objectives, activities, resources and assessment.`);$('schemeOutput').style.display='block';$('schemeOutput').textContent=`SCHEME OF WORK DRAFT\nSubject: ${subject}\nClass: ${cl||'Not specified'}\nTerm: ${term||'Not specified'}\n\n${rows.join('\n')}\n\nTeacher review: align weekly content with the official syllabus and school calendar.`;addActivity('Scheme of work drafted',subject+' — '+weeks+' weeks')}
-function makeResource(){let type=$('resType').value,level=$('resLevel').value,topic=$('resTopic').value,notes=$('resNotes').value;if(!topic){toast('Enter a topic first.');return}$('resourceOutput').style.display='block';$('resourceOutput').textContent=`${type.toUpperCase()} — DRAFT OUTLINE\nSubject / level: ${level||'Not specified'}\nTopic: ${topic}\n\n1. Learning purpose\nState what learners should understand or practise.\n\n2. Key content\n${notes||'Add verified facts, definitions, worked examples and source references here.'}\n\n3. Learner task\nCreate a task that checks understanding of the key content.\n\n4. Review\nTeacher to verify accuracy, level appropriateness and curriculum alignment before distribution.`;addActivity(type+' outline prepared',topic)}
-function makeExam(){let title=$('exTitle').value,level=$('exLevel').value,questions=$('exQuestions').value;if(!title||!questions){toast('Enter an examination title and questions.');return}$('examOutput').style.display='block';$('examOutput').textContent=`EXAMINATION DRAFT — NOT PUBLISHED\nTitle: ${title}\nSubject / level: ${level||'Not specified'}\nDuration: ${$('exDuration').value||'Not specified'}\nTotal marks: ${$('exMarks').value||'Not specified'}\n\nQUESTIONS\n${questions}\n\nVERIFICATION REQUIRED\n- Examiner must verify every question and mark allocation.\n- Answer key must be supplied and checked by an authorised teacher.\n- Written responses require teacher marking and approval.\n- Do not distribute until approved.`;addActivity('Examination draft prepared',title)}
-function saveExam(){if(!$('examOutput').textContent){toast('Prepare an examination first.');return}let a=JSON.parse(localStorage.getItem('el_exams')||'[]');a.push({text:$('examOutput').textContent,date:new Date().toISOString()});localStorage.setItem('el_exams',JSON.stringify(a));$('examCount').textContent=a.length;toast('Draft saved in this browser only.')}
-function printResult(id){let el=$(id);if(!el.textContent){toast('Prepare the content first.');return}let w=window.open('','_blank');if(!w){toast('Allow pop-ups to print this document.');return}w.document.write('<html><head><title>Education Lesedi</title><style>body{font:14px Arial;padding:35px;white-space:pre-wrap;line-height:1.6}h1{color:#123}</style></head><body><h1>Education Lesedi Scholars Hub</h1>'+escapeHtml(el.textContent)+'</body></html>');w.document.close();w.print()}
-function choosePlan(plan){$('modalTitle').textContent=plan+' package';$('modalText').textContent='Package interest recorded only in this demo. Live registration, 30-day trial activation and payment require secure server-side services. No payment has been taken.';$('modal').style.display='flex';addActivity('Package selected',plan)}
-function closeModal(){$('modal').style.display='none'}
-$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal()});
-try{$('planCount').textContent=JSON.parse(localStorage.getItem('el_lessons')||'[]').length;$('examCount').textContent=JSON.parse(localStorage.getItem('el_exams')||'[]').length}catch(e){}
-</script>
-<!-- EDUCATION LESEDI CUSTOMER LOGIN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-#lesedi-auth {
-  max-width: 650px;
-  margin: 35px auto;
-  padding: 25px;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  font-family: Arial, sans-serif;
-  color: #172554;
-  box-shadow: 0 5px 20px #00000012;
-}
-#lesedi-auth h2 { color: #102a56; text-align: center; }
-#lesedi-auth p { line-height: 1.5; }
-#lesedi-auth input,
-#lesedi-auth select {
-  width: 100%;
-  padding: 13px;
-  margin: 7px 0 15px;
-  border: 1px solid #bbb;
-  border-radius: 7px;
-  box-sizing: border-box;
-}
-#lesedi-auth button {
-  background: #123b79;
-  color: white;
-  padding: 13px 18px;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  margin: 5px 3px;
-}
-#lesedi-auth button:hover { background: #d69e19; }
-#lesedi-auth .secondary {
-  background: #e8edf5;
-  color: #123b79;
-}
-#lesedi-auth .gold { color: #b8860b; }
-#lesedi-auth .auth-status {
-  padding: 12px;
-  background: #f1f5f9;
-  border-radius: 7px;
-  overflow-wrap: anywhere;
-}
-#lesedi-auth .hidden { display: none; }
-</style>
-
-<section id="lesedi-auth">
-  <h2>Education Lesedi Scholars Hub</h2>
-  <p style="text-align:center" class="gold">
-    CLICK – PRESS – LEARN
-  </p>
-
-  <div id="lesedi-logged-out">
-    <div>
-      <button type="button" id="lesedi-show-login" class="secondary">
-        Customer Login
-      </button>
-      <button type="button" id="lesedi-show-register">
-        Create Account
-      </button>
-    </div>
-
-    <form id="lesedi-register" class="hidden">
-      <h3>Create Your Customer Account</h3>
-
-      <label>Full Name</label>
-      <input id="lesedi-name" type="text" required>
-
-      <label>Email Address</label>
-      <input id="lesedi-email-register" type="email" required>
-
-      <label>Phone Number</label>
-      <input id="lesedi-phone" type="tel">
-
-      <label>Choose Account Type</label>
-      <select id="lesedi-type" required>
-        <option value="individual">Individual / Private Customer</option>
-        <option value="teacher">Teacher</option>
-        <option value="examiner">Examiner</option>
-        <option value="school">School</option>
-        <option value="institution">Education Institution</option>
-      </select>
-
-      <label>Create Password</label>
-      <input id="lesedi-password-register"
-        type="password" minlength="6" required>
-
-      <button type="submit">Register My Account</button>
-    </form>
-
-    <form id="lesedi-login">
+  <div class="section-head"><div><h2>Customer Account</h2><p>Register or sign in securely using your email address.</p></div><span class="pill">SUPABASE AUTH</span></div>
+  <div class="notice">All customer categories are intended to receive a 30-day free trial. The trial countdown and package access must still be enforced by secure server-side rules; this page does not activate or extend a trial by itself.</div>
+  <div class="card" id="authPanel">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><button class="btn primary" type="button" onclick="showLoginForm()">Customer Login</button><button class="btn gold" type="button" onclick="showRegisterForm()">Create Account</button></div>
+    <form id="authLoginForm">
       <h3>Customer Login</h3>
-
-      <label>Email Address</label>
-      <input id="lesedi-email-login" type="email" required>
-
-      <label>Password</label>
-      <input id="lesedi-password-login"
-        type="password" required>
-
-      <button type="submit">Login</button>
+      <div class="field"><label>Email address</label><input id="authLoginEmail" type="email" autocomplete="email" required></div>
+      <div class="field"><label>Password</label><input id="authLoginPassword" type="password" autocomplete="current-password" required></div>
+      <button class="btn primary" type="submit">Sign in</button>
+      <button class="btn outline" type="button" onclick="sendPasswordReset()">Forgot password?</button>
     </form>
+    <form id="authRegisterForm" style="display:none">
+      <h3>Create your Education Lesedi account</h3>
+      <div class="field"><label>Full name</label><input id="authFullName" type="text" autocomplete="name" required></div>
+      <div class="field"><label>Email address</label><input id="authRegisterEmail" type="email" autocomplete="email" required></div>
+      <div class="field"><label>Phone number (optional)</label><input id="authPhone" type="tel" autocomplete="tel"></div>
+      <div class="field"><label>Account type</label><select id="authAccountType" required><option value="individual">Individual / Private Customer</option><option value="teacher">Teacher</option><option value="examiner">Examiner</option><option value="school">School</option><option value="institution">Education Institution</option></select></div>
+      <div class="field"><label>Create password (at least 6 characters)</label><input id="authRegisterPassword" type="password" minlength="6" autocomplete="new-password" required></div>
+      <button class="btn gold" type="submit">Register</button>
+    </form>
+    <div id="authStatus" class="notice" role="status" aria-live="polite">Choose Customer Login or Create Account.</div>
   </div>
-
-  <div id="lesedi-logged-in" class="hidden">
-    <h3>Welcome to Education Lesedi!</h3>
-    <p id="lesedi-welcome"></p>
-    <p id="lesedi-account-type"></p>
-    <button type="button" id="lesedi-logout">Logout</button>
-  </div>
-
-  <p id="lesedi-message" class="auth-status">
-    Your Education Lesedi customer account starts here.
-  </p>
+  <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3>You're signed in</h3><p id="authWelcome"></p><p id="authType"></p><button class="btn outline" type="button" onclick="signOutCustomer()">Sign out</button></div>
 </section>
 
+<section class="page" id="assistant">
+  <div class="section-head"><div><h2>AI Teacher Assistant</h2><p>Workspace for an AI integration — connect a secure AI backend to activate responses.</p></div></div>
+  <div class="card">
+    <div class="notice">AI is not connected in this standalone HTML prototype. Do not put an API key in browser JavaScript. A secure server endpoint is required.</div>
+    <div class="field"><label>What would you like the assistant to help with?</label><textarea id="aiPrompt" placeholder="For example: Create differentiated activities for a Standard 6 lesson on fractions."></textarea></div>
+    <div class="field"><label>Task</label><select id="aiTask"><option>Explain a topic</option><option>Draft a lesson plan</option><option>Create practice questions</option><option>Adapt content for different learning needs</option><option>Summarise source material</option></select></div>
+    <button class="btn primary" onclick="aiPlaceholder()">Prepare AI request</button>
+    <div id="aiResult"></div>
+  </div>
+</section>
+
+<section class="page" id="payments">
+  <div class="section-head"><div><h2>Packages & International Payments</h2><p>Choose a service package, then pay using an approved payment channel.</p></div><span class="pill">SECURE CHECKOUT DESIGN</span></div>
+  <div class="notice"><b>Payment setup status:</b> This page is prepared for integration, but it does not yet collect or confirm money. Live checkout requires merchant approval, provider API credentials and a secure server. Never treat a screenshot or uploaded proof as confirmation.</div>
+  <div class="card">
+    <h3>Choose your package</h3>
+    <div class="three-col">
+      <div class="price-card"><span class="pill">INDIVIDUAL</span><h3>Starter</h3><div class="price">P49 <small class="muted">/ month</small></div><p class="small muted">For individual teachers and learners creating resources and quizzes.</p><button class="btn primary" onclick="selectPackage('Starter','49')">Choose Starter</button></div>
+      <div class="price-card"><span class="pill">TEACHER</span><h3>Professional</h3><div class="price">P99 <small class="muted">/ month</small></div><p class="small muted">For teachers preparing lesson plans, schemes, worksheets and assessments.</p><button class="btn primary" onclick="selectPackage('Professional','99')">Choose Professional</button></div>
+      <div class="price-card"><span class="pill">SCHOOLS</span><h3>Institution</h3><div class="price">P499 <small class="muted">/ month</small></div><p class="small muted">For schools and education centres. Final institutional pricing can be agreed.</p><button class="btn primary" onclick="selectPackage('Institution','499')">Choose Institution</button></div>
+    </div>
+    <p class="small muted">These are proposed launch prices for the prototype and can be changed before launch. One-off conversion services can also be priced separately: quizzes P25–P50; full examinations P75–P150; reports P50–P100.</p>
+  </div>
+  <div class="two-col" style="margin-top:16px">
+    <div class="card">
+      <h3>Checkout details</h3>
+      <div class="field"><label>Selected package</label><input id="payPackage" value="Starter" readonly></div>
+      <div class="field"><label>Amount (BWP)</label><input id="payAmount" value="49" readonly></div>
+      <div class="field"><label>Your email for receipt and account activation</label><input id="payEmail" type="email" placeholder="you@example.com"></div>
+      <div class="field"><label>Country / region</label><select id="payCountry"><option value="BW">Botswana</option><option value="ZA">South Africa</option><option value="NA">Namibia</option><option value="ZW">Zimbabwe</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="OTHER">Other country</option></select></div>
+      <div class="field"><label>Display currency</label><select id="payCurrency"><option value="BWP">Botswana Pula (BWP)</option><option value="USD">US Dollar (USD)</option><option value="ZAR">South African Rand (ZAR)</option><option value="GBP">Pound Sterling (GBP)</option><option value="EUR">Euro (EUR)</option></select></div>
+      <p class="small muted">International checkout should show the final converted amount and fees on the payment provider's hosted checkout. This prototype does not calculate live exchange rates.</p>
+    </div>
+    <div class="card">
+      <h3>Select payment method</h3>
+      <label class="pay-method"><input type="radio" name="payMethod" value="orange" checked><span><strong>Orange Money Botswana</strong><span class="small muted">Merchant number: +267 77980825 • QR / approved Web Payment with OTP.</span></span></label>
+      <label class="pay-method"><input type="radio" name="payMethod" value="myzaka"><span><strong>Mascom MyZakaPay</strong><span class="small muted">Merchant number: +267 71823638 • Scan your official MyZaka merchant QR code.</span></span></label>
+      <label class="pay-method"><input type="radio" name="payMethod" value="card"><span><strong>International debit / credit card</strong><span class="small muted">Visa / Mastercard through a Botswana-approved acquiring bank or gateway.</span></span></label>
+      <button class="btn gold" style="width:100%;margin-top:14px" onclick="beginPayment()">Continue to payment instructions</button>
+      <div id="paymentInstructions" class="small muted" style="margin-top:12px">Select a package and payment method to see the next steps.</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Merchant QR code setup (administrator)</h3>
+    <p class="small muted">Upload the official QR image issued by Orange Money / MyZaka for your registered merchant account. Do not create a QR code from the phone number and assume it will collect payments.</p>
+    <div class="field"><label>Upload official merchant QR image</label><input id="merchantQrFile" type="file" accept="image/png,image/jpeg,image/webp" onchange="previewMerchantQR(event)"></div>
+    <div id="merchantQrArea" class="muted small">No merchant QR image uploaded in this browser session.</div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>How OTP and payment confirmation must work</h3>
+    <div class="payment-step"><b>1. Create transaction on the secure server.</b><br><span class="small muted">The server creates a unique payment reference and sends the customer to the provider's official checkout or approved payment flow.</span></div>
+    <div class="payment-step"><b>2. Customer authorises payment with the provider.</b><br><span class="small muted">For Orange Money Web Payment, the customer obtains the temporary OTP using the official Orange Money USSD process and enters it only in the approved provider payment flow. Never ask for the customer's wallet PIN or secret code.</span></div>
+    <div class="payment-step"><b>3. Verify payment server-to-server.</b><br><span class="small muted">A signed provider callback / webhook or authenticated transaction lookup confirms success. Only then should the platform activate the package and issue access.</span></div>
+    <div class="payment-step"><b>4. MyZakaPay QR.</b><br><span class="small muted">MyZakaPay's public merchant flow supports scanning a merchant QR. A website API / OTP flow must be confirmed directly with Mascom before automating payment status.</span></div>
+  </div>
+</section>
+
+<section class="page" id="analytics">
+  <div class="section-head"><div><h2>Results & Analytics</h2><p>Planned reporting features for the connected platform.</p></div></div>
+  <div class="tiles">
+    <div class="tile"><div class="tile-icon">📊</div><h3>Class performance</h3><p>Average scores, pass rates and progress by class.</p></div>
+    <div class="tile"><div class="tile-icon">🔎</div><h3>Learning gaps</h3><p>Identify topics that need further teaching.</p></div>
+    <div class="tile"><div class="tile-icon">📈</div><h3>Progress over time</h3><p>Compare assessments across terms.</p></div>
+  </div>
+  <div class="notice">Live learner analytics require student accounts, completed assessments and a central database. No learner data is being collected by this prototype.</div>
+</section>
+
+<section class="page" id="school">
+  <div class="section-head"><div><h2>School & Class Management</h2><p>Planned management area for institutions, educators and learners.</p></div></div>
+  <div class="tiles">
+    <div class="tile"><div class="tile-icon">🏫</div><h3>School profiles</h3><p>Institution details, departments and academic terms.</p></div>
+    <div class="tile"><div class="tile-icon">👩‍🏫</div><h3>Teacher accounts</h3><p>Secure staff profiles, roles and permissions.</p></div>
+    <div class="tile"><div class="tile-icon">🎓</div><h3>Classes & learners</h3><p>Class lists, learner enrolment and access control.</p></div>
+  </div>
+</section>
+
+<section class="page" id="library">
+  <div class="section-head"><div><h2>My Resource Library</h2><p>Items saved locally in this browser during the prototype.</p></div></div>
+  <div class="card"><h3>Saved documents</h3><div id="savedDocs" class="muted small">No saved documents.</div></div>
+  <div class="card"><h3>Saved examination drafts</h3><div id="savedExams" class="muted small">No examination drafts.</div></div>
+  <div class="notice">Local browser storage is not a backup and does not synchronise between devices. A production platform needs secure cloud storage and user-specific access permissions.</div>
+</section>
+
+<section class="page" id="settings">
+  <div class="section-head"><div><h2>Platform Setup & Roadmap</h2><p>What is needed to turn this prototype into a real online service.</p></div></div>
+  <div class="card">
+    <h3>Recommended production architecture</h3>
+    <ol>
+      <li><b>Frontend:</b> responsive web app for computers, tablets and smartphones.</li>
+      <li><b>Backend and database:</b> secure user accounts, roles, schools, classes, resources and results.</li>
+      <li><b>Document processing:</b> PDF/Word extraction, OCR for scanned images and page-by-page review.</li>
+      <li><b>AI services:</b> secure server-side integration for lesson plans, summaries and question drafting.</li>
+      <li><b>Examination engine:</b> timers, access codes, question banks, auto-marking and teacher moderation.</li>
+      <li><b>Payments:</b> Orange Money Web Payment, MyZakaPay merchant QR and an approved international Visa/Mastercard gateway, all verified server-side before package activation.</li>
+      <li><b>Security:</b> encrypted transport, secure password hashing, backups, audit logs and permissions.</li>
+    </ol>
+    <div class="notice">Never use browser localStorage as the production source of truth for passwords, payment status, access codes, exam answers or learner records.</div>
+  </div>
+</section>
+<footer>Education Lesedi Scholars Hub • Click • Press • Learn • Botswana</footer>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-(async function () {
-  const PROJECT_URL =
-    "https://ajcsojkyhivjjmomtufs.supabase.co";
+const $=id=>document.getElementById(id);
+const store={
+ get(k){try{return JSON.parse(localStorage.getItem('elsh_'+k)||'[]')}catch{return[]}},
+ set(k,v){localStorage.setItem('elsh_'+k,JSON.stringify(v))}
+};
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library')renderLibrary();if(id==='lesson')renderPlans();if(id==='home')refreshStats();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
 
-  const PUBLIC_KEY =
-    "sb_publishable_i9mPavGeRvUhgt2oTlh1-g_2JslOkNp";
+function selectPackage(name,amount){$('payPackage').value=name;$('payAmount').value=amount;showToast(name+' package selected.');}
+function beginPayment(){
+ const method=document.querySelector('input[name="payMethod"]:checked')?.value;
+ const pkg=$('payPackage').value, amount=$('payAmount').value, currency=$('payCurrency').value, country=$('payCountry').value;
+ const email=$('payEmail').value.trim();
+ if(!email || !email.includes('@')){showToast('Enter a valid email address for your receipt.');$('payEmail').focus();return;}
+ const box=$('paymentInstructions');
+ if(method==='orange'){
+  box.innerHTML='<div class="notice"><b>Orange Money selected</b><br>Merchant contact: +267 77980825<br>Package: '+escapeHTML(pkg)+' • P'+escapeHTML(amount)+' BWP<br><br>For live online payment, the secure Orange Money Web Payment API must be enabled for your registered merchant account. The customer will authorise the transaction through Orange’s official flow and OTP. This prototype cannot create or verify an Orange transaction yet. Do not send your Orange PIN or secret code to anyone.</div>';
+ }else if(method==='myzaka'){
+  box.innerHTML='<div class="notice"><b>MyZakaPay selected</b><br>Merchant contact: +267 71823638<br>Package: '+escapeHTML(pkg)+' • P'+escapeHTML(amount)+' BWP<br><br>Scan the official MyZaka merchant QR displayed by the merchant, then confirm the payment in the MyZaka service. A live website checkout and automatic activation require Mascom merchant/API approval. This prototype cannot verify a MyZaka payment yet.</div>';
+ }else{
+  box.innerHTML='<div class="notice"><b>International card selected</b><br>Package: '+escapeHTML(pkg)+' • '+escapeHTML(amount)+' BWP base price<br>Customer region: '+escapeHTML(country)+' • Display currency: '+escapeHTML(currency)+'<br><br>At launch, connect an approved Botswana bank/acquirer or gateway that supports international Visa/Mastercard and hosted checkout. The provider must calculate and disclose the final converted amount. No card details should be entered on this prototype.</div>';
+ }
+}
+function previewMerchantQR(event){
+ const f=event.target.files?.[0];if(!f)return;
+ if(!f.type.startsWith('image/')){showToast('Please choose a QR image file.');return;}
+ const reader=new FileReader();reader.onload=()=>{$('merchantQrArea').innerHTML='<p><b>QR image preview (temporary on this device)</b></p><img class="qr-preview" alt="Uploaded merchant QR code" src="'+reader.result+'"><p class="small muted">This preview is not yet stored centrally or verified by the payment provider.</p>';};reader.readAsDataURL(f);
+}
 
-  const db = window.supabase.createClient(
-    PROJECT_URL,
-    PUBLIC_KEY
-  );
-
-  const el = id => document.getElementById(id);
-
-  function message(text) {
-    el("lesedi-message").textContent = text;
-  }
-
-  function showLoggedOut() {
-    el("lesedi-logged-out").classList.remove("hidden");
-    el("lesedi-logged-in").classList.add("hidden");
-  }
-
-  function showLoggedIn(user, profile) {
-    el("lesedi-logged-out").classList.add("hidden");
-    el("lesedi-logged-in").classList.remove("hidden");
-    el("lesedi-welcome").textContent =
-      "Welcome, " + (profile?.full_name ||
-      user.user_metadata?.full_name || user.email);
-
-    el("lesedi-account-type").textContent =
-      "Account type: " + (profile?.account_type ||
-      user.user_metadata?.account_type || "Customer");
-  }
-
-  async function saveProfile(user) {
-    const metadata = user.user_metadata || {};
-
-    const profile = {
-      id: user.id,
-      full_name: metadata.full_name || "",
-      email: user.email,
-      phone: metadata.phone || "",
-      account_type: metadata.account_type || "individual"
-    };
-
-    const { error } = await db
-      .from("customer_profiles")
-      .upsert(profile, { onConflict: "id" });
-
-    if (error) {
-      message("Your login worked, but your profile could not be saved: "
-        + error.message);
-      return null;
-    }
-
-    return profile;
-  }
-
-  el("lesedi-show-login").onclick = function () {
-    el("lesedi-login").classList.remove("hidden");
-    el("lesedi-register").classList.add("hidden");
-    message("Enter your customer login details.");
-  };
-
-  el("lesedi-show-register").onclick = function () {
-    el("lesedi-register").classList.remove("hidden");
-    el("lesedi-login").classList.add("hidden");
-    message("Complete the form to create your account.");
-  };
-
-  el("lesedi-register").onsubmit = async function (event) {
-    event.preventDefault();
-    message("Creating your account. Please wait...");
-
-    const fullName = el("lesedi-name").value.trim();
-    const email = el("lesedi-email-register").value.trim();
-    const phone = el("lesedi-phone").value.trim();
-    const accountType = el("lesedi-type").value;
-    const password = el("lesedi-password-register").value;
-
-    const { data, error } = await db.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: "https://educationlesedihub.com/",
-        data: {
-          full_name: fullName,
-          phone: phone,
-          account_type: accountType
-        }
-      }
-    });
-
-    if (error) {
-      message("Registration error: " + error.message);
-      return;
-    }
-
-    if (data.session && data.user) {
-      const profile = await saveProfile(data.user);
-      if (profile) showLoggedIn(data.user, profile);
-      message("Your account has been created successfully.");
-    } else {
-      message(
-        "Registration received! Please check your email and click " +
-        "the confirmation link. Then return here and log in."
-      );
-    }
-
-    el("lesedi-register").reset();
-  };
-
-  el("lesedi-login").onsubmit = async function (event) {
-    event.preventDefault();
-    message("Signing you in. Please wait...");
-
-    const email = el("lesedi-email-login").value.trim();
-    const password = el("lesedi-password-login").value;
-
-    const { data, error } = await db.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      message("Login error: " + error.message);
-      return;
-    }
-
-    const profile = await saveProfile(data.user);
-    showLoggedIn(data.user, profile);
-
-    if (profile) {
-      message("You are successfully logged in!");
-    }
-  };
-
-  el("lesedi-logout").onclick = async function () {
-    const { error } = await db.auth.signOut();
-
-    if (error) {
-      message("Logout error: " + error.message);
-      return;
-    }
-
-    showLoggedOut();
-    message("You have successfully logged out.");
-  };
-
-  const { data: sessionData } = await db.auth.getSession();
-
-  if (sessionData.session) {
-    const user = sessionData.session.user;
-    const profile = await saveProfile(user);
-    showLoggedIn(user, profile);
-  } else {
-    showLoggedOut();
-  }
-})();
+function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function refreshStats(){$('statDocs').textContent=store.get('docs').length;$('statPlans').textContent=store.get('plans').length}
+async function extractDocument(){
+ const f=$('fileInput').files[0];if(!f){showToast('Choose a PDF, DOCX or TXT file first.');return}
+ if(f.size>20*1024*1024){showToast('For this prototype, choose a file smaller than 20 MB.');return}
+ $('extractStatus').textContent='Reading document…';
+ $('docTitle').value=$('docTitle').value||f.name.replace(/\.[^.]+$/,'');
+ try{
+  let text='';
+  if(f.name.toLowerCase().endsWith('.pdf')){
+   if(!window.pdfjsLib)throw Error('PDF reader library did not load.');
+   pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+   const data=new Uint8Array(await f.arrayBuffer());const pdf=await pdfjsLib.getDocument({data}).promise;
+   const pages=[];
+   for(let n=1;n<=pdf.numPages;n++){const page=await pdf.getPage(n);const tc=await page.getTextContent();pages.push(tc.items.map(x=>x.str).join(' '))}
+   text=pages.join('\n\n');
+   if(text.trim().length<30)throw Error('This PDF appears to be scanned or image-only. OCR is not connected yet; use a searchable PDF or paste the text for now.');
+  }else if(f.name.toLowerCase().endsWith('.docx')){
+   if(!window.mammoth)throw Error('Word reader library did not load.');
+   const result=await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()});text=result.value;
+  }else if(f.name.toLowerCase().endsWith('.txt')){text=await f.text()}
+  else throw Error('Unsupported file. Please use PDF, DOCX or TXT.');
+  $('extractedText').value=text;$('extractStatus').innerHTML='<div class="success">Extracted text from '+escapeHTML(f.name)+'. Review the content carefully against the original before using it.</div>';
+ }catch(e){$('extractStatus').innerHTML='<div class="notice">'+escapeHTML(e.message)+'</div>'}
+}
+function useTextForLesson(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return} $('lpSource').value=$('extractedText').value; $('lpTopic').value=$('docTitle').value||$('lpTopic').value;go('lesson')}
+function useTextForExam(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return}$('examQuestions').value=$('extractedText').value;$('examTitle').value=$('docTitle').value||'';go('exam')}
+function saveDocument(){const title=$('docTitle').value.trim(),content=$('extractedText').value.trim();if(!content){showToast('There is no extracted text to save.');return}const a=store.get('docs');a.unshift({title:title||'Untitled document',content,date:new Date().toLocaleString()});store.set('docs',a.slice(0,30));refreshStats();showToast('Saved on this device.')}
+function generatePlan(){
+ const topic=$('lpTopic').value.trim();if(!topic){showToast('Enter a lesson topic first.');return}
+ const data={topic,level:$('lpLevel').value,subject:$('lpSubject').value,className:$('lpClass').value,duration:$('lpDuration').value,size:$('lpSize').value,outcomes:$('lpOutcomes').value,source:$('lpSource').value};
+ const source=data.source.trim();
+ const objectives=data.outcomes.trim()||'By the end of the lesson, learners should be able to:\n• Explain the main ideas of '+topic+'.\n• Apply the concept to an appropriate example.\n• Demonstrate understanding through a learning activity.';
+ const html=`<div class="lesson-output" id="printLesson"><div style="text-align:center;border-bottom:2px solid #2457c5;padding-bottom:12px"><div class="eyebrow" style="color:#2457c5">Education Lesedi Scholars Hub</div><h2>LESSON PLAN: ${escapeHTML(topic.toUpperCase())}</h2><b>${escapeHTML(data.level)} • ${escapeHTML(data.subject||'Subject not specified')}</b><p class="small muted">${escapeHTML(data.className||'Class not specified')} | ${escapeHTML(data.duration)} | Class size: ${escapeHTML(data.size||'Not specified')} | ${new Date().toLocaleDateString()}</p></div>
+ <div class="lesson-block"><h4>1. Learning outcomes</h4><div>${escapeHTML(objectives).replace(/\n/g,'<br>')}</div></div>
+ <div class="lesson-block"><h4>2. Prior knowledge</h4><p>Identify what learners already know about ${escapeHTML(topic)}. Use short oral questions or a quick starter activity.</p></div>
+ <div class="lesson-block"><h4>3. Teaching and learning resources</h4><p>Relevant textbook or syllabus, board or display, learner notebooks, examples and any source document supplied by the teacher.</p></div>
+ <div class="lesson-block"><h4>4. Lesson development</h4><p><b>Introduction:</b> Introduce the topic and connect it to prior knowledge.</p><p><b>Teacher modelling:</b> Explain the key ideas using examples drawn from the approved teaching material.</p><p><b>Guided practice:</b> Work through an example with the class and check understanding.</p><p><b>Independent or group activity:</b> Learners complete a task related to ${escapeHTML(topic)}.</p><p><b>Conclusion:</b> Recap the main learning points and address misconceptions.</p></div>
+ <div class="lesson-block"><h4>5. Assessment for learning</h4><p>Use oral questions, observation, learner explanations and a short written task. Record learners who need additional support.</p></div>
+ <div class="lesson-block"><h4>6. Differentiation and inclusion</h4><p>Provide additional scaffolding and worked examples where needed. Extend learning with a more challenging application task. Adapt resources and response methods to learner needs.</p></div>
+ <div class="lesson-block"><h4>7. Homework / extension</h4><p>Set a short task that reinforces the lesson objective. Review it in the next lesson.</p></div>
+ ${source?`<div class="lesson-block"><h4>8. Source material supplied</h4><p class="small">The following source text was provided. Check it and align the lesson with the official syllabus before teaching.</p><div class="preview">${escapeHTML(source.slice(0,5000))}</div></div>`:''}
+ <p class="small muted">Draft for teacher review. Confirm curriculum alignment, accuracy, timings and suitability before use.</p>
+ <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn primary" onclick="window.print()">Print / Save PDF</button><button class="btn outline" onclick="saveCurrentPlan()">Save plan</button></div></div>`;
+ $('lessonResult').innerHTML=html;window.currentPlan={...data,html,date:new Date().toLocaleString()};}
+function saveCurrentPlan(){if(!window.currentPlan){showToast('Create a plan first.');return}const a=store.get('plans');a.unshift(window.currentPlan);store.set('plans',a.slice(0,50));refreshStats();renderPlans();showToast('Lesson plan saved on this device.')}
+function renderPlans(){const a=store.get('plans');$('savedPlans').innerHTML=a.length?a.map((p,i)=>`<div class="list-item"><div><b>${escapeHTML(p.topic)}</b><div class="small muted">${escapeHTML(p.level)} • ${escapeHTML(p.date)}</div></div><button class="btn outline" onclick="openSavedPlan(${i})">View</button></div>`).join(''):'No plans saved on this device yet.'}
+function openSavedPlan(i){const p=store.get('plans')[i];if(p){$('lessonResult').innerHTML=p.html;window.currentPlan=p;go('lesson')}}
+function buildScheme(){const topics=$('swTopics').value.split('\n').map(x=>x.trim()).filter(Boolean),weeks=Math.max(1,Math.min(20,Number($('swWeeks').value)||10));if(!topics.length){showToast('Enter at least one topic.');return}let rows='';for(let i=0;i<weeks;i++){const topic=topics[i%topics.length];rows+=`<tr><td>${i+1}</td><td>${escapeHTML(topic)}</td><td>To be completed by teacher</td><td>Teacher-selected activities and resources</td><td>Classwork / questioning / exercise</td></tr>`}$('schemeOutput').innerHTML=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML($('swSubject').value)} — ${escapeHTML($('swClass').value)} — ${escapeHTML($('swTerm').value)}</h3><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr>${['Week','Topic','Learning outcomes','Activities/resources','Assessment'].map(x=>`<th style="text-align:left;padding:9px;border-bottom:2px solid #2457c5">${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">Draft planner. Replace placeholders with the official syllabus sequence and school calendar.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`}
+function saveExamDraft(){const title=$('examTitle').value.trim(),questions=$('examQuestions').value.trim();if(!title||!questions){showToast('Enter an assessment title and question content.');return}const a=store.get('exams');a.unshift({title,subject:$('examClass').value,questions,key:$('examKey').value,date:new Date().toLocaleString(),status:'Draft — teacher verification required'});store.set('exams',a.slice(0,50));$('examStatus').innerHTML='<div class="success">Examination draft saved on this device. It is not published and no answer key has been assumed.</div>';renderLibrary()}
+function makeResource(){const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;if(!topic){showToast('Enter a topic first.');return}const output=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML(type)}: ${escapeHTML(topic)}</h3><p><b>Purpose:</b> Support learning and revision on ${escapeHTML(topic)}.</p><p><b>Key concepts:</b> Identify the main concepts from the approved syllabus and source notes.</p><p><b>Learning activity:</b> Ask learners to explain, practise and apply the topic using examples.</p><p><b>Check understanding:</b> Include short questions and a teacher-reviewed task.</p>${source?`<h4>Source notes</h4><div class="preview">${escapeHTML(source)}</div>`:'<p class="muted small">Add source notes to make this resource specific and factually grounded.</p>'}<p class="small muted">This is a structured outline, not a verified subject resource. Review content before distribution.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`;$('resourceOutput').innerHTML=output}
+function aiPlaceholder(){const p=$('aiPrompt').value.trim();if(!p){showToast('Enter a request first.');return}$('aiResult').innerHTML='<div class="notice"><b>AI request prepared.</b><br>Task: '+escapeHTML($('aiTask').value)+'<br>Request: '+escapeHTML(p)+'<br><br>To generate a real response, connect this form to a secure backend AI endpoint. Never place a private API key in this HTML file.</div>'}
+function renderLibrary(){const docs=store.get('docs'),exams=store.get('exams');$('savedDocs').innerHTML=docs.length?docs.map(d=>`<div class="list-item"><div><b>${escapeHTML(d.title)}</b><div class="small muted">${escapeHTML(d.date)} • ${d.content.length} characters</div></div><button class="btn outline" onclick="loadDoc('${encodeURIComponent(d.title)}')">Load</button></div>`).join(''):'No saved documents.';$('savedExams').innerHTML=exams.length?exams.map(e=>`<div class="list-item"><div><b>${escapeHTML(e.title)}</b><div class="small muted">${escapeHTML(e.status)} • ${escapeHTML(e.date)}</div></div><span class="pill">DRAFT</span></div>`).join(''):'No examination drafts.'}
+function loadDoc(title){const d=store.get('docs').find(x=>x.title===decodeURIComponent(title));if(d){$('docTitle').value=d.title;$('extractedText').value=d.content;go('convert')}}
+refreshStats();renderPlans();renderLibrary();
 </script>
-<!-- END EDUCATION LESEDI CUSTOMER LOGIN -->
-</body></html>
+<script>
+
+
+// Botswana practice catalogue: sample questions only, not official BEC past papers.
+const botswanaPracticeSets = [
+ {id:'psle-maths',level:'PSLE',subject:'Mathematics',className:'Standard 7',title:'PSLE Mathematics — Number and Fractions',topics:'Whole numbers, fractions, decimals, percentages',questions:[
+  {q:'What is 3/4 of 20?',o:['5','10','15','18'],a:2},
+  {q:'What is 25% written as a fraction in its simplest form?',o:['1/2','1/3','1/4','3/4'],a:2},
+  {q:'Calculate 125 + 275.',o:['300','350','400','450'],a:2}
+ ]},
+ {id:'psle-english',level:'PSLE',subject:'English',className:'Standard 7',title:'PSLE English — Grammar and Comprehension',topics:'Grammar, vocabulary, reading comprehension',questions:[
+  {q:'Choose the correct sentence.',o:['She go to school.','She goes to school.','She going school.','She gone school.'],a:1},
+  {q:'What is the opposite of “generous”?',o:['Kind','Selfish','Helpful','Friendly'],a:1},
+  {q:'Which punctuation mark ends a question?',o:['Full stop','Comma','Question mark','Colon'],a:2}
+ ]},
+ {id:'jce-maths',level:'JCE',subject:'Mathematics',className:'Form 3',title:'JCE Mathematics — Algebra',topics:'Expressions, equations, substitution',questions:[
+  {q:'Solve 2x + 3 = 11.',o:['3','4','5','7'],a:1},
+  {q:'Simplify 3a + 2a.',o:['5','5a','6a','a'],a:1},
+  {q:'If y = 3x + 2, find y when x = 2.',o:['6','7','8','9'],a:2}
+ ]},
+ {id:'jce-science',level:'JCE',subject:'Integrated Science',className:'Form 3',title:'JCE Science — Cells and Energy',topics:'Cells, living organisms, energy',questions:[
+  {q:'Which cell structure controls most cell activities?',o:['Cell wall','Nucleus','Vacuole','Cytoplasm'],a:1},
+  {q:'Which process releases energy from food in cells?',o:['Photosynthesis','Respiration','Evaporation','Filtration'],a:1},
+  {q:'Which gas is used by green plants during photosynthesis?',o:['Oxygen','Nitrogen','Carbon dioxide','Hydrogen'],a:2}
+ ]},
+ {id:'bgcse-biology',level:'BGCSE',subject:'Biology',className:'Form 5',title:'BGCSE Biology — Cells and Genetics',topics:'Cell structure, DNA, inheritance',questions:[
+  {q:'Where are chromosomes found in a typical plant cell?',o:['Cell wall','Nucleus','Vacuole','Cell membrane'],a:1},
+  {q:'What is the basic unit of inheritance?',o:['Tissue','Organ','Gene','Enzyme'],a:2},
+  {q:'Which molecule carries genetic information?',o:['Starch','DNA','Glucose','Water'],a:1}
+ ]},
+ {id:'bgcse-physics',level:'BGCSE',subject:'Physics',className:'Form 5',title:'BGCSE Physics — Electricity',topics:'Current, voltage, resistance',questions:[
+  {q:'What is the SI unit of electric current?',o:['Volt','Ohm','Ampere','Watt'],a:2},
+  {q:'Which instrument measures current?',o:['Voltmeter','Ammeter','Thermometer','Barometer'],a:1},
+  {q:'If V = 12 V and R = 4 Ω, what is the current?',o:['2 A','3 A','4 A','8 A'],a:1}
+ ]}
+];
+function renderBotswanaExams(){
+ const level=document.getElementById('becLevel')?.value||'all';
+ const query=(document.getElementById('becSearch')?.value||'').toLowerCase().trim();
+ const list=botswanaPracticeSets.filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level].join(' ').toLowerCase().includes(query)));
+ const target=document.getElementById('becCards'); if(!target)return;
+ target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button></div>`).join(''):'<div class="notice">No practice set matches your search. Try another subject or level.</div>';
+}
+function openPracticeSet(id){
+ const set=botswanaPracticeSets.find(x=>x.id===id); if(!set)return;
+ const out=document.getElementById('becPreview');
+ out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Sample practice questions for demonstration. These are not represented as official BEC past-paper questions. Teacher/examiner verification is required before formal assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" onclick="document.getElementById('examTitle').value='${escapeHTML(set.title).replace(/'/g,'&#39;')}';document.getElementById('examClass').value='${escapeHTML(set.className+' '+set.subject).replace(/'/g,'&#39;')}';document.getElementById('examQuestions').value=${JSON.stringify(set.questions.map((q,i)=>`${i+1}. ${q.q}\n${q.o.map((o,j)=>String.fromCharCode(65+j)+') '+o).join('\n')}`).join('\n\n'))};go('exam')">Send questions to Examination Studio</button></div>`;
+}
+
+// Supabase email registration and sign-in.
+const LESedi_SUPABASE_URL='https://ajcsojkyhivjjmomtufs.supabase.co';
+const LESedi_SUPABASE_KEY='sb_publishable_i9mPavGeRvUhgt2oTlh1-g_2JslOkNp';
+let lesediAuthClient=null;
+try{if(window.supabase?.createClient)lesediAuthClient=window.supabase.createClient(LESedi_SUPABASE_URL,LESedi_SUPABASE_KEY)}catch(e){console.error('Supabase setup:',e)}
+function authMessage(msg,isError=false){const box=document.getElementById('authStatus');if(box){box.textContent=msg;box.className=isError?'notice':'success'}}
+function showLoginForm(){document.getElementById('authLoginForm').style.display='block';document.getElementById('authRegisterForm').style.display='none';authMessage('Enter your registered email and password.')}
+function showRegisterForm(){document.getElementById('authLoginForm').style.display='none';document.getElementById('authRegisterForm').style.display='block';authMessage('Complete the form to create your account.')}
+async function saveLesediCustomerProfile(user){
+ const meta=user.user_metadata||{};
+ const profile={id:user.id,full_name:meta.full_name||'',email:user.email,phone:meta.phone||'',account_type:meta.account_type||'individual'};
+ const {error}=await lesediAuthClient.from('customer_profiles').upsert(profile,{onConflict:'id'});
+ if(error)throw error;
+ return profile;
+}
+function showSignedInCustomer(user,profile){
+ document.getElementById('authPanel').style.display='none';
+ document.getElementById('authSignedIn').style.display='block';
+ document.getElementById('authWelcome').textContent='Welcome, '+(profile?.full_name||user.user_metadata?.full_name||user.email);
+ document.getElementById('authType').textContent='Account type: '+(profile?.account_type||user.user_metadata?.account_type||'Customer');
+}
+document.getElementById('authRegisterForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!lesediAuthClient){authMessage('The secure login service did not load. Refresh the page and try again.',true);return;}
+ authMessage('Creating your account. Please wait…');
+ const full_name=document.getElementById('authFullName').value.trim();
+ const email=document.getElementById('authRegisterEmail').value.trim();
+ const phone=document.getElementById('authPhone').value.trim();
+ const account_type=document.getElementById('authAccountType').value;
+ const password=document.getElementById('authRegisterPassword').value;
+ const {data,error}=await lesediAuthClient.auth.signUp({email,password,options:{emailRedirectTo:'https://educationlesedihub.com/',data:{full_name,phone,account_type}}});
+ if(error){authMessage('Registration error: '+error.message,true);return;}
+ if(data.session&&data.user){try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile);authMessage('Your account has been created and you are signed in.');}catch(err){authMessage('Account created, but profile saving needs attention: '+err.message,true);}}
+ else authMessage('Registration received. Please open the confirmation email sent to you, confirm your address, then return here and sign in.');
+});
+document.getElementById('authLoginForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!lesediAuthClient){authMessage('The secure login service did not load. Refresh the page and try again.',true);return;}
+ authMessage('Signing you in…');
+ const email=document.getElementById('authLoginEmail').value.trim();
+ const password=document.getElementById('authLoginPassword').value;
+ const {data,error}=await lesediAuthClient.auth.signInWithPassword({email,password});
+ if(error){authMessage('Login error: '+error.message,true);return;}
+ try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile);authMessage('You are successfully signed in.');}
+ catch(err){authMessage('Login succeeded, but your customer profile could not be saved: '+err.message,true);}
+});
+async function sendPasswordReset(){
+ if(!lesediAuthClient){authMessage('The secure login service did not load.',true);return;}
+ const email=document.getElementById('authLoginEmail').value.trim();
+ if(!email){authMessage('Enter your email address in the login form first.',true);return;}
+ const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
+ authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
+}
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
+(async()=>{if(!lesediAuthClient)return;const {data}=await lesediAuthClient.auth.getSession();if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
+renderBotswanaExams();
+
+</script>
+</body>
+</html>
