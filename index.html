@@ -153,4 +153,287 @@ function closeModal(){$('modal').style.display='none'}
 $('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal()});
 try{$('planCount').textContent=JSON.parse(localStorage.getItem('el_lessons')||'[]').length;$('examCount').textContent=JSON.parse(localStorage.getItem('el_exams')||'[]').length}catch(e){}
 </script>
+<!-- EDUCATION LESEDI CUSTOMER LOGIN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+#lesedi-auth {
+  max-width: 650px;
+  margin: 35px auto;
+  padding: 25px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  font-family: Arial, sans-serif;
+  color: #172554;
+  box-shadow: 0 5px 20px #00000012;
+}
+#lesedi-auth h2 { color: #102a56; text-align: center; }
+#lesedi-auth p { line-height: 1.5; }
+#lesedi-auth input,
+#lesedi-auth select {
+  width: 100%;
+  padding: 13px;
+  margin: 7px 0 15px;
+  border: 1px solid #bbb;
+  border-radius: 7px;
+  box-sizing: border-box;
+}
+#lesedi-auth button {
+  background: #123b79;
+  color: white;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  margin: 5px 3px;
+}
+#lesedi-auth button:hover { background: #d69e19; }
+#lesedi-auth .secondary {
+  background: #e8edf5;
+  color: #123b79;
+}
+#lesedi-auth .gold { color: #b8860b; }
+#lesedi-auth .auth-status {
+  padding: 12px;
+  background: #f1f5f9;
+  border-radius: 7px;
+  overflow-wrap: anywhere;
+}
+#lesedi-auth .hidden { display: none; }
+</style>
+
+<section id="lesedi-auth">
+  <h2>Education Lesedi Scholars Hub</h2>
+  <p style="text-align:center" class="gold">
+    CLICK – PRESS – LEARN
+  </p>
+
+  <div id="lesedi-logged-out">
+    <div>
+      <button type="button" id="lesedi-show-login" class="secondary">
+        Customer Login
+      </button>
+      <button type="button" id="lesedi-show-register">
+        Create Account
+      </button>
+    </div>
+
+    <form id="lesedi-register" class="hidden">
+      <h3>Create Your Customer Account</h3>
+
+      <label>Full Name</label>
+      <input id="lesedi-name" type="text" required>
+
+      <label>Email Address</label>
+      <input id="lesedi-email-register" type="email" required>
+
+      <label>Phone Number</label>
+      <input id="lesedi-phone" type="tel">
+
+      <label>Choose Account Type</label>
+      <select id="lesedi-type" required>
+        <option value="individual">Individual / Private Customer</option>
+        <option value="teacher">Teacher</option>
+        <option value="examiner">Examiner</option>
+        <option value="school">School</option>
+        <option value="institution">Education Institution</option>
+      </select>
+
+      <label>Create Password</label>
+      <input id="lesedi-password-register"
+        type="password" minlength="6" required>
+
+      <button type="submit">Register My Account</button>
+    </form>
+
+    <form id="lesedi-login">
+      <h3>Customer Login</h3>
+
+      <label>Email Address</label>
+      <input id="lesedi-email-login" type="email" required>
+
+      <label>Password</label>
+      <input id="lesedi-password-login"
+        type="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div id="lesedi-logged-in" class="hidden">
+    <h3>Welcome to Education Lesedi!</h3>
+    <p id="lesedi-welcome"></p>
+    <p id="lesedi-account-type"></p>
+    <button type="button" id="lesedi-logout">Logout</button>
+  </div>
+
+  <p id="lesedi-message" class="auth-status">
+    Your Education Lesedi customer account starts here.
+  </p>
+</section>
+
+<script>
+(async function () {
+  const PROJECT_URL =
+    "https://ajcsojkyhivjjmomtufs.supabase.co";
+
+  const PUBLIC_KEY =
+    "sb_publishable_i9mPavGeRvUhgt2oTlh1-g_2JslOkNp";
+
+  const db = window.supabase.createClient(
+    PROJECT_URL,
+    PUBLIC_KEY
+  );
+
+  const el = id => document.getElementById(id);
+
+  function message(text) {
+    el("lesedi-message").textContent = text;
+  }
+
+  function showLoggedOut() {
+    el("lesedi-logged-out").classList.remove("hidden");
+    el("lesedi-logged-in").classList.add("hidden");
+  }
+
+  function showLoggedIn(user, profile) {
+    el("lesedi-logged-out").classList.add("hidden");
+    el("lesedi-logged-in").classList.remove("hidden");
+    el("lesedi-welcome").textContent =
+      "Welcome, " + (profile?.full_name ||
+      user.user_metadata?.full_name || user.email);
+
+    el("lesedi-account-type").textContent =
+      "Account type: " + (profile?.account_type ||
+      user.user_metadata?.account_type || "Customer");
+  }
+
+  async function saveProfile(user) {
+    const metadata = user.user_metadata || {};
+
+    const profile = {
+      id: user.id,
+      full_name: metadata.full_name || "",
+      email: user.email,
+      phone: metadata.phone || "",
+      account_type: metadata.account_type || "individual"
+    };
+
+    const { error } = await db
+      .from("customer_profiles")
+      .upsert(profile, { onConflict: "id" });
+
+    if (error) {
+      message("Your login worked, but your profile could not be saved: "
+        + error.message);
+      return null;
+    }
+
+    return profile;
+  }
+
+  el("lesedi-show-login").onclick = function () {
+    el("lesedi-login").classList.remove("hidden");
+    el("lesedi-register").classList.add("hidden");
+    message("Enter your customer login details.");
+  };
+
+  el("lesedi-show-register").onclick = function () {
+    el("lesedi-register").classList.remove("hidden");
+    el("lesedi-login").classList.add("hidden");
+    message("Complete the form to create your account.");
+  };
+
+  el("lesedi-register").onsubmit = async function (event) {
+    event.preventDefault();
+    message("Creating your account. Please wait...");
+
+    const fullName = el("lesedi-name").value.trim();
+    const email = el("lesedi-email-register").value.trim();
+    const phone = el("lesedi-phone").value.trim();
+    const accountType = el("lesedi-type").value;
+    const password = el("lesedi-password-register").value;
+
+    const { data, error } = await db.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: "https://educationlesedihub.com/",
+        data: {
+          full_name: fullName,
+          phone: phone,
+          account_type: accountType
+        }
+      }
+    });
+
+    if (error) {
+      message("Registration error: " + error.message);
+      return;
+    }
+
+    if (data.session && data.user) {
+      const profile = await saveProfile(data.user);
+      if (profile) showLoggedIn(data.user, profile);
+      message("Your account has been created successfully.");
+    } else {
+      message(
+        "Registration received! Please check your email and click " +
+        "the confirmation link. Then return here and log in."
+      );
+    }
+
+    el("lesedi-register").reset();
+  };
+
+  el("lesedi-login").onsubmit = async function (event) {
+    event.preventDefault();
+    message("Signing you in. Please wait...");
+
+    const email = el("lesedi-email-login").value.trim();
+    const password = el("lesedi-password-login").value;
+
+    const { data, error } = await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      message("Login error: " + error.message);
+      return;
+    }
+
+    const profile = await saveProfile(data.user);
+    showLoggedIn(data.user, profile);
+
+    if (profile) {
+      message("You are successfully logged in!");
+    }
+  };
+
+  el("lesedi-logout").onclick = async function () {
+    const { error } = await db.auth.signOut();
+
+    if (error) {
+      message("Logout error: " + error.message);
+      return;
+    }
+
+    showLoggedOut();
+    message("You have successfully logged out.");
+  };
+
+  const { data: sessionData } = await db.auth.getSession();
+
+  if (sessionData.session) {
+    const user = sessionData.session.user;
+    const profile = await saveProfile(user);
+    showLoggedIn(user, profile);
+  } else {
+    showLoggedOut();
+  }
+})();
+</script>
+<!-- END EDUCATION LESEDI CUSTOMER LOGIN -->
 </body></html>
