@@ -508,5 +508,56 @@ async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await
 renderBotswanaExams();
 
 </script>
-</body>
+<section id="education-levels" style="padding:40px 20px;background:#f4f7fc;text-align:center;">
+<h2 style="color:#102a56;">EDUCATION LESSEDI SCHOLARS HUB</h2>
+<h3>Choose Your Education Level</h3>
+<p>Learn, practise and take digital examinations.</p>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1100px;margin:auto;">
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Pre-Primary Education</h3>
+<p>Early learning quizzes and activities.</p>
+<button onclick="showExams('Pre-Primary')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Primary Education</h3>
+<p>Botswana PSLE learning and revision.</p>
+<button onclick="showExams('PSLE')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Junior Secondary</h3>
+<p>JCE learning and examinations.</p>
+<button onclick="showExams('JCE')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Senior Secondary</h3>
+<p>BGCSE learning and examinations.</p>
+<button onclick="showExams('BGCSE')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Tertiary Education</h3>
+<p>College and university learning.</p>
+<button onclick="showExams('Tertiary')">Explore</button>
+</div>
+
+</div>
+
+<div id="exam-library" style="margin:35px auto;max-width:900px;background:white;padding:25px;border-radius:12px;">
+<h2>Botswana Examination Library</h2>
+<p id="exam-message">Select an education level above to explore its examinations.</p>
+</div>
+</section>
+
+<script>
+function showExams(level) {
+document.getElementById('exam-message').innerHTML =
+'You selected ' + level + '. Examination papers and digital quizzes will appear here when added by the administrator.';
+document.getElementById('exam-library').scrollIntoView({behavior:'smooth'});
+}
+</script></body>
 </html>
