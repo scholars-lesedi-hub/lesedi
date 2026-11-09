@@ -4,139 +4,520 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Education Lesedi Scholars Hub - Digital education, examinations and learning resources worldwide.">
 <title>Education Lesedi Scholars Hub</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17243b}
-header{background:#071b42;color:white;padding:25px 7%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
-header h2{margin:0;color:#ffd34e}
-nav a{color:white;text-decoration:none;margin:8px;font-weight:bold}
-.hero{padding:75px 8%;background:linear-gradient(120deg,#09275b,#1762b5);color:white;text-align:center}
-.hero h1{font-size:38px;margin:0 0 15px}
-.hero p{font-size:18px;line-height:1.6}
-.btn{display:inline-block;background:#ffd34e;color:#102448;padding:13px 22px;border-radius:7px;text-decoration:none;font-weight:bold;margin:8px}
-section{padding:45px 7%}
-h2{text-align:center;color:#10346b}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{background:white;padding:24px;border-radius:12px;box-shadow:0 3px 15px #00000012}
-.card h3{color:#1354a0}
-.card p{line-height:1.6}
-.price{font-size:25px;font-weight:bold;color:#1256a5}
-.trial{background:#fff4cf;text-align:center;padding:25px;border-radius:12px}
-.upload{background:white;padding:25px;border-radius:12px;text-align:center}
-input,select,textarea{padding:12px;width:100%;margin:8px 0;border:1px solid #ccc;border-radius:6px}
-button{background:#104d9c;color:white;border:0;padding:12px 20px;border-radius:6px;cursor:pointer}
-footer{background:#071b42;color:white;text-align:center;padding:30px}
-small{color:#65728a}
+:root {
+  --navy:#071b42;
+  --blue:#1557a5;
+  --gold:#f4c542;
+  --white:#ffffff;
+  --light:#f3f6fc;
+  --text:#17243b;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--light);
+  color:var(--text);
+}
+header {
+  background:var(--navy);
+  color:white;
+  padding:18px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+.logo {font-size:21px;font-weight:bold;color:var(--gold)}
+nav {display:flex;flex-wrap:wrap;gap:15px}
+nav a {color:white;text-decoration:none;font-size:14px}
+nav a:hover {color:var(--gold)}
+.hero {
+  background:linear-gradient(120deg,#071b42,#1764b6);
+  color:white;
+  text-align:center;
+  padding:85px 8%;
+}
+.hero h1 {font-size:clamp(30px,5vw,48px);margin:0 0 15px}
+.hero p {font-size:18px;line-height:1.7;max-width:750px;margin:15px auto}
+.hero strong {color:var(--gold)}
+.btn {
+  display:inline-block;
+  background:var(--gold);
+  color:var(--navy);
+  padding:13px 22px;
+  border:0;
+  border-radius:7px;
+  font-weight:bold;
+  text-decoration:none;
+  cursor:pointer;
+  margin:5px;
+}
+.btn.blue {background:var(--blue);color:white}
+section {padding:48px 7%}
+.section-title {text-align:center;color:var(--navy);font-size:29px}
+.intro {text-align:center;line-height:1.7;max-width:750px;margin:0 auto 25px}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.card {
+  background:white;
+  padding:24px;
+  border-radius:12px;
+  box-shadow:0 4px 15px #071b4210;
+}
+.card h3 {color:var(--blue);margin-top:5px}
+.card p {line-height:1.6}
+.price {font-size:27px;font-weight:bold;color:var(--blue)}
+.trial {
+  background:#fff3c7;
+  padding:25px;
+  border-radius:12px;
+  text-align:center;
+  margin-bottom:25px;
+}
+.trial h2 {color:var(--navy)}
+input,select,textarea {
+  display:block;
+  width:100%;
+  padding:13px;
+  margin:10px 0;
+  border:1px solid #ccd4e1;
+  border-radius:7px;
+  font:inherit;
+  background:white;
+}
+label {font-weight:bold;font-size:14px}
+.form-box {
+  max-width:700px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 4px 15px #071b4210;
+}
+.notice {
+  background:#fff4d6;
+  border-left:4px solid var(--gold);
+  padding:13px;
+  line-height:1.6;
+  font-size:14px;
+}
+.small {font-size:13px;color:#667085;line-height:1.6}
+footer {
+  background:var(--navy);
+  color:white;
+  text-align:center;
+  padding:35px 15px;
+}
+footer a {color:var(--gold)}
+.chat {
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:var(--gold);
+  color:var(--navy);
+  border:0;
+  padding:15px 19px;
+  border-radius:30px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 3px 12px #0003;
+  z-index:5;
+}
+#chatPanel {
+  display:none;
+  position:fixed;
+  right:18px;
+  bottom:80px;
+  width:min(340px,calc(100% - 36px));
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  box-shadow:0 4px 25px #0003;
+  z-index:6;
+}
+#chatPanel h3 {color:var(--navy)}
+.hidden {display:none}
+hr {border:0;border-top:1px solid #e4e8ef;margin:20px 0}
+@media(max-width:600px) {
+  header {justify-content:center;text-align:center}
+  nav {justify-content:center}
+  .hero {padding:55px 6%}
+  section {padding:35px 5%}
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<h2>Education Lesedi Scholars Hub</h2>
-<nav>
-<a href="#home">Home</a>
-<a href="#services">Services</a>
-<a href="#upload">Upload</a>
-<a href="#packages">Packages</a>
-</nav>
+  <div class="logo">EDUCATION LESEDI SCHOLARS HUB</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#upload">Upload Papers</a>
+    <a href="#topics">Order Topics</a>
+    <a href="#packages">Packages</a>
+    <a href="#account">Login / Sign Up</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
+<main>
+
 <div class="hero" id="home">
-<h1>WELCOME TO EDUCATION LESEDI SCHOLARS HUB</h1>
-<p>Transform hardcopy educational materials into digital learning resources, quizzes and examinations.</p>
-<h3>CLICK – PRESS – LEARN</h3>
-<a class="btn" href="#upload">Upload Your Documents</a>
-<a class="btn" href="#packages">View Packages</a>
+  <h1>Welcome to Education Lesedi Scholars Hub</h1>
+  <p>
+    Transform educational materials into digital learning resources,
+    online quizzes, tests and examinations.
+  </p>
+  <h2><strong>CLICK – PRESS – LEARN</strong></h2>
+  <p>Supporting learners, teachers, schools and education institutions worldwide.</p>
+  <a class="btn" href="#topics">Order a Topic – P10</a>
+  <a class="btn" href="#upload">Upload Your Paper</a>
 </div>
 
+<section>
+  <div class="trial">
+    <h2>🎉 ONE MONTH FREE TRIAL FOR EVERY CUSTOMER!</h2>
+    <h3>Enjoy 30 days of trial access.</h3>
+    <p>
+      Available to private individuals, parents, tutors, teachers,
+      examiners, schools and education institutions.
+    </p>
+    <a class="btn" href="#account">Register for Your Free Trial</a>
+    <p class="small">Trial activation requires verified registration and a connected account system.</p>
+  </div>
+</section>
+
 <section id="services">
-<h2>Our Education Services</h2>
-<div class="grid">
-<div class="card"><h3>📄 Hardcopy to Digital</h3><p>Prepare examination papers, worksheets and educational documents for digital use.</p></div>
-<div class="card"><h3>📚 Lesson Plans</h3><p>Prepare structured lesson plans for different subjects and education levels.</p></div>
-<div class="card"><h3>📅 Schemes of Work</h3><p>Organise teaching activities, topics and learning objectives.</p></div>
-<div class="card"><h3>📝 Digital Examinations</h3><p>Create online quizzes, tests and examinations.</p></div>
-<div class="card"><h3>📊 Results & Reports</h3><p>Prepare learner performance reports and examination analysis.</p></div>
-<div class="card"><h3>🎓 Teaching Resources</h3><p>Prepare worksheets, revision exercises and classroom resources.</p></div>
-</div>
+  <h2 class="section-title">Our Education Services</h2>
+  <p class="intro">Everything you need to prepare, organise and deliver digital educational materials.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>📄 Hardcopy to Digital</h3>
+      <p>Convert examination papers, worksheets and scanned educational materials into editable digital questions.</p>
+    </div>
+    <div class="card">
+      <h3>📝 Digital Examinations</h3>
+      <p>Create multiple-choice, short-answer, true/false and matching examinations.</p>
+    </div>
+    <div class="card">
+      <h3>📚 Lesson Plans</h3>
+      <p>Prepare structured lesson plans for different subjects and education levels.</p>
+    </div>
+    <div class="card">
+      <h3>📅 Schemes of Work</h3>
+      <p>Organise topics, learning objectives and teaching activities.</p>
+    </div>
+    <div class="card">
+      <h3>🎓 Teaching Resources</h3>
+      <p>Prepare revision materials, worksheets and learning activities.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Results and Reports</h3>
+      <p>Analyse learner performance and prepare examination reports.</p>
+    </div>
+  </div>
+</section>
+
+<section id="topics">
+  <h2 class="section-title">Order an Educational Topic</h2>
+  <p class="intro">Need a particular topic? Order individual educational materials without buying a monthly subscription.</p>
+
+  <div class="form-box">
+    <h2 style="color:#1557a5">P10.00 per topic</h2>
+
+    <form onsubmit="orderTopic(event)">
+      <label>Your name</label>
+      <input id="customerName" required placeholder="Enter your name">
+
+      <label>Your email address</label>
+      <input id="customerEmail" type="email" required placeholder="Enter your email">
+
+      <label>Country</label>
+      <input id="country" required placeholder="Enter your country">
+
+      <label>Education level</label>
+      <select id="level" required>
+        <option value="">Select education level</option>
+        <option>Pre-primary</option>
+        <option>Primary</option>
+        <option>Junior Secondary</option>
+        <option>Senior Secondary</option>
+        <option>Adult Education</option>
+        <option>Technical and Vocational</option>
+        <option>Tertiary Education</option>
+        <option>Other</option>
+      </select>
+
+      <label>Subject</label>
+      <input id="subject" required placeholder="e.g. Mathematics">
+
+      <label>Topic to order</label>
+      <input id="topic" required placeholder="e.g. Fractions">
+
+      <label>What would you like us to prepare?</label>
+      <select id="material" required>
+        <option value="">Choose material</option>
+        <option>Topic notes</option>
+        <option>Worksheet</option>
+        <option>Revision questions</option>
+        <option>Multiple-choice quiz</option>
+        <option>Short-answer questions</option>
+        <option>Full topic learning package</option>
+      </select>
+
+      <label>Additional instructions</label>
+      <textarea id="instructions" rows="4" placeholder="Tell us what you need"></textarea>
+
+      <p class="price">Price: P10.00 per topic</p>
+
+      <button class="btn" type="submit">Submit Topic Order</button>
+      <p class="small">This form prepares an email order request. Payment and order confirmation are not automated yet.</p>
+    </form>
+  </div>
 </section>
 
 <section id="upload">
-<h2>Upload Your Hardcopy Documents</h2>
-<div class="upload">
-<p>Select a document you would like to convert or prepare for digital learning.</p>
-<input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-<select>
-<option>Select a service</option>
-<option>Convert examination paper</option>
-<option>Convert worksheet</option>
-<option>Prepare digital quiz</option>
-<option>Prepare lesson plan</option>
-<option>Prepare scheme of work</option>
-</select>
-<button onclick="alert('Your document has not been sent. Please contact Education Lesedi Scholars Hub to arrange processing.')">Submit Document</button>
-<p><small>This is a demonstration upload form. Secure document submission and conversion require a connected server.</small></p>
-</div>
+  <h2 class="section-title">Upload Your Hardcopy Examination</h2>
+  <p class="intro">Send your educational documents for digital conversion and examination preparation.</p>
+
+  <div class="form-box">
+    <form onsubmit="uploadNotice(event)">
+      <label>Your name</label>
+      <input required placeholder="Your name">
+
+      <label>Email address</label>
+      <input required type="email" placeholder="Your email">
+
+      <label>Education level</label>
+      <select required>
+        <option value="">Select education level</option>
+        <option>Pre-primary</option>
+        <option>Primary</option>
+        <option>Junior Secondary</option>
+        <option>Senior Secondary</option>
+        <option>Adult Education</option>
+        <option>Other</option>
+      </select>
+
+      <label>Subject</label>
+      <input required placeholder="Subject">
+
+      <label>Upload document</label>
+      <input type="file" id="document" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+
+      <label>How should the questions be converted?</label>
+      <select>
+        <option>Multiple-choice questions</option>
+        <option>Short-answer questions</option>
+        <option>True or false</option>
+        <option>Matching questions</option>
+        <option>Combination of question types</option>
+      </select>
+
+      <button class="btn" type="submit">Continue</button>
+      <p class="notice">
+        Document upload storage and AI extraction require a secure backend.
+        This demonstration does not transmit your document.
+      </p>
+    </form>
+  </div>
 </section>
 
 <section id="packages">
-<h2>Our Four Packages</h2>
-<div class="trial">
-<h3>🎉 ONE MONTH FREE TRIAL</h3>
-<p>All customer categories can receive a 30-day trial, subject to account verification and activation.</p>
-</div>
-<br>
-<div class="grid">
-<div class="card">
-<h3>Personal & Private</h3>
-<p>For individuals, parents, tutors and independent learners.</p>
-<div class="price">From P25</div>
-<p>Document preparation, quizzes and revision materials.</p>
-<a class="btn" href="#contact">Get Started</a>
-</div>
-<div class="card">
-<h3>Teacher Professional</h3>
-<p>For individual teachers and examiners.</p>
-<div class="price">P100/month</div>
-<p>Lesson plans, schemes of work and examination preparation.</p>
-<a class="btn" href="#contact">Get Started</a>
-</div>
-<div class="card">
-<h3>School Package</h3>
-<p>For primary and secondary schools.</p>
-<div class="price">P350/month</div>
-<p>School resources, teacher support and assessment preparation.</p>
-<a class="btn" href="#contact">Get Started</a>
-</div>
-<div class="card">
-<h3>Institution & Enterprise</h3>
-<p>For education institutions and organisations.</p>
-<div class="price">Custom Price</div>
-<p>Institutional solutions and customised services.</p>
-<a class="btn" href="#contact">Request Quote</a>
-</div>
-</div>
+  <h2 class="section-title">Our Four Packages</h2>
+  <p class="intro">Start with a 30-day free trial. Choose a package that suits your educational needs.</p>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Personal & Private</h3>
+      <p>For individuals, parents, tutors and independent learners.</p>
+      <div class="price">From P25</div>
+      <p>Personal educational materials, quizzes and revision resources.</p>
+      <a class="btn" href="#account">Get Started</a>
+    </div>
+
+    <div class="card">
+      <h3>Teacher Professional</h3>
+      <p>For teachers and examiners.</p>
+      <div class="price">P100/month</div>
+      <p>Lesson plans, schemes of work, tests and examinations.</p>
+      <a class="btn" href="#account">Get Started</a>
+    </div>
+
+    <div class="card">
+      <h3>School Package</h3>
+      <p>For primary and secondary schools.</p>
+      <div class="price">P350/month</div>
+      <p>School assessment preparation and teacher support.</p>
+      <a class="btn" href="#account">Get Started</a>
+    </div>
+
+    <div class="card">
+      <h3>Institution & Enterprise</h3>
+      <p>For education institutions and organisations.</p>
+      <div class="price">Custom price</div>
+      <p>Customised educational solutions and institutional services.</p>
+      <a class="btn" href="#contact">Request a Quote</a>
+    </div>
+
+  </div>
+  <p class="small">Prices are proposed Botswana Pula prices. International checkout must use a supported payment provider and verified currency conversion.</p>
+</section>
+
+<section id="account">
+  <h2 class="section-title">Customer Account</h2>
+
+  <div class="grid">
+    <div class="form-box">
+      <h3>Create Your Account</h3>
+      <form onsubmit="accountNotice(event)">
+        <input required placeholder="Full name">
+        <input required type="email" placeholder="Email address">
+        <input required type="password" placeholder="Create password">
+        <select required>
+          <option value="">Choose account type</option>
+          <option>Private Individual</option>
+          <option>Parent or Tutor</option>
+          <option>Teacher</option>
+          <option>Examiner</option>
+          <option>School</option>
+          <option>Education Institution</option>
+        </select>
+        <button class="btn" type="submit">Sign Up – Free Trial</button>
+      </form>
+    </div>
+
+    <div class="form-box">
+      <h3>Customer Login</h3>
+      <form onsubmit="accountNotice(event)">
+        <input required type="email" placeholder="Email address">
+        <input required type="password" placeholder="Password">
+        <button class="btn blue" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <p class="notice">These are account interface demonstrations. Secure registration, password storage, login and trial activation need a connected authentication service. Do not enter real passwords into this demonstration.</p>
+</section>
+
+<section id="payments">
+  <h2 class="section-title">International Payments</h2>
+  <p class="intro">We aim to serve customers worldwide with secure international and local payment options.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>International Cards</h3>
+      <p>Visa and Mastercard through an approved international payment gateway.</p>
+    </div>
+    <div class="card">
+      <h3>PayPal</h3>
+      <p>International wallet payments, subject to account and country eligibility.</p>
+    </div>
+    <div class="card">
+      <h3>Orange Money</h3>
+      <p>Botswana mobile money payment option.</p>
+      <strong>+267 77980825</strong>
+    </div>
+    <div class="card">
+      <h3>MyZaka</h3>
+      <p>Botswana mobile money payment option.</p>
+      <strong>+267 71823638</strong>
+    </div>
+  </div>
+
+  <p class="notice">
+    Actual checkout, official QR codes, OTP verification and subscription activation must be connected to approved payment providers. Never share your payment OTP with this website or its administrator.
+  </p>
 </section>
 
 <section id="contact">
-<h2>Contact Education Lesedi</h2>
-<div class="card">
-<p><strong>Orange Money:</strong> +267 77980825</p>
-<p><strong>MyZaka:</strong> +267 71823638</p>
-<p><strong>Email:</strong> ithuteonlinescholarshub@gmail.com</p>
-<p><strong>Website:</strong> educationlesedihub.com</p>
-<p>Contact us to arrange document processing, subscriptions and payment.</p>
-<a class="btn" href="https://wa.me/26777980825">Contact on WhatsApp</a>
-</div>
+  <h2 class="section-title">Contact Education Lesedi</h2>
+  <div class="form-box">
+    <h3>Customer Support</h3>
+    <p><strong>Email:</strong> lesedieducationhelpdesk@gmail.com</p>
+    <p><strong>Orange Money:</strong> +267 77980825</p>
+    <p><strong>MyZaka:</strong> +267 71823638</p>
+    <p><strong>Website:</strong> educationlesedihub.com</p>
+    <a class="btn" href="mailto:lesedieducationhelpdesk@gmail.com">Email Support</a>
+    <a class="btn blue" href="https://wa.me/26777980825">WhatsApp Support</a>
+  </div>
 </section>
 
+</main>
+
 <footer>
-<h3>Education Lesedi Scholars Hub</h3>
-<p>CLICK – PRESS – LEARN</p>
-<p>Empowering Education Through Digital Innovation.</p>
-<p>© 2026 Education Lesedi Scholars Hub</p>
+  <h2>Education Lesedi Scholars Hub</h2>
+  <h3>CLICK – PRESS – LEARN</h3>
+  <p>Empowering Education Through Digital Innovation.</p>
+  <p>Serving learners, teachers and institutions worldwide.</p>
+  <p>© 2026 Education Lesedi Scholars Hub</p>
 </footer>
+
+<button class="chat" onclick="toggleChat()">💬 AI / Admin Help</button>
+
+<div id="chatPanel">
+  <h3>Education Lesedi Support</h3>
+  <p>Welcome! How can we help you?</p>
+  <p class="small">For assistance, contact our support team by email.</p>
+  <a class="btn" href="mailto:lesedieducationhelpdesk@gmail.com?subject=Education%20Lesedi%20Support">Contact Administrator</a>
+  <button class="btn blue" onclick="toggleChat()">Close</button>
+  <p class="small">Live AI chat requires a connected AI and messaging service.</p>
+</div>
+
+<script>
+function toggleChat() {
+  const panel = document.getElementById("chatPanel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+}
+
+function orderTopic(event) {
+  event.preventDefault();
+
+  const fields = {
+    name: document.getElementById("customerName").value,
+    email: document.getElementById("customerEmail").value,
+    country: document.getElementById("country").value,
+    level: document.getElementById("level").value,
+    subject: document.getElementById("subject").value,
+    topic: document.getElementById("topic").value,
+    material: document.getElementById("material").value,
+    instructions: document.getElementById("instructions").value
+  };
+
+  const body = Object.entries(fields)
+    .map(([key,value]) => key + ": " + value)
+    .join("\n");
+
+  const url = "mailto:lesedieducationhelpdesk@gmail.com"
+    + "?subject=" + encodeURIComponent("New Topic Order - P10.00")
+    + "&body=" + encodeURIComponent(body + "\nPrice: P10.00");
+
+  window.location.href = url;
+}
+
+function uploadNotice(event) {
+  event.preventDefault();
+  alert("This demonstration does not upload or transmit your document yet. Please contact lesedieducationhelpdesk@gmail.com to arrange secure processing.");
+}
+
+function accountNotice(event) {
+  event.preventDefault();
+  alert("Account registration and login are not connected yet. A secure authentication and database service must be installed before real accounts can be created.");
+}
+</script>
 
 </body>
 </html>
