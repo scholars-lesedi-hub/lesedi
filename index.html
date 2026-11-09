@@ -1,65 +1,142 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Education Lesedi Scholars Hub - Click Press Learn</title>
+<title>Education Lesedi Scholars Hub</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#fff;color:#222}
-header{background:#0a2a5a;color:#fff;padding:20px;text-align:center}
-header h1{font-size:32px}
-header p{color:#ffcc00;margin-top:5px}
-nav{background:#ffcc00;padding:12px;text-align:center}
-nav a{margin:0 15px;color:#0a2a5a;font-weight:bold;text-decoration:none}
-.hero{background:#0a2a5a;color:#fff;text-align:center;padding:60px 20px}
-.hero h2{font-size:40px;margin-bottom:10px}
-.hero p{font-size:18px;margin-bottom:20px}
-.btn{background:#ffcc00;color:#000;padding:12px 25px;border-radius:25px;text-decoration:none;font-weight:bold;display:inline-block}
-.section{padding:50px 20px;text-align:center;max-width:900px;margin:auto}
-.section h2{color:#0a2a5a;margin-bottom:15px;font-size:28px}
-.cards{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:20px}
-.card{border:1px solid #ddd;border-radius:12px;padding:20px;width:260px;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
-.card h3{color:#0a2a5a;margin-bottom:10px}
-footer{background:#0a2a5a;color:#fff;text-align:center;padding:20px;margin-top:30px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fc;color:#17243b}
+header{background:#071b42;color:white;padding:25px 7%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+header h2{margin:0;color:#ffd34e}
+nav a{color:white;text-decoration:none;margin:8px;font-weight:bold}
+.hero{padding:75px 8%;background:linear-gradient(120deg,#09275b,#1762b5);color:white;text-align:center}
+.hero h1{font-size:38px;margin:0 0 15px}
+.hero p{font-size:18px;line-height:1.6}
+.btn{display:inline-block;background:#ffd34e;color:#102448;padding:13px 22px;border-radius:7px;text-decoration:none;font-weight:bold;margin:8px}
+section{padding:45px 7%}
+h2{text-align:center;color:#10346b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:white;padding:24px;border-radius:12px;box-shadow:0 3px 15px #00000012}
+.card h3{color:#1354a0}
+.card p{line-height:1.6}
+.price{font-size:25px;font-weight:bold;color:#1256a5}
+.trial{background:#fff4cf;text-align:center;padding:25px;border-radius:12px}
+.upload{background:white;padding:25px;border-radius:12px;text-align:center}
+input,select,textarea{padding:12px;width:100%;margin:8px 0;border:1px solid #ccc;border-radius:6px}
+button{background:#104d9c;color:white;border:0;padding:12px 20px;border-radius:6px;cursor:pointer}
+footer{background:#071b42;color:white;text-align:center;padding:30px}
+small{color:#65728a}
 </style>
 </head>
 <body>
+
 <header>
-<h1>📚 Education Lesedi Scholars Hub</h1>
-<p>Click - Press - Learn</p>
-</header>
+<h2>Education Lesedi Scholars Hub</h2>
 <nav>
 <a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#programs">Programs</a>
-<a href="#contact">Contact</a>
+<a href="#services">Services</a>
+<a href="#upload">Upload</a>
+<a href="#packages">Packages</a>
 </nav>
+</header>
+
 <div class="hero" id="home">
-<h2>Welcome to Lesedi</h2>
-<p>Empowering Botswana students to learn, grow and shine.</p>
-<a class="btn" href="#programs">Explore Programs</a>
+<h1>WELCOME TO EDUCATION LESEDI SCHOLARS HUB</h1>
+<p>Transform hardcopy educational materials into digital learning resources, quizzes and examinations.</p>
+<h3>CLICK – PRESS – LEARN</h3>
+<a class="btn" href="#upload">Upload Your Documents</a>
+<a class="btn" href="#packages">View Packages</a>
 </div>
-<div class="section" id="about">
-<h2>About Us</h2>
-<p>Education Lesedi Scholars Hub is a learning community in Gaborone, Botswana. We help scholars with tutoring, mentorship, exam prep and life skills.</p>
+
+<section id="services">
+<h2>Our Education Services</h2>
+<div class="grid">
+<div class="card"><h3>📄 Hardcopy to Digital</h3><p>Prepare examination papers, worksheets and educational documents for digital use.</p></div>
+<div class="card"><h3>📚 Lesson Plans</h3><p>Prepare structured lesson plans for different subjects and education levels.</p></div>
+<div class="card"><h3>📅 Schemes of Work</h3><p>Organise teaching activities, topics and learning objectives.</p></div>
+<div class="card"><h3>📝 Digital Examinations</h3><p>Create online quizzes, tests and examinations.</p></div>
+<div class="card"><h3>📊 Results & Reports</h3><p>Prepare learner performance reports and examination analysis.</p></div>
+<div class="card"><h3>🎓 Teaching Resources</h3><p>Prepare worksheets, revision exercises and classroom resources.</p></div>
 </div>
-<div class="section" id="programs">
-<h2>Our Programs</h2>
-<div class="cards">
-<div class="card"><h3>📖 Tutoring</h3><p>Maths, Science, English and more for PSLE, JCE & BGCSE.</p></div>
-<div class="card"><h3>🎓 Mentorship</h3><p>Guidance from top scholars and professionals.</p></div>
-<div class="card"><h3>💻 Digital Learning</h3><p>Click, Press, Learn - easy online lessons.</p></div>
+</section>
+
+<section id="upload">
+<h2>Upload Your Hardcopy Documents</h2>
+<div class="upload">
+<p>Select a document you would like to convert or prepare for digital learning.</p>
+<input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+<select>
+<option>Select a service</option>
+<option>Convert examination paper</option>
+<option>Convert worksheet</option>
+<option>Prepare digital quiz</option>
+<option>Prepare lesson plan</option>
+<option>Prepare scheme of work</option>
+</select>
+<button onclick="alert('Your document has not been sent. Please contact Education Lesedi Scholars Hub to arrange processing.')">Submit Document</button>
+<p><small>This is a demonstration upload form. Secure document submission and conversion require a connected server.</small></p>
 </div>
+</section>
+
+<section id="packages">
+<h2>Our Four Packages</h2>
+<div class="trial">
+<h3>🎉 ONE MONTH FREE TRIAL</h3>
+<p>All customer categories can receive a 30-day trial, subject to account verification and activation.</p>
 </div>
-<div class="section" id="contact">
-<h2>Contact Us</h2>
-<p>Gaborone, Botswana<br><br>WhatsApp: +267 7000 0000<br>Email: info@educationlesedi.com</p>
 <br>
-<a class="btn" href="https://wa.me/26770000000">Chat on WhatsApp</a>
+<div class="grid">
+<div class="card">
+<h3>Personal & Private</h3>
+<p>For individuals, parents, tutors and independent learners.</p>
+<div class="price">From P25</div>
+<p>Document preparation, quizzes and revision materials.</p>
+<a class="btn" href="#contact">Get Started</a>
 </div>
+<div class="card">
+<h3>Teacher Professional</h3>
+<p>For individual teachers and examiners.</p>
+<div class="price">P100/month</div>
+<p>Lesson plans, schemes of work and examination preparation.</p>
+<a class="btn" href="#contact">Get Started</a>
+</div>
+<div class="card">
+<h3>School Package</h3>
+<p>For primary and secondary schools.</p>
+<div class="price">P350/month</div>
+<p>School resources, teacher support and assessment preparation.</p>
+<a class="btn" href="#contact">Get Started</a>
+</div>
+<div class="card">
+<h3>Institution & Enterprise</h3>
+<p>For education institutions and organisations.</p>
+<div class="price">Custom Price</div>
+<p>Institutional solutions and customised services.</p>
+<a class="btn" href="#contact">Request Quote</a>
+</div>
+</div>
+</section>
+
+<section id="contact">
+<h2>Contact Education Lesedi</h2>
+<div class="card">
+<p><strong>Orange Money:</strong> +267 77980825</p>
+<p><strong>MyZaka:</strong> +267 71823638</p>
+<p><strong>Email:</strong> ithuteonlinescholarshub@gmail.com</p>
+<p><strong>Website:</strong> educationlesedihub.com</p>
+<p>Contact us to arrange document processing, subscriptions and payment.</p>
+<a class="btn" href="https://wa.me/26777980825">Contact on WhatsApp</a>
+</div>
+</section>
+
 <footer>
-<p>© 2026 Education Lesedi Scholars Hub | Click Press Learn</p>
+<h3>Education Lesedi Scholars Hub</h3>
+<p>CLICK – PRESS – LEARN</p>
+<p>Empowering Education Through Digital Innovation.</p>
+<p>© 2026 Education Lesedi Scholars Hub</p>
 </footer>
+
 </body>
 </html>
