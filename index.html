@@ -507,7 +507,60 @@ async function sendPasswordReset(){
 }
 async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
 (async()=>{if(!lesediAuthClient)return;const {data}=await lesediAuthClient.auth.getSession();if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
-renderBotswanaExams();
+// Botswana practice catalogue: sample questions, not official BEC past papers.
+const botswanaPracticeSets = [
+{id:'psle-maths',level:'PSLE',subject:'Mathematics',className:'Standard 7',title:'PSLE Mathematics',topics:'Numbers and fractions',questions:[
+{q:'What is 3/4 of 20?',o:['5','10','15','18'],a:2},
+{q:'What is 25% as a fraction?',o:['1/2','1/3','1/4','3/4'],a:2}
+]},
+{id:'psle-english',level:'PSLE',subject:'English',className:'Standard 7',title:'PSLE English',topics:'Grammar and vocabulary',questions:[
+{q:'Choose the correct sentence.',o:['She go to school.','She goes to school.','She going school.','She gone school.'],a:1}
+]},
+{id:'jce-maths',level:'JCE',subject:'Mathematics',className:'Form 3',title:'JCE Mathematics',topics:'Algebra',questions:[
+{q:'Solve 2x + 3 = 11.',o:['3','4','5','7'],a:1}
+]},
+{id:'jce-science',level:'JCE',subject:'Integrated Science',className:'Form 3',title:'JCE Integrated Science',topics:'Cells and energy',questions:[
+{q:'Which structure controls most cell activities?',o:['Cell wall','Nucleus','Vacuole','Cytoplasm'],a:1}
+]},
+{id:'bgcse-biology',level:'BGCSE',subject:'Biology',className:'Form 5',title:'BGCSE Biology',topics:'Cells and genetics',questions:[
+{q:'What is the basic unit of inheritance?',o:['Tissue','Organ','Gene','Enzyme'],a:2}
+]},
+{id:'bgcse-physics',level:'BGCSE',subject:'Physics',className:'Form 5',title:'BGCSE Physics',topics:'Electricity',questions:[
+{q:'What is the SI unit of electric current?',o:['Volt','Ohm','Ampere','Watt'],a:2}
+]}
+];
+
+function renderBotswanaExams(){
+ const target=document.getElementById('becCards');
+ if(!target)return;
+ target.innerHTML=botswanaPracticeSets.map(x=>`
+ <div class="tile">
+ <span class="pill">${x.level}</span>
+ <h3>${x.title}</h3>
+ <p>${x.className} • ${x.subject}</p>
+ <p class="small muted">${x.topics}</p>
+ <button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button>
+ </div>`).join('');
+}
+
+function openPracticeSet(id){
+ const set=botswanaPracticeSets.find(x=>x.id===id);
+ if(!set)return;
+ const out=document.getElementById('becPreview');
+ if(!out)return;
+ out.innerHTML=`
+ <div class="lesson-output">
+ <h3>${set.title}</h3>
+ <p>${set.level} • ${set.className} • ${set.subject}</p>
+ <div class="notice">Demonstration questions only, not official BEC past papers.</div>
+ ${set.questions.map((q,i)=>`
+ <div class="lesson-block">
+ <b>${i+1}. ${q.q}</b>
+ <ol type="A">${q.o.map(o=>`<li>${o}</li>`).join('')}</ol>
+ </div>`).join('')}
+ </div>`;
+}
+  renderBotswanaExams();
 
 </script>
 <section id="education-levels" style="padding:40px 20px;background:#f4f7fc;text-align:center;">
@@ -579,7 +632,7 @@ async function uploadDocumentToCloud(){
  if(error){alert('Upload failed: '+error.message);return;}
  alert('Your examination file has been saved securely.');
 }
-</script></script>
+</script>
 <footer style="background:#102a56;color:white;text-align:center;padding:25px 10px;margin-top:40px;">
   <h3>Education Lesedi Scholars Hub</h3>
   <p>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</p>
