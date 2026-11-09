@@ -102,7 +102,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <section class="page" id="convert">
   <div class="section-head"><div><h2>Hardcopy-to-Digital Converter</h2><p>Upload a document, extract its text and review it before creating resources.</p></div><span class="pill">DOCUMENT WORKSPACE</span></div>
   <div class="card">
-    <div class="dropzone"><div style="font-size:35px">📤</div><strong>Upload your teaching or examination material</strong><p class="muted small">Supported in this prototype: PDF, DOCX and TXT. Image OCR and scanned-PDF recognition need an OCR service.</p><input id="fileInput" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"></div>
+    <div class="dropzone"><div style="font-size:35px">📤</div><strong>Upload your teaching or examination material</strong><p class="muted small">Supported in this prototype: PDF, DOCX and TXT. Image OCR and scanned-PDF recognition need an OCR service.</p><input id="fileInput" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"></div><button type="button" onclick="uploadDocumentToCloud()" style="background:#102b5c;color:white;padding:12px 20px;border:0;border-radius:8px;margin-top:12px;cursor:pointer;">
+  Save Original File Securely
+</button>
     <div class="two-col">
       <div class="field"><label>Resource title</label><input id="docTitle" placeholder="e.g. Standard 7 Mathematics Test"></div>
       <div class="field"><label>What do you want to create?</label><select id="docPurpose"><option>Extract and organise text</option><option>Lesson plan</option><option>Scheme of work</option><option>Worksheet</option><option>Digital examination</option><option>Revision notes</option><option>Study summary</option></select></div>
@@ -559,14 +561,31 @@ document.getElementById('exam-message').innerHTML =
 'You selected ' + level + '. Examination papers and digital quizzes will appear here when added by the administrator.';
 document.getElementById('exam-library').scrollIntoView({behavior:'smooth'});
 }
+async function uploadDocumentToCloud(){
+ const file = document.getElementById('fileInput').files[0];
+ if(!file){alert('Please choose a file first.');return;}
+ if(!lesediAuthClient){alert('Supabase is not connected.');return;}
+
+ const {data:{user},error:userError}=await lesediAuthClient.auth.getUser();
+ if(userError || !user){alert('Please log in first.');return;}
+
+ const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+ const path=user.id+'/'+Date.now()+'-'+safeName;
+
+ const {error}=await lesediAuthClient.storage
+  .from('lesedi-examinations')
+  .upload(path,file,{upsert:false,contentType:file.type||'application/octet-stream'});
+
+ if(error){alert('Upload failed: '+error.message);return;}
+ alert('Your examination file has been saved securely.');
+}
 </script></script>
 <footer style="background:#102a56;color:white;text-align:center;padding:25px 10px;margin-top:40px;">
   <h3>Education Lesedi Scholars Hub</h3>
   <p>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</p>
   <p>Powered by Education Lesedi AI Learning System.</p>
   <p>Quality Digital Education for Everyone.</p>
-</footer></body>
-</html><section style="background:#f4f7ff;padding:30px 15px;text-align:center;border-radius:12px;margin:30px auto;max-width:900px;">
+</footer><section style="background:#f4f7ff;padding:30px 15px;text-align:center;border-radius:12px;margin:30px auto;max-width:900px;">
   <h2 style="color:#102a56;">Buy an Individual Topic</h2>
   <h1 style="color:#d49a00;">P10.00</h1>
   <p>Choose one educational topic and receive a digital quiz or learning assessment.</p>
