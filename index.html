@@ -571,5 +571,94 @@ function submitTopic(event){
  window.location.href="mailto:lesedieducationhelpdesk@gmail.com?subject="+encodeURIComponent("P10 individual topic request")+"&body="+encodeURIComponent(details);
 }
 </script>
+
+<!-- EDUCATION LESEDI: BOTSWANA EXAMINATION LIBRARY -->
+<section id="botswana-exam-library" style="padding:45px 20px;background:#f3f6fc;font-family:Arial,sans-serif;color:#10264b;">
+  <div style="max-width:1100px;margin:auto;">
+    <div style="background:#10264b;color:white;padding:28px;border-radius:16px;text-align:center;">
+      <h2 style="margin:0 0 10px;">Botswana Examination Library</h2>
+      <p style="color:#f4c84a;margin:0;">EDUCATION LESEDI SCHOLARS HUB</p>
+      <p>Find practice examinations by education level, subject and examination type.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:25px 0;">
+      <input id="examSearch" oninput="filterLesediExams()" placeholder="Search examinations..." style="padding:14px;border:1px solid #ccd5e3;border-radius:9px;">
+      <select id="examLevel" onchange="filterLesediExams()" style="padding:14px;border:1px solid #ccd5e3;border-radius:9px;">
+        <option value="">All education levels</option>
+        <option value="Primary">Primary School</option>
+        <option value="Junior">Junior Secondary</option>
+        <option value="Senior">Senior Secondary</option>
+        <option value="Tertiary">Tertiary & Vocational</option>
+      </select>
+      <select id="examType" onchange="filterLesediExams()" style="padding:14px;border:1px solid #ccd5e3;border-radius:9px;">
+        <option value="">All examination types</option>
+        <option value="PSLE">PSLE</option>
+        <option value="JCE">JCE</option>
+        <option value="BGCSE">BGCSE</option>
+        <option value="Practice">Practice examinations</option>
+      </select>
+    </div>
+
+    <div id="lesediExamResults" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;"></div>
+
+    <p style="text-align:center;color:#64748b;font-size:13px;margin-top:25px;">
+      Practice examination samples. Official past papers must be added with appropriate permission.
+    </p>
+  </div>
+</section>
+
+<script>
+const lesediExams = [
+  {level:"Primary",type:"PSLE",subject:"Mathematics",title:"PSLE Mathematics Practice",year:"Practice"},
+  {level:"Primary",type:"PSLE",subject:"English",title:"PSLE English Practice",year:"Practice"},
+  {level:"Primary",type:"PSLE",subject:"Setswana",title:"PSLE Setswana Practice",year:"Practice"},
+  {level:"Primary",type:"PSLE",subject:"Science",title:"PSLE Science Practice",year:"Practice"},
+  {level:"Junior",type:"JCE",subject:"Mathematics",title:"JCE Mathematics Practice",year:"Practice"},
+  {level:"Junior",type:"JCE",subject:"English",title:"JCE English Practice",year:"Practice"},
+  {level:"Junior",type:"JCE",subject:"Setswana",title:"JCE Setswana Practice",year:"Practice"},
+  {level:"Junior",type:"JCE",subject:"Science",title:"JCE Science Practice",year:"Practice"},
+  {level:"Senior",type:"BGCSE",subject:"Mathematics",title:"BGCSE Mathematics Practice",year:"Practice"},
+  {level:"Senior",type:"BGCSE",subject:"English",title:"BGCSE English Practice",year:"Practice"},
+  {level:"Senior",type:"BGCSE",subject:"Biology",title:"BGCSE Biology Practice",year:"Practice"},
+  {level:"Senior",type:"BGCSE",subject:"Chemistry",title:"BGCSE Chemistry Practice",year:"Practice"},
+  {level:"Senior",type:"BGCSE",subject:"Physics",title:"BGCSE Physics Practice",year:"Practice"},
+  {level:"Senior",type:"BGCSE",subject:"Geography",title:"BGCSE Geography Practice",year:"Practice"},
+  {level:"Tertiary",type:"Practice",subject:"General Studies",title:"Tertiary General Practice",year:"Practice"}
+];
+
+function filterLesediExams(){
+  const search=document.getElementById("examSearch").value.toLowerCase();
+  const level=document.getElementById("examLevel").value;
+  const type=document.getElementById("examType").value;
+  const results=lesediExams.filter(e=>
+    (!search || (e.title+" "+e.subject+" "+e.type).toLowerCase().includes(search)) &&
+    (!level || e.level===level) &&
+    (!type || e.type===type)
+  );
+  const container=document.getElementById("lesediExamResults");
+  container.innerHTML="";
+  if(!results.length){
+    container.innerHTML="<p>No matching examinations found.</p>";
+    return;
+  }
+  results.forEach(e=>{
+    const card=document.createElement("div");
+    card.style.cssText="background:white;padding:22px;border-radius:13px;box-shadow:0 3px 12px #10264b12;border:1px solid #e1e7f0;";
+    const title=document.createElement("h3");
+    title.textContent=e.title;
+    const details=document.createElement("p");
+    details.textContent=e.type+" | "+e.subject+" | "+e.year;
+    details.style.color="#64748b";
+    const button=document.createElement("button");
+    button.textContent="Open examination";
+    button.style.cssText="background:#174ea6;color:white;border:0;padding:12px 18px;border-radius:8px;cursor:pointer;width:100%;";
+    button.onclick=()=>alert("This is a practice examination listing. The actual examination questions, timer, learner login and result saving will be connected in the next development stage.");
+    card.append(title,details,button);
+    container.appendChild(card);
+  });
+}
+filterLesediExams();
+</script>
+<!-- END EDUCATION LESEDI EXAMINATION LIBRARY -->
 </body>
 </html>
