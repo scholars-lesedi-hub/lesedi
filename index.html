@@ -1,1 +1,696 @@
 
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Education Lesedi Scholars Hub - Click Press Learn</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#f1f5f9}
+.top-header{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:20}
+.logo h1{font-size:19px;margin:0;line-height:1;color:#0f2a5a}.logo h1 span{font-size:12px;font-style:italic}
+.search{flex:1;max-width:480px;display:flex;background:#f1f5f9;border-radius:20px;padding:8px 12px;border:1px solid #e2e8f0}.search input{border:none;background:transparent;width:100%;outline:none}
+.btn-login-top{background:#0a2463;color:#fff;border:none;padding:9px 18px;border-radius:20px;font-weight:bold;cursor:pointer}.btn-signup-top{background:#facc15;border:none;padding:9px 16px;border-radius:20px;font-weight:bold;cursor:pointer}
+.menu-btn{display:none;background:#0a2463;color:#fff;border:none;padding:9px 12px;border-radius:8px;font-weight:bold;cursor:pointer}
+.layout{display:flex;min-height:calc(100vh - 60px)}.sidebar{background:#0a2463;color:#fff;width:220px;padding:12px;flex-shrink:0}.sidebar a{display:block;color:#fff;text-decoration:none;padding:11px 10px;border-radius:8px;margin:4px 0;font-size:14px;cursor:pointer}.sidebar a.active,.sidebar a:hover{background:#2563eb}
+.main{flex:1;padding:12px;min-width:0}.hero{background:linear-gradient(90deg,#0a2463,#2563eb);color:#fff;border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:16px}.hero h2{margin:0;font-size:22px}.hero h2 span{color:#facc15}
+.btn-yellow{background:#facc15;border:none;padding:10px 18px;border-radius:20px;font-weight:bold;cursor:pointer}.btn-blue{background:#2563eb;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}.gcard{border-radius:12px;padding:16px;color:#fff;text-align:center;cursor:pointer;border:none;width:100%}.blue{background:#2563eb}.green{background:#16a34a}.orange{background:#ea580c}
+.card{background:#fff;border-radius:12px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:12px}.card h3{margin:0 0 10px;font-size:15px}input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
+.popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:99;overflow:auto}.box{background:#fff;margin:25px auto;padding:22px;width:92%;max-width:520px;border-radius:16px}.dash{display:none;border-radius:12px;padding:14px;margin:12px 0}
+.footer{background:#0a2463;color:#fff;text-align:center;padding:14px;font-size:13px}.price-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}.price-card{background:#fff;border-radius:14px;padding:16px;text-align:center;border:2px solid #e5e7eb}.price{font-size:22px;font-weight:bold;margin:6px 0}.per-month{font-size:12px;color:#64748b;font-weight:bold}
+.wa-float{position:fixed;bottom:20px;left:20px;background:#25D366;color:#fff;padding:11px 14px;border-radius:30px;font-weight:bold;cursor:pointer;z-index:50;border:none}
+.trial-banner{background:#16a34a;color:#fff;padding:10px;border-radius:8px;text-align:center;font-weight:bold;font-size:13px;margin:10px 0}
+.label-btn{background:#fff;border:2px solid #2563eb;padding:8px 12px;border-radius:20px;margin:4px;cursor:pointer;font-weight:bold}
+.quiz-opt{display:block;width:100%;text-align:left;background:#fff;border:2px solid #e2e8f0;padding:12px;border-radius:10px;margin:6px 0;cursor:pointer;font-weight:bold}.quiz-opt.selected{background:#dbeafe;border-color:#2563eb}
+.level-btn{background:#fff;border:2px solid #0a2463;padding:14px 8px;border-radius:12px;margin:4px;cursor:pointer;font-weight:bold}.level-btn.active{background:#0a2463;color:#fff}
+.quiz-next-btn{display:block!important;width:100%!important;padding:15px!important;font-weight:bold!important;border:none!important;border-radius:10px!important;cursor:pointer!important;margin-top:12px!important;background:#facc15!important}.quiz-next-btn.ready{background:#16a34a!important;color:#fff!important}
+.topic-chip{background:#e0e7ff;border:1px solid #2563eb;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;margin:3px;display:inline-block}
+.syllabus-box{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;margin:6px 0;font-size:12px}.unlock-box{background:#fffbeb;border:2px solid #facc15;border-radius:12px;padding:12px;margin:10px 0;text-align:center}.self-convert{background:#f0fdf4;border:2px dashed #16a34a;border-radius:12px;padding:12px;margin:10px 0}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:12px 18px;border-radius:20px;font-weight:bold;z-index:100;display:none}
+.sec{display:none}.sec.active{display:block!important}
+.sidebar-email{margin-top:20px;padding:10px 8px;background:#071a4a;border-radius:8px;font-size:11px;text-align:center}
+.lp-box{background:#fff;border:2px solid #16a34a;border-radius:12px;padding:14px;margin-top:10px;text-align:left}
+.lp-section{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;margin:8px 0;font-size:13px;line-height:1.5}
+.preview-box{background:#fff;border:1px solid #ddd;border-radius:8px;padding:10px;margin:8px 0;font-size:12px;max-height:200px;overflow:auto;text-align:left;white-space:pre-wrap}
+@media(max-width:800px){.sidebar{position:fixed;left:-240px;top:0;height:100%;z-index:60;transition:.3s}.sidebar.open{left:0}.menu-btn{display:block}.grid4,.price-grid{grid-template-columns:1fr 1fr}.hero{flex-direction:column;text-align:center}.hero-right{width:100%}.search{order:3;max-width:100%}}
+</style></head><body>
+<div id="toast" class="toast"></div>
+<div class="top-header"><button class="menu-btn" onclick="toggleMenu()">☰ MENU</button><div class="logo"><div style="font-size:32px">🎓</div><h1>Education Lesedi<br>Scholars Hub<br><span>Click • Press • Learn</span></h1></div><div class="search">🔍 <input id="searchInput" placeholder="Search: PSLE, JCE, BGCSE, Road Signs..."></div><div id="topProfile"><button class="btn-login-top" onclick="openLogin()">LOGIN</button> <button class="btn-signup-top" onclick="openSignup()">SIGNUP</button></div></div>
+<div class="layout">
+<div class="sidebar" id="sidebar">
+<a onclick="go('home',this)" class="active">🏠 Home</a>
+<a onclick="go('takeExam',this)">📝 Take Examination</a>
+<a onclick="go('labelling',this)">🎮 Free Games</a>
+<a onclick="go('results',this)">📊 My Results</a>
+<a onclick="go('upload',this)">📤 Convert PDF - Real Reading</a>
+<a onclick="go('aiTeacher',this)">🤖 AI Teacher</a>
+<a onclick="go('lessonPlan',this)">📝 Lesson Plan</a>
+<a onclick="go('pricing',this)">💰 Pricing & Pay</a>
+<a id="adminMenuLink" style="display:none" onclick="go('admin',this)">🛠️ Admin Panel</a>
+<a onclick="go('account',this)">👤 My Account</a>
+<a onclick="go('help',this)">🎧 Help</a>
+<a onclick="logout()">🚪 Logout</a>
+<div class="sidebar-email">📧 Helpdesk<br><a href="mailto:educationlesedihelpdesk@gmail.com" style="color:#facc15">educationlesedihelpdesk@gmail.com</a><br><span style="color:#cbd5e1">© 2026 Education Lesedi</span></div>
+</div>
+<div class="main">
+<div id="teacherDash" class="dash" style="background:#fff7ed;border:2px solid #fb923c"><h3>👩‍🏫 TEACHER DASHBOARD</h3><button class="btn-blue" onclick="go('upload')">+ Convert Test to Digital</button> <button class="btn-blue" style="background:#16a34a" onclick="go('lessonPlan')">📝 CREATE LESSON PLAN</button><p id="teacherInfo"></p></div>
+<div id="schoolDash" class="dash" style="background:#f0fdf4;border:2px solid #16a34a"><h3>🏫 SCHOOL DASHBOARD</h3><button class="btn-blue" style="background:#16a34a" onclick="go('lessonPlan')">📝 SCHOOL LESSON PLANS</button></div>
+<div id="studentDash" class="dash" style="background:#eff6ff;border:2px solid #60a5fa"><h3>🎓 STUDENT DASHBOARD</h3><button class="btn-blue" onclick="go('takeExam')">▶️ TAKE DIGITAL EXAM</button> <button class="btn-blue" style="background:#facc15;color:#000" onclick="go('upload')">📤 CONVERT MY PDF</button><p id="studentInfo"></p></div>
+<div id="guestDash" class="dash" style="background:#fffbeb;border:2px solid #facc15;display:block"><h3>Welcome - We Turn Paper Tests To Digital</h3><p style="font-size:13px">PSLE • JCE • BGCSE • Adult - Upload PDF, Get Digital Click Test.</p><button class="btn-yellow" onclick="openSignup()">SIGNUP FREE</button> <button class="btn-blue" onclick="openLogin()">LOGIN</button></div>
+
+<div id="sec-home" class="sec active">
+<div class="hero"><div style="flex:1;text-align:left"><h2>Welcome to <span>Education Lesedi Scholars Hub</span></h2><p><b>We Turn Your Tests Into Digital Click • Real PDF Reading • Auto Marking</b></p><br><button style="background:#fff;color:#0a2463;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer" onclick="go('upload')">📤 CONVERT MY TEST TO DIGITAL</button> <button style="background:#facc15;border:none;padding:10px 16px;border-radius:20px;font-weight:bold;cursor:pointer" onclick="showUnlockBox()">🔓 AUTO UNLOCK - P10</button></div><div style="text-align:center;min-width:190px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:14px"><div style="font-weight:bold">Learn Anytime,<br>Anywhere</div><div style="font-size:50px">👦🏾👧🏾💻</div><button class="btn-yellow" style="margin-top:10px;width:100%" onclick="go('takeExam')">Learn Anytime! →</button></div></div>
+<div class="trial-banner">🎉 3 MONTHS FREE TRIAL - Click Topic = Get That Topic - FIXED</div>
+<div class="grid4"><button class="gcard blue" onclick="go('takeExam')">📝<h3>Take Digital Exam</h3><p>Real Topic Questions</p></button><button class="gcard green" onclick="go('lessonPlan')">📝<h3>Lesson Plan</h3><p>View Saved</p></button><button class="gcard orange" onclick="go('upload')">📤<h3>Convert To Digital</h3><p>Paper → Digital</p></button></div>
+<div class="card" style="border:2px solid #0a2463;background:#eff6ff"><h3>🎯 CHOOSE LEVEL - THEN CLICK TOPIC</h3><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center"><button class="level-btn active" onclick="setLevel('Pre-Primary (Lower Learning)',this)">🌱 Pre-Primary<br><small>PSLE</small></button><button class="level-btn" onclick="setLevel('Secondary Education (Upper Learning)',this)">🎓 Secondary<br><small>JCE-BGCSE</small></button><button class="level-btn" style="border-color:#ea580c" onclick="setLevel('Adult Education (Tertiary - Vocational - Training)',this)">👩🏾‍🎓 Adult<br><small>Tertiary</small></button></div><p style="font-size:13px;text-align:center">Selected: <b id="selectedLevelText">Pre-Primary (Lower Learning)</b></p><div class="syllabus-box" id="syllabusDisplay"></div>
+<div class="unlock-box" id="unlockBox"><b>🔓 AUTO P10 UNLOCK</b><br><div style="font-size:12px;margin:6px 0;background:#fff;padding:8px;border-radius:8px;text-align:left"><b>🇧🇼 Botswana:</b> Orange Money <b>77980825</b> / MyZaka <b>71823638</b><br>Demo: <b>LESEDI10</b> • PER MONTH</div><div style="display:flex;gap:6px"><input id="unlockCodeInput" placeholder="Enter code e.g. LESEDI10" style="flex:1;margin:0"><button class="btn-blue" style="background:#16a34a" onclick="unlockWithCode()">UNLOCK</button></div><div id="unlockStatus"></div><div style="font-size:11px">Unlocked: <span id="unlockedList">All Topics Free</span></div></div>
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px;font-size:12px;text-align:center"><b>Tap a topic for REAL questions:</b><br><span id="topicChips"></span></div>
+<input id="wantTopic" placeholder="Type topic e.g. Photosynthesis, Fractions...">
+<button class="btn-blue" style="width:100%;background:#16a34a;padding:13px" onclick="startTopicFromInput()">▶️ START TOPIC QUIZ - GET THAT TOPIC ONLY →</button>
+<div style="display:flex;gap:8px;margin-top:6px"><button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS</button><button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH</button></div></div>
+<div class="card"><h3>📤 CONVERT YOUR PAPER TEST TO DIGITAL - REAL READING</h3><div class="self-convert"><input type="file" id="pdfFile" accept=".pdf"><button class="btn-blue" style="width:100%;padding:12px" onclick="convertPDF()">📖 READ MY REAL TEST & CONVERT →</button><div id="pdfReadingStatus"></div><div id="pdfPreviewBox"></div><p id="uploadStatus"></p><div id="createdQuizList"></div><hr><textarea id="pasteNotes" rows="5" placeholder="PASTE:&#10;1. What is ...?&#10;A. ...&#10;B. ...&#10;C. ...&#10;D. ...&#10;Answer: A"></textarea><input id="pasteTopicName" placeholder="Test name e.g. PSLE RME Test 1"><button class="btn-blue" style="width:100%;padding:12px;background:#16a34a" onclick="convertPastedNotes()">✨ CONVERT PASTED REAL QUESTIONS →</button><p id="pasteStatus"></p></div></div>
+<div class="card" style="border:2px solid #0a2463"><h3>💰 PRICING - PER MONTH</h3><div class="price-grid"><div class="price-card"><h3>Starter</h3><div class="price">Free</div><button class="btn-blue" style="width:100%;background:#16a34a" onclick="startLevelQuiz('math')">START FREE</button></div><div class="price-card" style="border:2px solid #facc15"><h3>Single Test</h3><div class="price">P10 / $1</div><button class="btn-yellow" style="width:100%" onclick="openPayModal('Single Test Digital - P10')">CONVERT 1 TEST →</button></div><div class="price-card"><h3>Subject Pack</h3><div class="price">P50 / $4</div><button class="btn-blue" style="width:100%" onclick="openPayModal('Subject Pack - P50')">CONVERT SUBJECT →</button></div><div class="price-card"><h3>Pro Digital</h3><div class="price">P150 / $11</div><button class="btn-blue" style="width:100%;background:#7c3aed" onclick="openPayModal('Pro Digital - P150')">GO UNLIMITED →</button></div><div class="price-card"><h3>Teacher Pack</h3><div class="price">P300 / $22</div><button class="btn-blue" style="width:100%;background:#0a2463" onclick="openPayModal('Teacher - P300')">FOR TEACHERS →</button></div><div class="price-card"><h3>Family Pack</h3><div class="price">P450 / $33</div><button class="btn-blue" style="width:100%;background:#ea580c" onclick="openPayModal('Family - P450')">FAMILY →</button></div><div class="price-card"><h3>School Hub</h3><div class="price">P800 / $60</div><button class="btn-yellow" style="width:100%" onclick="openPayModal('School Hub - P800')">TRIAL</button></div><div class="price-card"><h3>Adult Pack</h3><div class="price">P100 / $8</div><button class="btn-blue" style="width:100%;background:#0a2463" onclick="openPayModal('Adult - P100')">ADULT →</button></div></div></div>
+</div>
+
+<div id="sec-takeExam" class="sec"><div class="card"><h3>📝 DIGITAL CLICK EXAM - <span class="lvlName">Pre-Primary</span> - <span id="examTopicName" style="color:#16a34a"></span></h3><div class="syllabus-box" id="syllabusDisplay2"></div><div id="examTopicChips"></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn-blue" style="flex:1" onclick="startLevelQuiz('math')">📐 MATHS</button><button class="btn-blue" style="flex:1;background:#7c3aed" onclick="startLevelQuiz('eng')">📖 ENGLISH</button><button class="btn-blue" style="flex:1;background:#16a34a" onclick="startLevelQuiz('sci')">🔬 SCIENCE</button><button class="btn-blue" style="flex:1;background:#ea580c" onclick="startLevelQuiz('adult')">👩🏾‍🎓 ADULT</button></div><div style="background:#f8fafc;padding:14px;border-radius:10px;border:2px solid #e2e8f0;margin-top:10px"><p id="quizCounter" style="font-size:12px;font-weight:bold;color:#2563eb">DIGITAL CLICK - Real Questions For That Topic</p><b id="quizQ">Click a TOPIC above</b><div id="quizOpts"></div><p id="quizFeedback" style="font-weight:bold;text-align:center"></p><button id="quizNext" class="quiz-next-btn" onclick="nextQuizQ()">👉 NEXT → CLICK</button></div><div id="quizResult" style="display:none;text-align:center;padding:12px;background:#f0fdf4;border-radius:10px;margin-top:10px"><h3 id="quizScoreText"></h3><div id="quizReview" style="text-align:left"></div><button class="btn-yellow" style="width:100%;margin-top:8px" onclick="go('home')">← BACK HOME</button></div><button class="btn-blue" onclick="go('home')" style="margin-top:10px">← Back</button></div></div>
+
+<div id="sec-lessonPlan" class="sec"><div class="card" style="border:2px solid #16a34a"><h3>📝 LESSON PLAN - VIEW WORKS</h3><input id="lpTopic" placeholder="Topic e.g. Photosynthesis, Fractions"><select id="lpLevel"><option>Pre-Primary (Lower Learning) - PSLE</option><option>Secondary Education (Upper Learning) - JCE/BGCSE</option><option>Adult Education (Tertiary - Vocational - Training)</option></select><select id="lpDuration"><option value="40">40 Minutes</option><option value="80">80 Minutes - Double</option><option value="60">60 Minutes</option></select><input id="lpClassSize" placeholder="Class size e.g. 30"><div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><button class="label-btn" onclick="quickLP('Photosynthesis')">Photosynthesis</button><button class="label-btn" onclick="quickLP('Fractions')">Fractions</button><button class="label-btn" onclick="quickLP('Human Skeleton')">Human Skeleton</button><button class="label-btn" onclick="quickLP('Road Signs STOP')">Road Signs</button></div><button class="btn-blue" style="width:100%;background:#16a34a;padding:13px" onclick="createLessonPlan()">✨ CREATE LESSON PLAN →</button><div id="lpOutput"></div><h4>📚 MY SAVED PLANS - Click VIEW:</h4><div id="lpList"></div><div id="lpViewArea"></div><button class="btn-blue" onclick="go('home')">← Back</button></div></div>
+
+<div id="sec-labelling" class="sec"><div class="card"><h3>🎮 FREE GAMES</h3><div style="text-align:center"><div style="font-size:50px">🌱 🌼 🌿</div><button class="label-btn" onclick="alert('Correct! Leaf!')">Leaf</button> <button class="label-btn" onclick="alert('Correct! LESEDI!')">LESEDI</button></div><button class="btn-blue" onclick="go('home')">← Back</button></div></div>
+<div id="sec-results" class="sec"><div class="card"><h3>📊 My Results</h3><div id="otherResults"></div><button class="btn-blue" onclick="go('takeExam')">Take New Exam →</button> <button class="btn-blue" onclick="go('home')">← Home</button></div></div>
+<div id="sec-upload" class="sec"><div class="card"><h3>📤 Convert Test To Digital</h3><div class="self-convert"><input type="file" id="pdfFile2" accept=".pdf"><button class="btn-blue" style="width:100%" onclick="convertPDF2()">📖 READ MY REAL TEST →</button><div id="pdfReadingStatus2"></div><div id="pdfPreviewBox2"></div><div id="createdQuizList2"></div><hr><textarea id="pasteNotes2" rows="5" placeholder="Paste: 1. Q? A. B. C. D. Answer: A"></textarea><input id="pasteTopicName2" placeholder="Test name e.g. PSLE RME"><button class="btn-blue" style="width:100%;background:#16a34a" onclick="convertPastedNotes2()">✨ CONVERT PASTED →</button><p id="pasteStatus2"></p></div><button class="btn-blue" onclick="go('home')">← Home</button></div></div>
+<div id="sec-aiTeacher" class="sec"><div class="card" style="background:#0f172a;color:#fff;border:2px solid #7c3aed"><h3 style="color:#facc15">🤖 AI TEACHER</h3><div id="aiChatBox" style="background:#fff;color:#000;border-radius:12px;padding:12px;font-size:13px;max-height:300px;overflow:auto"><div>🤖 AI Teacher: Dumela! Ask me anything.</div></div><textarea id="aiInput" rows="3" placeholder="Ask AI anything..." style="background:#fff;color:#000"></textarea><button class="btn-yellow" style="width:100%" onclick="aiAssist()">ASK AI ✨</button><p id="aiOutput" style="font-size:13px;background:#fff;color:#000;padding:10px;border-radius:8px;display:none"></p></div><button class="btn-blue" onclick="go('home')">← Home</button></div>
+<div id="sec-pricing" class="sec"><div class="card"><h3>💰 Pricing & Pay - PER MONTH</h3><p>Starter Free • Single P10/$1 • Subject P50/$4 • Pro P150/$11 • Teacher P300/$22 • Family P450/$33 • School P800/$60 • Adult P100/$8<br>PayPal • Orange 77980825 • MyZaka 71823638 • educationlesedihelpdesk@gmail.com</p><button class="btn-blue" style="width:100%;background:#003087;padding:14px" onclick="openPayModal('Single Test Digital - P10')">🅿️ PAY NOW - P10 / MONTH →</button><br><br><button class="btn-blue" onclick="go('home')">← Home</button></div></div>
+<div id="sec-admin" class="sec"><div class="card"><h3>🛠️ ADMIN PANEL</h3><div id="adminFeedbackList"></div><div id="adminLPList"></div><div id="adminConvertedList"></div><button class="btn-blue" onclick="go('home')">← Back</button></div></div>
+<div id="sec-account" class="sec"><div class="card"><h3>👤 My Account</h3><div id="accountInfo"></div><button class="btn-blue" onclick="go('home')">← Home</button></div></div>
+<div id="sec-help" class="sec"><div class="card"><h3>🎧 Help</h3><p>📧 <b>educationlesedihelpdesk@gmail.com</b><br>WhatsApp: 71823638 / 77980825<br>Orange 77980825 / MyZaka 71823638</p><button class="btn-blue" onclick="go('home')">← Home</button></div></div>
+</div></div>
+<div class="footer"><div>Education Lesedi Scholars Hub | Click • Press • Learn</div><div>📧 <a href="mailto:educationlesedihelpdesk@gmail.com" style="color:#facc15">educationlesedihelpdesk@gmail.com</a> • WhatsApp: 71823638 • All prices PER MONTH</div></div>
+<button class="wa-float" onclick="whatsappOrder()">💬 WhatsApp 71823638</button>
+
+<div id="payModal" class="popup"><div class="box"><h3>💳 Pay - <span id="payPackageName">Single Test Digital</span></h3><div id="payAmountDisplay" style="background:#f0fdf4;border:1px solid #22c55e;padding:10px;text-align:center;font-weight:bold;margin:8px 0">Amount: P10 / $1 per month</div><button class="btn-blue" style="width:100%;padding:14px;background:#003087" onclick="doPayNow()">🅿️ PAY NOW →</button><p style="font-size:12px;text-align:center">After paying, upload proof for AUTO code!</p><input type="file" id="payProofFile" accept=".jpg,.png,.pdf"><button class="btn-blue" style="width:100%;background:#16a34a" onclick="payProofUpload()">📤 I PAID - UPLOAD PROOF → GET CODE</button><p id="payProofStatus"></p><p onclick="closePayModal()" style="text-align:center;cursor:pointer">Close</p></div></div>
+<div id="signupBox" class="popup"><div class="box"><h3>Signup - Start Free</h3><input id="s_name" placeholder="Full Name *"><input id="s_email" placeholder="Email *"><input id="s_phone" placeholder="Phone e.g. 71234567"><input id="s_town" placeholder="Town / City *"><input id="s_password" type="password" placeholder="Create Password * min 4 chars"><select id="s_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><select id="s_level"><option selected>Pre-Primary (Lower Learning)</option><option>Secondary Education (Upper Learning)</option><option>Adult Education (Tertiary - Vocational - Training)</option></select><button class="btn-yellow" style="width:100%;padding:13px" onclick="doSignup()">SIGNUP - START FREE</button><p id="signupError" style="color:red;text-align:center"></p><p onclick="closeSignup()" style="text-align:center;cursor:pointer">Close</p></div></div>
+<div id="loginBox" class="popup"><div class="box"><h3>Login</h3><input id="l_emailPhone" placeholder="Email OR Phone"><input id="l_password" type="password" placeholder="Password *"><select id="l_role"><option>Student</option><option>Teacher</option><option>Private</option><option>Parent</option></select><button class="btn-blue" style="width:100%;padding:13px" onclick="doLogin()">LOGIN</button><p style="text-align:center">No account? <b onclick="closeLogin();openSignup()" style="cursor:pointer;color:#2563eb">SIGNUP FIRST - FREE</b></p><p id="loginError" style="color:red;text-align:center"></p><p onclick="closeLogin()" style="text-align:center;cursor:pointer">Close</p></div></div>
+
+<script>
+function el(id){return document.getElementById(id);}
+function showToast(m){var t=el('toast');if(!t)return;t.innerHTML=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3500);}
+var PAYPAL_LINK="https://www.paypal.me/KutlwanoKoronji";
+var currentLevel="Pre-Primary (Lower Learning)";
+var currentUserName=localStorage.getItem('lesedi_name')||"Guest";
+var currentUserPhone=localStorage.getItem('lesedi_phone')||"";
+var currentUserRole=localStorage.getItem('lesedi_role')||"";
+var unlockedTopics=["Fractions","Road Signs","Photosynthesis","Plants","Numbers"];
+var VALID_CODES=["LESEDI10","LESEDI-10","P10","EDU10","2026P10"];
+var currentPayPackage='Single Test Digital';
+var customCodes=[]; try{customCodes=JSON.parse(localStorage.getItem('lesedi_codes')||'[]');}catch(e){}
+window.toggleMenu=function(){el('sidebar').classList.toggle('open');};
+window.go=function(sec,link){
+  if(link){var a=document.querySelectorAll('.sidebar a');for(var i=0;i<a.length;i++)a[i].classList.remove('active');link.classList.add('active');}
+  el('sidebar').classList.remove('open');
+  if(sec==='admin'){var role=localStorage.getItem('lesedi_role')||currentUserRole;var logged=localStorage.getItem('lesedi_isLoggedIn')==='true';if(!logged){alert("SIGNUP and LOGIN as Teacher first");openSignup();return;}if(role!=='Teacher'){alert("Admin is for TEACHERS only");return;}}
+  var secs=document.querySelectorAll('.sec');for(var j=0;j<secs.length;j++){secs[j].classList.remove('active');}
+  var t=el('sec-'+sec);if(t){t.classList.add('active');}else{el('sec-home').classList.add('active');}
+  if(sec==='lessonPlan'){renderLPAdmin();}
+  if(sec==='results'||sec==='account')renderMyResults();
+  renderTopicChips();window.scrollTo(0,0);
+};
+window.searchExams=function(){var q=el('searchInput').value;if(el('wantTopic'))el('wantTopic').value=q;go('takeExam');};
+window.setLevel=function(lvl,btn){currentLevel=lvl;if(el('selectedLevelText'))el('selectedLevelText').innerHTML=lvl;var n=document.querySelectorAll('.lvlName');for(var i=0;i<n.length;i++)n[i].innerHTML=lvl;var b=document.querySelectorAll('.level-btn');for(var j=0;j<b.length;j++)b[j].classList.remove('active');if(btn)btn.classList.add('active');renderTopicChips();};
+window.showUnlockBox=function(){go('home');setTimeout(function(){var b=el('unlockBox');if(b)b.scrollIntoView({behavior:'smooth',block:'center'});},300);};
+window.isUnlocked=function(t){return true;};
+window.unlockWithCode=function(){var code=(el('unlockCodeInput')?el('unlockCodeInput').value.trim().toUpperCase():"");if(!code){alert("Enter code - Demo: LESEDI10");return;}if(VALID_CODES.indexOf(code)>-1||code.indexOf("LESEDI")===0){if(el('unlockStatus'))el('unlockStatus').innerHTML="✅ UNLOCKED! All topics!";showToast("Unlocked!");}else{if(el('unlockStatus'))el('unlockStatus').innerHTML="❌ Wrong code. Demo: LESEDI10";}}};
+window.renderUnlockedList=function(){if(el('unlockedList'))el('unlockedList').innerHTML="All Topics Free";};
+window.openPayModal=function(p){currentPayPackage=p||'Single Test Digital';el('payPackageName').textContent=currentPayPackage+" - PER MONTH";el('payModal').style.display='block';updatePayCurrency();};
+window.closePayModal=function(){el('payModal').style.display='none';};
+window.updatePayCurrency=function(){var amt=getPayAmount();el('payAmountDisplay').innerHTML="Amount: "+amt.p+" / $"+amt.d+" PER MONTH";};
+function getPayAmount(){if(currentPayPackage.indexOf("School")>-1) return {p:"P800",d:"60"};if(currentPayPackage.indexOf("Family")>-1) return {p:"P450",d:"33"};if(currentPayPackage.indexOf("Teacher")>-1) return {p:"P300",d:"22"};if(currentPayPackage.indexOf("Pro Digital")>-1) return {p:"P150",d:"11"};if(currentPayPackage.indexOf("Adult")>-1) return {p:"P100",d:"8"};if(currentPayPackage.indexOf("Subject")>-1) return {p:"P50",d:"4"};return {p:"P10",d:"1"};}
+window.doPayNow=function(){var amt=getPayAmount();window.open(PAYPAL_LINK+"/"+amt.d,"_blank");showToast("PayPal $"+amt.d+" per month then upload proof");};
+window.payProofUpload=function(){var f=el('payProofFile').files[0];if(!f){alert("Upload proof first");return;}var c="LESEDI-"+Math.floor(1000+Math.random()*9000);customCodes.push({code:c});localStorage.setItem('lesedi_codes',JSON.stringify(customCodes));VALID_CODES.push(c);el('payProofStatus').innerHTML="🎉 AUTO CODE: "+c;if(el('unlockCodeInput'))el('unlockCodeInput').value=c;setTimeout(function(){closePayModal();unlockWithCode();},800);};
+window.whatsappOrder=function(m){window.open("https://wa.me/26771823638?text="+encodeURIComponent(m||"Dumela! Help - Education Lesedi"),"_blank");};
+
+function saveFeedback(t){var l=[];try{l=JSON.parse(localStorage.getItem('lesedi_feedback')||"[]");}catch(e){}l.unshift({name:currentUserName,msg:t,date:new Date().toLocaleString()});localStorage.setItem('lesedi_feedback',JSON.stringify(l.slice(0,20)));renderFeedbackAdmin();}
+function renderFeedbackAdmin(){var l=[];try{l=JSON.parse(localStorage.getItem('lesedi_feedback')||"[]");}catch(e){}var h=l.map(function(f){return "<div style='background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px;margin:6px 0'><b>"+f.name+"</b> - "+f.date+"<br>"+f.msg+"</div>";}).join("");if(el('adminFeedbackList'))el('adminFeedbackList').innerHTML=h||"No feedback yet";}
+
+window.getLessonData=function(topic){
+  var low=(topic||"").toLowerCase();
+  if(low.indexOf("skeleton")>-1) return {emoji:"💀🦴",title:"HUMAN SKELETON",objectives:["Name 5 major bones","Explain 3 functions: Protection, Support, Movement","Identify skeleton and label correctly"],points:["Skull - Protects brain","Ribs - Protect heart & lungs","Spine - 33 vertebrae","Femur = Longest bone","206 Bones in adult"],activity:"Learners label skeleton in pairs - 5 mins. Then Digital Quiz.",assessment:"Digital Click Quiz - 5 Questions. Pass = 4/5.",homework:"Draw and label your own skeleton with 5 bones."};
+  if(low.indexOf("photo")>-1) return {emoji:"🌱☀️",title:"PHOTOSYNTHESIS",objectives:["Define photosynthesis","Write equation: CO2 + Water + Sunlight = Glucose + Oxygen","Explain chlorophyll"],points:["In leaf - Chlorophyll traps sunlight","Needs: Sunlight, Water, CO2","Produces: Glucose + Oxygen","6CO2 + 6H2O = C6H12O6 + 6O2"],activity:"Experiment: Cover leaf with foil, observe.",assessment:"5 Digital Questions on equation.",homework:"Explain photosynthesis to parent in Setswana + English."};
+  if(low.indexOf("road")>-1||low.indexOf("stop")>-1) return {emoji:"🛑🚦",title:"ROAD SIGNS - BE SAFE",objectives:["Identify STOP, YIELD, 60km/h","Explain what to do at STOP","State why seatbelt saves life"],points:["STOP = Must STOP fully","YIELD = Give way","60 km/h in town, 120 km/h highway","Seatbelt ALWAYS"],activity:"Role-play driver + pedestrians at STOP sign.",assessment:"Digital Quiz - 10 Road Signs questions. Must score 8/10.",homework:"Count 5 road signs on way home."};
+  if(low.indexOf("fraction")>-1) return {emoji:"📐🍕",title:"FRACTIONS - PSLE",objectives:["Find 1/2, 1/4, 3/4 of numbers up to 200","Add 1/2 + 1/4 = 3/4","Solve word problem with money"],points:["1/2 of 20 = 10","3/4 of 100 = 75","1/2 + 1/4 = 3/4","25% = 1/4"],activity:"Use paper pizza into fractions. Groups compete.",assessment:"Digital Quiz 10 Fractions - Auto marked.",homework:"5 Fraction questions from past PSLE."};
+  return {emoji:"🎓✨",title:(topic||"LESSON").toUpperCase(),objectives:["Define "+topic,"List 3 key points about "+topic+" for "+currentLevel,"Answer 5 Digital Questions on "+topic],points:["What is "+topic+"?","Why is it important in Botswana?","3 Key points for "+currentLevel,"Example from everyday life"],activity:"Think-Pair-Share: Discuss "+topic+" in pairs, then Digital Quiz.",assessment:"Digital Click Test - 10 questions on "+topic+".",homework:"Write 5 sentences about "+topic};
+};
+window.buildLessonHTML=function(topic,lvl,dur,cls,d){
+  var today=new Date().toLocaleDateString();
+  var html="<div class='lp-box'><div style='text-align:center;border-bottom:2px solid #16a34a;padding-bottom:8px'><div style='font-size:32px'>"+d.emoji+"</div><h2 style='margin:4px 0'>LESSON PLAN: "+d.title+"</h2><div style='font-size:12px;background:#f0fdf4;padding:6px;border-radius:6px'><b>"+lvl+"</b> • "+dur+" Mins • Date: "+today+" "+(cls?"• Class: "+cls:"")+" • Teacher: "+currentUserName+"</div></div>"
+  +"<div class='lp-section'><b>🎯 1. OBJECTIVES:</b><br>"+d.objectives.map(function(o){return "• "+o;}).join("<br>")+"</div>"
+  +"<div class='lp-section'><b>📦 2. MATERIALS:</b><br>• Chalk/Whiteboard • Digital Click Quiz (10 Qs)</div>"
+  +"<div class='lp-section'><b>⏰ 3. STEPS ("+dur+" mins):</b><br><b>0-5 mins Starter:</b> What do you know about "+topic+"?<br><b>5-20 mins Teach:</b><br>"+d.points.map(function(p){return "• "+p;}).join("<br>")+"<br><b>20-30 mins Activity:</b> "+d.activity+"<br><b>30-"+dur+" mins Digital Test:</b> Digital Click Exam</div>"
+  +"<div class='lp-section'><b>✅ 4. ASSESSMENT:</b><br>"+d.assessment+"</div>"
+  +"<div class='lp-section'><b>🏠 5. HOMEWORK:</b><br>"+d.homework+"</div>"
+  +"<div style='display:flex;gap:6px'><button class='btn-blue' style='flex:1;background:#16a34a' onclick=\"window.print()\">🖨️ PRINT</button><button class='btn-yellow' style='flex:1' onclick=\"startLevelQuiz('sci','"+topic.replace(/'/g,"")+"')\">▶️ QUIZ →</button></div></div>";
+  return html;
+};
+window.quickLP=function(t){el('lpTopic').value=t;createLessonPlan();};
+window.createLessonPlan=function(){
+  var topic=(el('lpTopic')?el('lpTopic').value.trim():"")||"Photosynthesis";
+  var lvl=el('lpLevel')?el('lpLevel').value:currentLevel;
+  var dur=el('lpDuration')?el('lpDuration').value:"40";
+  var cls=el('lpClassSize')?el('lpClassSize').value.trim():"";
+  var d=getLessonData(topic);var html=buildLessonHTML(topic,lvl,dur,cls,d);
+  el('lpOutput').innerHTML=html;
+  var list=[];try{list=JSON.parse(localStorage.getItem('lesedi_lessonplans')||"[]");}catch(e){}
+  var id=Date.now();list.unshift({id:id,topic:topic,date:new Date().toLocaleDateString(),by:currentUserName,level:lvl,duration:dur,html:html});
+  localStorage.setItem('lesedi_lessonplans',JSON.stringify(list.slice(0,20)));renderLPAdmin();showToast("✅ Saved - Click VIEW below!");
+};
+window.viewLessonPlan=function(id){
+  var list=[];try{list=JSON.parse(localStorage.getItem('lesedi_lessonplans')||"[]");}catch(e){}
+  var found=null;for(var i=0;i<list.length;i++){if(list[i].id==id){found=list[i];break;}}
+  if(!found){for(var j=0;j<list.length;j++){if(list[j].topic===id){found=list[j];break;}}}
+  if(found){el('lpViewArea').innerHTML="<h4>👁️ VIEWING: "+found.topic+" <button class='btn-blue' style='float:right' onclick=\"document.getElementById('lpViewArea').innerHTML=''\">✖ CLOSE</button></h4>"+found.html;el('lpViewArea').scrollIntoView({behavior:'smooth'});el('lpOutput').innerHTML=found.html;}
+  else{var d=getLessonData(id);var lvl=el('lpLevel')?el('lpLevel').value:currentLevel;el('lpViewArea').innerHTML=buildLessonHTML(id,lvl,"40","",d);}
+};
+window.deleteLessonPlan=function(id){var list=[];try{list=JSON.parse(localStorage.getItem('lesedi_lessonplans')||"[]");}catch(e){}list=list.filter(function(p){return p.id!=id && p.topic!==id;});localStorage.setItem('lesedi_lessonplans',JSON.stringify(list));renderLPAdmin();};
+window.renderLPAdmin=function(){
+  var lp=[];try{lp=JSON.parse(localStorage.getItem('lesedi_lessonplans')||"[]");}catch(e){}
+  if(el('adminLPList'))el('adminLPList').innerHTML=lp.map(function(p){return "<div>📝 "+p.topic+" - "+p.by+" <button class='btn-blue' onclick=\"viewLessonPlan("+p.id+")\">VIEW</button></div>";}).join("")||"No lesson plans";
+  if(el('lpList')){
+    if(lp.length===0){el('lpList').innerHTML="<p style='font-size:12px;color:#64748b'>No saved plans yet - Create one above.</p>";}
+    else{el('lpList').innerHTML=lp.map(function(p){var safeId=p.id||("'"+p.topic.replace(/'/g,"")+"'");return "<div style='background:#fff;border:2px solid #16a34a;padding:10px;border-radius:10px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:8px'><div><b>📝 "+p.topic+"</b><br><small>"+p.date+" • "+p.level+"</small></div><div style='display:flex;gap:6px'><button class='btn-blue' style='background:#16a34a' onclick=\"viewLessonPlan("+safeId+")\">👁️ VIEW</button><button class='btn-blue' style='background:#ef4444' onclick=\"deleteLessonPlan("+safeId+")\">🗑️</button></div></div>";}).join("");}
+  }
+};
+
+var SYLLABUS={"Pre-Primary (Lower Learning)":"<b>PSLE - Std 1-7:</b> Setswana, English, Maths, Science, Photosynthesis","Secondary Education (Upper Learning)":"<b>JCE + BGCSE:</b> Maths, English, Biology, Photosynthesis, Physics, Chemistry","Adult Education (Tertiary - Vocational - Training)":"<b>ADULT:</b> Tertiary UB/BIUST • BTEP Plumbing, Electrical • Road Signs, CV"};
+var TOPICS_BY_LEVEL={
+"Pre-Primary (Lower Learning)":["Fractions","Phonics","Numbers","Plants","Photosynthesis","Animals","Setswana","Social Studies","Biology","Human Skeleton"],
+"Secondary Education (Upper Learning)":["Algebra","Biology","Photosynthesis","Physics","Chemistry","Essay","Commerce","History","Fractions","Plants"],
+"Adult Education (Tertiary - Vocational - Training)":["Tertiary","Vocational","Road Signs","Plumbing","Electrical","CV","GPA","Interview","Bricklaying","Welding","Photosynthesis"]
+};
+var TOPIC_QUESTIONS={
+"Photosynthesis":[
+{q:"What is photosynthesis?",o:["Animals eating","Process where plants make food using sunlight","Water boiling","Rocks breaking"],a:1,topic:"Photosynthesis"},
+{q:"Equation for photosynthesis?",o:["CO2 + Water + Sunlight = Glucose + Oxygen","O2 + Glucose = CO2 + Water","Nitrogen + Water = Protein","CO2 + O2 = Glucose"],a:0,topic:"Photosynthesis"},
+{q:"Where does photosynthesis happen?",o:["Root","Stem","Leaf - Chloroplast","Flower"],a:2,topic:"Photosynthesis"},
+{q:"What pigment traps sunlight?",o:["Melanin","Chlorophyll","Haemoglobin","Keratin"],a:1,topic:"Photosynthesis"},
+{q:"What gas do plants take in?",o:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],a:2,topic:"Photosynthesis"},
+{q:"What gas is released?",o:["Carbon dioxide","Nitrogen","Oxygen","Hydrogen"],a:2,topic:"Photosynthesis"},
+{q:"What else is needed besides CO2 and water?",o:["Moonlight","Sunlight","Darkness","Wind"],a:1,topic:"Photosynthesis"},
+{q:"What food does plant make?",o:["Oxygen","Glucose","Carbon dioxide","Water"],a:1,topic:"Photosynthesis"},
+{q:"6CO2 + 6H2O = ?",o:["C6H12O6 + 6O2","2CO2 + H2O","C6H12O6 only","O2 only"],a:0,topic:"Photosynthesis"},
+{q:"Why are leaves green?",o:["Chlorophyll","Water","Sun","Soil"],a:0,topic:"Photosynthesis"}],
+"Fractions":[
+{q:"What is 1/2 of 20?",o:["8","10","12","20"],a:1,topic:"Fractions"},
+{q:"What is 3/4 of 100?",o:["70","60","75","80"],a:2,topic:"Fractions"},
+{q:"1/2 + 1/4 = ?",o:["1/4","2/4","3/4","1/2"],a:2,topic:"Fractions"},
+{q:"What is 25% as a fraction?",o:["1/2","1/4","1/3","3/4"],a:1,topic:"Fractions"},
+{q:"1/4 of P200?",o:["P25","P75","P100","P50"],a:3,topic:"Fractions"},
+{q:"Which is biggest: 1/2, 1/4, 1/3?",o:["1/4","1/3","1/2","All same"],a:2,topic:"Fractions"},
+{q:"2/5 of 50?",o:["10","20","15","25"],a:1,topic:"Fractions"},
+{q:"What is 0.5 as fraction?",o:["1/4","2/3","1/2","1/5"],a:2,topic:"Fractions"},
+{q:"1/2 of 1 hour in minutes?",o:["15 mins","60 mins","45 mins","30 mins"],a:3,topic:"Fractions"},
+{q:"If you eat 2/4 of pizza, how much left?",o:["1/4","2/4","3/4","All"],a:1,topic:"Fractions"}],
+"Phonics":[
+{q:"Which word has 'sh' sound?",o:["Cat","Ship","Dog","Book"],a:1,topic:"Phonics"},
+{q:"Plural of 'child'?",o:["Childs","Childes","Children","Childrens"],a:2,topic:"Phonics"},
+{q:"Which is a vowel?",o:["B","K","A","T"],a:2,topic:"Phonics"},
+{q:"Past tense of 'go'?",o:["Goed","Going","Went","Gone to"],a:2,topic:"Phonics"},
+{q:"Opposite of 'hot'?",o:["Warm","Cold","Heat","Sun"],a:1,topic:"Phonics"},
+{q:"Correct spelling:",o:["Lesedy","Lessedi","Lesede","Lesedi"],a:3,topic:"Phonics"},
+{q:"Synonym of 'happy'?",o:["Sad","Angry","Joyful","Tired"],a:2,topic:"Phonics"},
+{q:"Which is a noun?",o:["Quickly","Gaborone","Run","Beautiful"],a:1,topic:"Phonics"},
+{q:"I ___ reading a book.",o:["Is","Are","Am","Be"],a:2,topic:"Phonics"},
+{q:"Dumela means?",o:["Bye","Hello","Thank you","Yes"],a:1,topic:"Phonics"}],
+"Numbers":[
+{q:"What is 12 x 8?",o:["88","96","84","108"],a:1,topic:"Numbers"},
+{q:"What is 150 ÷ 5?",o:["25","35","30","20"],a:2,topic:"Numbers"},
+{q:"What is 7 squared?",o:["14","21","49","77"],a:2,topic:"Numbers"},
+{q:"1 km in metres?",o:["100m","1000m","10m","10000m"],a:1,topic:"Numbers"},
+{q:"9 + 6 x 2 = ?",o:["30","15","21","18"],a:2,topic:"Numbers"},
+{q:"Triangle has how many sides?",o:["4","5","6","3"],a:3,topic:"Numbers"},
+{q:"If book is P15, 4 books cost?",o:["P45","P60","P50","P75"],a:1,topic:"Numbers"},
+{q:"What is 100 - 37?",o:["63","73","67","53"],a:0,topic:"Numbers"},
+{q:"Next number: 2,4,6,8,?",o:["9","11","10","12"],a:2,topic:"Numbers"},
+{q:"What is 50% of 80?",o:["30","50","40","20"],a:2,topic:"Numbers"}],
+"Plants":[
+{q:"Which part makes food in plant?",o:["Root","Stem","Leaf","Flower"],a:2,topic:"Plants"},
+{q:"What gas do plants take in?",o:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],a:2,topic:"Plants"},
+{q:"Water boils at?",o:["50C","90C","100C","120C"],a:2,topic:"Plants"},
+{q:"Main source of energy for plants?",o:["Moon","Sun","Wind","Coal"],a:1,topic:"Plants"},
+{q:"What is chlorophyll?",o:["Root hair","Green pigment that traps sunlight","Flower part","Seed"],a:1,topic:"Plants"},
+{q:"What do plants produce?",o:["Carbon dioxide","Glucose + Oxygen","Nitrogen","Protein"],a:1,topic:"Plants"},
+{q:"Which is a plant?",o:["Stone","Tree","Car","Chair"],a:1,topic:"Plants"},
+{q:"Seed needs what to grow?",o:["Only darkness","Water, air, warmth","Only sand","Only cold"],a:1,topic:"Plants"},
+{q:"Photosynthesis happens in?",o:["Root","Chloroplast in leaf","Stem","Flower"],a:1,topic:"Plants"},
+{q:"Which needs sunlight?",o:["Photosynthesis","Respiration only","No process","Digestion"],a:0,topic:"Plants"}],
+"Animals":[
+{q:"How many legs does an insect have?",o:["8","4","6","10"],a:2,topic:"Animals"},
+{q:"What do bees give us?",o:["Milk","Honey","Eggs","Wool"],a:1,topic:"Animals"},
+{q:"Which organ pumps blood?",o:["Liver","Heart","Lung","Kidney"],a:1,topic:"Animals"},
+{q:"What is a habitat?",o:["Food","Place where organism lives","Water","Air"],a:1,topic:"Animals"},
+{q:"Which is a mammal?",o:["Chicken","Cow","Snake","Fish"],a:1,topic:"Animals"},
+{q:"Ecosystem includes?",o:["Only animals","Living + non-living","Only plants","Only water"],a:1,topic:"Animals"},
+{q:"Baby frog is called?",o:["Calf","Tadpole","Puppy","Kitten"],a:1,topic:"Animals"},
+{q:"Which animal eats meat only?",o:["Goat","Lion","Cow","Rabbit"],a:1,topic:"Animals"},
+{q:"Birds use what to fly?",o:["Fins","Wings","Legs","Tail only"],a:1,topic:"Animals"},
+{q:"Which is living?",o:["Stone","Tree","Car","Chair"],a:1,topic:"Animals"}],
+"Setswana":[
+{q:"Dumela means?",o:["Bye","Thank you","Hello","Yes"],a:2,topic:"Setswana"},
+{q:"'Ke a leboga' means?",o:["Hello","I am fine","Thank you","Goodbye"],a:2,topic:"Setswana"},
+{q:"What is 'metsi' in English?",o:["Food","Water","House","School"],a:1,topic:"Setswana"},
+{q:"Setswana for 'child'?",o:["Monna","Ngwana","Mosadi","Kgosi"],a:1,topic:"Setswana"},
+{q:"What is 'bogobe'?",o:["Porridge","Meat","Water","Bread"],a:0,topic:"Setswana"},
+{q:"'Tsamaea sentle' means?",o:["Go well","Come here","Thank you","Hello"],a:0,topic:"Setswana"},
+{q:"National language of Botswana?",o:["English only","Setswana","Zulu","Afrikaans"],a:1,topic:"Setswana"},
+{q:"'Pula' also means?",o:["Money","Rain / Currency","School","Food"],a:1,topic:"Setswana"},
+{q:"How do you say 'How are you?'",o:["O tsogile jang?","Dumela","Ke a leboga","Sala sentle"],a:0,topic:"Setswana"},
+{q:"Capital of Botswana?",o:["Maun","Gaborone","Francistown","Palapye"],a:1,topic:"Setswana"}],
+"Social Studies":[
+{q:"Capital of Botswana?",o:["Maun","Francistown","Gaborone","Palapye"],a:2,topic:"Social Studies"},
+{q:"Currency of Botswana?",o:["Rand","Pula","Dollar","Kwacha"],a:1,topic:"Social Studies"},
+{q:"Botswana got independence in?",o:["1960","1966","1970","1980"],a:1,topic:"Social Studies"},
+{q:"Which is a Kgotla used for?",o:["Shopping","Community meetings","Airport","Hospital"],a:1,topic:"Social Studies"},
+{q:"Which is a neighbour of Botswana?",o:["Kenya","Namibia","Nigeria","Ghana"],a:1,topic:"Social Studies"},
+{q:"Okavango Delta is in which direction?",o:["South","North-West","South-East","North-East"],a:1,topic:"Social Studies"},
+{q:"Which animal is on Botswana coins?",o:["Lion","Zebra","Elephant","Leopard"],a:1,topic:"Social Studies"},
+{q:"'Fatshe leno la rona' means?",o:["Our land","Our water","Our school","Our cattle"],a:0,topic:"Social Studies"},
+{q:"Which is a village in Botswana?",o:["London","Mochudi","Paris","Cairo"],a:1,topic:"Social Studies"},
+{q:"President's house is called?",o:["State House","Parliament","Court","Museum"],a:0,topic:"Social Studies"}],
+"Algebra":[
+{q:"Solve 2x+3=11, x=?",o:["5","3","4","7"],a:2,topic:"Algebra"},
+{q:"Gradient of y=3x+2?",o:["2","5","3","1"],a:2,topic:"Algebra"},
+{q:"Root 81?",o:["8","9","7","81"],a:1,topic:"Algebra"},
+{q:"Factorise x2-9?",o:["(x-9)(x+1)","(x-3)(x+3)","(x+3)2","(x-3)2"],a:1,topic:"Algebra"},
+{q:"What is 3! ?",o:["9","3","6","12"],a:2,topic:"Algebra"},
+{q:"Mean of 4,6,8,10?",o:["6","8","7","9"],a:2,topic:"Algebra"},
+{q:"Probability of head?",o:["1","1/3","1/2","1/4"],a:2,topic:"Algebra"},
+{q:"Log 100 base 10?",o:["10","1","2","100"],a:2,topic:"Algebra"},
+{q:"Simplify 2² x 2³",o:["16","8","32","64"],a:2,topic:"Algebra"},
+{q:"If x=5, 3x+2 = ?",o:["13","17","15","10"],a:1,topic:"Algebra"}],
+"Biology":[
+{q:"Photosynthesis produces?",o:["Carbon + Water","Glucose + Oxygen","Protein + Energy","Nitrogen + Oxygen"],a:1,topic:"Biology"},
+{q:"Powerhouse of cell?",o:["Nucleus","Mitochondria","Ribosome","Vacuole"],a:1,topic:"Biology"},
+{q:"What is DNA?",o:["Protein","Genetic material","Enzyme","Hormone"],a:1,topic:"Biology"},
+{q:"Which blood cells carry oxygen?",o:["White","Platelets","Red","Plasma"],a:2,topic:"Biology"},
+{q:"What is osmosis?",o:["Blood flow","Water movement across membrane","Photosynthesis","Respiration"],a:1,topic:"Biology"},
+{q:"Human skeleton has how many bones?",o:["106","306","206","156"],a:2,topic:"Biology"},
+{q:"Longest bone?",o:["Humerus","Femur","Skull","Rib"],a:1,topic:"Biology"},
+{q:"Where does gas exchange happen?",o:["Heart","Lungs - Alveoli","Liver","Kidney"],a:1,topic:"Biology"},
+{q:"Main function of roots?",o:["Make food","Absorb water","Make seeds","Protect"],a:1,topic:"Biology"},
+{q:"Chlorophyll is found in?",o:["Root","Chloroplast","Nucleus","Mitochondria"],a:1,topic:"Biology"}],
+"Human Skeleton":[
+{q:"How many bones in adult?",o:["106","206","306","156"],a:1,topic:"Human Skeleton"},
+{q:"Longest bone?",o:["Humerus","Femur","Skull","Rib"],a:1,topic:"Human Skeleton"},
+{q:"Skull protects?",o:["Heart","Brain","Lungs","Stomach"],a:1,topic:"Human Skeleton"},
+{q:"Ribs protect?",o:["Brain","Heart & Lungs","Legs","Arms"],a:1,topic:"Human Skeleton"},
+{q:"How many vertebrae?",o:["23","33","43","13"],a:1,topic:"Human Skeleton"},
+{q:"Which is arm bone?",o:["Femur","Humerus","Tibia","Rib"],a:1,topic:"Human Skeleton"},
+{q:"Function of skeleton?",o:["Only movement","Support, Protection, Movement","Only protection","Only blood"],a:1,topic:"Human Skeleton"},
+{q:"Baby has how many bones?",o:["206","300","100","150"],a:1,topic:"Human Skeleton"},
+{q:"Knee joint is?",o:["Ball and socket","Hinge joint","Fixed","No joint"],a:1,topic:"Human Skeleton"},
+{q:"What makes bones hard?",o:["Water","Calcium","Iron only","Blood"],a:1,topic:"Human Skeleton"}],
+"Physics":[
+{q:"Newton's 2nd law?",o:["E=mc2","F=ma","V=IR","P=IV"],a:1,topic:"Physics"},
+{q:"Unit of current?",o:["Volt","Ampere","Ohm","Watt"],a:1,topic:"Physics"},
+{q:"What causes day/night?",o:["Moon orbit","Earth rotation","Sun moving","Eclipse"],a:1,topic:"Physics"},
+{q:"Speed = ?",o:["Distance x Time","Distance / Time","Force x Mass","Energy / Time"],a:1,topic:"Physics"},
+{q:"Unit of force?",o:["Joule","Watt","Newton","Volt"],a:2,topic:"Physics"},
+{q:"What is gravity?",o:["Push only","Force pulling to Earth","Magnet","Light"],a:1,topic:"Physics"},
+{q:"Which travels fastest?",o:["Sound","Light","Car","Plane"],a:1,topic:"Physics"},
+{q:"Ohm's law V = ?",o:["I+R","IR","I/R","R/I"],a:1,topic:"Physics"},
+{q:"Cos 0 = ?",o:["0","0.5","1","-1"],a:2,topic:"Physics"},
+{q:"Energy of moving object?",o:["Potential","Kinetic","Heat","Chemical"],a:1,topic:"Physics"}],
+"Chemistry":[
+{q:"pH of neutral?",o:["0","14","7","1"],a:2,topic:"Chemistry"},
+{q:"Chemical symbol for water?",o:["CO2","H2O","O2","NaCl"],a:1,topic:"Chemistry"},
+{q:"Which is an acid?",o:["Soap","Vinegar / Lemon","Baking soda","Bleach"],a:1,topic:"Chemistry"},
+{q:"Symbol for Sodium?",o:["So","Na","S","N"],a:1,topic:"Chemistry"},
+{q:"What is H2SO4?",o:["Water","Sulphuric acid","Salt","Oxygen"],a:1,topic:"Chemistry"},
+{q:"Which gas is in air most?",o:["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],a:2,topic:"Chemistry"},
+{q:"What is NaCl?",o:["Water","Common salt","Acid","Sugar"],a:1,topic:"Chemistry"},
+{q:"Atomic number of Carbon?",o:["12","6","8","14"],a:1,topic:"Chemistry"},
+{q:"Which is a metal?",o:["Oxygen","Iron","Sulphur","Carbon"],a:1,topic:"Chemistry"},
+{q:"pH of acid is?",o:["More than 7","7","Less than 7","14"],a:2,topic:"Chemistry"}],
+"Essay":[
+{q:"Essay Introduction should?",o:["Conclude","Introduce topic","Give examples","List references"],a:1,topic:"Essay"},
+{q:"What is metaphor?",o:["Comparing with like","Comparing without like/as","Exaggeration","Repetition"],a:1,topic:"Essay"},
+{q:"What is theme?",o:["Character","Main idea","Setting","Plot twist"],a:1,topic:"Essay"},
+{q:"Summary should be?",o:["Copy all","Brief and own words","Long","Add opinion"],a:1,topic:"Essay"},
+{q:"What is alliteration?",o:["Rhyme","Same starting sound","Opposite","Question"],a:1,topic:"Essay"},
+{q:"Choose formal:",o:["Gimme","I want it","I would be grateful","Give me now"],a:2,topic:"Essay"},
+{q:"What is plot?",o:["Character","Sequence of events","Place","Theme"],a:1,topic:"Essay"},
+{q:"Conclusion should?",o:["Introduce new idea","Summarise main points","Add new story","Ask many questions"],a:1,topic:"Essay"},
+{q:"Inference means?",o:["Copying","Reading between lines","Skimming","Scanning"],a:1,topic:"Essay"},
+{q:"Good paragraph has?",o:["One idea only","Many ideas mixed","No topic sentence","Only conclusion"],a:0,topic:"Essay"}],
+"Commerce":[
+{q:"What is profit?",o:["Cost - Selling","Selling - Cost","Cost + Selling","Loss only"],a:1,topic:"Commerce"},
+{q:"What is a budget?",o:["No plan","Plan for income & expenses","Only spending","Borrowing only"],a:1,topic:"Commerce"},
+{q:"If you buy P10 sell P15 profit?",o:["P25","P5","P10","P15"],a:1,topic:"Commerce"},
+{q:"What is a receipt?",o:["Proof of payment","Advert","Order","Invoice only"],a:0,topic:"Commerce"},
+{q:"Which is a business cost?",o:["Profit","Rent / Transport","Sales","Income"],a:1,topic:"Commerce"},
+{q:"Demand means?",o:["Supply only","Want + ability to buy","No want","Profit"],a:1,topic:"Commerce"},
+{q:"What is interest?",o:["Free money","Cost of borrowing money","Profit only","Tax"],a:1,topic:"Commerce"},
+{q:"Break-even is?",o:["Profit","Loss","No profit no loss","High profit"],a:2,topic:"Commerce"},
+{q:"Marketing is?",o:["Only selling","Promoting product to customers","Only buying","No promotion"],a:1,topic:"Commerce"},
+{q:"What is a customer?",o:["Seller","Person who buys","Worker","Owner"],a:1,topic:"Commerce"}],
+"History":[
+{q:"Botswana independence year?",o:["1960","1966","1970","1980"],a:1,topic:"History"},
+{q:"First President?",o:["Festus Mogae","Seretse Khama","Ian Khama","Masisi"],a:1,topic:"History"},
+{q:"Capital before Gaborone?",o:["Maun","Mahikeng / Mafikeng","Francistown","Lobatse"],a:1,topic:"History"},
+{q:"What is Bogosi?",o:["School","Chieftainship","Money","Road"],a:1,topic:"History"},
+{q:"Kgotla is used for?",o:["Shopping","Community meetings","Hospital","Airport"],a:1,topic:"History"},
+{q:"Which is historical site?",o:["Tsodilo Hills","Gaborone Mall","Airport","University"],a:0,topic:"History"},
+{q:"Who was Khama the Great?",o:["Teacher","Kgosi of Bangwato","President only","Trader"],a:1,topic:"History"},
+{q:"Bechuanaland protectorate of?",o:["France","Britain","Germany","Portugal"],a:1,topic:"History"},
+{q:"What does Pula mean?",o:["Only money","Rain - blessing","School","Cattle"],a:1,topic:"History"},
+{q:"When Republic?",o:["30 Sep 1966","30 Sep 1960","1 Jan 1970","30 Sep 1980"],a:0,topic:"History"}],
+"Road Signs":[
+{q:"STOP sign means?",o:["Slow only","Must STOP completely","Go fast","Park"],a:1,topic:"Road Signs"},
+{q:"Speed limit in town?",o:["120 km/h","100 km/h","60 km/h","30 km/h"],a:2,topic:"Road Signs"},
+{q:"When wear seatbelt?",o:["Only highway","Always","Only night","Never"],a:1,topic:"Road Signs"},
+{q:"YIELD means?",o:["Speed up","Give way to others","Stop forever","No entry"],a:1,topic:"Road Signs"},
+{q:"Red traffic light means?",o:["Go","Prepare","Stop","Speed"],a:2,topic:"Road Signs"},
+{q:"Zebra crossing is for?",o:["Cars only","Pedestrians to cross","Parking","Buses"],a:1,topic:"Road Signs"},
+{q:"What to do at crossing?",o:["Speed","Stop / Give way to pedestrians","Hoot only","Ignore"],a:1,topic:"Road Signs"},
+{q:"Drinking and driving?",o:["Allowed","Not allowed - Dangerous","Only at night","Only short distance"],a:1,topic:"Road Signs"},
+{q:"What does 120 km/h mean?",o:["Minimum","Maximum speed","No speed","Only trucks"],a:1,topic:"Road Signs"},
+{q:"Before crossing road?",o:["Run","Look left, right, left","Close eyes","Cross anywhere"],a:1,topic:"Road Signs"}],
+"Tertiary":[
+{q:"What is Tertiary Education?",o:["Primary school","University / College after Secondary","Road sign","Licence"],a:1,topic:"Tertiary"},
+{q:"What is GPA?",o:["Road sign","Grade Point Average","Game","Car"],a:1,topic:"Tertiary"},
+{q:"What is plagiarism?",o:["Studying","Copying others work as yours","Group work","Revision"],a:1,topic:"Tertiary"},
+{q:"What is a Degree?",o:["Primary certificate","University qualification (3-4 years)","Road licence","CV"],a:1,topic:"Tertiary"},
+{q:"UB stands for?",o:["University of Botswana","University of Britain","Universal Bank","Urban Botswana"],a:0,topic:"Tertiary"},
+{q:"BIUST is in?",o:["Gaborone","Palapye","Maun","Francistown"],a:1,topic:"Tertiary"},
+{q:"What is a Bursary?",o:["Loan only","Financial help for study","Road fine","Tax"],a:1,topic:"Tertiary"},
+{q:"What is a Lecture?",o:["Primary lesson","University teaching session","Road sign","Exam"],a:1,topic:"Tertiary"},
+{q:"What to include in assignment?",o:["Only jokes","References, own work","Copy only","No name"],a:1,topic:"Tertiary"},
+{q:"Why attend orientation?",o:["No need","Learn about campus, rules","Only for fun","To skip class"],a:1,topic:"Tertiary"}],
+"Vocational":[
+{q:"What is Vocational Training?",o:["Only theory","Hands-on skill: Plumbing, Electrical","Primary maths","No skill"],a:1,topic:"Vocational"},
+{q:"BTEP stands for?",o:["Botswana Technical Education Programme","Basic Teacher Programme","Botswana Trade Exam","None"],a:0,topic:"Vocational"},
+{q:"What does plumber do?",o:["Wiring","Pipes, water, toilets","Bricklaying","Welding"],a:1,topic:"Vocational"},
+{q:"What is apprenticeship?",o:["Only theory","Learn trade by working with expert","Primary school","No work"],a:1,topic:"Vocational"},
+{q:"Safety in workshop?",o:["Slippers","Safety boots, goggles, gloves","No protection","Hat only"],a:1,topic:"Vocational"},
+{q:"What is a trade test?",o:["Primary test","Practical test to prove skill","Road test","No test"],a:1,topic:"Vocational"},
+{q:"Which tool for electrical?",o:["Hammer only","Multimeter, screwdriver","Spade","Trowel"],a:1,topic:"Vocational"},
+{q:"Why wear gloves?",o:["Fashion","Protect hands","No reason","Only cold"],a:1,topic:"Vocational"},
+{q:"What is bricklaying?",o:["Wiring","Building walls with bricks","Plumbing","Painting only"],a:1,topic:"Vocational"},
+{q:"Certificate after vocational?",o:["No certificate","National Certificate / Trade Certificate","PSLE only","No value"],a:1,topic:"Vocational"}],
+"Plumbing":[
+{q:"What does a plumber fix?",o:["Wires","Pipes, taps, toilets, leaks","Walls","Roof only"],a:1,topic:"Plumbing"},
+{q:"Main tool for blocked drain?",o:["Multimeter","Plunger / Drain snake","Hammer","Paint brush"],a:1,topic:"Plumbing"},
+{q:"Water leak should be?",o:["Ignored","Fixed quickly to save water","Left","Covered"],a:1,topic:"Plumbing"},
+{q:"What is a stopcock?",o:["Light switch","Valve to stop water","Door handle","Tap only"],a:1,topic:"Plumbing"},
+{q:"Pipe for hot water is often?",o:["Blue","Red / Insulated","Black only","No colour"],a:1,topic:"Plumbing"},
+{q:"Why use Teflon tape?",o:["For wires","Seal pipe joints to stop leak","Paint wall","Clean"],a:1,topic:"Plumbing"},
+{q:"Toilet cistern does what?",o:["Stores water for flushing","Heats water","Lights room","No use"],a:0,topic:"Plumbing"},
+{q:"Safety with water + electricity?",o:["Work wet","Switch off power first","No need","Touch both"],a:1,topic:"Plumbing"},
+{q:"What is water pressure?",o:["Colour of water","Force of water in pipes","Taste","Temperature only"],a:1,topic:"Plumbing"},
+{q:"Which pipe is for waste?",o:["Copper small","PVC waste pipe - bigger","Electrical conduit","Gas pipe"],a:1,topic:"Plumbing"}],
+"Electrical":[
+{q:"What does electrician do?",o:["Pipes","Wiring, lights, plugs, DB board","Bricks","Painting"],a:1,topic:"Electrical"},
+{q:"Safety first?",o:["Work live","Switch OFF power before work","Wet hands","No gloves"],a:1,topic:"Electrical"},
+{q:"Unit of voltage?",o:["Ampere","Volt","Ohm","Watt"],a:1,topic:"Electrical"},
+{q:"What is a circuit breaker?",o:["Light bulb","Safety device that trips on fault","Plug","Wire"],a:1,topic:"Electrical"},
+{q:"Colour for live wire?",o:["Blue","Brown / Red","Green/Yellow","Black"],a:1,topic:"Electrical"},
+{q:"Earth wire colour?",o:["Brown","Blue","Green/Yellow","Red"],a:2,topic:"Electrical"},
+{q:"What is a multimeter for?",o:["Cut wires","Measure voltage, current, resistance","Hammer","Drill"],a:1,topic:"Electrical"},
+{q:"Why use insulation?",o:["Fashion","Prevent shock","No need","Only heat"],a:1,topic:"Electrical"},
+{q:"If someone gets shock?",o:["Touch them live","Switch off power, call help","Pour water","Ignore"],a:1,topic:"Electrical"},
+{q:"Socket in Botswana type?",o:["Type C only","Type M - 3 pin large","Type A","No standard"],a:1,topic:"Electrical"}],
+"CV":[
+{q:"CV should include?",o:["Only jokes","Education, skills, contact","Only photo","No contact"],a:1,topic:"CV"},
+{q:"CV means?",o:["Car Vehicle","Curriculum Vitae","Central Village","No meaning"],a:1,topic:"CV"},
+{q:"Best CV length?",o:["10 pages","1-2 pages","5 pages with jokes","No limit"],a:1,topic:"CV"},
+{q:"What to put first?",o:["Jokes","Contact + Personal profile","Hobbies only","Salary"],a:1,topic:"CV"},
+{q:"Should CV have photo?",o:["Must be funny","Clear professional photo (if asked)","Cartoon","No name"],a:1,topic:"CV"},
+{q:"Reference is?",o:["Friend only","Person who can confirm your work","Enemy","No one"],a:1,topic:"CV"},
+{q:"What is cover letter?",o:["No need","Short letter explaining why you fit job","Long story","Copy of CV"],a:1,topic:"CV"},
+{q:"Spelling in CV?",o:["With mistakes","Correct, professional","Slang","No check"],a:1,topic:"CV"},
+{q:"Hobbies should be?",o:["All jokes","Relevant, brief","None at all","Many pages"],a:1,topic:"CV"},
+{q:"Email should be?",o:["Funny nickname","Professional: name.surname@gmail.com","No email","Fake"],a:1,topic:"CV"}],
+"GPA":[
+{q:"What is GPA?",o:["Road sign","Grade Point Average","Game","Car"],a:1,topic:"GPA"},
+{q:"Highest GPA usually?",o:["1.0","4.0","10.0","2.0"],a:1,topic:"GPA"},
+{q:"A=4, B=3, GPA for A+B?",o:["3.0","3.5","4.0","2.0"],a:1,topic:"GPA"},
+{q:"GPA is used in?",o:["Primary only","Tertiary / University","Road test","No use"],a:1,topic:"GPA"},
+{q:"How to improve GPA?",o:["Skip class","Study, attend, submit assignments","Copy","No effort"],a:1,topic:"GPA"},
+{q:"What is CGPA?",o:["Single semester","Cumulative GPA - all semesters","Road sign","No meaning"],a:1,topic:"GPA"},
+{q:"Fail grade is?",o:["A","F","B","C"],a:1,topic:"GPA"},
+{q:"If GPA is 1.0?",o:["Excellent","Low - need improve","Best","No meaning"],a:1,topic:"GPA"},
+{q:"Transcript shows?",o:["Only name","All courses + grades + GPA","Only photo","No grades"],a:1,topic:"GPA"},
+{q:"Why GPA matters?",o:["No use","For jobs, bursary, further study","Only fun","For driving"],a:1,topic:"GPA"}],
+"Interview":[
+{q:"At interview, you should?",o:["Arrive late","Arrive early, neat, prepared","Chew gum","Use phone"],a:1,topic:"Interview"},
+{q:"'Tell me about yourself'?",o:["Long life story","Brief: education, skills, why fit","Jokes only","No answer"],a:1,topic:"Interview"},
+{q:"What to wear?",o:["Shorts","Clean, smart, professional","Sleepwear","Beach wear"],a:1,topic:"Interview"},
+{q:"Eye contact means?",o:["Rude","Confident, respectful","No need","Ignore"],a:1,topic:"Interview"},
+{q:"Question to ask at end?",o:["No question","About role, next steps","Salary only first","When is lunch"],a:1,topic:"Interview"},
+{q:"What to bring?",o:["Nothing","CV, certificates, ID","Only phone","Snacks"],a:1,topic:"Interview"},
+{q:"If you don't know answer?",o:["Lie","Be honest, say how you'd find out","Keep quiet","Argue"],a:1,topic:"Interview"},
+{q:"Handshake should be?",o:["Too weak","Firm, brief","Too strong","No handshake"],a:1,topic:"Interview"},
+{q:"After interview?",o:["Forget","Thank you message / email","Demand job","Complain"],a:1,topic:"Interview"},
+{q:"Why do you want this job?",o:["Only money","Skills + passion + help company","No reason","I need any job"],a:1,topic:"Interview"}],
+"Bricklaying":[
+{q:"What does bricklayer do?",o:["Wiring","Build walls with bricks, mortar","Plumbing","Painting only"],a:1,topic:"Bricklaying"},
+{q:"Mortar is made of?",o:["Only water","Cement + sand + water","Only sand","Only cement"],a:1,topic:"Bricklaying"},
+{q:"Tool to check level?",o:["Hammer","Spirit level","Paint brush","Trowel only"],a:1,topic:"Bricklaying"},
+{q:"What is a trowel for?",o:["Cut wire","Spread mortar, lay bricks","Measure voltage","Drill"],a:1,topic:"Bricklaying"},
+{q:"Foundation should be?",o:["Weak","Strong, level, deep enough","No need","On grass only"],a:1,topic:"Bricklaying"},
+{q:"Why cure bricks?",o:["No need","Keep mortar moist for strength","Make dry fast","For colour"],a:1,topic:"Bricklaying"},
+{q:"Safety?",o:["No PPE","Boots, gloves, helmet, eye protection","Slippers","No need"],a:1,topic:"Bricklaying"},
+{q:"What is a corner block?",o:["No use","First brick to guide line","Last brick","Decor only"],a:1,topic:"Bricklaying"},
+{q:"Mix ratio?",o:["Only cement","1 cement : 4 sand (common)","Only water","No ratio"],a:1,topic:"Bricklaying"},
+{q:"Plumb line checks?",o:["Level floor","Vertical straightness of wall","Colour","Temperature"],a:1,topic:"Bricklaying"}],
+"Welding":[
+{q:"What does welder do?",o:["Pipes only","Join metals with heat","Bricks","Wires only"],a:1,topic:"Welding"},
+{q:"PPE for welding?",o:["No mask","Welding helmet, gloves, overalls","Slippers","Sunglasses only"],a:1,topic:"Welding"},
+{q:"Why wear helmet?",o:["Fashion","Protect eyes from arc rays","Only dust","No need"],a:1,topic:"Welding"},
+{q:"What is arc welding?",o:["Glue","Electric arc melts metal to join","Hammer only","Painting"],a:1,topic:"Welding"},
+{q:"Gas bottles should be?",o:["Near fire","Upright, secured, away from heat","Lying anywhere","No need"],a:1,topic:"Welding"},
+{q:"What is slag?",o:["Paint","Coating left after welding to be chipped","Water","No meaning"],a:1,topic:"Welding"},
+{q:"Before welding, metal should be?",o:["Dirty","Clean, dry, rust removed","Wet","Painted"],a:1,topic:"Welding"},
+{q:"What is electrode?",o:["Hammer","Rod that melts to join metal","Brush","Wire only"],a:1,topic:"Welding"},
+{q:"Fire risk - you should?",o:["Ignore","Have fire extinguisher, clear area","Weld near fuel","No check"],a:1,topic:"Welding"},
+{q:"After welding, joint should be?",o:["Weak","Strong, checked, cleaned","Loose","Paint only"],a:1,topic:"Welding"}]
+};
+function findTopicKey(input){
+  if(!input) return null;
+  var low=input.toLowerCase().trim();
+  var keys=Object.keys(TOPIC_QUESTIONS);
+  for(var i=0;i<keys.length;i++){if(keys[i].toLowerCase()===low) return keys[i];}
+  for(var j=0;j<keys.length;j++){if(low.indexOf(keys[j].toLowerCase())>-1 || keys[j].toLowerCase().indexOf(low)>-1) return keys[j];}
+  if(low.indexOf("photo")>-1) return "Photosynthesis";
+  if(low.indexOf("fraction")>-1) return "Fractions";
+  if(low.indexOf("skeleton")>-1 || low.indexOf("bone")>-1) return "Human Skeleton";
+  if(low.indexOf("road")>-1 || low.indexOf("stop")>-1) return "Road Signs";
+  if(low.indexOf("plant")>-1) return "Plants";
+  return null;
+}
+var customQuizzes={};
+var curQuiz=null,curIdx=0,curScore=0,curSubject="math",userAnswers=[],answered=false,currentTopic="";
+window.getQuizFor=function(level,subject,topicFilter){
+  if(topicFilter && customQuizzes[topicFilter]) return customQuizzes[topicFilter];
+  var found=findTopicKey(topicFilter);
+  if(found && TOPIC_QUESTIONS[found]) return TOPIC_QUESTIONS[found].slice(0,10);
+  var base=[];
+  if(subject==="sci") base=TOPIC_QUESTIONS["Photosynthesis"].concat(TOPIC_QUESTIONS["Biology"]).slice(0,10);
+  else if(subject==="eng") base=TOPIC_QUESTIONS["Phonics"].slice(0,10);
+  else if(subject==="adult") base=TOPIC_QUESTIONS["Road Signs"].slice(0,10);
+  else if(level.indexOf("Secondary")>-1) base=TOPIC_QUESTIONS["Algebra"].slice(0,10);
+  else base=TOPIC_QUESTIONS["Numbers"].slice(0,10);
+  return base.slice(0,10);
+};
+window.renderTopicChips=function(){
+  var topics=TOPICS_BY_LEVEL[currentLevel]||[];
+  var html=topics.map(function(t){return '<span class="topic-chip" onclick="tryStartTopic(\''+t+'\')">🔓 '+t+'</span>';}).join("");
+  if(el('topicChips'))el('topicChips').innerHTML=html;
+  if(el('examTopicChips'))el('examTopicChips').innerHTML=html;
+  var syl=SYLLABUS[currentLevel]||"";
+  if(el('syllabusDisplay'))el('syllabusDisplay').innerHTML=syl;
+  if(el('syllabusDisplay2'))el('syllabusDisplay2').innerHTML=syl;
+  renderUnlockedList();
+};
+window.tryStartTopic=function(t){startTopicQuiz(t);};
+window.startTopicQuiz=function(t){
+  currentTopic=t;if(el('wantTopic'))el('wantTopic').value=t;if(el('examTopicName'))el('examTopicName').innerHTML=" | Topic: "+t;
+  var sub='math';var low=t.toLowerCase();
+  if(low.indexOf("photo")>-1||low.indexOf("plant")>-1||low.indexOf("biology")>-1||low.indexOf("skeleton")>-1) sub='sci';
+  else if(low.indexOf("phonics")>-1||low.indexOf("essay")>-1||low.indexOf("setswana")>-1) sub='eng';
+  else if(low.indexOf("road")>-1||low.indexOf("plumbing")>-1||low.indexOf("electrical")>-1||low.indexOf("cv")>-1||low.indexOf("weld")>-1) sub='adult';
+  startLevelQuiz(sub,t);
+};
+window.startTopicFromInput=function(){
+  var t=(el('wantTopic')?el('wantTopic').value.trim():"")||"Photosynthesis";
+  var found=findTopicKey(t);
+  if(found) t=found;
+  startTopicQuiz(t);
+};
+window.startLevelQuiz=function(subject,topicOverride){
+  curSubject=subject;
+  var topic=topicOverride||(el('wantTopic')?el('wantTopic').value:"")||"";
+  // FIX: If topic is real topic like Photosynthesis, USE IT, ignore MATHS button
+  var foundKey=findTopicKey(topic);
+  if(foundKey){currentTopic=foundKey;topic=foundKey;}
+  else if(topic && topic.length>1){currentTopic=topic;}
+  else{currentTopic="";}
+  if(el('examTopicName'))el('examTopicName').innerHTML=currentTopic?" | Topic: "+currentTopic:"";
+  go('takeExam');
+  curQuiz=getQuizFor(currentLevel,subject,currentTopic);
+  curIdx=0;curScore=0;userAnswers=[];answered=false;
+  if(el('quizResult'))el('quizResult').style.display='none';
+  showQuizQ();
+};
+window.showQuizQ=function(){
+  answered=false;var item=curQuiz[curIdx];
+  el('quizCounter').innerHTML="REAL QUESTIONS - "+currentLevel+" | "+(currentTopic||"General")+" | Q "+(curIdx+1)+" / "+curQuiz.length;
+  el('quizQ').innerHTML="Q"+(curIdx+1)+": "+item.q;
+  el('quizFeedback').innerHTML="👆 CLICK answer, then NEXT";
+  var nb=el('quizNext');nb.style.display='block';nb.classList.remove('ready');nb.innerHTML="👉 CLICK ANSWER FIRST - THEN NEXT →";
+  var h="";for(var i=0;i<item.o.length;i++){h+='<button class="quiz-opt" onclick="answerRealQuiz('+i+',this)">'+String.fromCharCode(65+i)+". "+item.o[i]+'</button>';}
+  el('quizOpts').innerHTML=h;
+};
+window.answerRealQuiz=function(i,elm){
+  userAnswers[curIdx]=i;answered=true;
+  var b=document.querySelectorAll('.quiz-opt');for(var k=0;k<b.length;k++)b[k].classList.remove('selected');
+  elm.classList.add('selected');el('quizFeedback').innerHTML="✓ Click saved - Tap NEXT";
+  var nb=el('quizNext');nb.classList.add('ready');
+  if(curIdx===curQuiz.length-1)nb.innerHTML="🏁 SEE RESULT →";else nb.innerHTML="✅ NEXT → Q"+(curIdx+2)+" / "+curQuiz.length;
+};
+window.nextQuizQ=function(){
+  if(!answered){alert("Please CLICK an answer first");return;}
+  curIdx++;
+  if(curIdx>=curQuiz.length){
+    el('quizQ').innerHTML="Finished! 🎉";el('quizOpts').innerHTML="";el('quizCounter').innerHTML="Done - "+curQuiz.length+" Real Questions Complete";el('quizNext').style.display='none';el('quizResult').style.display='block';
+    var fs=0;for(var i=0;i<curQuiz.length;i++){if(userAnswers[i]===curQuiz[i].a)fs++;}
+    curScore=fs;
+    el('quizScoreText').innerHTML="🎉 Result: "+curScore+" / "+curQuiz.length+" = "+Math.round(curScore/curQuiz.length*100)+"% - "+(currentTopic||currentLevel);
+    el('quizFeedback').innerHTML="";saveResult(curScore,curQuiz.length);
+    var rev="<h4 style='text-align:center'>📋 Review - "+(currentTopic||"General")+" - Real Answers:</h4>";
+    for(var idx=0;idx<curQuiz.length;idx++){var it=curQuiz[idx];var my=userAnswers[idx];var cor=it.a;var ic=my===cor?"✅":"❌";rev+="<div style='background:#fff;border:1px solid #e5e7eb;padding:10px;border-radius:8px;margin:6px 0;font-size:13px'>"+ic+" <b>Q"+(idx+1)+":</b> "+it.q+"<br>You: <b>"+(my!==undefined?it.o[my]:"No click")+"</b><br>Correct: <b style='color:#16a34a'>"+it.o[cor]+"</b></div>";}
+    el('quizReview').innerHTML=rev;showToast("🎉 You scored "+curScore+"/"+curQuiz.length+" in "+(currentTopic||"General")+"!");
+  }else showQuizQ();
+};
+function saveResult(score,total){try{var ex=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]");ex.unshift({level:currentLevel,subject:curSubject,topic:currentTopic||"General",score:score,total:total,date:new Date().toLocaleDateString(),name:currentUserName});localStorage.setItem('lesedi_my_results',JSON.stringify(ex.slice(0,20)));renderMyResults();}catch(e){}}
+window.renderMyResults=function(){var list=[];try{list=JSON.parse(localStorage.getItem('lesedi_my_results')||"[]");}catch(e){}var h=list.map(function(r){return "<div style='border-bottom:1px solid #eee;padding:6px 0'>✅ <b>"+r.score+"/"+r.total+"</b> - "+r.level+" - "+r.topic+" ("+r.date+")</div>";}).join("");if(el('otherResults'))el('otherResults').innerHTML=h||"No results yet - Take digital quiz!";if(el('accountInfo'))el('accountInfo').innerHTML="<b>Name:</b> "+currentUserName+"<br><b>Phone:</b> "+currentUserPhone+"<br><b>Role:</b> "+currentUserRole+"<br><b>Level:</b> "+currentLevel;};
+window.parseRealQuestions=function(text, topicName){
+  var questions=[];var clean=text.replace(/\r/g,"\n").replace(/\n{3,}/g,"\n\n");
+  var parts=clean.split(/\n\s*(?=\d{1,2}[\.\)]\s)/);
+  for(var i=0;i<parts.length;i++){
+    var block=parts[i].trim();if(block.length<20) continue;
+    var qMatch=block.match(/^\d{1,2}[\.\)]\s*([\s\S]{5,300}?)(?=\n\s*A[\.\)\:]|\sA\.\s|\sA\s)/i);
+    if(!qMatch) continue;
+    var qText=qMatch[1].replace(/\n/g," ").trim();
+    var optA=extractOption(block,"A");var optB=extractOption(block,"B");var optC=extractOption(block,"C");var optD=extractOption(block,"D");
+    if(optA && optB){var opts=[optA,optB,optC||"Option C",optD||"Option D"];var ans=0;var ansM=block.match(/Answer\s*[:\-]\s*([A-D])/i);if(ansM){ans="ABCD".indexOf(ansM[1].toUpperCase());if(ans<0)ans=0;}questions.push({q:qText,o:opts,a:ans,topic:topicName});}
+  }
+  return questions.slice(0,30);
+};
+function extractOption(block, letter){
+  var re=new RegExp(letter+"[\\.\\:\\)]\\s*([^\\n]{1,150})(?=\\n\\s*[B-D][\\.\\:\\)]|\\n\\s*Answer|\\n\\s*\\d{1,2}[\\.]\\)|$)", "i");
+  var m=block.match(re);if(m) return m[1].trim();
+  var re2=new RegExp(letter+"\\.\\s*([^A-D]{3,80}?)(?=\\s*[B-D]\\.\\s|$)", "i");var m2=block.match(re2);if(m2) return m2[1].trim();
+  return null;
+}
+window.convertPDF=function(){doRealPDFRead('pdfFile','pdfReadingStatus','pdfPreviewBox');};
+window.convertPDF2=function(){doRealPDFRead('pdfFile2','pdfReadingStatus2','pdfPreviewBox2');};
+window.doRealPDFRead=function(fileId, statusId, previewId){
+  var inp=el(fileId);var f=inp?inp.files[0]:null;if(!f){alert("Choose PDF first");return;}
+  var tn=f.name.replace(/\.[^/.]+$/,"").replace(/[-_]/g," ").substring(0,40);
+  el(statusId).innerHTML="📖 Reading REAL text from "+f.name+"...";
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var typed=new Uint8Array(e.target.result);
+    pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    pdfjsLib.getDocument({data:typed}).promise.then(function(pdf){
+      var promises=[];
+      for(var i=1;i<=Math.min(pdf.numPages,10);i++){promises.push(pdf.getPage(i).then(function(page){return page.getTextContent().then(function(tc){return tc.items.map(function(it){return it.str;}).join(" ");});}));}
+      Promise.all(promises).then(function(pages){
+        var fullText=pages.join("\n");
+        if(fullText.trim().length<50){el(statusId).innerHTML="⚠️ This PDF looks like PHOTO/SCAN - no text. Use PASTE method below.";return;}
+        if(el(previewId)) el(previewId).innerHTML="<div class='preview-box'><b>✅ REAL TEXT FOUND:</b><br>"+fullText.substring(0,800)+"</div>";
+        var realQs=parseRealQuestions(fullText, tn);
+        if(realQs.length>=2){createRealQuiz(tn, realQs);el(statusId).innerHTML="✅ SUCCESS! Found "+realQs.length+" REAL questions: "+tn;}
+        else{el(statusId).innerHTML="⚠️ Found text but no A/B/C/D pattern. Use PASTE method.";if(el('pasteNotes'))el('pasteNotes').value=fullText.substring(0,2000);if(el('pasteTopicName'))el('pasteTopicName').value=tn;}
+      });
+    }).catch(function(err){el(statusId).innerHTML="❌ Could not read PDF: "+err.message;});
+  };
+  reader.readAsArrayBuffer(f);
+};
+function createRealQuiz(tn, realQs){
+  customQuizzes[tn]=realQs;
+  if(TOPICS_BY_LEVEL[currentLevel].indexOf(tn)===-1)TOPICS_BY_LEVEL[currentLevel].push(tn);
+  var ex=[];try{ex=JSON.parse(localStorage.getItem('lesedi_created_quizzes')||"[]");}catch(e){}ex.unshift({name:tn,date:new Date().toLocaleDateString(),count:realQs.length});localStorage.setItem('lesedi_created_quizzes',JSON.stringify(ex.slice(0,10)));
+  var lh=ex.map(function(q){return "<div style='background:#fff;border:1px solid #16a34a;padding:8px;border-radius:8px;margin:6px 0'>📖 <b>"+q.name+"</b> <small>"+(q.count||"")+" REAL Qs</small> <button class='btn-blue' onclick=\"startCreatedQuiz('"+q.name.replace(/'/g,"")+"')\">START →</button></div>";}).join("");
+  if(el('createdQuizList'))el('createdQuizList').innerHTML=lh;
+  if(el('createdQuizList2'))el('createdQuizList2').innerHTML=lh;
+  if(el('uploadStatus'))el('uploadStatus').innerHTML="✅ "+tn+" - "+realQs.length+" REAL questions!";
+  renderTopicChips();showToast("✅ "+realQs.length+" REAL questions converted!");
+  setTimeout(function(){startLevelQuiz('math',tn);},800);
+}
+window.startCreatedQuiz=function(t){startLevelQuiz('math',t);};
+window.convertPastedNotes=function(){
+  var notes=el('pasteNotes').value.trim();var tn=el('pasteTopicName').value.trim()||"My Test";
+  if(notes.length<20){alert("Paste your REAL questions first");return;}
+  var qs=parseRealQuestions(notes, tn);
+  if(qs.length<1){alert("Use format:\n1. What is...?\nA. ...\nB. ...\nC. ...\nD. ...\nAnswer: A");return;}
+  createRealQuiz(tn, qs);el('pasteStatus').innerHTML="✅ Converted "+qs.length+" REAL questions for "+tn+"!";
+};
+window.convertPastedNotes2=function(){
+  var notes=el('pasteNotes2').value.trim();var tn=el('pasteTopicName2').value.trim()||"My Test";
+  if(notes.length<20){alert("Paste real questions");return;}
+  var qs=parseRealQuestions(notes, tn);
+  if(qs.length<1){alert("Use format: 1. Q? A. B. C. D. Answer: A");return;}
+  createRealQuiz(tn, qs);el('pasteStatus2').innerHTML="✅ Converted "+qs.length+" REAL questions!";
+};
+window.aiAssist=function(){
+  var q=el('aiInput').value.trim();if(!q){alert("Type what you want to learn");return;}
+  var box=el('aiChatBox');var d=document.createElement('div');d.innerHTML="You: "+q;box.appendChild(d);
+  var ans="Teaching "+q+" for "+currentLevel+". Key: main concept, example, 3 questions. Try Lesson Plan for this topic!";
+  if(q.toLowerCase().indexOf("photo")>-1) ans="Photosynthesis: 6CO2+6H2O + sunlight = C6H12O6+6O2. In leaf, chlorophyll.";
+  if(q.toLowerCase().indexOf("fraction")>-1) ans="Fractions: 1/2 of 20=10, 3/4 of 100=75, 1/2+1/4=3/4.";
+  if(q.toLowerCase().indexOf("road")>-1) ans="STOP = must STOP. 60 km/h in town, 120 highway. Seatbelt ALWAYS.";
+  setTimeout(function(){var d2=document.createElement('div');d2.innerHTML="<b>AI:</b> "+ans;box.appendChild(d2);var o=el('aiOutput');if(o){o.style.display='block';o.innerHTML=ans;}},400);
+  el('aiInput').value="";
+};
+window.openLogin=function(){el('loginBox').style.display='block';};window.closeLogin=function(){el('loginBox').style.display='none';};
+window.openSignup=function(){el('signupBox').style.display='block';};window.closeSignup=function(){el('signupBox').style.display='none';};
+window.logout=function(){localStorage.removeItem('lesedi_phone');localStorage.removeItem('lesedi_name');localStorage.removeItem('lesedi_role');localStorage.removeItem('lesedi_isLoggedIn');alert("Logged out");location.reload();};
+function getAllUsers(){try{return JSON.parse(localStorage.getItem('lesedi_all_users')||"[]");}catch(e){return[];}}
+function saveAllUsers(u){localStorage.setItem('lesedi_all_users',JSON.stringify(u));}
+window.showDashboard=function(role,name,country){
+  el('teacherDash').style.display='none';el('studentDash').style.display='none';el('guestDash').style.display='none';
+  el('topProfile').innerHTML='<div style="display:flex;align-items:center;gap:8px"><div style="width:36px;height:36px;background:#0a2463;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div><div><b>'+name+'</b><br><small>'+role+'</small></div><button onclick="logout()" style="background:#ef4444;color:#fff;border:none;padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px">Logout</button></div>';
+  if(role==='Teacher'){el('teacherDash').style.display='block';el('schoolDash').style.display='block';if(el('teacherInfo'))el('teacherInfo').innerHTML="Dumela Teacher "+name+"!";el('adminMenuLink').style.display='block';}
+  else{el('studentDash').style.display='block';if(el('studentInfo'))el('studentInfo').innerHTML="Dumela "+name+"!";}
+};
+window.doSignup=function(){
+  var name=el('s_name').value.trim();var email=el('s_email').value.trim().toLowerCase();var phRaw=el('s_phone').value.trim();var town=el('s_town').value.trim();var pw=el('s_password').value.trim();var role=el('s_role').value||"Student";var lvl=el('s_level')?el('s_level').value:currentLevel;
+  var err=el('signupError');
+  if(!name||!email||!phRaw||!town||!pw){err.innerHTML="❌ Fill Name, Email, Phone, Town, Password.";return;}
+  if(email.indexOf("@")===-1){err.innerHTML="❌ Enter valid email";return;}
+  if(pw.length<4){err.innerHTML="❌ Password min 4 chars";return;}
+  var fullPhone=phRaw.replace(/[^0-9]/g,"");
+  var users=getAllUsers();var ex=users.find(function(u){return u.email===email;});
+  if(ex){err.innerHTML="❌ Already signed up! Please LOGIN.";closeSignup();openLogin();return;}
+  var nu={phone:fullPhone,email:email,full_name:name,name:name,town:town,role:role,level:lvl,country:"Botswana",password:pw,date:new Date().toLocaleDateString()};
+  users.unshift(nu);saveAllUsers(users.slice(0,200));
+  currentLevel=lvl;currentUserPhone=fullPhone;currentUserName=name;currentUserRole=role;
+  localStorage.setItem('lesedi_phone',fullPhone);localStorage.setItem('lesedi_name',name);localStorage.setItem('lesedi_role',role);localStorage.setItem('lesedi_email',email);localStorage.setItem('lesedi_country',"Botswana");localStorage.setItem('lesedi_isLoggedIn','true');
+  alert("🎉 Dumela "+name+"! Account created - Role: "+role);closeSignup();showDashboard(role,name,"Botswana");
+};
+window.doLogin=function(){
+  var input=el('l_emailPhone').value.trim().toLowerCase();var pw=el('l_password').value.trim();var role=el('l_role').value;
+  var err=el('loginError');err.innerHTML="";
+  if(!input||!pw){err.innerHTML="❌ Enter Email/Phone and Password";return;}
+  var users=getAllUsers();
+  var f=users.find(function(u){return (u.email.toLowerCase()===input||u.phone===input)&&u.password===pw;});
+  if(!f){err.innerHTML="❌ NO ACCOUNT FOUND! Please SIGNUP FIRST - Free.";alert("CANNOT LOGIN - No account. Please SIGNUP FIRST.");return;}
+  currentLevel=f.level||currentLevel;currentUserPhone=f.phone;currentUserName=f.full_name||f.name;currentUserRole=f.role||role;
+  localStorage.setItem('lesedi_phone',f.phone);localStorage.setItem('lesedi_name',currentUserName);localStorage.setItem('lesedi_role',currentUserRole);localStorage.setItem('lesedi_email',f.email||"");localStorage.setItem('lesedi_isLoggedIn','true');
+  alert("🎉 Dumela "+currentUserName+"!");closeLogin();showDashboard(currentUserRole,currentUserName,"Botswana");
+};
+renderTopicChips();renderMyResults();renderLPAdmin();renderFeedbackAdmin();
+(function(){var logged=localStorage.getItem('lesedi_isLoggedIn')==='true';var role=localStorage.getItem('lesedi_role')||"";var name=localStorage.getItem('lesedi_name')||"Guest";if(logged&&role){showDashboard(role,name,"Botswana");}})();
+document.getElementById('searchInput').addEventListener('keyup',function(e){if(e.key==='Enter')searchExams();});
+</script>
+</body></html>
