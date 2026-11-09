@@ -1,664 +1,156 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Education Lesedi Scholars Hub - Digital learning, quizzes, examinations and educational resources.">
-<title>Education Lesedi Scholars Hub | Click – Press – Learn</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081a3a">
+<meta name="description" content="Education Lesedi Scholars Hub — turn educational documents into digital teaching and assessment resources.">
+<title>Education Lesedi Scholars Hub</title>
 <style>
-:root{
-  --navy:#102747;--blue:#1756a9;--gold:#f5bd45;
-  --white:#fff;--light:#f3f6fb;--ink:#1d2939;
-  --muted:#667085;--green:#16834a;--border:#dfe5ee;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#f7f9fc;line-height:1.6}
-a{text-decoration:none;color:inherit}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-header{background:var(--navy);color:white;position:sticky;top:0;z-index:20;box-shadow:0 3px 12px #0002}
-.nav{max-width:1200px;margin:auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px}
-.brand{display:flex;align-items:center;gap:12px;font-weight:bold;font-size:18px}
-.logo{width:45px;height:45px;border-radius:12px;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-size:21px;font-weight:900}
-.brand small{display:block;color:#f7d98d;font-size:11px;letter-spacing:1.5px}
-nav{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-nav a{font-size:13px;color:#fff}
-nav a:hover{color:var(--gold)}
-.menu-btn{display:none;background:transparent;color:white;border:1px solid #ffffff66;padding:7px 10px;border-radius:7px}
-.container{max-width:1200px;margin:auto;padding:0 20px}
-.hero{background:linear-gradient(120deg,#102747,#1756a9);color:white;padding:65px 0 70px}
-.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:35px;align-items:center}
-.eyebrow{color:var(--gold);font-weight:bold;letter-spacing:2px;font-size:12px}
-h1{font-size:clamp(35px,5vw,57px);line-height:1.1;margin:14px 0}
-.hero p{color:#e2eaf5;max-width:650px}
-.hero-card{background:#ffffff12;border:1px solid #ffffff38;border-radius:18px;padding:25px}
-.hero-card h2{color:var(--gold);margin-top:0}
-.btn{display:inline-block;padding:12px 19px;border-radius:8px;border:0;font-weight:bold;margin:5px 5px 5px 0}
-.btn-gold{background:var(--gold);color:var(--navy)}
-.btn-blue{background:var(--blue);color:white}
-.btn-outline{border:1px solid #ffffff90;color:white;background:transparent}
-.btn:hover{filter:brightness(.95);transform:translateY(-1px)}
-.trial-strip{background:var(--gold);color:var(--navy);text-align:center;padding:13px 15px;font-weight:bold}
-section{padding:55px 0}
-.section-title{text-align:center;margin:0 auto 30px;max-width:760px}
-.section-title h2{font-size:30px;color:var(--navy);margin:0 0 8px}
-.section-title p{color:var(--muted);margin:0}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.grid.four{grid-template-columns:repeat(4,1fr)}
-.card{background:white;border:1px solid var(--border);border-radius:14px;padding:21px;box-shadow:0 4px 15px #152b4610}
-.card h3{color:var(--navy);margin:8px 0}
-.card p{color:var(--muted);font-size:14px}
-.icon{font-size:30px}
-.promo{background:linear-gradient(125deg,#102747,#174f91);color:white;border-radius:20px;padding:30px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
-.promo h2{font-size:clamp(28px,4vw,42px);margin:3px 0;color:var(--gold)}
-.promo p{color:#e8eff9}
-.promo-number{font-size:65px;font-weight:900;color:var(--gold);line-height:1}
-.pill{display:inline-block;padding:5px 10px;border-radius:30px;background:#eaf4ed;color:#17663b;font-size:11px;font-weight:bold}
-.level-card{border-top:4px solid var(--blue)}
-.exam-card{background:#fff;border-left:4px solid var(--gold)}
-.exam-card h3{margin-top:0}
-.price{font-size:26px;color:var(--blue);font-weight:bold}
-.price small{font-size:12px;color:var(--muted);font-weight:normal}
-.feature-list{padding-left:18px;color:var(--muted);font-size:14px}
-.feature-list li{margin:6px 0}
-.form-card{max-width:850px;margin:auto;background:white;padding:25px;border:1px solid var(--border);border-radius:16px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{display:flex;flex-direction:column;gap:6px}
-.field.full{grid-column:1/-1}
-label{font-size:13px;font-weight:bold;color:var(--navy)}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ccd5e2;border-radius:8px;background:white;color:var(--ink)}
-textarea{min-height:95px;resize:vertical}
-.notice{background:#fff8e6;border:1px solid #f3d58a;border-radius:10px;padding:13px;font-size:13px;color:#654b12}
-.blue-notice{background:#edf4ff;border:1px solid #c9dcfa;color:#174477}
-.quiz-area{background:#eef3fa}
-.quiz-box{max-width:850px;margin:auto}
-.quiz-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-.quiz-question{background:white;border:1px solid var(--border);padding:20px;border-radius:12px;margin:15px 0}
-.quiz-question label{display:block;font-weight:normal;padding:7px 0;color:var(--ink)}
-.quiz-question input{width:auto;margin-right:8px}
-.result{background:#eaf6ee;padding:18px;border-radius:10px;margin-top:15px}
-footer{background:var(--navy);color:white;padding:38px 0}
-footer p,footer a{color:#d8e1ef;font-size:13px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:25px}
-.small{font-size:12px;color:var(--muted)}
-.hidden{display:none!important}
-.chat-button{position:fixed;right:20px;bottom:20px;background:var(--gold);color:var(--navy);border:0;border-radius:50px;padding:14px 18px;font-weight:bold;box-shadow:0 5px 20px #0003;z-index:30}
-.chat-panel{position:fixed;right:20px;bottom:80px;width:min(320px,calc(100vw - 40px));background:white;border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 8px 35px #0003;z-index:30}
-hr{border:0;border-top:1px solid var(--border);margin:20px 0}
-@media(max-width:850px){
- .grid.four{grid-template-columns:repeat(2,1fr)}
- .hero-grid{grid-template-columns:1fr}
- nav{display:none;position:absolute;top:70px;left:0;right:0;background:var(--navy);padding:18px;flex-direction:column;align-items:flex-start}
- nav.open{display:flex}.menu-btn{display:block}
-}
-@media(max-width:600px){
- .grid,.grid.four,.form-grid,.quiz-controls,.footer-grid{grid-template-columns:1fr}
- .promo{grid-template-columns:1fr}.promo-number{font-size:48px}
- section{padding:40px 0}.hero{padding:45px 0}
- .brand{font-size:14px}.logo{width:39px;height:39px}
-}
+:root{--navy:#081a3a;--blue:#174ea6;--blue2:#2563eb;--gold:#f3bd38;--ink:#17243b;--muted:#68758b;--bg:#f4f7fc;--line:#e3e9f2;--white:#fff;--green:#16845b;--shadow:0 18px 50px rgba(12,35,75,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{display:grid;grid-template-columns:258px 1fr;min-height:100vh}.sidebar{background:var(--navy);color:white;padding:24px 17px;position:sticky;top:0;height:100vh;overflow:auto}.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 25px}.logo{width:43px;height:43px;border-radius:13px;background:linear-gradient(145deg,var(--gold),#fff0b7);color:var(--navy);display:grid;place-items:center;font-weight:950;font-size:21px}.brand strong{display:block;font-size:14px;line-height:1.25}.brand small{color:#b7c7e2;font-size:10px;letter-spacing:1.6px}.nav-label{font-size:10px;color:#91a5c8;text-transform:uppercase;letter-spacing:1.5px;padding:17px 11px 7px}.nav button{display:flex;gap:12px;align-items:center;width:100%;border:0;background:transparent;color:#d7e2f5;padding:11px 12px;border-radius:10px;text-align:left;margin:2px 0}.nav button:hover,.nav button.active{background:#173b72;color:white}.nav .ico{width:20px;text-align:center;font-size:17px}.side-foot{margin-top:35px;border-top:1px solid #25416a;padding:17px 9px;color:#aebfda;font-size:11px}.main{min-width:0}.topbar{height:74px;background:#ffffffeb;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}.crumb{font-weight:750}.top-actions{display:flex;align-items:center;gap:13px}.trial-pill{background:#fff6dc;color:#825d00;padding:7px 12px;border-radius:30px;font-size:12px;font-weight:800}.avatar{width:36px;height:36px;border-radius:50%;background:#e5edff;color:var(--blue);display:grid;place-items:center;font-weight:800}.content{max-width:1420px;margin:auto;padding:30px 34px 60px}.welcome{background:linear-gradient(115deg,#0a2047,#174b9d);color:white;border-radius:20px;padding:30px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}.welcome:after{content:"";position:absolute;width:280px;height:280px;border:1px solid #ffffff22;border-radius:50%;right:9%;top:-160px;box-shadow:0 0 0 35px #ffffff09,0 0 0 70px #ffffff06}.welcome>*{position:relative;z-index:1}.welcome h1{font-size:clamp(24px,3vw,34px);line-height:1.15;margin:0 0 9px}.welcome p{color:#d2def3;margin:0;max-width:650px}.welcome .btn{background:var(--gold);color:#18243b}.eyebrow{font-size:11px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:9px}.btn{border:0;border-radius:10px;padding:11px 16px;background:var(--blue2);color:white;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}.btn.secondary{background:#edf3ff;color:#194a96}.btn.outline{background:white;color:var(--blue);border:1px solid #cbd8ee}.btn.dark{background:var(--navy)}.btn.small{padding:8px 12px;font-size:12px}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:22px 0}.stat,.panel,.plan{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 20px #17365d08}.stat{padding:18px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:26px;margin-top:8px}.stat .sicon{width:35px;height:35px;border-radius:10px;background:#edf3ff;display:grid;place-items:center}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:30px 0 14px}.section-head h2{margin:0;font-size:20px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:17px}.panel{padding:21px}.panel h3{margin:0 0 6px;font-size:16px}.sub{color:var(--muted);font-size:12px;margin:0 0 17px}.upload{border:2px dashed #b9cbe8;background:#f8faff;border-radius:14px;padding:27px 18px;text-align:center}.upload .bigico{font-size:32px}.upload h3{margin:8px 0 4px}.upload p{color:var(--muted);font-size:12px;margin:0 0 14px}.file-name{font-size:12px;color:var(--green);margin-top:10px;overflow-wrap:anywhere}.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.quick{border:1px solid var(--line);border-radius:13px;padding:15px;text-align:left;background:white;color:var(--ink)}.quick:hover{border-color:#9bb8e8;background:#f8faff}.quick .qico{font-size:21px}.quick strong{display:block;margin:7px 0 2px;font-size:13px}.quick small{color:var(--muted);font-size:11px}.activity{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.activity:last-child{border:0}.dot{width:9px;height:9px;background:var(--gold);border-radius:50%;margin-top:6px}.activity strong{font-size:12px;display:block}.activity small{font-size:11px;color:var(--muted)}.page{display:none}.page.active{display:block}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.plan{padding:21px;position:relative;display:flex;flex-direction:column}.plan.featured{border:2px solid var(--blue2);box-shadow:0 12px 32px #2563eb18}.tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:850;color:var(--blue);background:#edf3ff;padding:5px 8px;border-radius:30px;align-self:flex-start}.plan h3{font-size:17px;margin:13px 0 4px}.price{font-size:28px;font-weight:900;letter-spacing:-1px}.price span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0}.plan p{color:var(--muted);font-size:12px;min-height:38px}.plan ul{list-style:none;padding:0;margin:10px 0 18px;flex:1}.plan li{font-size:12px;margin:9px 0;color:#3e4d64}.plan li:before{content:"✓";color:var(--green);font-weight:900;margin-right:8px}.plan .btn{width:100%}.notice{padding:13px 15px;border-radius:12px;background:#fff7e4;border:1px solid #f3dfaa;color:#765600;font-size:12px;margin:17px 0}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750}.field input,.field select,.field textarea{border:1px solid #d8e1ef;border-radius:9px;padding:11px 12px;background:white;color:var(--ink);outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:#6e9ce8;box-shadow:0 0 0 3px #2563eb14}.field textarea{min-height:95px;resize:vertical}.result{background:#f8faff;border:1px solid var(--line);border-radius:12px;padding:17px;margin-top:15px;white-space:pre-wrap;font-size:13px}.muted{color:var(--muted)}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:750;background:#f8faff}.status{padding:4px 8px;border-radius:20px;background:#fff4d6;color:#856000;font-size:10px;font-weight:800}.footer{text-align:center;color:#8390a5;font-size:11px;padding:35px 0 5px}.mobile-menu{display:none}.toast{position:fixed;bottom:22px;right:22px;background:#10284e;color:white;padding:13px 17px;border-radius:11px;box-shadow:var(--shadow);z-index:20;display:none;max-width:340px;font-size:13px}.modal-back{display:none;position:fixed;inset:0;background:#081a3acc;z-index:15;align-items:center;justify-content:center;padding:18px}.modal{background:white;border-radius:18px;max-width:490px;width:100%;padding:25px;box-shadow:var(--shadow)}.modal h2{margin:0 0 6px}.modal p{color:var(--muted);font-size:13px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.shell{display:block}.sidebar{position:fixed;left:-270px;z-index:12;width:258px;transition:left .2s}.sidebar.open{left:0}.topbar{padding:0 17px;height:64px}.mobile-menu{display:inline-flex}.content{padding:19px 16px 45px}.welcome{padding:23px;align-items:flex-start;flex-direction:column}.grid2{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.top-actions .trial-pill{display:none}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.section-head{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
-
-<header>
- <div class="nav">
-  <a class="brand" href="#home">
-   <span class="logo">EL</span>
-   <span>EDUCATION LESEDI SCHOLARS HUB
-    <small>CLICK – PRESS – LEARN</small>
-   </span>
-  </a>
-  <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
-  <nav id="mainNav">
-   <a href="#home" onclick="closeMenu()">Home</a>
-   <a href="#levels" onclick="closeMenu()">Education Levels</a>
-   <a href="#weekly" onclick="closeMenu()">Free Weekly Quiz</a>
-   <a href="#botswana" onclick="closeMenu()">Botswana Exams</a>
-   <a href="#upload" onclick="closeMenu()">Upload Papers</a>
-   <a href="#packages" onclick="closeMenu()">Packages</a>
-   <a href="#contact" onclick="closeMenu()">Contact</a>
-  </nav>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="logo">EL</div><div><strong>EDUCATION LESEDI<br>SCHOLARS HUB</strong><small>CLICK · PRESS · LEARN</small></div></div>
+ <div class="nav-label">Workspace</div><nav class="nav">
+ <button class="active" data-page="overview"><span class="ico">⌂</span>Overview</button>
+ <button data-page="converter"><span class="ico">⇧</span>Hardcopy Converter</button>
+ <button data-page="lesson"><span class="ico">▤</span>Lesson Plan Studio</button>
+ <button data-page="scheme"><span class="ico">▦</span>Scheme of Work</button>
+ <button data-page="resources"><span class="ico">✧</span>Teaching Resources</button>
+ <button data-page="exams"><span class="ico">✎</span>Examination Studio</button>
+ <button data-page="results"><span class="ico">▥</span>Results & Reports</button>
+ </nav>
+ <div class="nav-label">Business</div><nav class="nav">
+ <button data-page="packages"><span class="ico">◇</span>Packages & Pricing</button>
+ <button data-page="account"><span class="ico">◎</span>Account & Trial</button>
+ <button data-page="help"><span class="ico">?</span>Help & Contact</button>
+ </nav>
+ <div class="side-foot">Education Lesedi Scholars Hub<br>© <span id="year"></span> · Botswana & beyond</div>
+</aside>
+<main class="main">
+<header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="btn secondary small mobile-menu" id="menuBtn">☰</button><span class="crumb" id="crumb">Overview</span></div><div class="top-actions"><span class="trial-pill" id="trialBadge">30-DAY FREE TRIAL</span><div class="avatar" id="avatar">EL</div></div></header>
+<div class="content">
+<section class="page active" id="overview">
+ <div class="welcome"><div><div class="eyebrow">Your teaching & assessment workspace</div><h1>Turn learning materials<br>into learning opportunities.</h1><p>Convert educational documents, prepare lesson plans, build assessments and organise teaching resources in one place.</p></div><button class="btn" onclick="showPage('converter')">＋ Upload a document</button></div>
+ <div class="stats">
+  <div class="stat"><div class="stat-top">Documents uploaded <span class="sicon">⇧</span></div><strong id="docCount">0</strong></div>
+  <div class="stat"><div class="stat-top">Lesson plans saved <span class="sicon">▤</span></div><strong id="planCount">0</strong></div>
+  <div class="stat"><div class="stat-top">Exams created <span class="sicon">✎</span></div><strong id="examCount">0</strong></div>
+  <div class="stat"><div class="stat-top">Trial access <span class="sicon">◷</span></div><strong>30 days</strong></div>
  </div>
-</header>
-
-<div class="trial-strip">
- 🎓 EVERY CUSTOMER GETS A 30-DAY FREE TRIAL — REGISTER TO GET STARTED!
-</div>
-
-<main>
-<section class="hero" id="home">
- <div class="container hero-grid">
-  <div>
-   <div class="eyebrow">YOUR DIGITAL EDUCATION PARTNER</div>
-   <h1>From Hardcopy to Digital Learning.</h1>
-   <p>We help schools, teachers, examiners, parents, learners and education institutions turn educational materials into digital learning resources, quizzes and examinations.</p>
-   <p><strong>CLICK – PRESS – LEARN.</strong></p>
-   <a class="btn btn-gold" href="#weekly">Try the Free Weekly Quiz</a>
-   <a class="btn btn-outline" href="#upload">Upload Your Documents</a>
+ <div class="section-head"><div><h2>Start creating</h2><p>Choose a tool to begin working.</p></div></div>
+ <div class="grid2">
+  <div class="panel"><h3>Upload hardcopy or digital material</h3><p class="sub">Start with a PDF, Word document or text file. Scanned-image OCR requires a connected OCR service.</p>
+   <div class="upload"><div class="bigico">📄</div><h3>Bring your teaching material</h3><p>PDF, DOCX or TXT · Max 15 MB in this demo</p><input type="file" id="homeFile" accept=".pdf,.docx,.txt" hidden><button class="btn" onclick="document.getElementById('homeFile').click()">Choose a file</button><div class="file-name" id="homeFileName"></div></div>
+   <div style="display:flex;gap:9px;margin-top:13px;flex-wrap:wrap"><button class="btn secondary small" onclick="showPage('lesson')">Create lesson plan</button><button class="btn outline small" onclick="showPage('exams')">Create examination</button></div>
   </div>
-  <div class="hero-card">
-   <span class="pill">WELCOME TO EDUCATION LESEDI</span>
-   <h2>Learning made easier.</h2>
-   <p>Upload educational documents, create digital quizzes, prepare learners for examinations and monitor performance.</p>
-   <hr style="border-color:#ffffff35">
-   <p>✔ Pre-Primary to Tertiary</p>
-   <p>✔ PSLE, JC/JCE and BGCSE preparation</p>
-   <p>✔ Digital quizzes and examinations</p>
-   <p>✔ Teacher-reviewed assessment</p>
-  </div>
+  <div class="panel"><h3>Quick access</h3><p class="sub">Your most-used tools.</p><div class="quick-grid">
+   <button class="quick" onclick="showPage('converter')"><span class="qico">🔄</span><strong>Document converter</strong><small>Extract supported document text</small></button>
+   <button class="quick" onclick="showPage('lesson')"><span class="qico">📚</span><strong>Lesson plans</strong><small>Prepare a structured draft</small></button>
+   <button class="quick" onclick="showPage('scheme')"><span class="qico">🗓️</span><strong>Scheme of work</strong><small>Plan topics by week</small></button>
+   <button class="quick" onclick="showPage('resources')"><span class="qico">💡</span><strong>Teaching resources</strong><small>Outline notes and worksheets</small></button>
+  </div></div>
  </div>
+ <div class="section-head"><div><h2>Recent activity</h2><p>Activity saved in this browser on this device.</p></div></div>
+ <div class="panel" id="activity"><div class="muted" style="font-size:12px">No activity yet. Upload a document or create your first resource.</div></div>
 </section>
 
-<section id="levels">
- <div class="container">
-  <div class="section-title">
-   <h2>Our Education Categories</h2>
-   <p>Choose the education level that matches the learner.</p>
-  </div>
-  <div class="grid four">
-   <div class="card level-card">
-    <div class="icon">🧸</div><h3>Pre-Primary Education</h3>
-    <p>Early childhood learning, numbers, letters, shapes, colours, language and basic skills.</p>
-    <a class="btn btn-blue" href="#weekly">Explore quizzes</a>
-   </div>
-   <div class="card level-card">
-    <div class="icon">📚</div><h3>Primary Education</h3>
-    <p>Primary learning, literacy, numeracy, science, revision and PSLE preparation.</p>
-    <a class="btn btn-blue" href="#botswana">PSLE preparation</a>
-   </div>
-   <div class="card level-card">
-    <div class="icon">🎓</div><h3>Secondary Education</h3>
-    <p>Junior and senior secondary learning, subject practice, JC/JCE and BGCSE preparation.</p>
-    <a class="btn btn-blue" href="#botswana">Exam preparation</a>
-   </div>
-   <div class="card level-card">
-    <div class="icon">🏛️</div><h3>Tertiary Education</h3>
-    <p>College, vocational, diploma and university learning resources and assessments.</p>
-    <a class="btn btn-blue" href="#upload">Submit a request</a>
-   </div>
-  </div>
- </div>
+<section class="page" id="converter">
+ <div class="section-head"><div><h2>Hardcopy & document converter</h2><p>Upload a source document and inspect its contents before using it.</p></div></div>
+ <div class="grid2"><div class="panel"><h3>Upload source material</h3><p class="sub">This starter interface accepts PDF, DOCX and TXT. It does not perform OCR or AI conversion yet.</p><div class="upload"><div class="bigico">📥</div><h3>Select your document</h3><p>PDF · DOCX · TXT · 15 MB maximum</p><input type="file" id="sourceFile" accept=".pdf,.docx,.txt" hidden><button class="btn" onclick="document.getElementById('sourceFile').click()">Browse files</button><div id="sourceName" class="file-name"></div></div><div class="notice">Scanned PDFs and photographs need OCR (optical character recognition). This version will not pretend to read them. Connect an OCR service before offering scan conversion to paying customers.</div></div>
+ <div class="panel"><h3>What happens next?</h3><div class="activity"><div class="dot"></div><div><strong>1. Upload</strong><small>Choose a source document.</small></div></div><div class="activity"><div class="dot"></div><div><strong>2. Extract</strong><small>Text extraction requires a real PDF/DOCX processing service.</small></div></div><div class="activity"><div class="dot"></div><div><strong>3. Review</strong><small>A teacher checks extracted text, questions and answer keys.</small></div></div><div class="activity"><div class="dot"></div><div><strong>4. Create</strong><small>Use verified source content to prepare a lesson, worksheet or examination.</small></div></div></div></div>
+ <div class="panel" style="margin-top:17px"><h3>Selected file</h3><p id="selectedFileDetails" class="muted" style="font-size:13px">No file selected.</p><button class="btn secondary small" onclick="showPage('lesson')">Continue to Lesson Plan Studio</button></div>
 </section>
 
-<section id="weekly">
- <div class="container">
-  <div class="promo">
-   <div>
-    <span class="pill">EXCLUSIVE CUSTOMER BENEFIT</span>
-    <h2>10 FREE QUESTIONS EVERY WEEK!</h2>
-    <p>Registered Education Lesedi customers can practise with a free weekly 10-question quiz. Questions are selected according to education level, grade, subject and curriculum.</p>
-    <a href="#quiz" class="btn btn-gold">Choose Your Weekly Quiz</a>
-    <p class="small" style="color:#dbe7f7">One weekly allowance per eligible customer account. Registration and server-side verification will be required for the live service.</p>
-   </div>
-   <div class="promo-number">10<small style="display:block;font-size:15px;color:white">QUESTIONS</small></div>
-  </div>
- </div>
+<section class="page" id="lesson">
+ <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable lesson-plan draft. Review it against your curriculum before teaching.</p></div></div>
+ <div class="panel"><div class="form-grid">
+  <div class="field"><label>Subject</label><input id="lpSubject" placeholder="e.g. Mathematics"></div>
+  <div class="field"><label>Grade / class</label><input id="lpGrade" placeholder="e.g. Standard 5"></div>
+  <div class="field"><label>Topic</label><input id="lpTopic" placeholder="e.g. Fractions"></div>
+  <div class="field"><label>Duration</label><input id="lpDuration" placeholder="e.g. 40 minutes"></div>
+  <div class="field"><label>Learning objectives</label><textarea id="lpObjectives" placeholder="What should learners know or do?"></textarea></div>
+  <div class="field"><label>Source / teaching materials</label><textarea id="lpMaterials" placeholder="Textbook chapter, uploaded source, teaching aids..."></textarea></div>
+  <div class="field full"><label>Teaching approach / notes</label><textarea id="lpApproach" placeholder="Explain, demonstrate, group work, practical activity..."></textarea></div>
+ </div><div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap"><button class="btn" onclick="makeLesson()">Prepare lesson-plan draft</button><button class="btn secondary" onclick="saveLesson()">Save draft</button><button class="btn outline" onclick="printResult('lessonOutput')">Print / Save PDF</button></div><div id="lessonOutput" class="result" style="display:none"></div><p class="muted" style="font-size:11px;margin-top:12px">This creates a structured template from the information you enter. It is not AI-generated curriculum advice.</p></div>
 </section>
 
-<section class="quiz-area" id="quiz">
- <div class="container quiz-box">
-  <div class="section-title">
-   <h2>Weekly Free Quiz</h2>
-   <p>Choose the learner's level and subject to see a sample practice quiz.</p>
-  </div>
-  <div class="form-card">
-   <div class="notice">Free weekly quiz promotion: intended for registered customers. This website preview contains sample questions; the live weekly allowance and customer accounts require a secure backend.</div>
-   <div class="quiz-controls">
-    <div class="field">
-     <label for="quizLevel">Education level</label>
-     <select id="quizLevel" onchange="updateSubjects()">
-      <option value="Pre-Primary">Pre-Primary</option>
-      <option value="Primary">Primary</option>
-      <option value="Secondary">Secondary</option>
-      <option value="Tertiary">Tertiary</option>
-     </select>
-    </div>
-    <div class="field">
-     <label for="quizGrade">Grade / examination</label>
-     <select id="quizGrade">
-      <option>Early learning</option><option>Standard 1–6</option>
-      <option>Standard 7 – PSLE</option><option>Form 1–3 – JC/JCE</option>
-      <option>Form 4–5 – BGCSE</option><option>College / University</option>
-     </select>
-    </div>
-    <div class="field">
-     <label for="quizSubject">Subject</label>
-     <select id="quizSubject">
-      <option>Mathematics</option><option>English</option><option>Science</option>
-     </select>
-    </div>
-   </div>
-   <button class="btn btn-blue" onclick="startQuiz()">Start sample quiz</button>
-   <div id="quizOutput"></div>
-  </div>
- </div>
+<section class="page" id="scheme">
+ <div class="section-head"><div><h2>Scheme of Work Planner</h2><p>Organise teaching topics and activities across a term.</p></div></div>
+ <div class="panel"><div class="form-grid"><div class="field"><label>Subject</label><input id="swSubject" placeholder="e.g. English"></div><div class="field"><label>Class</label><input id="swClass" placeholder="e.g. Form 2"></div><div class="field"><label>Term</label><input id="swTerm" placeholder="e.g. Term 1"></div><div class="field"><label>Number of weeks</label><input id="swWeeks" type="number" min="1" max="20" value="10"></div><div class="field full"><label>Topics (one per line)</label><textarea id="swTopics" placeholder="Reading comprehension&#10;Grammar&#10;Writing skills"></textarea></div></div><button class="btn" style="margin-top:14px" onclick="makeScheme()">Build scheme table</button><div id="schemeOutput" class="result" style="display:none"></div><button class="btn outline small" style="margin-top:10px" onclick="printResult('schemeOutput')">Print / Save PDF</button></div>
 </section>
 
-<section id="botswana">
- <div class="container">
-  <div class="section-title">
-   <h2>Botswana Examination Preparation</h2>
-   <p>Special preparation pathways for Botswana learners, with questions organised by level, subject and the applicable syllabus.</p>
-  </div>
-  <div class="grid">
-   <div class="card exam-card">
-    <span class="pill">PRIMARY LEVEL</span>
-    <h3>🇧🇼 PSLE Preparation</h3>
-    <p>Primary School Leaving Examination practice and revision.</p>
-    <ul class="feature-list">
-     <li>Mathematics</li><li>English</li><li>Setswana</li>
-     <li>Science and Social Studies</li><li>Agriculture and other syllabus subjects</li>
-    </ul>
-    <a class="btn btn-blue" href="#quiz" onclick="selectPath('Primary','Standard 7 – PSLE','Mathematics')">Practise PSLE</a>
-   </div>
-   <div class="card exam-card">
-    <span class="pill">JUNIOR SECONDARY</span>
-    <h3>🇧🇼 JC / JCE Preparation</h3>
-    <p>Junior Certificate learning, revision and examination practice.</p>
-    <ul class="feature-list">
-     <li>Mathematics</li><li>English and Setswana</li>
-     <li>Integrated Science</li><li>Social Studies</li>
-     <li>Agriculture and other syllabus subjects</li>
-    </ul>
-    <a class="btn btn-blue" href="#quiz" onclick="selectPath('Secondary','Form 1–3 – JC/JCE','Mathematics')">Practise JC/JCE</a>
-   </div>
-   <div class="card exam-card">
-    <span class="pill">SENIOR SECONDARY</span>
-    <h3>🇧🇼 BGCSE Preparation</h3>
-    <p>Senior secondary examination practice and subject revision.</p>
-    <ul class="feature-list">
-     <li>Mathematics and English</li><li>Biology, Chemistry and Physics</li>
-     <li>Geography and History</li><li>Accounting and Business Studies</li>
-     <li>Other approved BGCSE subjects</li>
-    </ul>
-    <a class="btn btn-blue" href="#quiz" onclick="selectPath('Secondary','Form 4–5 – BGCSE','Mathematics')">Practise BGCSE</a>
-   </div>
-  </div>
-  <p class="small" style="text-align:center;margin-top:18px">Subject availability and question content must be checked against the current official Botswana curriculum and examination syllabuses. This list is indicative, not a complete official subject list.</p>
- </div>
+<section class="page" id="resources">
+ <div class="section-head"><div><h2>Teaching Resources</h2><p>Build a clear outline for notes, worksheets and revision materials.</p></div></div>
+ <div class="panel"><div class="form-grid"><div class="field"><label>Resource type</label><select id="resType"><option>Class notes</option><option>Worksheet</option><option>Revision guide</option><option>Homework activity</option><option>Practical activity</option></select></div><div class="field"><label>Subject & level</label><input id="resLevel" placeholder="e.g. Science, Standard 7"></div><div class="field full"><label>Topic / learning focus</label><input id="resTopic" placeholder="Enter topic"></div><div class="field full"><label>Key points or source notes</label><textarea id="resNotes" placeholder="Paste verified content or key points here"></textarea></div></div><button class="btn" style="margin-top:14px" onclick="makeResource()">Prepare resource outline</button><div id="resourceOutput" class="result" style="display:none"></div><button class="btn outline small" style="margin-top:10px" onclick="printResult('resourceOutput')">Print / Save PDF</button></div>
 </section>
 
-<section id="services">
- <div class="container">
-  <div class="section-title">
-   <h2>Our Educational Services</h2>
-   <p>Tools and services to support teaching, learning and assessment.</p>
-  </div>
-  <div class="grid four">
-   <div class="card"><div class="icon">📄</div><h3>Hardcopy to Digital</h3><p>Convert permitted PDF, Word and scanned educational documents into editable digital material.</p></div>
-   <div class="card"><div class="icon">📝</div><h3>Quiz Creator</h3><p>Create multiple-choice, true/false, matching and short-answer quizzes.</p></div>
-   <div class="card"><div class="icon">⏱️</div><h3>Online Examinations</h3><p>Prepare timed assessments and controlled examination sessions.</p></div>
-   <div class="card"><div class="icon">📊</div><h3>Results & Reports</h3><p>Review learner performance and generate downloadable reports.</p></div>
-   <div class="card"><div class="icon">📖</div><h3>Learning Resources</h3><p>Request notes, worksheets, revision activities and topic packages.</p></div>
-   <div class="card"><div class="icon">📋</div><h3>Lesson Plans</h3><p>Prepare structured lesson plans for different education levels.</p></div>
-   <div class="card"><div class="icon">🗂️</div><h3>Schemes of Work</h3><p>Organise teaching schedules, topics and learning objectives.</p></div>
-   <div class="card"><div class="icon">👩‍🏫</div><h3>Teacher Review</h3><p>Allow teachers to check questions, answer keys and written responses.</p></div>
-  </div>
- </div>
+<section class="page" id="exams">
+ <div class="section-head"><div><h2>Examination Studio</h2><p>Prepare an examination draft and keep answer verification under teacher control.</p></div></div>
+ <div class="panel"><div class="form-grid"><div class="field"><label>Examination title</label><input id="exTitle" placeholder="e.g. End of term test"></div><div class="field"><label>Subject & level</label><input id="exLevel" placeholder="e.g. Mathematics, Standard 6"></div><div class="field"><label>Duration</label><input id="exDuration" placeholder="e.g. 1 hour"></div><div class="field"><label>Total marks</label><input id="exMarks" type="number" min="1" placeholder="e.g. 50"></div><div class="field full"><label>Questions (enter one per line)</label><textarea id="exQuestions" placeholder="1. ...&#10;2. ..."></textarea></div></div><button class="btn" style="margin-top:14px" onclick="makeExam()">Prepare examination draft</button><button class="btn secondary" style="margin-top:14px" onclick="saveExam()">Save examination draft</button><div id="examOutput" class="result" style="display:none"></div><div class="notice">No answer key is invented. Do not publish until a qualified teacher/examiner verifies every question, mark allocation and answer key. Essays and long answers require human review before final marks are released.</div></div>
 </section>
 
-<section id="upload" style="background:#edf2f8">
- <div class="container">
-  <div class="section-title">
-   <h2>Upload Your Hardcopy or Educational Material</h2>
-   <p>Send us your document for a conversion or digital examination service request.</p>
-  </div>
-  <div class="form-card">
-   <div class="notice">Upload preview only: this form does not transmit or securely store files yet. A backend upload service will be connected in a later development stage.</div>
-   <form onsubmit="submitUpload(event)">
-    <div class="form-grid">
-     <div class="field"><label>Your name</label><input required id="upName" placeholder="Full name"></div>
-     <div class="field"><label>Email address</label><input required id="upEmail" type="email" placeholder="you@example.com"></div>
-     <div class="field"><label>Customer type</label>
-      <select id="upCustomer"><option>Individual / Parent</option><option>Teacher</option><option>Examiner</option><option>School</option><option>Education institution</option></select>
-     </div>
-     <div class="field"><label>Education level</label>
-      <select id="upLevel"><option>Pre-Primary</option><option>Primary</option><option>Secondary</option><option>Tertiary</option></select>
-     </div>
-     <div class="field"><label>Service required</label>
-      <select id="upService"><option>Convert paper to digital questions</option><option>Create a digital quiz</option><option>Create a full examination</option><option>Prepare learning resources</option><option>Results analysis</option></select>
-     </div>
-     <div class="field"><label>Subject</label><input id="upSubject" placeholder="e.g. Mathematics"></div>
-     <div class="field full"><label>Select your document (PDF, Word or image)</label><input type="file" id="upFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"></div>
-     <div class="field full"><label>Instructions</label><textarea id="upInstructions" placeholder="Tell us what you want us to do with your document."></textarea></div>
-    </div>
-    <button class="btn btn-blue" type="submit">Prepare email request</button>
-   </form>
-  </div>
- </div>
+<section class="page" id="results">
+ <div class="section-head"><div><h2>Results & Reports</h2><p>Reporting tools will become available after learner accounts and assessment records are connected.</p></div></div>
+ <div class="panel"><h3>Reporting module — setup required</h3><p class="muted">This GitHub starter does not collect real learner submissions or calculate live school performance. A secure database, learner authentication and verified assessment records must be connected before reports can be generated.</p><div class="notice">Protect learner names, marks and school records. Do not upload confidential learner data to this public demo.</div></div>
 </section>
 
-<section id="topic">
- <div class="container">
-  <div class="section-title">
-   <h2>Order an Individual Topic</h2>
-   <p>Need help with one topic? Request an individual educational topic for P10.00.</p>
-  </div>
-  <div class="form-card">
-   <div class="price">P10.00 <small>per individual topic</small></div>
-   <p class="small">This is a separate pay-as-you-go service. A subscription is not required.</p>
-   <form onsubmit="submitTopic(event)">
-    <div class="form-grid">
-     <div class="field"><label>Name</label><input required id="topicName"></div>
-     <div class="field"><label>Email</label><input required type="email" id="topicEmail"></div>
-     <div class="field"><label>Education level</label><select id="topicLevel"><option>Pre-Primary</option><option>Primary</option><option>Secondary</option><option>Tertiary</option></select></div>
-     <div class="field"><label>Grade / examination</label><input id="topicGrade" placeholder="e.g. Standard 7 PSLE"></div>
-     <div class="field"><label>Subject</label><input required id="topicSubject" placeholder="e.g. Mathematics"></div>
-     <div class="field"><label>Topic</label><input required id="topicTitle" placeholder="e.g. Fractions"></div>
-     <div class="field full"><label>What would you like?</label>
-      <select id="topicProduct"><option>Topic notes</option><option>Worksheet</option><option>Revision questions</option><option>MCQ quiz</option><option>Short-answer questions</option><option>Full topic learning package</option></select>
-     </div>
-    </div>
-    <button class="btn btn-blue" type="submit">Request my P10 topic</button>
-   </form>
-  </div>
- </div>
+<section class="page" id="packages">
+ <div class="section-head"><div><h2>Packages & Pricing</h2><p>Four service levels for individuals, teachers, schools and institutions.</p></div></div>
+ <div class="notice"><strong>30-day trial for every customer type.</strong> The trial should begin once a customer creates and verifies an account. This static GitHub version displays the offer but cannot securely enforce trial dates or activate paid subscriptions without a backend.</div>
+ <div class="cards">
+  <article class="plan"><span class="tag">Individuals</span><h3>Personal & Private</h3><div class="price">From P25 <span>/ service</span></div><p>For parents, private tutors, individuals and independent learners.</p><ul><li>Personal document preparation</li><li>Digital quiz creation</li><li>Revision exercises</li><li>Private lesson-plan drafts</li><li>Pay per requested service</li></ul><button class="btn secondary" onclick="choosePlan('Personal & Private')">Choose package</button></article>
+  <article class="plan featured"><span class="tag">For educators</span><h3>Teacher Professional</h3><div class="price">P100 <span>/ month · proposed</span></div><p>Tools for teachers preparing lessons and assessments.</p><ul><li>Lesson-plan and scheme templates</li><li>Teaching resource outlines</li><li>Digital exam drafts</li><li>Document conversion workflow</li><li>Teacher review controls</li></ul><button class="btn" onclick="choosePlan('Teacher Professional')">Choose package</button></article>
+  <article class="plan"><span class="tag">For schools</span><h3>School</h3><div class="price">P350 <span>/ month · proposed</span></div><p>Centralised teaching and assessment tools for a school.</p><ul><li>School workspace</li><li>Multiple teacher accounts*</li><li>Examination management</li><li>Results reporting*</li><li>Administration tools*</li></ul><button class="btn secondary" onclick="choosePlan('School')">Choose package</button></article>
+  <article class="plan"><span class="tag">Advanced</span><h3>Institution & Enterprise</h3><div class="price">Custom <span>/ quotation</span></div><p>For education institutions and larger organisations.</p><ul><li>Multi-department setup*</li><li>Bulk conversion workflow*</li><li>Examiner and admin roles*</li><li>Advanced reporting*</li><li>Custom configuration*</li></ul><button class="btn secondary" onclick="choosePlan('Institution & Enterprise')">Request quotation</button></article>
+ </div><p class="muted" style="font-size:11px;margin-top:12px">*These multi-user and reporting features require the production backend. Prices are suggested launch prices and should be confirmed before taking payment.</p>
+ <div class="panel" style="margin-top:18px"><h3>Payment methods planned</h3><div class="grid2"><div><strong>Orange Money</strong><p class="muted" style="font-size:13px">Merchant number: +267 77980825</p></div><div><strong>MyZaka</strong><p class="muted" style="font-size:13px">Merchant number: +267 71823638</p></div><div><strong>International payments</strong><p class="muted" style="font-size:13px">Visa / Mastercard through an approved gateway.</p></div><div><strong>QR and OTP payments</strong><p class="muted" style="font-size:13px">Official merchant QR, provider OTP and server-side payment verification must be integrated.</p></div></div><div class="notice">Payment details are displayed for planning only. This website does not collect payments, generate OTPs or verify transactions. Never treat a screenshot or customer-entered reference as proof of payment.</div></div>
 </section>
 
-<section id="packages" style="background:#edf2f8">
- <div class="container">
-  <div class="section-title">
-   <h2>Our Packages</h2>
-   <p>Every customer category receives a 30-day free trial.</p>
-  </div>
-  <div class="grid four">
-   <div class="card">
-    <span class="pill">PRIVATE CUSTOMERS</span><h3>Personal & Private</h3>
-    <div class="price">From P25</div><small>Per service</small>
-    <ul class="feature-list"><li>Individual learning resources</li><li>Quizzes and revision</li><li>Weekly free quiz access</li><li>30-day free trial</li></ul>
-    <a class="btn btn-blue" href="#contact">Get started</a>
-   </div>
-   <div class="card">
-    <span class="pill">FOR EDUCATORS</span><h3>Teacher Professional</h3>
-    <div class="price">P100 <small>/ month</small></div>
-    <ul class="feature-list"><li>Teaching resources</li><li>Quiz and exam tools</li><li>Question conversion requests</li><li>Weekly free quiz access</li><li>30-day free trial</li></ul>
-    <a class="btn btn-blue" href="#contact">Get started</a>
-   </div>
-   <div class="card">
-    <span class="pill">FOR SCHOOLS</span><h3>School Package</h3>
-    <div class="price">P350 <small>/ month</small></div>
-    <ul class="feature-list"><li>School dashboard</li><li>Teacher and learner management</li><li>Digital assessment tools</li><li>Reports and analysis</li><li>30-day free trial</li></ul>
-    <a class="btn btn-blue" href="#contact">Get started</a>
-   </div>
-   <div class="card">
-    <span class="pill">INSTITUTIONS</span><h3>Institution & Enterprise</h3>
-    <div class="price">Custom</div>
-    <ul class="feature-list"><li>Institution dashboard</li><li>Multiple departments</li><li>Custom assessment services</li><li>Support and reporting</li><li>30-day free trial</li></ul>
-    <a class="btn btn-blue" href="#contact">Request quotation</a>
-   </div>
-  </div>
-  <p class="small" style="text-align:center;margin-top:18px">Prices shown are proposed starting prices and may be confirmed before a customer subscribes.</p>
- </div>
+<section class="page" id="account">
+ <div class="section-head"><div><h2>Account & 30-day trial</h2><p>Trial terms and account setup information.</p></div></div>
+ <div class="grid2"><div class="panel"><h3>One month free for every user type</h3><p class="sub">Personal · Teacher · School · Institution</p><div style="font-size:38px;font-weight:900;color:var(--blue)">30 days</div><p class="muted" style="font-size:13px">Recommended production rule: one trial per verified account or organisation, starting at successful email/phone verification. Trial expiry and package permissions must be enforced by the server.</p></div><div class="panel"><h3>Trial setup checklist</h3><div class="activity"><div class="dot"></div><div><strong>Create account</strong><small>Customer chooses their account type.</small></div></div><div class="activity"><div class="dot"></div><div><strong>Verify email or mobile</strong><small>Send a real one-time verification code through a provider.</small></div></div><div class="activity"><div class="dot"></div><div><strong>Start 30-day trial</strong><small>Server records start and expiry timestamps.</small></div></div><div class="activity"><div class="dot"></div><div><strong>Choose a package</strong><small>Customer pays after trial or selects an available service.</small></div></div></div></div>
+ <div class="notice">This is a front-end starter, not a live registration system. Do not enter real passwords or confidential information here. Authentication and trial enforcement are not implemented in this static version.</div>
 </section>
 
-<section id="marking">
- <div class="container">
-  <div class="section-title">
-   <h2>Responsible Assessment & Marking</h2>
-   <p>Accuracy, fairness and teacher oversight matter.</p>
-  </div>
-  <div class="grid">
-   <div class="card"><h3>Automatic marking</h3><p>Objective questions such as multiple choice and true/false can be automatically marked using verified answer keys.</p></div>
-   <div class="card"><h3>Teacher verification</h3><p>Teachers or examiners verify extracted questions and answer keys before an examination is published.</p></div>
-   <div class="card"><h3>Written answers</h3><p>Essays, long answers and practical responses require teacher review or AI-assisted marking with teacher approval before final marks are issued.</p></div>
-  </div>
- </div>
+<section class="page" id="help">
+ <div class="section-head"><div><h2>Help & Contact</h2><p>Customer support information.</p></div></div>
+ <div class="grid2"><div class="panel"><h3>Education Lesedi Scholars Hub</h3><p class="muted">CLICK · PRESS · LEARN</p><p>Digital teaching resources, document conversion workflows and online assessment services.</p><p><strong>Orange Money:</strong> +267 77980825</p><p><strong>MyZaka:</strong> +267 71823638</p></div><div class="panel"><h3>Before going live</h3><ul style="padding-left:18px;color:#53627a;font-size:13px;line-height:1.9"><li>Connect secure user accounts and database.</li><li>Connect OCR for scanned papers and photos.</li><li>Connect a real AI service through a protected server.</li><li>Integrate merchant-approved payment APIs.</li><li>Test backups, privacy and access controls.</li></ul></div></div>
 </section>
-
-<section id="contact" style="background:#edf2f8">
- <div class="container">
-  <div class="section-title">
-   <h2>Contact Education Lesedi Scholars Hub</h2>
-   <p>Speak to us about digital examinations, educational resources and subscriptions.</p>
-  </div>
-  <div class="grid">
-   <div class="card"><h3>✉️ Email support</h3><p>lesedieducationhelpdesk@gmail.com</p><a class="btn btn-blue" href="mailto:lesedieducationhelpdesk@gmail.com">Email us</a></div>
-   <div class="card"><h3>📱 Orange Money</h3><p>+267 77980825</p><p class="small">Payment details are displayed for reference. Payment verification is not connected yet.</p></div>
-   <div class="card"><h3>📱 MyZaka</h3><p>+267 71823638</p><p class="small">Payment details are displayed for reference. Payment verification is not connected yet.</p></div>
-  </div>
-  <div class="card" style="margin-top:18px;text-align:center">
-   <h3>International customers</h3>
-   <p>International payment options such as Visa, Mastercard and PayPal can be added after merchant accounts and payment gateway integrations are approved and connected.</p>
-  </div>
- </div>
-</section>
-</main>
-
-<footer>
- <div class="container footer-grid">
-  <div><h3>Education Lesedi Scholars Hub</h3><p>CLICK – PRESS – LEARN</p><p>Digital learning, educational resources and examination solutions.</p></div>
-  <div><h3>Quick links</h3><p><a href="#levels">Education categories</a></p><p><a href="#weekly">Free weekly quiz</a></p><p><a href="#upload">Upload documents</a></p></div>
-  <div><h3>Support</h3><p>lesedieducationhelpdesk@gmail.com</p><p>educationlesedihub.com</p></div>
- </div>
- <div class="container"><hr style="border-color:#ffffff30"><p>© <span id="year"></span> Education Lesedi Scholars Hub. All rights reserved.</p></div>
-</footer>
-
-<button class="chat-button" onclick="toggleChat()">💬 Help & Support</button>
-<div class="chat-panel hidden" id="chatPanel">
- <h3>How can we help?</h3>
- <p>Contact our support team for help with registration, document conversion, quizzes or examinations.</p>
- <a class="btn btn-blue" href="mailto:lesedieducationhelpdesk@gmail.com">Email support</a>
- <button class="btn" onclick="toggleChat()">Close</button>
- <p class="small">Live chat and AI support will be connected in a future development stage.</p>
-</div>
-
+<div class="footer">Education Lesedi Scholars Hub · CLICK · PRESS · LEARN · Built for Botswana and international growth</div>
+</div></main></div>
+<div class="toast" id="toast"></div>
+<div class="modal-back" id="modal"><div class="modal"><h2 id="modalTitle">Continue</h2><p id="modalText"></p><div class="modal-actions"><button class="btn outline" onclick="closeModal()">Close</button><button class="btn" onclick="closeModal();showPage('help')">View setup requirements</button></div></div></div>
 <script>
-document.getElementById("year").textContent=new Date().getFullYear();
-
-function toggleMenu(){document.getElementById("mainNav").classList.toggle("open")}
-function closeMenu(){document.getElementById("mainNav").classList.remove("open")}
-function toggleChat(){document.getElementById("chatPanel").classList.toggle("hidden")}
-
-function selectPath(level,grade,subject){
- document.getElementById("quizLevel").value=level;
- document.getElementById("quizGrade").value=grade;
- updateSubjects();
- document.getElementById("quizSubject").value=subject;
-}
-
-function updateSubjects(){
- const level=document.getElementById("quizLevel").value;
- const subject=document.getElementById("quizSubject");
- const choices={
-  "Pre-Primary":["Early Numeracy","Early Literacy","Shapes and Colours","Basic Science"],
-  "Primary":["Mathematics","English","Setswana","Science","Social Studies","Agriculture"],
-  "Secondary":["Mathematics","English","Setswana","Biology","Chemistry","Physics","Geography","History","Accounting","Business Studies"],
-  "Tertiary":["Mathematics","English","Business Studies","Computer Studies","Accounting","Education Studies"]
- };
- subject.innerHTML="";
- choices[level].forEach(s=>{
-  const option=document.createElement("option");
-  option.textContent=s;option.value=s;subject.appendChild(option);
- });
-}
-
-const sampleQuestions=[
- {q:"What is 7 × 8?",a:["54","56","64","48"],correct:1},
- {q:"Which number is an even number?",a:["13","17","21","24"],correct:3},
- {q:"What is half of 50?",a:["15","20","25","30"],correct:2},
- {q:"Which word is a noun?",a:["Quickly","Beautiful","School","Running"],correct:2},
- {q:"Which planet is known as the Red Planet?",a:["Venus","Mars","Jupiter","Mercury"],correct:1},
- {q:"How many sides does a triangle have?",a:["Two","Three","Four","Five"],correct:1},
- {q:"Which of these is a source of light?",a:["Stone","Mirror","Sun","Book"],correct:2},
- {q:"What is 100 divided by 4?",a:["20","25","30","40"],correct:1},
- {q:"Which punctuation mark ends a question?",a:["Full stop","Comma","Question mark","Colon"],correct:2},
- {q:"Which of these is a living thing?",a:["Rock","Tree","Chair","Bottle"],correct:1}
-];
-
-function startQuiz(){
- const output=document.getElementById("quizOutput");
- const level=document.getElementById("quizLevel").value;
- const grade=document.getElementById("quizGrade").value;
- const subject=document.getElementById("quizSubject").value;
- output.innerHTML="";
- const heading=document.createElement("h3");
- heading.textContent="Sample practice quiz: "+level+" | "+grade+" | "+subject;
- output.appendChild(heading);
- const note=document.createElement("div");
- note.className="notice";
- note.textContent="DEMO QUESTIONS: These sample questions are not a complete Botswana syllabus-aligned weekly quiz. The live platform will select and verify questions for the learner's exact grade, subject, curriculum and syllabus.";
- output.appendChild(note);
- const form=document.createElement("form");
- form.id="sampleQuizForm";
- sampleQuestions.forEach((item,index)=>{
-  const box=document.createElement("div");box.className="quiz-question";
-  const q=document.createElement("strong");q.textContent=(index+1)+". "+item.q;box.appendChild(q);
-  item.a.forEach((answer,j)=>{
-   const label=document.createElement("label");
-   const radio=document.createElement("input");
-   radio.type="radio";radio.name="q"+index;radio.value=j;radio.required=true;
-   label.appendChild(radio);label.appendChild(document.createTextNode(answer));
-   box.appendChild(label);
-  });
-  form.appendChild(box);
- });
- const submit=document.createElement("button");
- submit.className="btn btn-blue";submit.type="submit";submit.textContent="Submit sample quiz";
- form.appendChild(submit);
- form.onsubmit=function(event){
-  event.preventDefault();
-  let score=0;
-  sampleQuestions.forEach((item,index)=>{
-   const selected=form.querySelector('input[name="q'+index+'"]:checked');
-   if(selected && Number(selected.value)===item.correct)score++;
-  });
-  const result=document.createElement("div");result.className="result";
-  result.innerHTML="<h3>Sample quiz result</h3><strong>"+score+" / 10</strong><p>This is a demonstration score only. Live learner results will be saved to a secure customer account after the platform backend is connected.</p>";
-  form.appendChild(result);
-  submit.disabled=true;submit.textContent="Quiz submitted";
- };
- output.appendChild(form);
- output.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-function submitUpload(event){
- event.preventDefault();
- const file=document.getElementById("upFile").files[0];
- const details=[
-  "Document conversion request",
-  "Name: "+document.getElementById("upName").value,
-  "Email: "+document.getElementById("upEmail").value,
-  "Customer type: "+document.getElementById("upCustomer").value,
-  "Education level: "+document.getElementById("upLevel").value,
-  "Service: "+document.getElementById("upService").value,
-  "Subject: "+document.getElementById("upSubject").value,
-  "File selected: "+(file?file.name:"No file selected"),
-  "Instructions: "+document.getElementById("upInstructions").value,
-  "",
-  "Please reply with instructions for securely submitting my document."
- ].join("\n");
- alert("Your email application will open. Please note: the selected document is NOT automatically attached. Attach it yourself before sending.");
- window.location.href="mailto:lesedieducationhelpdesk@gmail.com?subject="+encodeURIComponent("Document conversion request")+"&body="+encodeURIComponent(details);
-}
-
-function submitTopic(event){
- event.preventDefault();
- const details=[
-  "Individual topic order request",
-  "Name: "+document.getElementById("topicName").value,
-  "Email: "+document.getElementById("topicEmail").value,
-  "Education level: "+document.getElementById("topicLevel").value,
-  "Grade / examination: "+document.getElementById("topicGrade").value,
-  "Subject: "+document.getElementById("topicSubject").value,
-  "Topic: "+document.getElementById("topicTitle").value,
-  "Requested material: "+document.getElementById("topicProduct").value,
-  "Price advertised: P10.00"
- ].join("\n");
- alert("Your email application will open to prepare your P10 topic request. This does not take payment or confirm an order.");
- window.location.href="mailto:lesedieducationhelpdesk@gmail.com?subject="+encodeURIComponent("P10 individual topic request")+"&body="+encodeURIComponent(details);
-}
+const pages=['overview','converter','lesson','scheme','resources','exams','results','packages','account','help'];
+const labels={overview:'Overview',converter:'Hardcopy Converter',lesson:'Lesson Plan Studio',scheme:'Scheme of Work',resources:'Teaching Resources',exams:'Examination Studio',results:'Results & Reports',packages:'Packages & Pricing',account:'Account & Trial',help:'Help & Contact'};
+let selectedFile=null, activity=[];
+const $=id=>document.getElementById(id);
+$('year').textContent=new Date().getFullYear();
+function toast(msg){let t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',3600)}
+function showPage(p){if(!pages.includes(p))return;pages.forEach(x=>$(x).classList.toggle('active',x===p));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=labels[p];$('sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+$('menuBtn').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
+function addActivity(title,detail){activity.unshift({title,detail,time:new Date().toLocaleString()});activity=activity.slice(0,8);renderActivity()}
+function renderActivity(){$('activity').innerHTML=activity.length?activity.map(a=>`<div class="activity"><div class="dot"></div><div><strong>${escapeHtml(a.title)}</strong><small>${escapeHtml(a.detail)} · ${escapeHtml(a.time)}</small></div></div>`).join(''):'<div class="muted" style="font-size:12px">No activity yet.</div>'}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function handleFile(file){if(!file)return;if(file.size>15*1024*1024){toast('File is larger than the 15 MB demo limit.');return}let ext=file.name.split('.').pop().toLowerCase();if(!['pdf','docx','txt'].includes(ext)){toast('Please choose a PDF, DOCX or TXT file.');return}selectedFile=file;$('homeFileName').textContent=file.name;$('sourceName').textContent=file.name;$('selectedFileDetails').textContent=`${file.name} · ${(file.size/1024).toFixed(1)} KB · ${ext.toUpperCase()}. File selected; extraction service is not connected.`;$('docCount').textContent='1';addActivity('Document selected',file.name);toast('File selected. Extraction is not yet connected.')}
+$('homeFile').addEventListener('change',e=>handleFile(e.target.files[0]));$('sourceFile').addEventListener('change',e=>handleFile(e.target.files[0]));
+function makeLesson(){let v={subject:$('lpSubject').value,grade:$('lpGrade').value,topic:$('lpTopic').value,duration:$('lpDuration').value,objectives:$('lpObjectives').value,materials:$('lpMaterials').value,approach:$('lpApproach').value};if(!v.subject||!v.topic){toast('Enter at least a subject and topic.');return}let s=`LESSON PLAN DRAFT\n\nSubject: ${v.subject}\nClass: ${v.grade||'Not specified'}\nTopic: ${v.topic}\nDuration: ${v.duration||'Not specified'}\n\nLEARNING OBJECTIVES\n${v.objectives||'Teacher to add measurable learning objectives.'}\n\nTEACHING & LEARNING MATERIALS\n${v.materials||'Teacher to list required materials.'}\n\nLESSON SEQUENCE\n1. Introduction / prior knowledge: Connect the topic to learners’ existing knowledge.\n2. Teacher instruction: Explain and demonstrate the key concept using verified content.\n3. Guided practice: Work through examples with learners.\n4. Learner activity: Learners complete an appropriate task individually or in groups.\n5. Assessment: Check understanding against the stated objectives.\n6. Conclusion: Summarise key learning and give follow-up work.\n\nTEACHING APPROACH / NOTES\n${v.approach||'Teacher to complete this section.'}\n\nREVIEW CHECKLIST\n- Confirm curriculum alignment and correct terminology.\n- Check accuracy of all examples and answers.\n- Adapt activities for learner needs.\n- Add references to the source material.`;$('lessonOutput').style.display='block';$('lessonOutput').textContent=s;addActivity('Lesson plan draft prepared',v.subject+' — '+v.topic);toast('Lesson-plan draft prepared. Please review it.')}
+function saveLesson(){if(!$('lessonOutput').textContent){toast('Prepare a lesson plan first.');return}let a=JSON.parse(localStorage.getItem('el_lessons')||'[]');a.push({text:$('lessonOutput').textContent,date:new Date().toISOString()});localStorage.setItem('el_lessons',JSON.stringify(a));$('planCount').textContent=a.length;toast('Saved in this browser only. It is not backed up online.')}
+function makeScheme(){let subject=$('swSubject').value,cl=$('swClass').value,term=$('swTerm').value,weeks=Math.min(20,Math.max(1,Number($('swWeeks').value)||1)),topics=$('swTopics').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!subject||!topics.length){toast('Enter a subject and at least one topic.');return}let rows=Array.from({length:weeks},(_,i)=>`Week ${i+1} | ${topics[i%topics.length]} | Teacher to add objectives, activities, resources and assessment.`);$('schemeOutput').style.display='block';$('schemeOutput').textContent=`SCHEME OF WORK DRAFT\nSubject: ${subject}\nClass: ${cl||'Not specified'}\nTerm: ${term||'Not specified'}\n\n${rows.join('\n')}\n\nTeacher review: align weekly content with the official syllabus and school calendar.`;addActivity('Scheme of work drafted',subject+' — '+weeks+' weeks')}
+function makeResource(){let type=$('resType').value,level=$('resLevel').value,topic=$('resTopic').value,notes=$('resNotes').value;if(!topic){toast('Enter a topic first.');return}$('resourceOutput').style.display='block';$('resourceOutput').textContent=`${type.toUpperCase()} — DRAFT OUTLINE\nSubject / level: ${level||'Not specified'}\nTopic: ${topic}\n\n1. Learning purpose\nState what learners should understand or practise.\n\n2. Key content\n${notes||'Add verified facts, definitions, worked examples and source references here.'}\n\n3. Learner task\nCreate a task that checks understanding of the key content.\n\n4. Review\nTeacher to verify accuracy, level appropriateness and curriculum alignment before distribution.`;addActivity(type+' outline prepared',topic)}
+function makeExam(){let title=$('exTitle').value,level=$('exLevel').value,questions=$('exQuestions').value;if(!title||!questions){toast('Enter an examination title and questions.');return}$('examOutput').style.display='block';$('examOutput').textContent=`EXAMINATION DRAFT — NOT PUBLISHED\nTitle: ${title}\nSubject / level: ${level||'Not specified'}\nDuration: ${$('exDuration').value||'Not specified'}\nTotal marks: ${$('exMarks').value||'Not specified'}\n\nQUESTIONS\n${questions}\n\nVERIFICATION REQUIRED\n- Examiner must verify every question and mark allocation.\n- Answer key must be supplied and checked by an authorised teacher.\n- Written responses require teacher marking and approval.\n- Do not distribute until approved.`;addActivity('Examination draft prepared',title)}
+function saveExam(){if(!$('examOutput').textContent){toast('Prepare an examination first.');return}let a=JSON.parse(localStorage.getItem('el_exams')||'[]');a.push({text:$('examOutput').textContent,date:new Date().toISOString()});localStorage.setItem('el_exams',JSON.stringify(a));$('examCount').textContent=a.length;toast('Draft saved in this browser only.')}
+function printResult(id){let el=$(id);if(!el.textContent){toast('Prepare the content first.');return}let w=window.open('','_blank');if(!w){toast('Allow pop-ups to print this document.');return}w.document.write('<html><head><title>Education Lesedi</title><style>body{font:14px Arial;padding:35px;white-space:pre-wrap;line-height:1.6}h1{color:#123}</style></head><body><h1>Education Lesedi Scholars Hub</h1>'+escapeHtml(el.textContent)+'</body></html>');w.document.close();w.print()}
+function choosePlan(plan){$('modalTitle').textContent=plan+' package';$('modalText').textContent='Package interest recorded only in this demo. Live registration, 30-day trial activation and payment require secure server-side services. No payment has been taken.';$('modal').style.display='flex';addActivity('Package selected',plan)}
+function closeModal(){$('modal').style.display='none'}
+$('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeModal()});
+try{$('planCount').textContent=JSON.parse(localStorage.getItem('el_lessons')||'[]').length;$('examCount').textContent=JSON.parse(localStorage.getItem('el_exams')||'[]').length}catch(e){}
 </script>
-
-<!-- EDUCATION LESEDI: BOTSWANA EXAMINATION LIBRARY -->
-<section id="botswana-exam-library" style="padding:45px 20px;background:#f3f6fc;font-family:Arial,sans-serif;color:#10264b;">
-  <div style="max-width:1100px;margin:auto;">
-    <div style="background:#10264b;color:white;padding:28px;border-radius:16px;text-align:center;">
-      <h2 style="margin:0 0 10px;">Botswana Examination Library</h2>
-      <p style="color:#f4c84a;margin:0;">EDUCATION LESEDI SCHOLARS HUB</p>
-      <p>Find practice examinations by education level, subject and examination type.</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:25px 0;">
-      <input id="examSearch" oninput="filterLesediExams()" placeholder="Search examinations..." style="padding:14px;border:1px solid #ccd5e3;border-radius:9px;">
-      <select id="examLevel" onchange="filterLesediExams()" style="padding:14px;border:1px solid #ccd5e3;border-radius:9px;">
-        <option value="">All education levels</option>
-        <option value="Primary">Primary School</option>
-        <option value="Junior">Junior Secondary</option>
-        <option value="Senior">Senior Secondary</option>
-        <option value="Tertiary">Tertiary & Vocational</option>
-      </select>
-      <select id="examType" onchange="filterLesediExams()" style="padding:14px;border:1px solid #ccd5e3;border-radius:9px;">
-        <option value="">All examination types</option>
-        <option value="PSLE">PSLE</option>
-        <option value="JCE">JCE</option>
-        <option value="BGCSE">BGCSE</option>
-        <option value="Practice">Practice examinations</option>
-      </select>
-    </div>
-
-    <div id="lesediExamResults" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;"></div>
-
-    <p style="text-align:center;color:#64748b;font-size:13px;margin-top:25px;">
-      Practice examination samples. Official past papers must be added with appropriate permission.
-    </p>
-  </div>
-</section>
-
-<script>
-const lesediExams = [
-  {level:"Primary",type:"PSLE",subject:"Mathematics",title:"PSLE Mathematics Practice",year:"Practice"},
-  {level:"Primary",type:"PSLE",subject:"English",title:"PSLE English Practice",year:"Practice"},
-  {level:"Primary",type:"PSLE",subject:"Setswana",title:"PSLE Setswana Practice",year:"Practice"},
-  {level:"Primary",type:"PSLE",subject:"Science",title:"PSLE Science Practice",year:"Practice"},
-  {level:"Junior",type:"JCE",subject:"Mathematics",title:"JCE Mathematics Practice",year:"Practice"},
-  {level:"Junior",type:"JCE",subject:"English",title:"JCE English Practice",year:"Practice"},
-  {level:"Junior",type:"JCE",subject:"Setswana",title:"JCE Setswana Practice",year:"Practice"},
-  {level:"Junior",type:"JCE",subject:"Science",title:"JCE Science Practice",year:"Practice"},
-  {level:"Senior",type:"BGCSE",subject:"Mathematics",title:"BGCSE Mathematics Practice",year:"Practice"},
-  {level:"Senior",type:"BGCSE",subject:"English",title:"BGCSE English Practice",year:"Practice"},
-  {level:"Senior",type:"BGCSE",subject:"Biology",title:"BGCSE Biology Practice",year:"Practice"},
-  {level:"Senior",type:"BGCSE",subject:"Chemistry",title:"BGCSE Chemistry Practice",year:"Practice"},
-  {level:"Senior",type:"BGCSE",subject:"Physics",title:"BGCSE Physics Practice",year:"Practice"},
-  {level:"Senior",type:"BGCSE",subject:"Geography",title:"BGCSE Geography Practice",year:"Practice"},
-  {level:"Tertiary",type:"Practice",subject:"General Studies",title:"Tertiary General Practice",year:"Practice"}
-];
-
-function filterLesediExams(){
-  const search=document.getElementById("examSearch").value.toLowerCase();
-  const level=document.getElementById("examLevel").value;
-  const type=document.getElementById("examType").value;
-  const results=lesediExams.filter(e=>
-    (!search || (e.title+" "+e.subject+" "+e.type).toLowerCase().includes(search)) &&
-    (!level || e.level===level) &&
-    (!type || e.type===type)
-  );
-  const container=document.getElementById("lesediExamResults");
-  container.innerHTML="";
-  if(!results.length){
-    container.innerHTML="<p>No matching examinations found.</p>";
-    return;
-  }
-  results.forEach(e=>{
-    const card=document.createElement("div");
-    card.style.cssText="background:white;padding:22px;border-radius:13px;box-shadow:0 3px 12px #10264b12;border:1px solid #e1e7f0;";
-    const title=document.createElement("h3");
-    title.textContent=e.title;
-    const details=document.createElement("p");
-    details.textContent=e.type+" | "+e.subject+" | "+e.year;
-    details.style.color="#64748b";
-    const button=document.createElement("button");
-    button.textContent="Open examination";
-    button.style.cssText="background:#174ea6;color:white;border:0;padding:12px 18px;border-radius:8px;cursor:pointer;width:100%;";
-    button.onclick=()=>alert("This is a practice examination listing. The actual examination questions, timer, learner login and result saving will be connected in the next development stage.");
-    card.append(title,details,button);
-    container.appendChild(card);
-  });
-}
-filterLesediExams();
-</script>
-<!-- END EDUCATION LESEDI EXAMINATION LIBRARY -->
-</body>
-</html>
+</body></html>
