@@ -684,7 +684,6 @@ function buyDQ(){
   window.open('https://wa.me/26777980825?text=' + msg, '_blank');
 }
 </script>
-
 <!-- ===== END SHOP ===== -->
 <script>
 function buyDQ(){
@@ -693,34 +692,34 @@ function buyDQ(){
   window.open('https://wa.me/26777980825?text=' + msg, '_blank');
 }
 
-function fixShopDisplay(){
+// SIMPLE FIX - just show shop and scroll to it, don't hide main
+function showShopSimple(){
   var shop = document.getElementById('shop');
   if(!shop) return;
   shop.style.display = 'block';
-  shop.classList.add('active');
-  var mainEl = document.querySelector('main');
-  if(mainEl) mainEl.style.display = 'none';
-  document.querySelectorAll('main .page').forEach(function(p){ p.classList.remove('active'); });
-  shop.scrollIntoView({behavior:'smooth'});
+  shop.style.background = '#f4f7fb';
+  shop.style.padding = '20px';
+  // Show it
   setTimeout(function(){
-    var box = document.querySelector('#shop .card[style*="f5c842"]');
-    if(box){ box.scrollIntoView({behavior:'smooth', block:'center'}); box.style.boxShadow = '0 0 0 3px #f5c842'; }
-  }, 400);
+    shop.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+  // Highlight P100 box
+  setTimeout(function(){
+    var box = document.querySelector('#shop .card');
+    if(box) box.style.border = '3px solid #f5c842';
+  }, 500);
 }
 
-function fixOtherPages(){
-  var mainEl = document.querySelector('main');
-  if(mainEl) mainEl.style.display = '';
-  var shop = document.getElementById('shop');
-  if(shop){ shop.style.display='none'; shop.classList.remove('active'); }
-}
-
-document.querySelectorAll('button[data-page="shop"]').forEach(function(btn){
-  btn.onclick = function(e){ e.preventDefault(); fixShopDisplay(); };
-});
-document.querySelectorAll('button[data-page]:not([data-page="shop"])').forEach(function(btn){
-  btn.addEventListener('click', function(){ fixOtherPages(); });
-});
+// Force all SHOP buttons to use simple scroll
+setTimeout(function(){
+  document.querySelectorAll('button[data-page="shop"]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      showShopSimple();
+    }, true);
+  });
+}, 500);
 </script>
 </body>
 </html>
