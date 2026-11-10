@@ -673,7 +673,7 @@ async function uploadDocumentToCloud(){
       <div class="price">P100 <small class="muted">once-off</small></div>
       <p class="small muted">Pay: Orange Money 77980825<br>MyZaka 71823638<br>Education Lesedi Scholars Hub</p>
       <div class="field"><label>Your name</label><input id="dq-name" placeholder="e.g. Neo"></div>
-      <button class="btn gold" style="width:100%" onclick="buyDQ()">BUY - PP100 via WhatsApp</button>
+      <button class="btn gold" style="width:100%" onclick="buyDQ()">BUY - P100 via WhatsApp</button>
     </div>
   </div>
 </section>
@@ -684,5 +684,48 @@ function buyDQ(){
   window.open('https://wa.me/26777980825?text=' + msg, '_blank');
 }
 </script>
-<!-- ===== END SHOP ===== --></body>
+<!-- ===== END SHOP ===== -->
+<script>
+// FIX - SHOP is outside main, so force it to show and scroll to box
+function fixShopDisplay(){
+  var shop = document.getElementById('shop');
+  if(!shop) return;
+  // Make shop visible even outside main
+  shop.style.display = 'block';
+  shop.classList.add('active');
+  // Hide main pages
+  document.querySelectorAll('main .page').forEach(p=>{
+    if(p.id !== 'shop') p.classList.remove('active');
+  });
+  // Hide main container, show shop
+  var mainEl = document.querySelector('main');
+  if(mainEl) mainEl.style.display = 'none';
+  // Scroll straight to P100 box
+  shop.scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    var box = shop.querySelector('.card[style*="f5c842"]');
+    if(box) box.scrollIntoView({behavior:'smooth', block:'center'});
+    // Highlight the box so parent sees it
+    if(box) box.style.boxShadow = '0 0 0 3px #f5c842';
+  }, 400);
+}
+
+function fixOtherPages(){
+  var mainEl = document.querySelector('main');
+  if(mainEl) mainEl.style.display = '';
+  var shop = document.getElementById('shop');
+  if(shop){ shop.style.display='none'; shop.classList.remove('active'); }
+}
+
+// Hook all SHOP buttons
+document.querySelectorAll('button[data-page="shop"]').forEach(btn=>{
+  btn.onclick = function(e){ e.preventDefault(); fixShopDisplay(); };
+});
+// Hook all other menu buttons to hide shop again
+document.querySelectorAll('button[data-page]:not([data-page="shop"])').forEach(btn=>{
+  btn.addEventListener('click', function(){ fixOtherPages(); });
+});
+</script>
+</body>
+</html></body>
 </html>
