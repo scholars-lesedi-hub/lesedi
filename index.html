@@ -684,29 +684,27 @@ function buyDQ(){
   window.open('https://wa.me/26777980825?text=' + msg, '_blank');
 }
 </script>
+
 <!-- ===== END SHOP ===== -->
 <script>
-// FIX - SHOP is outside main, so force it to show and scroll to box
+function buyDQ(){
+  var name = document.getElementById('dq-name') ? document.getElementById('dq-name').value : '';
+  var msg = encodeURIComponent('Hi Lesedi! I want BEC Digital Questions P100. My name: ' + name + '. I will pay Orange Money 77980825 / MyZaka 71823638.');
+  window.open('https://wa.me/26777980825?text=' + msg, '_blank');
+}
+
 function fixShopDisplay(){
   var shop = document.getElementById('shop');
   if(!shop) return;
-  // Make shop visible even outside main
   shop.style.display = 'block';
   shop.classList.add('active');
-  // Hide main pages
-  document.querySelectorAll('main .page').forEach(p=>{
-    if(p.id !== 'shop') p.classList.remove('active');
-  });
-  // Hide main container, show shop
   var mainEl = document.querySelector('main');
   if(mainEl) mainEl.style.display = 'none';
-  // Scroll straight to P100 box
+  document.querySelectorAll('main .page').forEach(function(p){ p.classList.remove('active'); });
   shop.scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>{
-    var box = shop.querySelector('.card[style*="f5c842"]');
-    if(box) box.scrollIntoView({behavior:'smooth', block:'center'});
-    // Highlight the box so parent sees it
-    if(box) box.style.boxShadow = '0 0 0 3px #f5c842';
+  setTimeout(function(){
+    var box = document.querySelector('#shop .card[style*="f5c842"]');
+    if(box){ box.scrollIntoView({behavior:'smooth', block:'center'}); box.style.boxShadow = '0 0 0 3px #f5c842'; }
   }, 400);
 }
 
@@ -717,15 +715,12 @@ function fixOtherPages(){
   if(shop){ shop.style.display='none'; shop.classList.remove('active'); }
 }
 
-// Hook all SHOP buttons
-document.querySelectorAll('button[data-page="shop"]').forEach(btn=>{
+document.querySelectorAll('button[data-page="shop"]').forEach(function(btn){
   btn.onclick = function(e){ e.preventDefault(); fixShopDisplay(); };
 });
-// Hook all other menu buttons to hide shop again
-document.querySelectorAll('button[data-page]:not([data-page="shop"])').forEach(btn=>{
+document.querySelectorAll('button[data-page]:not([data-page="shop"])').forEach(function(btn){
   btn.addEventListener('click', function(){ fixOtherPages(); });
 });
 </script>
 </body>
-</html></body>
 </html>
