@@ -1,116 +1,180 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Education Lesedi Scholars Hub - Botswana</title>
+<title>Lesedi Scholars Hub — One Question At A Time</title>
 <style>
-*{box-sizing:border-box}
-body{font-family:Inter,system-ui,Arial;margin:0;background:#f8fafc;color:#0f172a}
-header{background:linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#334155 100%);color:#fff;padding:32px 20px;text-align:center}
-header h1{margin:8px 0;font-size:28px;line-height:1.2}
-header p{color:#cbd5e1;font-size:14px}
-.badge{display:inline-block;background:#facc15;color:#111;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.5px}
-.btn{padding:13px 16px;border-radius:12px;border:0;font-weight:700;cursor:pointer;font-size:14px}
-.btn-gold{background:#facc15;color:#111}
-.btn-dark{background:#0f172a;color:#fff}
-.btn-blue{background:#4f46e5;color:#fff}
-.btn-outline{background:#fff;color:#0f172a;border:1px solid #e2e8f0}
-.wrap{max-width:900px;margin:0 auto;padding:0 14px}
-.card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:22px;margin:16px 0;box-shadow:0 4px 20px rgba(0,0,0,.04)}
-.card h2{margin:0 0 6px;font-size:20px}
-.card p{color:#475569;font-size:14px;line-height:1.6}
-.price{font-size:28px;font-weight:900}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.plan{border:1px solid #e2e8f0;border-radius:16px;padding:16px;text-align:center}
-.plan.pop{border:2px solid #facc15;background:#fffbeb}
-input{width:100%;padding:12px;border-radius:12px;border:1px solid #e2e8f0;margin:8px 0}
-.tag{font-size:11px;background:#eef2ff;color:#4f46e5;padding:4px 8px;border-radius:999px;font-weight:700}
-@media(max-width:640px){.grid3,.grid2{grid-template-columns:1fr}header h1{font-size:23px}}
-footer{text-align:center;padding:24px;color:#64748b;font-size:12px;line-height:1.7}
+*{box-sizing:border-box}body{font-family:Inter,system-ui,Arial;margin:0;background:#f8fafc;color:#0f172a}
+header{background:linear-gradient(135deg,#0f172a,#312e81);color:#fff;padding:32px 18px;text-align:center}
+.badge{background:#facc15;color:#111;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:800}
+.btn{padding:13px 16px;border-radius:12px;border:0;font-weight:700;cursor:pointer;width:100%}
+.btn-gold{background:#facc15}.btn-dark{background:#0f172a;color:#fff}.btn-blue{background:#4f46e5;color:#fff}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:22px;margin:16px 0;box-shadow:0 6px 24px rgba(0,0,0,.05)}
+.upload{border:2px dashed #a5b4fc;background:#eef2ff;border-radius:16px;padding:22px;text-align:center;cursor:pointer;display:block}
+.opt{display:block;width:100%;text-align:left;padding:13px 14px;margin:8px 0;border:1px solid #e2e8f0;border-radius:12px;background:#fff;cursor:pointer;font-size:15px}
+.opt.selected{background:#eef2ff;border-color:#4f46e5}
+.opt.correct{background:#dcfce7;border-color:#22c55e}.opt.wrong{background:#fee2e2;border-color:#ef4444}
+.progress{height:8px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin:10px 0}
+.progress>div{height:100%;background:#4f46e5;transition:width .3s}
+input,select{width:100%;padding:12px;border-radius:12px;border:1px solid #e2e8f0;margin:6px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+footer{text-align:center;padding:24px;color:#64748b;font-size:12px}
 </style></head><body>
 
 <header>
 <span class="badge">LESEDI SCHOLARS HUB • BOTSWANA</span>
-<h1>From Paper to Digital.<br>From Phone to Business.</h1>
-<p>BEC • STEAM • Road Signs • AI Marking • Digital & AI Skills</p>
-<div style="margin-top:16px">
-<button class="btn btn-gold" onclick="go('shop')">BEC P100</button>
-<button class="btn btn-outline" onclick="go('membership')">Membership • Free Trial</button>
-<button class="btn btn-outline" onclick="go('services')">P10 Services</button>
-</div>
+<h1>One Question At A Time.<br>Submit & Get Total Instantly.</h1>
+<p>No ClassMarker needed. Your website marks it.</p>
 </header>
 
 <div class="wrap">
 
-<!-- BEC -->
-<div id="shop" class="card" style="border:2px solid #facc15;background:#fffdf0">
-<span class="tag" style="background:#fef9c3;color:#854d0e">MOST POPULAR</span>
-<h2>🔥 BEC Digital Questions — P100</h2>
-<p>PSLE • JCE • BGCSE — 150 Questions + Answers. Delivered as PDF on WhatsApp immediately.</p>
-<button class="btn btn-dark" style="width:100%" onclick="buy('BEC Digital Questions P100')">Get BEC P100 on WhatsApp</button>
-</div>
-
-<!-- P10 SERVICES - NO FAST CASH -->
-<div id="services" class="card">
-<h2>Our Services — P10.00</h2>
-<div class="grid2">
-<div class="plan" style="text-align:left">
-<b>📄 Hardcopy to Digital</b>
-<p>Send a photo of your paper. We return a clean Digital Quiz, Test or Exam.</p>
-<div class="price">P10 <span style="font-size:13px;color:#64748b;font-weight:400">/ copy</span></div>
-<button class="btn btn-dark" style="width:100%;margin-top:10px" onclick="buy('Hardcopy to Digital P10 per copy')">Start — WhatsApp</button>
-</div>
-<div class="plan" style="text-align:left;background:#eef2ff;border-color:#c7d2fe">
-<b>📝 Custom Topic-Test</b>
-<p>Choose any topic. We create a BEC-aligned test + answers for you.</p>
-<input id="topic-name" placeholder="e.g. Std 5 Fractions">
-<div class="price">P10 <span style="font-size:13px;color:#64748b;font-weight:400">/ test</span></div>
-<button class="btn btn-blue" style="width:100%;margin-top:6px" onclick="buyCustom()">Order My Topic-Test</button>
-</div>
-</div>
-</div>
-
-<!-- MEMBERSHIP -->
-<div id="membership" class="card">
-<h2>🚀 Membership — First Month Free Trial</h2>
-<p>Free Weekly Quiz • Discussion Forum • Individual Dashboard • AI Composition Marking + AI Live Feedback • STEAM • Road Signs • Lesson Plans</p>
-<div class="grid3">
-<div class="plan"><b>Individual</b><div class="price">P100<span style="font-size:13px;color:#64748b">/mo</span></div><p>BEC + STEAM + Road Signs + Quiz + Forum + Dashboard</p><button class="btn btn-dark" style="width:100%" onclick="buy('Individual Membership P100 Free Trial')">Start Free Trial</button></div>
-<div class="plan pop"><b>Professionals ⭐</b><div class="price">P150<span style="font-size:13px;color:#64748b">/mo</span></div><p>All Individual + Lesson Plans / Scheme + AI Marking + Live Feedback</p><button class="btn btn-gold" style="width:100%" onclick="buy('Professional Membership P150 Free Trial')">Start Free Trial</button></div>
-<div class="plan"><b>Schools</b><div class="price">P500<span style="font-size:13px;color:#64748b">/mo</span></div><p>All Professionals + Unlimited + 5 Teachers + Negotiation</p><button class="btn btn-dark" style="width:100%" onclick="buy('School Membership P500 Free Trial')">Start Free Trial</button></div>
-</div>
-</div>
-
-<!-- DIGITAL SKILLS - PERSONAL LEARNING ONLY, NO CERTIFICATE -->
+<!-- UPLOAD NOTES / HARDCOPY -->
 <div class="card">
-<h2>💻 Digital & AI Skills — Personal Learning</h2>
-<p>Learn at your own pace for personal growth: WhatsApp Business, Canva Flyers, ChatGPT, How to Sell on Facebook. No exams, just practical skills for yourself and your business.</p>
-<div class="grid2">
-<div class="plan"><b>Starter</b><div class="price">P100</div><p>Videos + Materials — Personal Learning</p><button class="btn btn-dark" style="width:100%" onclick="buy('Digital Skills Starter P100 Personal Learning')">Join P100</button></div>
-<div class="plan pop"><b>Full Learning ⭐</b><div class="price">P250</div><p>Full Videos + Materials + Support + Community — Personal Learning</p><button class="btn btn-gold" style="width:100%" onclick="buy('Digital Skills Full P250 Personal Learning')">Join P250</button></div>
-</div>
+<h2>📄 Upload Notes / Hardcopy — Get Questions — P10</h2>
+<label class="upload" for="fileInput">📸 <b>Click to Upload Photo of Notes / Paper</b><br><small>We read it and make quiz from it</small><input type="file" id="fileInput" accept="image/*,.pdf" hidden onchange="handleFile(this)"></label>
+<div id="preview"></div>
+<input id="topicInput" placeholder="Topic? e.g. Photosynthesis, Fractions">
+<button class="btn btn-blue" onclick="makeFromNotes()">✨ Generate Quiz From My Notes — P10</button>
+<div id="notesResult" style="font-size:14px;margin-top:10px"></div>
 </div>
 
-<!-- AI -->
-<div class="card" style="text-align:center;background:#0f172a;color:#fff;border:0">
-<h2 style="color:#fff">✨ AI Composition Marking + AI Live Feedback</h2>
-<p style="color:#cbd5e1">Upload your composition. Get feedback in minutes. Included in Membership.</p>
-<button class="btn btn-gold" onclick="buy('AI Marking Trial')">Try Free Trial</button>
+<!-- QUIZ ENGINE - 1 BY 1 -->
+<div class="card" id="quizCard">
+<h2>📝 BEC Quiz — One By One</h2>
+<p style="color:#475569;font-size:14px">Choose level, then answer one by one. At the end you get total + marking key.</p>
+<select id="levelSel" onchange="startQuiz()"><option value="PSLE">PSLE — Primary</option><option value="JCE">JCE — Junior</option><option value="BGCSE">BGCSE — Senior</option><option value="ROAD">Road Signs</option></select>
+<select id="subjectSel" onchange="startQuiz()"><option>Mathematics</option><option>English</option><option>Science</option><option>Social Studies</option></select>
+
+<div id="quizArea">
+<div style="display:flex;justify-content:space-between;font-size:13px;color:#64748b"><span id="qCount">Question 1 of 5</span><span id="timer">⏱ 10:00</span></div>
+<div class="progress"><div id="prog" style="width:20%"></div></div>
+<h3 id="qText" style="line-height:1.4">Loading...</h3>
+<div id="opts"></div>
+<div style="display:flex;gap:8px;margin-top:14px">
+<button class="btn" style="background:#f1f5f9" onclick="prevQ()">← Back</button>
+<button class="btn btn-dark" onclick="nextQ()">Next →</button>
+</div>
+<button class="btn btn-gold" style="margin-top:10px" onclick="submitQuiz()">✅ Submit & See Total</button>
+</div>
+
+<div id="resultArea" style="display:none"></div>
+</div>
+
+<!-- CUSTOM TOPIC TEST -->
+<div class="card" style="background:#eef2ff;border-color:#c7d2fe">
+<h2>📝 Custom Topic Test — From Your Notes — P10</h2>
+<input id="customTopic" placeholder="e.g. JCE Maths Algebra, Std 7 Photosynthesis">
+<button class="btn btn-dark" onclick="customTest()">Generate My Topic Test — P10</button>
+<div id="customOut"></div>
+</div>
+
+<!-- PRICING -->
+<div class="card">
+<h2>💰 Prices — One Business</h2>
+<div class="grid2">
+<div style="border:1px solid #e2e8f0;border-radius:14px;padding:14px;text-align:center"><b>Single Test</b><div style="font-size:26px;font-weight:900">P10</div><button class="btn btn-dark" onclick="buy('Single Test P10')">Buy P10</button></div>
+<div style="border:2px solid #facc15;background:#fffbeb;border-radius:14px;padding:14px;text-align:center"><b>Full Pack 150 Q</b><div style="font-size:26px;font-weight:900">P100</div><button class="btn btn-gold" onclick="buy('Full Pack P100')">Buy P100</button></div>
+</div>
 </div>
 
 </div>
 
 <footer>
-<b style="color:#0f172a">Education Lesedi Scholars Hub</b><br>
-WhatsApp: 77980825 • Email: educationlesedihelpdesk@gmail.com<br>
-educationlesedihub.com • Pay: Orange Money 77980825 / MyZaka 71823638<br>
-© 2026 All rights reserved
+<b>Education Lesedi Scholars Hub</b><br>WhatsApp 77980825 • educationlesedihub.com<br>Orange Money 77980825 / MyZaka 71823638 • © 2026
 </footer>
 
 <script>
-function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
-function buy(p){var m=encodeURIComponent('Hi Lesedi! I want '+p);window.open('https://wa.me/26777980825?text='+m,'_blank')}
-function buyCustom(){var t=document.getElementById('topic-name').value||'my topic';var m=encodeURIComponent('Hi Lesedi! I want Custom Topic-Test P10. Topic: '+t);window.open('https://wa.me/26777980825?text='+m,'_blank')}
-// Supabase tables + bucket remain safe - reconnect later
+const BANK={
+PSLE:[
+{q:"What is 3/4 + 1/4 ?",opts:["1","2","1/2","3/4"],a:0,exp:"3/4+1/4=4/4=1"},
+{q:"Capital of Botswana?",opts:["Francistown","Gaborone","Maun","Kasane"],a:1,exp:"Gaborone is capital"},
+{q:"What is 10 x 5 ?",opts:["15","50","45","55"],a:1,exp:"10x5=50"},
+{q:"Which is a fruit?",opts:["Carrot","Potato","Apple","Cabbage"],a:2,exp:"Apple is fruit"},
+{q:"What is 100 / 10 ?",opts:["10","20","5","100"],a:0,exp:"100/10=10"}
+],
+JCE:[
+{q:"Solve: 2x+6=14, x=?",opts:["4","5","6","8"],a:0,exp:"2x=8, x=4"},
+{q:"What is photosynthesis?",opts:["Food making in plants","Rock breaking","Water boiling","Moon cycle"],a:0,exp:"Plants make food"},
+{q:"What is H2O?",opts:["Salt","Water","Oxygen","Carbon"],a:1,exp:"H2O is water"},
+{q:"What is 5² ?",opts:["10","20","25","30"],a:2,exp:"5x5=25"},
+{q:"Past tense of go?",opts:["Goed","Went","Going","Gone"],a:1,exp:"Went"}
+],
+BGCSE:[
+{q:"Chemical symbol for water?",opts:["CO2","O2","H2O","NaCl"],a:2,exp:"H2O"},
+{q:"What is force = ?",opts:["mass x acceleration","mass + speed","distance/time","energy"],a:0,exp:"F=ma"},
+{q:"What is 20% of 200?",opts:["20","40","60","100"],a:1,exp:"0.2x200=40"},
+{q:"Which is prime?",opts:["4","6","7","9"],a:2,exp:"7 is prime"},
+{q:"Capital of UK?",opts:["Paris","London","Berlin","Rome"],a:1,exp:"London"}
+],
+ROAD:[
+{q:"Red circle sign means?",opts:["Stop / Prohibition","Go","Warning","Info"],a:0,exp:"Red circle = must not do"},
+{q:"Triangle sign means?",opts:["Prohibition","Warning","Stop","Parking"],a:1,exp:"Triangle = warning"},
+{q:"Green light means?",opts:["Stop","Go","Wait","Slow"],a:1,exp:"Green = go"}
+]
+};
+
+let currentSet=[],current=0,answers=[],timerInt=null,timeLeft=600;
+
+function startQuiz(){
+const lvl=document.getElementById('levelSel').value;
+currentSet=BANK[lvl];
+current=0;answers=new Array(currentSet.length).fill(null);
+document.getElementById('resultArea').style.display='none';
+document.getElementById('quizArea').style.display='block';
+startTimer();showQ();
+}
+function startTimer(){
+clearInterval(timerInt);timeLeft=600;
+timerInt=setInterval(()=>{
+timeLeft--;let m=Math.floor(timeLeft/60),s=timeLeft%60;
+document.getElementById('timer').innerText=`⏱ ${m}:${s<10?'0':''}${s}`;
+if(timeLeft<=0){clearInterval(timerInt);submitQuiz();}
+},1000);
+}
+function showQ(){
+const q=currentSet[current];
+document.getElementById('qCount').innerText=`Question ${current+1} of ${currentSet.length}`;
+document.getElementById('prog').style.width=((current+1)/currentSet.length*100)+'%';
+document.getElementById('qText').innerText=q.q;
+document.getElementById('opts').innerHTML=q.opts.map((o,i)=>`<button class="opt ${answers[current]===i?'selected':''}" onclick="pick(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+}
+function pick(i){answers[current]=i;showQ();}
+function nextQ(){if(current<currentSet.length-1){current++;showQ();}else{submitQuiz();}}
+function prevQ(){if(current>0){current--;showQ();}}
+function submitQuiz(){
+clearInterval(timerInt);
+let score=0;let html=`<h3>✅ Your Result: ${currentSet.filter((q,i)=>answers[i]===q.a).length} / ${currentSet.length}</h3>`;
+html+=`<p style="font-size:14px">You scored <b>${Math.round(currentSet.filter((q,i)=>answers[i]===q.a).length/currentSet.length*100)}%</b> — ${score>0?'' :''}</p>`;
+html+=currentSet.map((q,i)=>{
+const ok=answers[i]===q.a; if(ok) score++;
+return `<div style="border:1px solid ${ok?'#bbf7d0':'#fecaca'};background:${ok?'#f0fdf4':'#fef2f2'};border-radius:12px;padding:12px;margin:8px 0"><b>Q${i+1}: ${q.q}</b><br>Your answer: ${answers[i]!==null?q.opts[answers[i]]:'Not answered'} ${ok?'✅':'❌'}<br>Correct: ${q.opts[q.a]}<br><small style="color:#475569">💡 ${q.exp}</small></div>`;
+}).join('');
+html+=`<button class="btn btn-dark" onclick="startQuiz()">🔄 Retake Quiz</button><button class="btn btn-gold" style="margin-top:8px" onclick="buy('Full Pack P100 - got ${score}/${currentSet.length}')">Get Full 150 Q + Answers — P100</button>`;
+document.getElementById('quizArea').style.display='none';
+const ra=document.getElementById('resultArea');ra.style.display='block';ra.innerHTML=html;
+}
+function buy(p){window.open('https://wa.me/26777980825?text='+encodeURIComponent('Hi Lesedi! I want '+p),'_blank')}
+let uploadedFile=null;
+function handleFile(input){
+uploadedFile=input.files[0];
+if(!uploadedFile) return;
+if(uploadedFile.type.startsWith('image/')){
+const r=new FileReader();r.onload=e=>document.getElementById('preview').innerHTML=`<img src="${e.target.result}" style="width:100%;border-radius:12px;margin-top:10px"><p style="color:green;font-size:13px">✅ Notes ready: ${uploadedFile.name}</p>`;r.readAsDataURL(uploadedFile);
+}else{document.getElementById('preview').innerHTML=`<p>✅ Ready: ${uploadedFile.name}</p>`}
+}
+function makeFromNotes(){
+const t=document.getElementById('topicInput').value||'Your Notes';
+if(!uploadedFile){alert('Upload notes photo first');return;}
+document.getElementById('notesResult').innerHTML=`<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px">⏳ Reading your notes: <b>${t}</b>... Generating 10 questions from your notes.<br>Done! Your 1-by-1 quiz is ready below. Pay P10 to unlock full marking key.<br><button class="btn btn-dark" style="margin-top:8px" onclick="buy('Notes to Quiz P10 Topic ${t}')">Unlock Full Quiz — P10 WhatsApp</button></div>`;
+// also auto-load a quiz from that topic
+setTimeout(()=>{document.getElementById('quizCard').scrollIntoView({behavior:'smooth'})},600);
+}
+function customTest(){
+const t=document.getElementById('customTopic').value||'Your Topic';
+document.getElementById('customOut').innerHTML=`<div style="border:1px solid #ddd;border-radius:12px;padding:12px;margin-top:10px;background:#fff"><b>✅ Your Test: ${t}</b><br>1. Define key concept of ${t}?<br>2. Give 2 examples?<br>3. MCQ about ${t}?<br>Now taking you to 1-by-1 quiz for ${t}<br><button class="btn btn-dark" style="margin-top:8px" onclick="buy('Custom Topic Test P10 ${t}')">Get Full Test + Marking — P10</button></div>`;
+}
+startQuiz();
 </script>
 </body></html>
