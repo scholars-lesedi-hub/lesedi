@@ -217,7 +217,18 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
       <div class="field"><label>Full name</label><input id="authFullName" type="text" autocomplete="name" required></div>
       <div class="field"><label>Email address</label><input id="authRegisterEmail" type="email" autocomplete="email" required></div>
       <div class="field"><label>Phone number (optional)</label><input id="authPhone" type="tel" autocomplete="tel"></div>
-      <div class="field"><label>Account type</label><select id="authAccountType" required><option value="individual">Individual / Private Customer</option><option value="teacher">Teacher</option><option value="examiner">Examiner</option><option value="school">School</option><option value="institution">Education Institution</option></select></div>
+      <div class="field">
+  <label>Account type</label>
+  <select id="authAccountType" required>
+    <option value="individual">Individual / Private Customer</option>
+    <option value="parent">Parent / Guardian</option>
+    <option value="private_tutor">Private Tutor</option>
+    <option value="teacher">Teacher</option>
+    <option value="examiner">Examiner</option>
+    <option value="school">School</option>
+    <option value="institution">Education Institution</option>
+  </select>
+</div>
       <div class="field"><label>Create password (at least 6 characters)</label><input id="authRegisterPassword" type="password" minlength="6" autocomplete="new-password" required></div>
       <button class="btn gold" type="submit">Register</button>
     </form>
