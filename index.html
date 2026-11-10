@@ -687,6 +687,15 @@ function buyDQ(){
 }
 </script>
 <!-- ===== END SHOP ===== -->
+
+<div id="shop" style="display:block !important; background:#fff8d6; border:3px solid #f5c842; margin:20px; padding:20px; border-radius:16px;">
+  <h2>🔥 BEC DIGITAL QUESTIONS - P100</h2>
+  <p>PSLE • JCE • BGCSE - 150 Questions + Answers - PDF on WhatsApp</p>
+  <p>Pay: Orange Money 77980825 / MyZaka 71823638</p>
+  <input id="dq-name" placeholder="Your name" style="width:100%; padding:11px; border-radius:8px; border:1px solid #ddd; margin-bottom:10px;">
+  <button onclick="buyDQ()" style="background:#111; color:#fff; padding:12px 20px; border-radius:8px; border:0; width:100%; font-weight:700;">BUY P100 ON WHATSAPP</button>
+</div>
+
 <script>
 function buyDQ(){
   var name = document.getElementById('dq-name') ? document.getElementById('dq-name').value : '';
@@ -694,40 +703,13 @@ function buyDQ(){
   window.open('https://wa.me/26777980825?text=' + msg, '_blank');
 }
 
-// SIMPLE FIX - just show shop and scroll to it, don't hide main
 function showShopSimple(){
   var shop = document.getElementById('shop');
   if(!shop) return;
   shop.style.display = 'block';
-  shop.style.background = '#f4f7fb';
-  shop.style.padding = '20px';
-  // Show it
-  setTimeout(function(){
-    shop.scrollIntoView({behavior:'smooth', block:'start'});
-  }, 100);
-  // Highlight P100 box
-  setTimeout(function(){
-    var box = document.querySelector('#shop .card');
-    if(box) box.style.border = '3px solid #f5c842';
-  }, 500);
+  shop.scrollIntoView({behavior:'smooth', block:'start'});
 }
-
-// Force all SHOP buttons to use simple scroll
-setTimeout(function(){
-  document.querySelectorAll('button[data-page="shop"]').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      showShopSimple();
-    }, true);
-  });
-}, 500);
 </script>
-<div id="shop" style="display:block !important; background:#fff8d6; border:3px solid #f5c842; margin:20px; padding:20px; border-radius:16px;">
-  <h2>🔥 BEC DIGITAL QUESTIONS - P100</h2>
-  <p>PSLE • JCE • BGCSE - 150 Questions + Answers - PDF on WhatsApp</p>
-  <p>Pay: Orange Money 77980825 / MyZaka 71823638</p>
-  <button onclick="window.open('https://wa.me/26777980825?text='+encodeURIComponent('Hi Lesedi! I want BEC P100 Questions. I will pay P100.'))" style="background:#111; color:#fff; padding:12px 20px; border-radius:8px; border:0;">BUY P100 ON WHATSAPP</button>
-</div>
-</body></body>
+
+</body>
 </html>
