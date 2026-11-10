@@ -161,7 +161,11 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <h3>Digital Examination Preview</h3>
   <p>Learners will answer one question at a time.</p>
   <div id="learnerExamArea">
-    <p>No examination has been loaded yet.</p>
+  <p>Ready to begin your practice examination?</p>
+  <button class="btn primary" onclick="startDigitalExam()">
+    Start Examination
+  </button>
+</div>
   </div>
 </div>
   </div>
@@ -406,7 +410,89 @@ function renderPlans(){const a=store.get('plans');$('savedPlans').innerHTML=a.le
 function openSavedPlan(i){const p=store.get('plans')[i];if(p){$('lessonResult').innerHTML=p.html;window.currentPlan=p;go('lesson')}}
 function buildScheme(){const topics=$('swTopics').value.split('\n').map(x=>x.trim()).filter(Boolean),weeks=Math.max(1,Math.min(20,Number($('swWeeks').value)||10));if(!topics.length){showToast('Enter at least one topic.');return}let rows='';for(let i=0;i<weeks;i++){const topic=topics[i%topics.length];rows+=`<tr><td>${i+1}</td><td>${escapeHTML(topic)}</td><td>To be completed by teacher</td><td>Teacher-selected activities and resources</td><td>Classwork / questioning / exercise</td></tr>`}$('schemeOutput').innerHTML=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML($('swSubject').value)} — ${escapeHTML($('swClass').value)} — ${escapeHTML($('swTerm').value)}</h3><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr>${['Week','Topic','Learning outcomes','Activities/resources','Assessment'].map(x=>`<th style="text-align:left;padding:9px;border-bottom:2px solid #2457c5">${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">Draft planner. Replace placeholders with the official syllabus sequence and school calendar.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`}
 function saveExamDraft(){const title=$('examTitle').value.trim(),questions=$('examQuestions').value.trim();if(!title||!questions){showToast('Enter an assessment title and question content.');return}const a=store.get('exams');a.unshift({title,subject:$('examClass').value,questions,key:$('examKey').value,date:new Date().toLocaleString(),status:'Draft — teacher verification required'});store.set('exams',a.slice(0,50));$('examStatus').innerHTML='<div class="success">Examination draft saved on this device. It is not published and no answer key has been assumed.</div>';renderLibrary()}
-function makeResource(){const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;if(!topic){showToast('Enter a topic first.');return}const output=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML(type)}: ${escapeHTML(topic)}</h3><p><b>Purpose:</b> Support learning and revision on ${escapeHTML(topic)}.</p><p><b>Key concepts:</b> Identify the main concepts from the approved syllabus and source notes.</p><p><b>Learning activity:</b> Ask learners to explain, practise and apply the topic using examples.</p><p><b>Check understanding:</b> Include short questions and a teacher-reviewed task.</p>${source?`<h4>Source notes</h4><div class="preview">${escapeHTML(source)}</div>`:'<p class="muted small">Add source notes to make this resource specific and factually grounded.</p>'}<p class="small muted">This is a structured outline, not a verified subject resource. Review content before distribution.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`;$('resourceOutput').innerHTML=output}
+let learnerExamQuestions = [
+  {
+    question: "What is 15% of P200?",
+    options: ["P15", "P20", "P30", "P40"],
+    answer: 2
+  },
+  {
+    question: "Solve: 3x + 6 = 18.",
+    options: ["2", "3", "4", "6"],
+    answer: 2
+  },
+  {
+    question: "What is the square root of 144?",
+    options: ["10", "11", "12", "14"],
+    answer: 2
+  }
+];
+
+let learnerCurrentQuestion = 0;
+let learnerAnswers = {};
+
+function startDigitalExam(){
+  learnerCurrentQuestion = 0;
+  learnerAnswers = {};
+  renderDigitalQuestion();
+}
+
+function renderDigitalQuestion(){
+  const q = learnerExamQuestions[learnerCurrentQuestion];
+  const area = document.getElementById('learnerExamArea');
+
+  area.innerHTML = `
+    <h4>Question ${learnerCurrentQuestion + 1} of ${learnerExamQuestions.length}</h4>
+    <p><b>${q.question}</b></p>
+    ${q.options.map((option, i) => `
+      <label style="display:block;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;cursor:pointer">
+        <input type="radio" name="learnerAnswer" value="${i}"
+          ${learnerAnswers[learnerCurrentQuestion] === i ? 'checked' : ''}
+          onchange="learnerAnswers[learnerCurrentQuestion]=Number(this.value)">
+        ${String.fromCharCode(65+i)}. ${option}
+      </label>
+    `).join('')}
+    <p>Answered: ${Object.keys(learnerAnswers).length} / ${learnerExamQuestions.length}</p>
+    <button class="btn outline" onclick="previousDigitalQuestion()" ${learnerCurrentQuestion===0?'disabled':''}>Previous</button>
+    <button class="btn primary" onclick="nextDigitalQuestion()">
+      ${learnerCurrentQuestion===learnerExamQuestions.length-1?'Submit':'Next'}
+    </button>
+  `;
+}
+
+function previousDigitalQuestion(){
+  if(learnerCurrentQuestion>0){
+    learnerCurrentQuestion--;
+    renderDigitalQuestion();
+  }
+}
+
+function nextDigitalQuestion(){
+  if(learnerCurrentQuestion<learnerExamQuestions.length-1){
+    learnerCurrentQuestion++;
+    renderDigitalQuestion();
+  }else{
+    submitDigitalExam();
+  }
+}
+
+function submitDigitalExam(){
+  const unanswered = learnerExamQuestions.length - Object.keys(learnerAnswers).length;
+
+  if(unanswered>0){
+    alert('Please answer all questions before submitting. Unanswered: '+unanswered);
+    return;
+  }
+
+  let score = 0;
+  learnerExamQuestions.forEach((q,i)=>{
+    if(learnerAnswers[i]===q.answer) score++;
+  });
+
+  document.getElementById('learnerExamArea').innerHTML =
+    '<h3>Examination submitted</h3><p>Your score: '+score+' / '+learnerExamQuestions.length+'</p>';
+}
+  function makeResource(){const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;if(!topic){showToast('Enter a topic first.');return}const output=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML(type)}: ${escapeHTML(topic)}</h3><p><b>Purpose:</b> Support learning and revision on ${escapeHTML(topic)}.</p><p><b>Key concepts:</b> Identify the main concepts from the approved syllabus and source notes.</p><p><b>Learning activity:</b> Ask learners to explain, practise and apply the topic using examples.</p><p><b>Check understanding:</b> Include short questions and a teacher-reviewed task.</p>${source?`<h4>Source notes</h4><div class="preview">${escapeHTML(source)}</div>`:'<p class="muted small">Add source notes to make this resource specific and factually grounded.</p>'}<p class="small muted">This is a structured outline, not a verified subject resource. Review content before distribution.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`;$('resourceOutput').innerHTML=output}
 function aiPlaceholder(){const p=$('aiPrompt').value.trim();if(!p){showToast('Enter a request first.');return}$('aiResult').innerHTML='<div class="notice"><b>AI request prepared.</b><br>Task: '+escapeHTML($('aiTask').value)+'<br>Request: '+escapeHTML(p)+'<br><br>To generate a real response, connect this form to a secure backend AI endpoint. Never place a private API key in this HTML file.</div>'}
 function renderLibrary(){const docs=store.get('docs'),exams=store.get('exams');$('savedDocs').innerHTML=docs.length?docs.map(d=>`<div class="list-item"><div><b>${escapeHTML(d.title)}</b><div class="small muted">${escapeHTML(d.date)} • ${d.content.length} characters</div></div><button class="btn outline" onclick="loadDoc('${encodeURIComponent(d.title)}')">Load</button></div>`).join(''):'No saved documents.';$('savedExams').innerHTML=exams.length?exams.map(e=>`<div class="list-item"><div><b>${escapeHTML(e.title)}</b><div class="small muted">${escapeHTML(e.status)} • ${escapeHTML(e.date)}</div></div><span class="pill">DRAFT</span></div>`).join(''):'No examination drafts.'}
 function loadDoc(title){const d=store.get('docs').find(x=>x.title===decodeURIComponent(title));if(d){$('docTitle').value=d.title;$('extractedText').value=d.content;go('convert')}}
