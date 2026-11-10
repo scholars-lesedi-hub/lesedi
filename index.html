@@ -1,60 +1,116 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Education Lesedi Scholars Hub</title>
-<style>body{font-family:Arial;margin:0;background:#f4f7fb;color:#111}header{background:#111827;color:#fff;padding:24px;text-align:center}.btn{padding:12px 16px;border-radius:8px;border:0;font-weight:700;margin:5px;cursor:pointer}.gold{background:#f5c842}.dark{background:#111;color:#fff}.white{background:#fff}.card{background:#fff;margin:16px;padding:20px;border-radius:16px;border:1px solid #e5e7eb}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}@media(max-width:600px){.grid{grid-template-columns:1fr}}</style></head><body>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Education Lesedi Scholars Hub - Botswana</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial;margin:0;background:#f8fafc;color:#0f172a}
+header{background:linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#334155 100%);color:#fff;padding:32px 20px;text-align:center}
+header h1{margin:8px 0;font-size:28px;line-height:1.2}
+header p{color:#cbd5e1;font-size:14px}
+.badge{display:inline-block;background:#facc15;color:#111;padding:6px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.5px}
+.btn{padding:13px 16px;border-radius:12px;border:0;font-weight:700;cursor:pointer;font-size:14px}
+.btn-gold{background:#facc15;color:#111}
+.btn-dark{background:#0f172a;color:#fff}
+.btn-blue{background:#4f46e5;color:#fff}
+.btn-outline{background:#fff;color:#0f172a;border:1px solid #e2e8f0}
+.wrap{max-width:900px;margin:0 auto;padding:0 14px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:22px;margin:16px 0;box-shadow:0 4px 20px rgba(0,0,0,.04)}
+.card h2{margin:0 0 6px;font-size:20px}
+.card p{color:#475569;font-size:14px;line-height:1.6}
+.price{font-size:28px;font-weight:900}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plan{border:1px solid #e2e8f0;border-radius:16px;padding:16px;text-align:center}
+.plan.pop{border:2px solid #facc15;background:#fffbeb}
+input{width:100%;padding:12px;border-radius:12px;border:1px solid #e2e8f0;margin:8px 0}
+.tag{font-size:11px;background:#eef2ff;color:#4f46e5;padding:4px 8px;border-radius:999px;font-weight:700}
+@media(max-width:640px){.grid3,.grid2{grid-template-columns:1fr}header h1{font-size:23px}}
+footer{text-align:center;padding:24px;color:#64748b;font-size:12px;line-height:1.7}
+</style></head><body>
 
 <header>
-<div style="color:#f5c842;font-size:11px;letter-spacing:1px;">LESEDI SCHOLARS HUB • BOTSWANA</div>
-<h1>From Paper to Digital. From Phone to Business.</h1>
-<p>BEC • STEAM • Road Signs • AI Marking • Digital Skills</p>
-<button class="btn gold" onclick="go('shop')">BEC P100</button>
-<button class="btn white" onclick="go('membership')">Membership - Free Trial</button>
-<button class="btn white" onclick="go('p10')">P10 Fast Cash</button>
+<span class="badge">LESEDI SCHOLARS HUB • BOTSWANA</span>
+<h1>From Paper to Digital.<br>From Phone to Business.</h1>
+<p>BEC • STEAM • Road Signs • AI Marking • Digital & AI Skills</p>
+<div style="margin-top:16px">
+<button class="btn btn-gold" onclick="go('shop')">BEC P100</button>
+<button class="btn btn-outline" onclick="go('membership')">Membership • Free Trial</button>
+<button class="btn btn-outline" onclick="go('services')">P10 Services</button>
+</div>
 </header>
 
-<div id="shop" class="card" style="background:#fff8d6;border:3px solid #f5c842;">
-<h2>🔥 BEC DIGITAL QUESTIONS - P100</h2>
-<p>PSLE • JCE • BGCSE - 150 Q + Answers - PDF on WhatsApp</p>
-<button class="btn dark" style="width:100%" onclick="buy('BEC P100')">BUY P100 ON WHATSAPP</button>
+<div class="wrap">
+
+<!-- BEC -->
+<div id="shop" class="card" style="border:2px solid #facc15;background:#fffdf0">
+<span class="tag" style="background:#fef9c3;color:#854d0e">MOST POPULAR</span>
+<h2>🔥 BEC Digital Questions — P100</h2>
+<p>PSLE • JCE • BGCSE — 150 Questions + Answers. Delivered as PDF on WhatsApp immediately.</p>
+<button class="btn btn-dark" style="width:100%" onclick="buy('BEC Digital Questions P100')">Get BEC P100 on WhatsApp</button>
 </div>
 
-<div id="p10" class="card">
-<h2>📄 Hardcopy to Digital AI Help - P10 per copy</h2>
-<p>Send photo of your paper, we return Digital Quiz / Test / Exam.</p>
-<button class="btn dark" style="width:100%" onclick="buy('Hardcopy to Digital P10 per copy')">START P10 - WHATSAPP</button>
+<!-- P10 SERVICES - NO FAST CASH -->
+<div id="services" class="card">
+<h2>Our Services — P10.00</h2>
+<div class="grid2">
+<div class="plan" style="text-align:left">
+<b>📄 Hardcopy to Digital</b>
+<p>Send a photo of your paper. We return a clean Digital Quiz, Test or Exam.</p>
+<div class="price">P10 <span style="font-size:13px;color:#64748b;font-weight:400">/ copy</span></div>
+<button class="btn btn-dark" style="width:100%;margin-top:10px" onclick="buy('Hardcopy to Digital P10 per copy')">Start — WhatsApp</button>
+</div>
+<div class="plan" style="text-align:left;background:#eef2ff;border-color:#c7d2fe">
+<b>📝 Custom Topic-Test</b>
+<p>Choose any topic. We create a BEC-aligned test + answers for you.</p>
+<input id="topic-name" placeholder="e.g. Std 5 Fractions">
+<div class="price">P10 <span style="font-size:13px;color:#64748b;font-weight:400">/ test</span></div>
+<button class="btn btn-blue" style="width:100%;margin-top:6px" onclick="buyCustom()">Order My Topic-Test</button>
+</div>
+</div>
 </div>
 
-<div class="card" style="background:#eef2ff;border:2px solid #818cf8;">
-<h2>📝 CUSTOM Topic-Test - P10.00</h2>
-<p>Order any topic! BEC aligned. Example: "Std 7 English", "JCE Maths - Algebra", "Road Signs".</p>
-<input id="topic-name" placeholder="e.g. Std 5 Fractions" style="width:100%;padding:11px;border-radius:8px;border:1px solid #ddd;margin-bottom:8px;">
-<button style="width:100%;background:#4f46e5;color:#fff;padding:12px;border-radius:8px;border:0;font-weight:700;" onclick="buyCustom()">ORDER MY P10 TOPIC-TEST</button>
-</div>
-
+<!-- MEMBERSHIP -->
 <div id="membership" class="card">
-<h2>🚀 Membership - First Month FREE TRIAL</h2>
-<p>Free Weekly Quiz • Discussion Forum • Dashboard • AI Marking + Live Feedback</p>
-<div class="grid">
-<div style="border:1px solid #ddd;border-radius:12px;padding:14px;text-align:center;"><b>Individual</b><h3>P100/mo</h3><small>BEC + STEAM + Road Signs + Quiz + Forum</small><br><button class="btn dark" style="width:100%;margin-top:8px" onclick="buy('Individual Membership P100 Free Trial')">Start FREE Trial</button></div>
-<div style="border:2px solid #f5c842;background:#fffbeb;border-radius:12px;padding:14px;text-align:center;"><b>Professionals ⭐</b><h3>P150/mo</h3><small>+ Lesson Plans/Scheme + AI Marking + 5x P10 Docs Free</small><br><button class="btn gold" style="width:100%;margin-top:8px" onclick="buy('Professional P150 Free Trial')">Start FREE Trial</button></div>
-<div style="border:1px solid #ddd;border-radius:12px;padding:14px;text-align:center;"><b>Schools</b><h3>P500/mo</h3><small>Unlimited + 5 Teachers + Negotiation</small><br><button class="btn dark" style="width:100%;margin-top:8px" onclick="buy('School P500 Free Trial')">Start FREE Trial</button></div>
+<h2>🚀 Membership — First Month Free Trial</h2>
+<p>Free Weekly Quiz • Discussion Forum • Individual Dashboard • AI Composition Marking + AI Live Feedback • STEAM • Road Signs • Lesson Plans</p>
+<div class="grid3">
+<div class="plan"><b>Individual</b><div class="price">P100<span style="font-size:13px;color:#64748b">/mo</span></div><p>BEC + STEAM + Road Signs + Quiz + Forum + Dashboard</p><button class="btn btn-dark" style="width:100%" onclick="buy('Individual Membership P100 Free Trial')">Start Free Trial</button></div>
+<div class="plan pop"><b>Professionals ⭐</b><div class="price">P150<span style="font-size:13px;color:#64748b">/mo</span></div><p>All Individual + Lesson Plans / Scheme + AI Marking + Live Feedback</p><button class="btn btn-gold" style="width:100%" onclick="buy('Professional Membership P150 Free Trial')">Start Free Trial</button></div>
+<div class="plan"><b>Schools</b><div class="price">P500<span style="font-size:13px;color:#64748b">/mo</span></div><p>All Professionals + Unlimited + 5 Teachers + Negotiation</p><button class="btn btn-dark" style="width:100%" onclick="buy('School Membership P500 Free Trial')">Start Free Trial</button></div>
 </div>
 </div>
 
+<!-- DIGITAL SKILLS - PERSONAL LEARNING ONLY, NO CERTIFICATE -->
 <div class="card">
-<h2>💻 Digital & AI Skills - P100 / P250</h2>
-<p>WhatsApp Business, Canva, ChatGPT, Selling on Facebook.</p>
-<div class="grid" style="grid-template-columns:1fr 1fr;">
-<div style="border:1px solid #ddd;border-radius:12px;padding:12px;text-align:center;"><b>P100 Starter</b><br><button class="btn dark" style="width:100%;margin-top:6px" onclick="buy('Digital Skills P100')">Join P100</button></div>
-<div style="border:2px solid #f5c842;border-radius:12px;padding:12px;text-align:center;background:#fffbeb;"><b>P250 Full + Certificate</b><br><button class="btn gold" style="width:100%;margin-top:6px" onclick="buy('Digital Skills P250')">Join P250</button></div>
+<h2>💻 Digital & AI Skills — Personal Learning</h2>
+<p>Learn at your own pace for personal growth: WhatsApp Business, Canva Flyers, ChatGPT, How to Sell on Facebook. No exams, just practical skills for yourself and your business.</p>
+<div class="grid2">
+<div class="plan"><b>Starter</b><div class="price">P100</div><p>Videos + Materials — Personal Learning</p><button class="btn btn-dark" style="width:100%" onclick="buy('Digital Skills Starter P100 Personal Learning')">Join P100</button></div>
+<div class="plan pop"><b>Full Learning ⭐</b><div class="price">P250</div><p>Full Videos + Materials + Support + Community — Personal Learning</p><button class="btn btn-gold" style="width:100%" onclick="buy('Digital Skills Full P250 Personal Learning')">Join P250</button></div>
 </div>
 </div>
 
-<footer style="text-align:center;padding:20px;color:#666;font-size:12px;">© 2026 Lesedi Scholars Hub • WhatsApp 77980825 • educationlesedihelpdesk@gmail.com<br>Pay: Orange Money 77980825 / MyZaka 71823638</footer>
+<!-- AI -->
+<div class="card" style="text-align:center;background:#0f172a;color:#fff;border:0">
+<h2 style="color:#fff">✨ AI Composition Marking + AI Live Feedback</h2>
+<p style="color:#cbd5e1">Upload your composition. Get feedback in minutes. Included in Membership.</p>
+<button class="btn btn-gold" onclick="buy('AI Marking Trial')">Try Free Trial</button>
+</div>
+
+</div>
+
+<footer>
+<b style="color:#0f172a">Education Lesedi Scholars Hub</b><br>
+WhatsApp: 77980825 • Email: educationlesedihelpdesk@gmail.com<br>
+educationlesedihub.com • Pay: Orange Money 77980825 / MyZaka 71823638<br>
+© 2026 All rights reserved
+</footer>
 
 <script>
 function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
 function buy(p){var m=encodeURIComponent('Hi Lesedi! I want '+p);window.open('https://wa.me/26777980825?text='+m,'_blank')}
-function buyCustom(){var t=document.getElementById('topic-name').value||'my topic';var m=encodeURIComponent('Hi Lesedi! I want CUSTOM Topic-Test P10. Topic: '+t);window.open('https://wa.me/26777980825?text='+m,'_blank')}
-// Supabase tables + bucket safe, reconnect here later
+function buyCustom(){var t=document.getElementById('topic-name').value||'my topic';var m=encodeURIComponent('Hi Lesedi! I want Custom Topic-Test P10. Topic: '+t);window.open('https://wa.me/26777980825?text='+m,'_blank')}
+// Supabase tables + bucket remain safe - reconnect later
 </script>
 </body></html>
