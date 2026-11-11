@@ -49,7 +49,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 .toast{position:fixed;right:20px;bottom:20px;background:#102b5c;color:white;padding:12px 18px;border-radius:10px;display:none;z-index:50;box-shadow:0 5px 20px #0002}
 @media(max-width:1000px){.shell{grid-template-columns:210px 1fr}main{padding:18px}.stats{grid-template-columns:repeat(2,1fr)}.tiles{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){header{padding:10px 14px}.brand h1{font-size:14px}.header-actions .user-pill{display:none}.shell{display:block}aside{min-height:0;padding:8px;position:sticky;top:70px;z-index:15}nav{display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto;padding:9px 11px;font-size:12px}.nav-label,.aside-foot{display:none}main{padding:14px}.hero{padding:22px;display:block}.hero-art{display:none}.stats{gap:8px}.stat{padding:12px}.stat .number{font-size:22px}.tiles,.two-col,.three-col{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}}
-@media print{header,aside,.no-print,footer{display:none!important}.shell{display:block}main{padding:0}.page{display:none!important}#lesson.page.active{display:block!important}.lesson-output{border:0}}
+@media print{header,aside,.no-print,footer{display:none!important}.shell{display:block}main{padding:0}.page{display:none!important}#lesson.page.active,#scheme.page.active{display:block!important}#scheme.page.active .scheme-controls{display:none!important}.lesson-output{border:0}}
 </style>
 <style>.hero-art.lesedi-logo{display:block;min-width:0;flex:0 1 270px}.lesedi-logo img{display:block;width:min(100%,270px);height:auto;margin:auto;border-radius:14px;background:white}@media(max-width:760px){.hero-art.lesedi-logo{margin-top:20px}.lesedi-logo img{width:min(100%,220px)}}</style></head>
 <body>
@@ -188,9 +188,17 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <section class="page" id="scheme">
   <div class="section-head"><div><h2>Scheme of Work Planner</h2><p>Organise a subject into a sequence of teachable units.</p></div></div>
   <div class="card">
+    <div class="scheme-controls">
+    <details id="schemeSyllabus"><summary><strong>Create from syllabus</strong></summary>
+      <p id="schemeSyllabusStatus" role="status">Sign in with an approved teacher account to load syllabus topics.</p>
+      <div id="schemeSyllabusFields" hidden><div class="two-col">
+        <label class="field">Standard<select id="schemeStandard"></select></label>
+        <label class="field">Subject<select id="schemeSubject"></select></label>
+      </div><button type="button" class="btn outline" id="loadSchemeTopics">Load topics and outcomes</button></div>
+    </details>
     <div class="two-col"><div class="field"><label>Subject</label><input id="swSubject" placeholder="e.g. Mathematics"></div><div class="field"><label>Class / level</label><input id="swClass" placeholder="e.g. Form 2"></div><div class="field"><label>Term</label><select id="swTerm"><option>Term 1</option><option>Term 2</option><option>Term 3</option><option>Annual plan</option></select></div><div class="field"><label>Number of weeks</label><input id="swWeeks" type="number" min="1" max="20" value="10"></div></div>
     <div class="field"><label>Topics (one topic per line)</label><textarea id="swTopics" placeholder="Whole numbers&#10;Fractions&#10;Decimals&#10;Percentages"></textarea></div>
-    <button class="btn primary" onclick="buildScheme()">Build scheme table</button>
+    <button class="btn primary" onclick="buildScheme()">Build scheme table</button></div>
     <div id="schemeOutput"></div>
   </div>
 </section>
@@ -670,8 +678,92 @@ function openSavedPlan(i){
  for(const [field,key] of Object.entries(fields))$(field).value=typeof p[key]==='string'?p[key]:'';
  generatePlan();go('lesson');
 }
-function buildScheme(){const topics=$('swTopics').value.split('\n').map(x=>x.trim()).filter(Boolean),weeks=Math.max(1,Math.min(20,Number($('swWeeks').value)||10));if(!topics.length){showToast('Enter at least one topic.');return}let rows='';for(let i=0;i<weeks;i++){const topic=topics[i%topics.length];rows+=`<tr><td>${i+1}</td><td>${escapeHTML(topic)}</td><td>To be completed by teacher</td><td>Teacher-selected activities and resources</td><td>Classwork / questioning / exercise</td></tr>`}$('schemeOutput').innerHTML=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML($('swSubject').value)} — ${escapeHTML($('swClass').value)} — ${escapeHTML($('swTerm').value)}</h3><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr>${['Week','Topic','Learning outcomes','Activities/resources','Assessment'].map(x=>`<th style="text-align:left;padding:9px;border-bottom:2px solid #2457c5">${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">Draft planner. Replace placeholders with the official syllabus sequence and school calendar.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`}
 
+let schemeSyllabusRows=[],schemeSelectedRows=[],schemeSyllabusRequest=0;
+function schemeChoices(select,values,label=value=>value){
+ const previous=select.value;
+ select.replaceChildren(...[...new Set(values)].map(value=>new Option(label(value),value)));
+ if([...select.options].some(option=>option.value===previous))select.value=previous;
+}
+function updateSchemeSubjects(){
+ schemeChoices($('schemeSubject'),schemeSyllabusRows.filter(row=>String(row.standard)===$('schemeStandard').value).map(row=>row.subject));
+}
+async function loadSchemeSyllabus(){
+ const user=cloudUser,status=$('schemeSyllabusStatus');
+ if(!user){status.textContent='Sign in with an approved teacher account to load syllabus topics.';return}
+ const request=++schemeSyllabusRequest;
+ status.textContent='Loading syllabus…';
+ $('schemeSyllabusFields').hidden=true;
+ const {data,error}=await lesediAuthClient.from('lesedi_syllabus_objectives')
+  .select('id,standard,subject,topic,code,objective,source_page').order('standard').order('subject').order('id');
+ if(request!==schemeSyllabusRequest||cloudUser?.id!==user.id)return;
+ schemeSyllabusRows=error?[]:data;
+ if(error){status.textContent='Could not load the syllabus. Close and reopen to retry.';return}
+ if(!data.length){status.textContent='No objectives are available for this account. Ask the administrator to enable syllabus access.';return}
+ schemeChoices($('schemeStandard'),data.map(row=>row.standard),value=>'Standard '+value);
+ updateSchemeSubjects();
+ $('schemeSyllabusFields').hidden=false;
+ status.textContent='Choose the standard and subject for your scheme.';
+}
+$('schemeSyllabus').addEventListener('toggle',()=>{if($('schemeSyllabus').open)loadSchemeSyllabus()});
+$('schemeStandard').onchange=updateSchemeSubjects;
+$('loadSchemeTopics').onclick=()=>{
+ if(!cloudUser)return;
+ const standard=$('schemeStandard').value,subject=$('schemeSubject').value;
+ const rows=schemeSyllabusRows.filter(row=>String(row.standard)===standard&&row.subject===subject);
+ if(!rows.length)return;
+ if($('swTopics').value.trim()&&!confirm('Replace the topic list with syllabus topics?'))return;
+ schemeSelectedRows=rows;
+ $('swSubject').value=subject;
+ $('swClass').value='Standard '+standard;
+ $('swTopics').value=[...new Set(rows.map(row=>row.topic))].join('\n');
+ $('schemeSyllabusStatus').textContent='Topics loaded. Reorder the lines if needed, set the term and weeks, then build the scheme.';
+};
+document.addEventListener('lesedi-syllabus-signout',()=>{
+ schemeSyllabusRequest++;
+ schemeSyllabusRows=[];schemeSelectedRows=[];
+ $('schemeSyllabusFields').hidden=true;$('schemeSyllabus').open=false;
+ $('schemeSyllabusStatus').textContent='Sign in with an approved teacher account to load syllabus topics.';
+ for(const id of ['swSubject','swClass','swTopics'])$(id).value='';
+ $('schemeOutput').replaceChildren();
+});
+function buildScheme(){
+ const topics=$('swTopics').value.split('\n').map(topic=>topic.trim()).filter(Boolean);
+ if(!topics.length){showToast('Enter at least one topic.');return}
+ const weeks=Math.max(1,Math.min(20,Math.floor(Number($('swWeeks').value)||10)));
+ const subject=$('swSubject').value.trim(),standard=$('swClass').value.trim();
+ const matching=schemeSelectedRows.filter(row=>row.subject===subject&&'Standard '+row.standard===standard);
+ const output=$('schemeOutput');
+ output.innerHTML='<div class="lesson-output" style="margin-top:16px"><h3></h3><p class="no-print" data-scheme-note></p><div style="overflow:auto"><table style="width:100%;border-collapse:collapse"><thead><tr>'+['Week','Topic','Learning outcomes','Activities and resources','Assessment','Lesson plan'].map((label,i)=>'<th scope="col" '+(i===5?'class="no-print"':'')+' style="text-align:left;padding:8px;border-bottom:2px solid #2457c5">'+label+'</th>').join('')+'</tr></thead><tbody></tbody></table></div><p><button type="button" class="btn outline no-print" onclick="window.print()">Print / Save PDF</button></p></div>';
+ output.querySelector('h3').textContent=[subject,standard,$('swTerm').value].filter(Boolean).join(' · ');
+ output.querySelector('[data-scheme-note]').textContent=(matching.length?'This draft uses the objectives currently available in the Syllabus Bank. ':'')+'Edit cells in the table. '+(topics.length>weeks?'Increase the number of weeks to include '+(topics.length-weeks)+' more topic(s).':'Blank weeks are available for additional topics or revision.');
+ const body=output.querySelector('tbody');
+ for(let i=0;i<weeks;i++){
+  const topic=topics[i]||'';
+  const outcomes=matching.filter(row=>row.topic===topic).map(row=>row.code+' '+row.objective+' (PDF p. '+row.source_page+')').join('\n');
+  const tr=document.createElement('tr');
+  const values=[String(i+1),topic,outcomes,'',''];
+  const labels=['Week','Topic','Learning outcomes','Activities and resources','Assessment'];
+  values.forEach((value,j)=>{
+   const cell=document.createElement('td');cell.textContent=value;cell.style.cssText='padding:8px;vertical-align:top;border-bottom:1px solid #d9e1ed;white-space:pre-wrap';
+   if(j){cell.contentEditable='plaintext-only';cell.setAttribute('role','textbox');cell.setAttribute('aria-label',labels[j]+' for week '+(i+1));}
+   tr.append(cell);
+  });
+  const actions=document.createElement('td');actions.className='no-print';
+  const button=document.createElement('button');button.type='button';button.className='btn outline';button.textContent='Plan lesson';
+  button.onclick=()=>{
+   const selectedTopic=tr.cells[1].textContent.trim();
+   if(!selectedTopic){showToast('Enter a topic for this week first.');return}
+   if(['lpTopic','lpSubject','lpClass','lpOutcomes'].some(id=>$(id).value)&&!confirm('Replace the lesson details in the open planner?'))return;
+   $('lpTopic').value=selectedTopic;$('lpSubject').value=subject;$('lpClass').value=standard;
+   $('lpOutcomes').value=tr.cells[2].innerText.trim();
+   if(/^Standard [1-7]$/.test(standard))$('lpLevel').value='Primary (Standards 1–7)';
+   $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
+   go('lesson');
+  };
+  actions.append(button);tr.append(actions);body.append(tr);
+ }
+}
 function parseDigitalQuestions(text){
  const questions=[];
  let current=null;
