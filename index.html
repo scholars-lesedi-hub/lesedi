@@ -102,6 +102,45 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button class="tile" onclick="go('assistant')"><div class="tile-icon">✨</div><h3>AI teacher assistant</h3><p>Connect an AI service to help draft and adapt teaching materials.</p></button>
   </div>
   <div class="notice"><b>Important:</b> <div class="notice"><b>Start practising.</b> Explore the Subject Question Bank and try a STEAM quiz, test, or practice exam. Sign in to open your dashboard.</div>.</div>
+<section id="education-levels" style="padding:40px 20px;background:#f4f7fc;text-align:center;">
+<h3>Choose Your Education Level</h3>
+<p>Learn, practise and take digital examinations.</p>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1100px;margin:auto;">
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Pre-Primary Education</h3>
+<p>Early learning quizzes and activities.</p>
+<button type="button" class="btn outline" onclick="showExams('Pre-Primary')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Primary Education</h3>
+<p>Botswana PSLE learning and revision.</p>
+<button type="button" class="btn outline" onclick="showExams('PSLE')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Junior Secondary</h3>
+<p>JCE learning and examinations.</p>
+<button type="button" class="btn outline" onclick="showExams('JCE')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Senior Secondary</h3>
+<p>BGCSE learning and examinations.</p>
+<button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore</button>
+</div>
+
+<div style="background:white;padding:25px;border-radius:12px;">
+<h3>Tertiary Education</h3>
+<p>College and university learning.</p>
+<button type="button" class="btn outline" onclick="showExams('Tertiary')">Explore</button>
+</div>
+
+</div>
+
+</section>
 </section>
 
 <section class="page" id="convert">
@@ -197,7 +236,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <div class="notice"><b>Important:</b> <div class="notice"><b>Independent practice questions for PSLE, JCE and BGCSE.</b> These questions are created for revision and are not official BEC past papers.</div> with sample practice sets. It is not a complete collection of official BEC past papers. Official examination papers and answer keys may only be uploaded or distributed where Education Lesedi has permission. Teachers and examiners must verify every question and answer key before use.</div>
   <div class="card">
     <div class="two-col">
-      <div class="field"><label>Examination level</label><select id="becLevel" onchange="renderBotswanaExams()"><option value="all">All levels</option><option value="PSLE">PSLE — Standards 1–7</option><option value="JCE">JCE — Forms 1–3</option><option value="BGCSE">BGCSE — Forms 4–5</option></select></div>
+      <div class="field"><label>Examination level</label><select id="becLevel" onchange="renderBotswanaExams()"><option value="all">All levels</option><option value="Pre-Primary">Pre-Primary</option><option value="Tertiary">Tertiary</option><option value="PSLE">PSLE — Standards 1–7</option><option value="JCE">JCE — Forms 1–3</option><option value="BGCSE">BGCSE — Forms 4–5</option></select></div>
       <div class="field"><label>Search subject or topic</label><input id="becSearch" oninput="renderBotswanaExams()" placeholder="e.g. Mathematics, fractions, biology"></div>
     </div>
     <div id="becCards" class="tiles"></div>
@@ -264,9 +303,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <div class="card">
     <h3>Choose your package</h3>
     <div class="three-col">
-      <div class="price-card"><span class="pill">INDIVIDUAL</span><h3>Starter</h3><div class="price">P50 <small class="muted">/ month</small></div><p class="small muted">For individual teachers and learners creating resources and quizzes.</p><button class="btn primary" onclick="selectPackage('Starter','49')">Choose Starter</button></div>
-      <div class="price-card"><span class="pill">TEACHER</span><h3>Professional</h3><div class="price">P100 <small class="muted">/ month</small></div><p class="small muted">For teachers preparing lesson plans, schemes, worksheets and assessments.</p><button class="btn primary" onclick="selectPackage('Professional','99')">Choose Professional</button></div>
-      <div class="price-card"><span class="pill">SCHOOLS</span><h3>Institution</h3><div class="price">P800 <small class="muted">/ month</small></div><p class="small muted">For schools and education centres. Final institutional pricing can be agreed.</p><button class="btn primary" onclick="selectPackage('Institution','499')">Choose Institution</button></div>
+      <div class="price-card"><span class="pill">INDIVIDUAL</span><h3>Starter</h3><div class="price">P50 <small class="muted">/ month</small></div><p class="small muted">For individual teachers and learners creating resources and quizzes.</p><button class="btn primary" onclick="selectPackage('Starter','50')">Choose Starter</button></div>
+      <div class="price-card"><span class="pill">TEACHER</span><h3>Professional</h3><div class="price">P100 <small class="muted">/ month</small></div><p class="small muted">For teachers preparing lesson plans, schemes, worksheets and assessments.</p><button class="btn primary" onclick="selectPackage('Professional','100')">Choose Professional</button></div>
+      <div class="price-card"><span class="pill">SCHOOLS</span><h3>Institution</h3><div class="price">P800 <small class="muted">/ month</small></div><p class="small muted">For schools and education centres. Final institutional pricing can be agreed.</p><button class="btn primary" onclick="selectPackage('Institution','800')">Choose Institution</button></div>
     </div>
     <p class="small muted">These are proposed launch prices for the prototype and can be changed before launch. One-off conversion services can also be priced separately: quizzes P25–P50; full examinations P75–P150; reports P50–P100.</p>
   </div>
@@ -897,12 +936,14 @@ function renderBotswanaExams(){
  const query=(document.getElementById('becSearch')?.value||'').toLowerCase().trim();
  const list=botswanaPracticeSets.filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level].join(' ').toLowerCase().includes(query)));
  const target=document.getElementById('becCards'); if(!target)return;
- target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button></div>`).join(''):'<div class="notice">No practice set matches your search. Try another subject or level.</div>';
+ $('becPreview').replaceChildren();
+ target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
 }
 function openPracticeSet(id){
  const set=botswanaPracticeSets.find(x=>x.id===id); if(!set)return;
  const out=document.getElementById('becPreview');
- out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Independent revision questions. A teacher or examiner should verify them before using them in an assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" data-send-practice>Send questions to Examination Studio</button></div>`;
+ out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Independent revision questions. A teacher or examiner should verify them before using them in an assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" data-take-practice>Take practice quiz</button> <button class="btn outline" type="button" data-send-practice>Send questions to Examination Studio</button></div>`;
+ out.querySelector('[data-take-practice]').onclick=()=>takeLibraryPractice(set);
  out.querySelector('[data-send-practice]').onclick=()=>{
   $('examTitle').value=set.title;
   $('examClass').value=set.className+' '+set.subject;
@@ -915,6 +956,35 @@ function openPracticeSet(id){
   $('examStatus').textContent='';
   go('exam');
  };
+}
+
+function takeLibraryPractice(set){
+ const area=$('becPreview');
+ const answers=Array(set.questions.length).fill(null);
+ let index=0;
+ function render(){
+  const question=set.questions[index];
+  area.innerHTML='<div class="card"><h3>'+escapeHTML(set.title)+'</h3><p>Question '+(index+1)+' of '+answers.length+'</p><p>'+escapeHTML(question.q)+'</p><div data-options></div><p data-message role="status"></p><button type="button" class="btn outline" data-back>Previous</button> <button type="button" class="btn primary" data-forward></button></div>';
+  const options=area.querySelector('[data-options]');
+  question.o.forEach((option,i)=>{
+   const label=document.createElement('label');label.style.display='block';
+   const input=document.createElement('input');input.type='radio';input.name='libraryPracticeAnswer';input.style.width='auto';
+   input.checked=answers[index]===i;input.onchange=()=>{answers[index]=i};
+   label.append(input,document.createTextNode(' '+option));options.append(label);
+  });
+  const back=area.querySelector('[data-back]'),forward=area.querySelector('[data-forward]');
+  back.disabled=index===0;back.onclick=()=>{index--;render()};
+  forward.textContent=index===answers.length-1?'Submit practice':'Next';
+  forward.onclick=()=>{
+   if(answers[index]===null){area.querySelector('[data-message]').textContent='Choose an answer to continue.';return}
+   if(index<answers.length-1){index++;render();return}
+   const score=set.questions.filter((q,i)=>q.a===answers[i]).length;
+   area.innerHTML='<div class="card"><h3>Practice complete</h3><p>Marks: '+score+' / '+answers.length+'</p><button type="button" class="btn outline" data-restart>Try again</button></div>';
+   area.querySelector('[data-restart]').onclick=()=>takeLibraryPractice(set);
+  };
+ }
+ render();
+ area.scrollIntoView({block:'nearest'});
 }
 
 // Supabase email registration and sign-in.
@@ -1138,56 +1208,17 @@ async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await
   renderBotswanaExams();
 
 </script>
-<section id="education-levels" style="padding:40px 20px;background:#f4f7fc;text-align:center;">
-<h2 style="color:#102a56;">EDUCATION LESEDI SCHOLARS HUB</h2>
-<h3>Choose Your Education Level</h3>
-<p>Learn, practise and take digital examinations.</p>
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1100px;margin:auto;">
-
-<div style="background:white;padding:25px;border-radius:12px;">
-<h3>Pre-Primary Education</h3>
-<p>Early learning quizzes and activities.</p>
-<button onclick="showExams('Pre-Primary')">Explore</button>
-</div>
-
-<div style="background:white;padding:25px;border-radius:12px;">
-<h3>Primary Education</h3>
-<p>Botswana PSLE learning and revision.</p>
-<button onclick="showExams('PSLE')">Explore</button>
-</div>
-
-<div style="background:white;padding:25px;border-radius:12px;">
-<h3>Junior Secondary</h3>
-<p>JCE learning and examinations.</p>
-<button onclick="showExams('JCE')">Explore</button>
-</div>
-
-<div style="background:white;padding:25px;border-radius:12px;">
-<h3>Senior Secondary</h3>
-<p>BGCSE learning and examinations.</p>
-<button onclick="showExams('BGCSE')">Explore</button>
-</div>
-
-<div style="background:white;padding:25px;border-radius:12px;">
-<h3>Tertiary Education</h3>
-<p>College and university learning.</p>
-<button onclick="showExams('Tertiary')">Explore</button>
-</div>
-
-</div>
-
-<div id="exam-library" style="margin:35px auto;max-width:900px;background:white;padding:25px;border-radius:12px;">
-<h2>Botswana Examination Library</h2>
-<p id="exam-message">Select an education level above to explore its examinations.</p>
-</div>
-</section>
 
 <script>
-function showExams(level) {
-document.getElementById('exam-message').innerHTML =
-'You selected ' + level + '. Examination papers and digital quizzes will appear here when added by the administrator.';
-document.getElementById('exam-library').scrollIntoView({behavior:'smooth'});
+function showExams(level){
+ const select=$('becLevel');
+ if(![...select.options].some(option=>option.value===level))return;
+ select.value=level;
+ $('becSearch').value='';
+ renderBotswanaExams();
+ go('botswana-exams');
+ select.focus({preventScroll:true});
 }
 async function loadCloudFiles(){
  const user=cloudUser;
