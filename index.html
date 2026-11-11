@@ -149,7 +149,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
  <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p></article>
  <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p></article>
  <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p></article>
- </div>
+ </div><article class="price-card"><h3>PSLE Mathematics Practice Pack</h3><p>60 original questions across four topic quizzes and one mixed revision test. See your marks and answer explanations after each attempt.</p><p>Pack access is available to approved accounts. Online checkout is pending.</p><button type="button" class="btn outline" onclick="showPslePracticePack()">Explore the PSLE pack</button></article>
  <p>Online checkout is pending.</p><button type="button" class="btn outline" onclick="go('payments')">View payment options</button></section>
 </section>
 
@@ -253,7 +253,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 
 <section class="page" id="botswana-exams">
   <div class="section-head"><div><h2>Botswana Examination Library</h2><p>Browse syllabus-aligned practice areas for PSLE, JCE and BGCSE.</p></div><span class="pill">BOTSWANA</span></div>
-  <div class="notice"><b>Important:</b> <div class="notice"><b>Independent practice questions for PSLE, JCE and BGCSE.</b> These questions are created for revision and are not official BEC past papers.</div> with sample practice sets. It is not a complete collection of official BEC past papers. Official examination papers and answer keys may only be uploaded or distributed where Education Lesedi has permission. Teachers and examiners must verify every question and answer key before use.</div>
+  <div class="notice">Independent practice for PSLE, JCE and BGCSE. These sets are for revision and are not official BEC past papers.</div>
+  <article class="price-card"><h3>PSLE Mathematics Practice Pack</h3><p>60 original questions across four topic quizzes and one mixed revision test. See your marks and answer explanations after each attempt.</p><p>Pack access is available to approved accounts. Online checkout is pending.</p><button type="button" class="btn outline" onclick="showPslePracticePack()">Explore the PSLE pack</button></article>
   <div class="card">
     <div class="two-col">
       <div class="field"><label>Examination level</label><select id="becLevel" onchange="renderBotswanaExams()"><option value="all">All levels</option><option value="Pre-Primary">Pre-Primary</option><option value="Tertiary">Tertiary</option><option value="PSLE">PSLE — Standards 1–7</option><option value="JCE">JCE — Forms 1–3</option><option value="BGCSE">BGCSE — Forms 4–5</option></select></div>
@@ -333,7 +334,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
  <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p></article>
  <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p></article>
  <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p></article>
- </div><div class="card"><h3>Pay to Cell</h3><p>Payment contact <strong>+267 71823638</strong>.</p><p>Ask the administrator to confirm the recipient, package and amount before sending money. Package access is confirmed manually.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a payment</button></div></section>
+ </div><article class="price-card"><h3>PSLE Mathematics Practice Pack</h3><p>60 original questions across four topic quizzes and one mixed revision test. See your marks and answer explanations after each attempt.</p><p>Pack access is available to approved accounts. Online checkout is pending.</p><button type="button" class="btn outline" onclick="showPslePracticePack()">Explore the PSLE pack</button></article><div class="card"><h3>Pay to Cell</h3><p>Payment contact <strong>+267 71823638</strong>.</p><p>Ask the administrator to confirm the recipient, package and amount before sending money. Package access is confirmed manually.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a payment</button></div></section>
 <section class="page" id="feedback"><div class="section-head"><div><h2>Feedback &amp; Support</h2><p>Send a private message to the Lesedi administrator and check for replies.</p></div></div><div class="card"><p id="feedbackStatus" role="status"></p><div id="feedbackPanel" hidden><label class="field" id="feedbackCustomerLabel" hidden>Customer conversation<select id="feedbackCustomer"></select></label><div id="feedbackMessages"></div><form id="feedbackForm"><label class="field">Message<textarea id="feedbackBody" required maxlength="2000"></textarea></label><button class="btn primary">Send message</button></form></div></div></section>
 <section class="page" id="professional-forum"><div class="section-head"><div><h2>Professional Forum</h2><p>Discuss teaching, assessments, STEAM and other educational topics. Keep learner names and records private.</p></div></div><div class="card"><p id="forumStatus" role="status"></p><div id="forumPanel" hidden><form id="forumNew"><label class="field">Discussion title<input id="forumTitle" required maxlength="120"></label><label class="field">Opening message<textarea id="forumBody" required maxlength="2000"></textarea></label><button class="btn primary">Start discussion</button></form><div id="forumThreads"></div><div id="forumDiscussion"></div></div></div></section>
 
@@ -1072,7 +1073,7 @@ async function loadPublishedPractice(){
 function renderBotswanaExams(clearPreview=true){
  const level=document.getElementById('becLevel')?.value||'all';
  const query=(document.getElementById('becSearch')?.value||'').toLowerCase().trim();
- const list=availablePractice().filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level].join(' ').toLowerCase().includes(query)));
+ const list=availablePractice().filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level,x.pack_code==='psle-mathematics'?'PSLE Mathematics Practice Pack':''].join(' ').toLowerCase().includes(query)));
  const target=document.getElementById('becCards'); if(!target)return;
  if(clearPreview){practiceOpenRequest++;$('becPreview').replaceChildren();}
  target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><p class="small muted">${x.question_count??x.questions.length} questions${x.minutes?' · about '+Number(x.minutes)+' minutes':''}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')"> ${x.pack_code?(x.available?'Open pack quiz':'View pack access'):'Open free sample'}</button><p class="small muted">${x.pack_code?'PSLE Mathematics Practice Pack':'Free sample'}</p></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
@@ -1426,6 +1427,12 @@ $('recoveryForm').onsubmit=async event=>{
 
 
 <script>
+function showPslePracticePack(){
+ showExams('PSLE');
+ $('becSearch').value='PSLE Mathematics Practice Pack';
+ renderBotswanaExams();
+ $('becCards').scrollIntoView({block:'nearest'});
+}
 function showExams(level){
  const select=$('becLevel');
  if(![...select.options].some(option=>option.value===level))return;
