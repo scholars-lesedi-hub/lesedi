@@ -315,7 +315,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="subject-notes"><div class="section-head"><div><h2>Subject Question Bank</h2><p>Choose a subject to practise with questions drawn from the uploaded notes. Each attempt shuffles the questions and options.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="steam-assessments"><div class="section-head"><div><h2>STEAM Assessments</h2><p>Choose a subject and start a short STEAM quiz, test or exam. Each includes an applied written task for teacher review.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="library">
+<section class="page" id="subject-notes"><div class="section-head"><div><h2>Subject Question Bank</h2><p>Choose a subject to practise with questions drawn from the uploaded notes. Each attempt shuffles the questions and options.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="steam-assessments"><div class="section-head"><div><h2>STEAM Assessments</h2><p>Choose a subject and start a short STEAM quiz, test or exam. The Agriculture school garden unit includes labelled STEAM questions.</p></div></div><details class="card"><summary><strong>Teacher introduction to STEAM</strong></summary><p>A short introduction for teachers and tutors. No certificate is awarded.</p><h3>1. Start with a practical problem</h3><p>Use the Standard 5 school garden unit. Ask learners how they could water seedlings using a recycled bottle and a limited amount of water.</p><h3>2. Label the skill learners demonstrate</h3><p>Use Science for investigating, Technology for selecting or using tools, Engineering for designing and testing, Arts for purposeful visual communication, and Mathematics for measuring, calculating or interpreting data. Add a secondary label only when the question assesses that skill too.</p><h3>3. Choose the evidence and marking method</h3><p>The quiz checks three objective skills. The test adds a design task. The exam adds visual communication and a design-and-calculation task. Objective items are automatically marked. Use the rubrics below to award marks for written work.</p><h3>4. Review before publishing</h3><p>Use the Examination Studio to prepare a school assessment. Check the level, question wording, answer key and rubric before approving and publishing it.</p><h3>Worked examples for teacher marking</h3><details><summary>Engineering marking example</summary><p>A recycled bottle drip system empties too quickly. Describe one design change and a fair test to check whether it works.</p><p>3 marks. Award 1 for a feasible design change, 1 for keeping relevant conditions the same, and 1 for comparing the time or water delivered.</p><p><strong>Sample full-credit response.</strong> Use a smaller outlet. Start both bottles with the same amount of water and keep them at the same height. Time how long each takes to deliver 250 mL.</p></details><details><summary>Arts marking example</summary><p>Plan a three-panel illustrated guide showing younger learners how to fill, place and check the bottle. Describe what each panel shows and how you would make the order clear.</p><p>3 marks. Award 1 for covering all three steps in order, 1 for visuals that clarify each step, and 1 for a clear sequence cue such as arrows or numbers.</p><p><strong>Sample full-credit response.</strong> Panel 1 shows water pouring into the bottle, panel 2 shows the bottle beside a seedling, and panel 3 shows a learner checking the water level. Large numbers and arrows show the order.</p></details><details><summary>Engineering + Mathematics marking example</summary><p>A bottle delivers 250 mL in 20 minutes. If it runs at the same rate, how much will it deliver in 60 minutes? Explain how you would check that prediction with your prototype.</p><p>3 marks. Award 1 for 750 mL, 1 for showing three 20-minute intervals or equivalent reasoning, and 1 for a feasible 60-minute test using a measuring container.</p><p><strong>Sample full-credit response.</strong> 60 ÷ 20 = 3, so 3 × 250 mL = 750 mL. Run the bottle for 60 minutes with enough water and measure what collects in a marked jug.</p></details></details><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="library">
   <div class="section-head"><div><h2>My Resource Library</h2><p>Items saved locally in this browser during the prototype.</p></div></div>
   <div class="card"><h3>Saved documents</h3><div id="savedDocs" class="muted small">No saved documents.</div></div>
   <div class="card"><h3>Saved examination drafts</h3><div id="savedExams" class="muted small">No examination drafts.</div></div>
@@ -729,6 +729,54 @@ async function uploadDocumentToCloud(){
       ['Which direction does heat naturally transfer?','From warmer to cooler regions','From cooler to warmer regions only','Upwards in every material','Sideways only']
     ],'Design a simple cover to keep a warm drink warm longer. Identify a material and explain which type of heat transfer it reduces.']
   ];
+  const gardenUnit = [
+  {
+    "label": "Science",
+    "text": "Two equal garden beds get the same sunlight and start with equally moist soil. One is covered with dry grass. Which measurement helps you test whether the grass slows water loss?",
+    "options": [
+      "Soil moisture in each bed after one day",
+      "The number of letters in each bed’s name",
+      "The distance from each bed to the school gate",
+      "The colour of each watering can"
+    ],
+    "feedback": "Compare soil moisture under the same conditions to isolate the effect of the grass cover."
+  },
+  {
+    "label": "Technology",
+    "text": "Which digital tool lets a class record daily water use and automatically calculate a weekly total?",
+    "options": [
+      "A spreadsheet with a SUM formula",
+      "A camera with flash turned off",
+      "An audio recorder",
+      "An image viewer"
+    ],
+    "feedback": "A spreadsheet can store daily readings and use a formula to total them."
+  },
+  {
+    "label": "Mathematics",
+    "text": "Four equal beds each need 3 litres of water. The class has already collected 5 litres. How much more water is needed?",
+    "options": [
+      "7 litres",
+      "12 litres",
+      "8 litres",
+      "17 litres"
+    ],
+    "feedback": "Four beds need 4 × 3 = 12 litres. Subtract the 5 litres already collected to get 7 litres."
+  },
+  {
+    "label": "Engineering",
+    "text": "A recycled bottle drip system empties too quickly. Describe one design change and a fair test to check whether it works."
+  },
+  {
+    "label": "Arts",
+    "text": "Plan a three-panel illustrated guide showing younger learners how to fill, place and check the bottle. Describe what each panel shows and how you would make the order clear."
+  },
+  {
+    "label": "Engineering",
+    "secondary": "Mathematics",
+    "text": "A bottle delivers 250 mL in 20 minutes. If it runs at the same rate, how much will it deliver in 60 minutes? Explain how you would check that prediction with your prototype."
+  }
+];
   const formats = {Quiz:2,Test:3,Exam:4};
   const shuffle = items => {
     const copy = [...items];
@@ -749,7 +797,8 @@ async function uploadDocumentToCloud(){
       const heading=document.createElement('h3');
       heading.textContent=subject;
       const detail=document.createElement('p');
-      detail.textContent=level+' · '+source;
+      const garden = steam && subject==='Agriculture';
+      detail.textContent=level+' · '+(garden?'School garden watering':source);
       card.append(heading,detail);
       for(const format of Object.keys(formats)){
         const button=document.createElement('button');
@@ -758,8 +807,13 @@ async function uploadDocumentToCloud(){
         button.textContent=format;
         button.onclick=()=>{
           if(attempt && !confirm('Start a new assessment and discard the current answers?'))return;
-          const items=shuffle(questions).slice(0,formats[format]).map(([text,...options])=>({text,key:options[0],options:shuffle(options)}));
-          if(steam)items.push({text:challenge});
+          const gardenLength={Quiz:3,Test:4,Exam:6}[format];
+          const items=garden
+            ? gardenUnit.slice(0,gardenLength).map(item=>item.options
+                ? {...item,key:item.options[0],options:shuffle(item.options)}
+                : {...item})
+            : shuffle(questions).slice(0,formats[format]).map(([text,...options])=>({text,key:options[0],options:shuffle(options)}));
+          if(steam&&!garden)items.push({text:challenge});
           attempt={subject,format,items,answers:Array(items.length).fill(''),index:0};
           show();
           runner.scrollIntoView({block:'start'});
@@ -772,6 +826,11 @@ async function uploadDocumentToCloud(){
       const {items,answers,index,subject,format}=attempt;
       const item=items[index];
       runner.innerHTML='<h3>'+escapeHTML(subject)+' '+format+'</h3><p>Question '+(index+1)+' of '+items.length+'</p><form><fieldset><legend>'+escapeHTML(item.text)+'</legend><div class="notes-options"></div></fieldset><div class="notes-actions"></div></form>';
+      if(item.label){
+        const label=document.createElement('p');
+        label.textContent='STEAM · '+item.label+(item.secondary?' + '+item.secondary:'');
+        runner.prepend(label);
+      }
       const options=runner.querySelector('.notes-options');
       if(item.options){
         item.options.forEach(option=>{
@@ -832,9 +891,16 @@ async function uploadDocumentToCloud(){
         const score=items.reduce((sum,item,i)=>sum+Number(item.key===answers[i]),0);
         runner.innerHTML='<h3>Assessment submitted</h3><p>Objective score: '+score+' / '+objective.length+'</p>';
         items.forEach((item,i)=>{
-          if(item.options)return;
+          if(item.options){
+            if(item.feedback){
+              const feedback=document.createElement('p');
+              feedback.textContent=item.label+' · '+(item.key===answers[i]?'Correct. ':'Review. ')+item.feedback;
+              runner.append(feedback);
+            }
+            return;
+          }
           const title=document.createElement('h4');
-          title.textContent='Written response · teacher review';
+          title.textContent=(item.label?item.label+' · ':'')+'Written response · teacher review';
           const response=document.createElement('p');
           response.textContent=answers[i];
           const note=document.createElement('p');
