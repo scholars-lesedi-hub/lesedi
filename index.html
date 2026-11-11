@@ -262,6 +262,18 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div></div>
 </section>
 
+<section class="page" id="reset-password">
+ <div class="section-head"><div><h2>Set new password</h2></div></div>
+ <div class="card">
+  <p id="recoveryStatus" role="status">Checking your password reset link…</p>
+  <form id="recoveryForm" hidden>
+   <label class="field">New password<input id="recoveryPassword" type="password" autocomplete="new-password" minlength="6" required></label>
+   <label class="field">Confirm new password<input id="recoveryConfirm" type="password" autocomplete="new-password" minlength="6" required></label>
+   <button type="submit" class="btn primary">Save new password</button>
+  </form>
+  <button type="button" class="btn outline" onclick="go('account');showLoginForm()">Return to sign in</button>
+ </div>
+</section>
 <section class="page" id="account">
   <div class="section-head"><div><h2>Customer Account</h2><p>Register or sign in securely using your email address.</p></div><span class="pill">SUPABASE AUTH</span></div>
   <div class="notice">All customer categories are intended to receive a 30-day free trial. The trial countdown and package access must still be enforced by secure server-side rules; this page does not activate or extend a trial by itself.</div>
@@ -1028,6 +1040,9 @@ function takeLibraryPractice(set){
 }
 
 // Supabase email registration and sign-in.
+const recoveryUrl=new URL(location.href);
+const recoveryRequested=recoveryUrl.searchParams.get('reset')==='1'||new URLSearchParams(recoveryUrl.hash.slice(1)).get('type')==='recovery';
+let recoveryAccount=null;
 const LESedi_SUPABASE_URL='https://ajcsojkyhivjjmomtufs.supabase.co';
 const LESedi_SUPABASE_KEY='sb_publishable_i9mPavGeRvUhgt2oTlh1-g_2JslOkNp';
 let lesediAuthClient=null;
@@ -1235,7 +1250,7 @@ async function sendPasswordReset(){
  if(!lesediAuthClient){authMessage('The secure login service did not load.',true);return;}
  const email=document.getElementById('authLoginEmail').value.trim();
  if(!email){authMessage('Enter your email address in the login form first.',true);return;}
- const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
+ const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
 async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
@@ -1243,7 +1258,53 @@ async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
  refreshStats();renderPlans();renderLibrary();$('customerDashboardLinks').replaceChildren();$('customerAccountNav').textContent='Customer Login';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
-(async()=>{if(!lesediAuthClient)return;const {data}=await lesediAuthClient.auth.getSession();if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
+
+if(recoveryRequested)go('reset-password');
+if(lesediAuthClient){
+ lesediAuthClient.auth.onAuthStateChange((event,session)=>{
+  if(event==='PASSWORD_RECOVERY'&&session?.user){
+   recoveryAccount=session.user.id;
+   $('recoveryForm').hidden=false;
+   $('recoveryStatus').textContent='Choose a new password for your Lesedi account.';
+   go('reset-password');
+  }
+  if(event==='SIGNED_OUT'){recoveryAccount=null;$('recoveryForm').hidden=true}
+ });
+}
+$('recoveryForm').onsubmit=async event=>{
+ event.preventDefault();
+ if(!recoveryAccount||!lesediAuthClient)return;
+ const status=$('recoveryStatus'),password=$('recoveryPassword').value;
+ if(password!==$('recoveryConfirm').value){status.textContent='The passwords do not match.';return}
+ const form=event.currentTarget,button=form.querySelector('button');
+ button.disabled=true;
+ try{
+  const {data:sessionData,error:sessionError}=await lesediAuthClient.auth.getSession();
+  if(sessionError||sessionData.session?.user.id!==recoveryAccount){
+   form.hidden=true;status.textContent='Request a fresh password reset link.';return;
+  }
+  const {error}=await lesediAuthClient.auth.updateUser({password});
+  if(error){status.textContent=error.message;return}
+  form.reset();form.hidden=true;recoveryAccount=null;
+  const url=new URL(location.href);url.searchParams.delete('reset');url.hash='';
+  history.replaceState(null,'',url);
+  const result=await lesediAuthClient.auth.signOut({scope:'local'});
+  status.textContent=result.error?'Password updated. Sign out before signing in again.':'Password updated. Sign in with your new password.';
+  if(!result.error){go('account');showLoginForm();authMessage('Password updated. Sign in with your new password.')}
+ }catch{status.textContent='Could not complete the reset. Please try again.'}
+ finally{button.disabled=false}
+};
+(async()=>{
+ if(!lesediAuthClient){
+  if(recoveryRequested)$('recoveryStatus').textContent='The sign-in service did not load. Refresh this page and try again.';
+  return;
+ }
+ const {data}=await lesediAuthClient.auth.getSession();
+ if(recoveryRequested||recoveryAccount){
+  if(!recoveryAccount)$('recoveryStatus').textContent='This link could not be verified. Request a fresh password reset link.';
+  return;
+ }
+ if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
 
   renderBotswanaExams();
 
