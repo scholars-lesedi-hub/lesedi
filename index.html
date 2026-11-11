@@ -75,7 +75,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="analytics"><span class="ico">▥</span>Results & Analytics</button>
     <button data-page="school"><span class="ico">⌂</span>School & Classes</button>
     <button data-page="library"><span class="ico">▤</span>My Resource Library</button>
-    <button data-page="account"><span class="ico">👤</span>Customer Login</button>
+    <button data-page="account" id="customerAccountNav"><span class="ico">👤</span>Customer Login</button>
     <button data-page="settings"><span class="ico">⚙</span>Platform Setup</button>
   </nav>
   <div class="aside-foot"><b>Education Lesedi Scholars Hub</b><br>Click • Press • Learn<br><br>Helpdesk<br>educationlesedihelpdesk@gmail.com<br>Orange Money: +267 77980825<br>MyZaka: +267 71823638</div>
@@ -235,7 +235,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     </form>
     <div id="authStatus" class="notice" role="status" aria-live="polite">Choose Customer Login or Create Account.</div>
   </div>
-  <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3>You're signed in</h3><p id="authWelcome"></p><p id="authType"></p><button class="btn outline" type="button" onclick="signOutCustomer()">Sign out</button></div>
+  <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3 id="customerDashboardTitle">My Dashboard</h3><p id="authWelcome"></p><p id="authType"></p><div id="customerDashboardLinks" style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0"></div><p class="notice" id="customerDashboardPending"></p><button class="btn outline" type="button" onclick="signOutCustomer()">Sign out</button></div>
 </section>
 
 <section class="page" id="assistant">
@@ -556,18 +556,174 @@ try{if(window.supabase?.createClient)lesediAuthClient=window.supabase.createClie
 function authMessage(msg,isError=false){const box=document.getElementById('authStatus');if(box){box.textContent=msg;box.className=isError?'notice':'success'}}
 function showLoginForm(){document.getElementById('authLoginForm').style.display='block';document.getElementById('authRegisterForm').style.display='none';authMessage('Enter your registered email and password.')}
 function showRegisterForm(){document.getElementById('authLoginForm').style.display='none';document.getElementById('authRegisterForm').style.display='block';authMessage('Complete the form to create your account.')}
-async function saveLesediCustomerProfile(user){
- const meta=user.user_metadata||{};
- const profile={id:user.id,full_name:meta.full_name||'',email:user.email,phone:meta.phone||'',account_type:meta.account_type||'individual'};
- const {error}=await lesediAuthClient.from('customer_profiles').upsert(profile,{onConflict:'id'});
- if(error)throw error;
- return profile;
+const customerDashboards = {
+  "individual": [
+    "Learner dashboard",
+    "Practise by subject or open a STEAM assessment.",
+    [
+      [
+        "Subject practice",
+        "subject-notes"
+      ],
+      [
+        "STEAM assessments",
+        "steam-assessments"
+      ],
+      [
+        "Practice exam library",
+        "botswana-exams"
+      ]
+    ],
+    "Personal results and school exam access"
+  ],
+  "parent": [
+    "Parent and guardian dashboard",
+    "Explore practice resources to use with your learner.",
+    [
+      [
+        "Subject practice",
+        "subject-notes"
+      ],
+      [
+        "STEAM assessments",
+        "steam-assessments"
+      ]
+    ],
+    "Linked learners, assigned assessments and progress"
+  ],
+  "private_tutor": [
+    "Private tutor dashboard",
+    "Prepare assessment drafts and find practice activities.",
+    [
+      [
+        "Examination Studio",
+        "exam"
+      ],
+      [
+        "Subject practice",
+        "subject-notes"
+      ],
+      [
+        "STEAM assessments",
+        "steam-assessments"
+      ]
+    ],
+    "Assigned learners and their results"
+  ],
+  "teacher": [
+    "Teacher dashboard",
+    "Prepare assessment drafts and explore the STEAM teacher introduction.",
+    [
+      [
+        "Examination Studio",
+        "exam"
+      ],
+      [
+        "Hardcopy Converter",
+        "convert"
+      ],
+      [
+        "STEAM teacher introduction",
+        "steam-assessments"
+      ]
+    ],
+    "Class assessments, written marking and class results"
+  ],
+  "examiner": [
+    "Examiner dashboard",
+    "Convert papers and prepare assessment drafts for verification.",
+    [
+      [
+        "Hardcopy Converter",
+        "convert"
+      ],
+      [
+        "Examination Studio",
+        "exam"
+      ],
+      [
+        "Practice exam library",
+        "botswana-exams"
+      ]
+    ],
+    "Shared exam approval, publication and results"
+  ],
+  "school": [
+    "School dashboard",
+    "Explore assessment preparation tools and STEAM resources for your school.",
+    [
+      [
+        "Examination Studio",
+        "exam"
+      ],
+      [
+        "Hardcopy Converter",
+        "convert"
+      ],
+      [
+        "STEAM assessments",
+        "steam-assessments"
+      ]
+    ],
+    "School staff, classes, learner records and reports"
+  ],
+  "institution": [
+    "Education institution dashboard",
+    "Explore assessment tools and teaching resources for your institution.",
+    [
+      [
+        "Examination Studio",
+        "exam"
+      ],
+      [
+        "Teaching resources",
+        "resources"
+      ],
+      [
+        "STEAM assessments",
+        "steam-assessments"
+      ]
+    ],
+    "Institution staff, departments, learner records and reports"
+  ]
+};
+function getCustomerDashboard(type){
+ return Object.hasOwn(customerDashboards,type)?customerDashboards[type]:customerDashboards.individual;
 }
-function showSignedInCustomer(user,profile){
- document.getElementById('authPanel').style.display='none';
- document.getElementById('authSignedIn').style.display='block';
- document.getElementById('authWelcome').textContent='Welcome, '+(profile?.full_name||user.user_metadata?.full_name||user.email);
- document.getElementById('authType').textContent='Account type: '+(profile?.account_type||user.user_metadata?.account_type||'Customer');
+async function saveLesediCustomerProfile(user){
+ const profiles=lesediAuthClient.from('customer_profiles');
+ const {data,error}=await profiles.select('id,full_name,account_type').eq('id',user.id).maybeSingle();
+ if(error)throw error;
+ if(data)return data;
+ const meta=user.user_metadata||{};
+ const account_type=Object.hasOwn(customerDashboards,meta.account_type)?meta.account_type:'individual';
+ const profile={id:user.id,full_name:meta.full_name||'',email:user.email,phone:meta.phone||'',account_type};
+ const {error:saveError}=await profiles.upsert(profile,{onConflict:'id',ignoreDuplicates:true});
+ if(saveError)throw saveError;
+ const {data:saved,error:readError}=await profiles.select('id,full_name,account_type').eq('id',user.id).single();
+ if(readError)throw readError;
+ return saved;
+}
+function showSignedInCustomer(user,profile,openDashboard=false){
+ const [title,description,links,pending]=getCustomerDashboard(profile.account_type);
+ $('authPanel').style.display='none';
+ $('authSignedIn').style.display='block';
+ $('customerAccountNav').textContent='My Dashboard';
+ $('customerDashboardTitle').textContent=title;
+ $('authWelcome').textContent='Welcome, '+(profile.full_name||user.email);
+ $('authType').textContent=description;
+ const actions=$('customerDashboardLinks');
+ actions.replaceChildren();
+ links.forEach(([label,page])=>{
+  const button=document.createElement('button');
+  button.type='button';
+  button.className='btn outline';
+  button.textContent=label;
+  button.onclick=()=>go(page);
+  actions.append(button);
+ });
+ $('customerDashboardPending').textContent=pending+' will appear here when the shared database features are connected.';
+ if(openDashboard)go('account');
 }
 document.getElementById('authRegisterForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!lesediAuthClient){authMessage('The secure login service did not load. Refresh the page and try again.',true);return;}
@@ -579,7 +735,7 @@ document.getElementById('authRegisterForm').addEventListener('submit',async e=>{
  const password=document.getElementById('authRegisterPassword').value;
  const {data,error}=await lesediAuthClient.auth.signUp({email,password,options:{emailRedirectTo:'https://educationlesedihub.com/',data:{full_name,phone,account_type}}});
  if(error){authMessage('Registration error: '+error.message,true);return;}
- if(data.session&&data.user){try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile);authMessage('Your account has been created and you are signed in.');}catch(err){authMessage('Account created, but profile saving needs attention: '+err.message,true);}}
+ if(data.session&&data.user){try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile,true);authMessage('Your account has been created and you are signed in.');}catch(err){authMessage('Account created, but profile saving needs attention: '+err.message,true);}}
  else authMessage('Registration received. Please open the confirmation email sent to you, confirm your address, then return here and sign in.');
 });
 document.getElementById('authLoginForm').addEventListener('submit',async e=>{
@@ -589,7 +745,7 @@ document.getElementById('authLoginForm').addEventListener('submit',async e=>{
  const password=document.getElementById('authLoginPassword').value;
  const {data,error}=await lesediAuthClient.auth.signInWithPassword({email,password});
  if(error){authMessage('Login error: '+error.message,true);return;}
- try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile);authMessage('You are successfully signed in.');}
+ try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile,true);authMessage('You are successfully signed in.');}
  catch(err){authMessage('Login succeeded, but your customer profile could not be saved: '+err.message,true);}
 });
 async function sendPasswordReset(){
@@ -599,7 +755,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';$('customerDashboardLinks').replaceChildren();$('customerAccountNav').textContent='Customer Login';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
 (async()=>{if(!lesediAuthClient)return;const {data}=await lesediAuthClient.auth.getSession();if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
 
   renderBotswanaExams();
