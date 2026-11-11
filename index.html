@@ -259,7 +259,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
       <div class="field"><label>Examination level</label><select id="becLevel" onchange="renderBotswanaExams()"><option value="all">All levels</option><option value="Pre-Primary">Pre-Primary</option><option value="Tertiary">Tertiary</option><option value="PSLE">PSLE — Standards 1–7</option><option value="JCE">JCE — Forms 1–3</option><option value="BGCSE">BGCSE — Forms 4–5</option></select></div>
       <div class="field"><label>Search subject or topic</label><input id="becSearch" oninput="renderBotswanaExams()" placeholder="e.g. Mathematics, fractions, biology"></div>
     </div>
-    <div id="becCards" class="tiles"></div>
+    <p id="becBankStatus" role="status"></p><div id="becCards" class="tiles"></div>
     <div id="becPreview" style="margin-top:16px"></div>
   </div>
   <div class="card" style="margin-top:16px"><h3>Examination coverage planned</h3><div class="three-col">
@@ -513,7 +513,7 @@ async function saveCloudResource(kind,payload){
 }
 const store={get(kind){return cloudItems[kind]}};
 
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
 
@@ -1052,16 +1052,36 @@ const botswanaPracticeSets = [
 {q:'What is the SI unit of electric current?',o:['Volt','Ohm','Ampere','Watt'],a:2}
 ]}
 ];
-function renderBotswanaExams(){
+let publishedPractice=[],practiceLoading=false;
+function availablePractice(){return [...publishedPractice,...botswanaPracticeSets]}
+async function loadPublishedPractice(){
+ if(practiceLoading)return;
+ const status=$('becBankStatus');
+ if(!lesediAuthClient){status.textContent='Showing starter practice sets.';return}
+ practiceLoading=true;
+ status.textContent='Loading published practice…';
+ try{
+  const {data,error}=await lesediAuthClient.from('lesedi_practice_sets')
+   .select('slug,level,subject,class_name,title,topics,minutes,questions').eq('published',true).order('level').order('title');
+  if(error)throw error;
+  publishedPractice=data.filter(row=>/^[a-z0-9][a-z0-9-]{0,79}$/.test(row.slug)&&Array.isArray(row.questions)&&row.questions.length&&row.questions.every(q=>
+   q&&typeof q.q==='string'&&Array.isArray(q.o)&&q.o.length>=2&&q.o.every(option=>typeof option==='string'&&option.trim())&&Number.isInteger(q.a)&&q.a>=0&&q.a<q.o.length
+  )).map(row=>({...row,id:'bank-'+row.slug,className:row.class_name}));
+  status.textContent='';
+  renderBotswanaExams(false);
+ }catch{status.textContent='Could not load the online bank. Starter practice sets are available.'}
+ finally{practiceLoading=false}
+}
+function renderBotswanaExams(clearPreview=true){
  const level=document.getElementById('becLevel')?.value||'all';
  const query=(document.getElementById('becSearch')?.value||'').toLowerCase().trim();
- const list=botswanaPracticeSets.filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level].join(' ').toLowerCase().includes(query)));
+ const list=availablePractice().filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level].join(' ').toLowerCase().includes(query)));
  const target=document.getElementById('becCards'); if(!target)return;
- $('becPreview').replaceChildren();
- target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
+ if(clearPreview)$('becPreview').replaceChildren();
+ target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><p class="small muted">${x.questions.length} questions${x.minutes?' · about '+Number(x.minutes)+' minutes':''}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
 }
 function openPracticeSet(id){
- const set=botswanaPracticeSets.find(x=>x.id===id); if(!set)return;
+ const set=availablePractice().find(x=>x.id===id); if(!set)return;
  const out=document.getElementById('becPreview');
  out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Independent revision questions. A teacher or examiner should verify them before using them in an assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" data-take-practice>Take practice quiz</button> <button class="btn outline" type="button" data-send-practice>Send questions to Examination Studio</button></div>`;
  out.querySelector('[data-take-practice]').onclick=()=>takeLibraryPractice(set);
@@ -1099,8 +1119,17 @@ function takeLibraryPractice(set){
   forward.onclick=()=>{
    if(answers[index]===null){area.querySelector('[data-message]').textContent='Choose an answer to continue.';return}
    if(index<answers.length-1){index++;render();return}
-   const score=set.questions.filter((q,i)=>q.a===answers[i]).length;
-   area.innerHTML='<div class="card"><h3>Practice complete</h3><p>Marks: '+score+' / '+answers.length+'</p><button type="button" class="btn outline" data-restart>Try again</button></div>';
+   const mark=q=>Number.isInteger(q.marks)&&q.marks>0?q.marks:1;
+   const total=set.questions.reduce((sum,q)=>sum+mark(q),0);
+   const score=set.questions.reduce((sum,q,i)=>sum+(q.a===answers[i]?mark(q):0),0);
+   area.innerHTML='<div class="card"><h3>Practice complete</h3><p>Marks: '+score+' / '+total+'</p><div data-practice-feedback></div><button type="button" class="btn outline" data-restart>Try again</button></div>';
+   const feedback=area.querySelector('[data-practice-feedback]');
+   set.questions.forEach((q,i)=>{
+    const detail=document.createElement('p');
+    detail.textContent=(i+1)+'. '+(q.a===answers[i]?'Correct. ':'Your answer: '+q.o[answers[i]]+'. ')+
+     'Correct answer: '+q.o[q.a]+'. '+(q.feedback||'');
+    feedback.append(detail);
+   });
    area.querySelector('[data-restart]').onclick=()=>takeLibraryPractice(set);
   };
  }
