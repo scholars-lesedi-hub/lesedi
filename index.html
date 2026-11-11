@@ -1052,37 +1052,50 @@ const botswanaPracticeSets = [
 {q:'What is the SI unit of electric current?',o:['Volt','Ohm','Ampere','Watt'],a:2}
 ]}
 ];
-let publishedPractice=[],practiceLoading=false;
+let publishedPractice=[],practiceRequest=0,practiceOpenRequest=0;
 function availablePractice(){return [...publishedPractice,...botswanaPracticeSets]}
 async function loadPublishedPractice(){
- if(practiceLoading)return;
+ const request=++practiceRequest;
  const status=$('becBankStatus');
  if(!lesediAuthClient){status.textContent='Showing starter practice sets.';return}
- practiceLoading=true;
  status.textContent='Loading published practice…';
  try{
-  const {data,error}=await lesediAuthClient.from('lesedi_practice_sets')
-   .select('slug,level,subject,class_name,title,topics,minutes,questions').eq('published',true).order('level').order('title');
+  const {data,error}=await lesediAuthClient.rpc('lesedi_practice_catalogue');
   if(error)throw error;
-  publishedPractice=data.filter(row=>/^[a-z0-9][a-z0-9-]{0,79}$/.test(row.slug)&&Array.isArray(row.questions)&&row.questions.length&&row.questions.every(q=>
-   q&&typeof q.q==='string'&&Array.isArray(q.o)&&q.o.length>=2&&q.o.every(option=>typeof option==='string'&&option.trim())&&Number.isInteger(q.a)&&q.a>=0&&q.a<q.o.length
-  )).map(row=>({...row,id:'bank-'+row.slug,className:row.class_name}));
+  if(request!==practiceRequest)return;
+  publishedPractice=data.filter(row=>/^[a-z0-9][a-z0-9-]{0,79}$/.test(row.slug)&&row.question_count>0)
+   .map(row=>({...row,id:'bank-'+row.slug,className:row.class_name}));
   status.textContent='';
   renderBotswanaExams(false);
- }catch{status.textContent='Could not load the online bank. Starter practice sets are available.'}
- finally{practiceLoading=false}
+ }catch{if(request===practiceRequest)status.textContent='Could not load the online bank. Starter practice sets are available.'}
 }
 function renderBotswanaExams(clearPreview=true){
  const level=document.getElementById('becLevel')?.value||'all';
  const query=(document.getElementById('becSearch')?.value||'').toLowerCase().trim();
  const list=availablePractice().filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level].join(' ').toLowerCase().includes(query)));
  const target=document.getElementById('becCards'); if(!target)return;
- if(clearPreview)$('becPreview').replaceChildren();
- target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><p class="small muted">${x.questions.length} questions${x.minutes?' · about '+Number(x.minutes)+' minutes':''}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
+ if(clearPreview){practiceOpenRequest++;$('becPreview').replaceChildren();}
+ target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><p class="small muted">${x.question_count??x.questions.length} questions${x.minutes?' · about '+Number(x.minutes)+' minutes':''}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')"> ${x.pack_code?(x.available?'Open pack quiz':'View pack access'):'Open free sample'}</button><p class="small muted">${x.pack_code?'PSLE Mathematics Practice Pack':'Free sample'}</p></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
 }
-function openPracticeSet(id){
- const set=availablePractice().find(x=>x.id===id); if(!set)return;
- const out=document.getElementById('becPreview');
+async function openPracticeSet(id){
+ const entry=availablePractice().find(x=>x.id===id);if(!entry)return;
+ const out=$('becPreview'),request=++practiceOpenRequest;
+ if(entry.pack_code&&!entry.available){
+  out.innerHTML='<div class="card"><h3>PSLE Mathematics Practice Pack</h3><p>Four topic quizzes and one mixed revision test. Sign in with a pack-enabled account to practise. Online checkout is pending.</p><button type="button" class="btn outline" onclick="go(\'feedback\')">Ask about pack access</button></div>';
+  out.scrollIntoView({block:'nearest'});return;
+ }
+ let set=entry;
+ if(entry.slug){
+  out.textContent='Loading questions…';
+  const {data,error}=await lesediAuthClient.from('lesedi_practice_sets').select('questions').eq('slug',entry.slug).maybeSingle();
+  if(request!==practiceOpenRequest)return;
+  if(error||!data){out.textContent='This practice set is unavailable. Check your access and try again.';return}
+  const questions=data.questions;
+  if(!Array.isArray(questions)||!questions.length||!questions.every(q=>q&&typeof q.q==='string'&&Array.isArray(q.o)&&q.o.length>=2&&q.o.every(option=>typeof option==='string'&&option.trim())&&Number.isInteger(q.a)&&q.a>=0&&q.a<q.o.length)){
+   out.textContent='This set needs a question check before it can be played.';return;
+  }
+  set={...entry,questions};
+ }
  out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Independent revision questions. A teacher or examiner should verify them before using them in an assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" data-take-practice>Take practice quiz</button> <button class="btn outline" type="button" data-send-practice>Send questions to Examination Studio</button></div>`;
  out.querySelector('[data-take-practice]').onclick=()=>takeLibraryPractice(set);
  out.querySelector('[data-send-practice]').onclick=()=>{
@@ -1298,6 +1311,8 @@ async function saveLesediCustomerProfile(user){
 }
 function showSignedInCustomer(user,profile,openDashboard=false){
  cloudUser=user;
+ publishedPractice=[];practiceOpenRequest++;renderBotswanaExams();
+ if($('botswana-exams').classList.contains('active'))loadPublishedPractice();
  checkOwnerBanks(user);
  if($('notes-bank').classList.contains('active'))loadNotesBank();
  loadCloudResources();
@@ -1352,7 +1367,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
