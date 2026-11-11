@@ -67,7 +67,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="scheme"><span class="ico">▦</span>Scheme of Work</button>
 <button data-page="exam"><span class="ico">✓</span>Examination Studio</button>
     <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
-    <button data-page="subject-notes"><span class="ico">▤</span>Subject Question Bank</button>
+    <button data-page="notes-bank"><span class="ico">▤</span>Notes Bank</button>
+<button data-page="subject-notes"><span class="ico">▤</span>Subject Question Bank</button>
 <button data-page="steam-assessments"><span class="ico">✧</span>STEAM Assessments</button>
 <button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
     <button data-page="assistant"><span class="ico">✧</span>AI Teacher Assistant</button>
@@ -155,6 +156,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <div class="section-head"><div><h2>Examination Studio</h2><p>Prepare a digital assessment draft from reviewed questions.</p></div></div>
   <div class="card">
     <div class="two-col"><div class="field"><label>Assessment title</label><input id="examTitle" placeholder="e.g. End of Term Science Test"></div><div class="field"><label>Subject / class</label><input id="examClass" placeholder="e.g. Standard 7 Science"></div></div>
+    <details id="examReferencePanel" hidden><summary>Notes for this assessment</summary><pre id="examReferenceNotes" style="white-space:pre-wrap;font:inherit"></pre></details>
     <div class="field"><label>Question text</label><textarea id="examQuestions" placeholder="Paste or type questions here."></textarea></div>
     <div class="field"><label>Teacher-verified answer key (optional)</label><textarea id="examKey" placeholder="Enter verified answers separately. Leave blank if not yet checked."></textarea></div>
     <div class="notice">Before publishing, check each question and answer key. Upload official papers or marking schemes only if Education Lesedi has permission to use them. Written responses require teacher review.</div>
@@ -314,6 +316,18 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
+<section class="page" id="notes-bank">
+ <div class="section-head"><div><h2>Notes Bank</h2><p>Find subject notes to use in a lesson plan or assessment draft.</p></div></div>
+ <div class="card" id="notesSignIn"><p>Sign in to browse the Notes Bank.</p><button class="btn primary" type="button" onclick="go('account');showLoginForm()">Sign in</button></div>
+ <div id="notesWorkspace" hidden>
+  <div class="card two-col">
+   <label class="field">Subject<select id="notesSubject"><option value="">All subjects</option></select></label>
+   <label class="field">Search<input id="notesSearch" type="search" placeholder="e.g. Farming systems"></label>
+  </div>
+  <p id="notesStatus" role="status"></p>
+  <div id="notesList"></div>
+ </div>
+</section>
 <section class="page" id="subject-notes"><div class="section-head"><div><h2>Subject Question Bank</h2><p>Choose a subject to practise with questions drawn from the uploaded notes. Each attempt shuffles the questions and options.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="steam-assessments"><div class="section-head"><div><h2>STEAM Assessments</h2><p>Choose a subject and start a short STEAM quiz, test or exam. The Agriculture school garden unit includes labelled STEAM questions.</p></div></div><details class="card"><summary><strong>Teacher introduction to STEAM</strong></summary><p>A short introduction for teachers and tutors. No certificate is awarded.</p><h3>1. Start with a practical problem</h3><p>Use the Standard 5 school garden unit. Ask learners how they could water seedlings using a recycled bottle and a limited amount of water.</p><h3>2. Label the skill learners demonstrate</h3><p>Use Science for investigating, Technology for selecting or using tools, Engineering for designing and testing, Arts for purposeful visual communication, and Mathematics for measuring, calculating or interpreting data. Add a secondary label only when the question assesses that skill too.</p><h3>3. Choose the evidence and marking method</h3><p>The quiz checks three objective skills. The test adds a design task. The exam adds visual communication and a design-and-calculation task. Objective items are automatically marked. Use the rubrics below to award marks for written work.</p><h3>4. Review before publishing</h3><p>Use the Examination Studio to prepare a school assessment. Check the level, question wording, answer key and rubric before approving and publishing it.</p><h3>Worked examples for teacher marking</h3><details><summary>Engineering marking example</summary><p>A recycled bottle drip system empties too quickly. Describe one design change and a fair test to check whether it works.</p><p>3 marks. Award 1 for a feasible design change, 1 for keeping relevant conditions the same, and 1 for comparing the time or water delivered.</p><p><strong>Sample full-credit response.</strong> Use a smaller outlet. Start both bottles with the same amount of water and keep them at the same height. Time how long each takes to deliver 250 mL.</p></details><details><summary>Arts marking example</summary><p>Plan a three-panel illustrated guide showing younger learners how to fill, place and check the bottle. Describe what each panel shows and how you would make the order clear.</p><p>3 marks. Award 1 for covering all three steps in order, 1 for visuals that clarify each step, and 1 for a clear sequence cue such as arrows or numbers.</p><p><strong>Sample full-credit response.</strong> Panel 1 shows water pouring into the bottle, panel 2 shows the bottle beside a seedling, and panel 3 shows a learner checking the water level. Large numbers and arrows show the order.</p></details><details><summary>Engineering + Mathematics marking example</summary><p>A bottle delivers 250 mL in 20 minutes. If it runs at the same rate, how much will it deliver in 60 minutes? Explain how you would check that prediction with your prototype.</p><p>3 marks. Award 1 for 750 mL, 1 for showing three 20-minute intervals or equivalent reasoning, and 1 for a feasible 60-minute test using a measuring container.</p><p><strong>Sample full-credit response.</strong> 60 ÷ 20 = 3, so 3 × 250 mL = 750 mL. Run the bottle for 60 minutes with enough water and measure what collects in a marked jug.</p></details></details><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="library">
   <div class="section-head"><div><h2>My Resource Library</h2><p>Sign in to find your private uploads, saved documents and exam drafts.</p></div></div>
   <div class="card"><h3>Saved documents</h3><div id="savedDocs" class="muted small">No saved documents.</div></div>
@@ -347,6 +361,87 @@ const $=id=>document.getElementById(id);
 const resourceTable='lesedi_private_resources';
 const fileBucket='lesedi-private-files';
 let cloudUser=null;
+
+let bankNotes=[];
+let notesRequest=0;
+function clearNotesBank(){
+ notesRequest++;
+ bankNotes=[];
+ $('notesList').replaceChildren();
+ $('notesSubject').replaceChildren(new Option('All subjects',''));
+ $('notesSearch').value='';
+ $('notesWorkspace').hidden=true;
+ $('notesSignIn').hidden=false;
+ $('examReferenceNotes').textContent='';
+ $('examReferencePanel').hidden=true;
+}
+async function loadNotesBank(){
+ const user=cloudUser;
+ if(!user){clearNotesBank();return}
+ const request=++notesRequest;
+ $('notesWorkspace').hidden=false;
+ $('notesSignIn').hidden=true;
+ $('notesStatus').textContent='Loading notes…';
+ const {data,error}=await lesediAuthClient.from('lesedi_notes_bank')
+  .select('id,subject,level,topic,content').eq('published',true).order('subject').order('topic').limit(500);
+ if(request!==notesRequest||cloudUser?.id!==user.id)return;
+ if(error){
+  bankNotes=[];
+  $('notesList').replaceChildren();
+  $('notesStatus').textContent='Could not load the Notes Bank. Open it again to retry.';
+  return;
+ }
+ bankNotes=data;
+ const select=$('notesSubject'), previous=select.value;
+ const subjects=[...new Set(data.map(note=>note.subject))];
+ select.replaceChildren(new Option('All subjects',''),...subjects.map(subject=>new Option(subject,subject)));
+ if(subjects.includes(previous))select.value=previous;
+ renderNotesBank();
+}
+function renderNotesBank(){
+ const subject=$('notesSubject').value;
+ const search=$('notesSearch').value.trim().toLowerCase();
+ const list=$('notesList');
+ list.replaceChildren();
+ const matches=bankNotes.filter(note=>(!subject||note.subject===subject)&&
+  [note.topic,note.level,note.subject].some(value=>value.toLowerCase().includes(search)));
+ $('notesStatus').textContent=matches.length?matches.length+' matching topic(s).':'No notes match your search.';
+ matches.forEach(note=>{
+  const card=document.createElement('article');card.className='card';
+  const title=document.createElement('h3');title.textContent=note.topic;
+  const detail=document.createElement('p');detail.textContent=note.subject+' · '+note.level;
+  const preview=document.createElement('details');
+  const summary=document.createElement('summary');summary.textContent='Read notes';
+  const body=document.createElement('p');body.textContent=note.content;body.style.whiteSpace='pre-wrap';
+  preview.append(summary,body);card.append(title,detail,preview);
+  for(const [label,page] of [['Use in Lesson Plan','lesson'],['Use in Assessment Draft','exam']]){
+   const button=document.createElement('button');
+   button.className='btn outline';button.type='button';button.textContent=label;
+   button.style.marginTop='10px';button.style.marginRight='8px';
+   button.onclick=()=>{
+    if(!cloudUser)return;
+    if(page==='lesson'){
+     if($('lpSource').value&&$('lpSource').value!==note.content&&!confirm('Replace the source text in your open lesson plan?'))return;
+     $('lpSource').value=note.content;
+     if(!$('lpTopic').value)$('lpTopic').value=note.topic;
+     if(!$('lpSubject').value)$('lpSubject').value=note.subject;
+    }else{
+     $('examReferenceNotes').textContent=note.content;
+     $('examReferencePanel').hidden=false;
+     $('examReferencePanel').open=true;
+     if(!$('examTitle').value)$('examTitle').value=note.topic;
+     if(!$('examClass').value)$('examClass').value=note.subject+' · '+note.level;
+    }
+    go(page);
+   };
+   card.append(button);
+  }
+  list.append(card);
+ });
+}
+$('notesSubject').addEventListener('change',renderNotesBank);
+$('notesSearch').addEventListener('input',renderNotesBank);
+
 let cloudItems={docs:[],plans:[],exams:[]};
 let cloudRead=0;
 async function loadCloudResources(){
@@ -372,7 +467,7 @@ async function saveCloudResource(kind,payload){
 }
 const store={get(kind){return cloudItems[kind]}};
 
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='home')refreshStats();window.scrollTo({top:0,behavior:'smooth'})}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
 
@@ -836,6 +931,7 @@ async function saveLesediCustomerProfile(user){
 }
 function showSignedInCustomer(user,profile,openDashboard=false){
  cloudUser=user;
+ if($('notes-bank').classList.contains('active'))loadNotesBank();
  loadCloudResources();
  loadCloudFiles();
  const [title,description,links,pending]=getCustomerDashboard(profile.account_type);
@@ -888,7 +984,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearNotesBank();cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
