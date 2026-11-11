@@ -514,36 +514,25 @@ refreshStats();renderPlans();renderLibrary();
 
 // Botswana practice catalogue: sample questions only, not official BEC past papers.
 const botswanaPracticeSets = [
- {id:'psle-maths',level:'PSLE',subject:'Mathematics',className:'Standard 7',title:'PSLE Mathematics — Number and Fractions',topics:'Whole numbers, fractions, decimals, percentages',questions:[
-  {q:'What is 3/4 of 20?',o:['5','10','15','18'],a:2},
-  {q:'What is 25% written as a fraction in its simplest form?',o:['1/2','1/3','1/4','3/4'],a:2},
-  {q:'Calculate 125 + 275.',o:['300','350','400','450'],a:2}
- ]},
- {id:'psle-english',level:'PSLE',subject:'English',className:'Standard 7',title:'PSLE English — Grammar and Comprehension',topics:'Grammar, vocabulary, reading comprehension',questions:[
-  {q:'Choose the correct sentence.',o:['She go to school.','She goes to school.','She going school.','She gone school.'],a:1},
-  {q:'What is the opposite of “generous”?',o:['Kind','Selfish','Helpful','Friendly'],a:1},
-  {q:'Which punctuation mark ends a question?',o:['Full stop','Comma','Question mark','Colon'],a:2}
- ]},
- {id:'jce-maths',level:'JCE',subject:'Mathematics',className:'Form 3',title:'JCE Mathematics — Algebra',topics:'Expressions, equations, substitution',questions:[
-  {q:'Solve 2x + 3 = 11.',o:['3','4','5','7'],a:1},
-  {q:'Simplify 3a + 2a.',o:['5','5a','6a','a'],a:1},
-  {q:'If y = 3x + 2, find y when x = 2.',o:['6','7','8','9'],a:2}
- ]},
- {id:'jce-science',level:'JCE',subject:'Integrated Science',className:'Form 3',title:'JCE Science — Cells and Energy',topics:'Cells, living organisms, energy',questions:[
-  {q:'Which cell structure controls most cell activities?',o:['Cell wall','Nucleus','Vacuole','Cytoplasm'],a:1},
-  {q:'Which process releases energy from food in cells?',o:['Photosynthesis','Respiration','Evaporation','Filtration'],a:1},
-  {q:'Which gas is used by green plants during photosynthesis?',o:['Oxygen','Nitrogen','Carbon dioxide','Hydrogen'],a:2}
- ]},
- {id:'bgcse-biology',level:'BGCSE',subject:'Biology',className:'Form 5',title:'BGCSE Biology — Cells and Genetics',topics:'Cell structure, DNA, inheritance',questions:[
-  {q:'Where are chromosomes found in a typical plant cell?',o:['Cell wall','Nucleus','Vacuole','Cell membrane'],a:1},
-  {q:'What is the basic unit of inheritance?',o:['Tissue','Organ','Gene','Enzyme'],a:2},
-  {q:'Which molecule carries genetic information?',o:['Starch','DNA','Glucose','Water'],a:1}
- ]},
- {id:'bgcse-physics',level:'BGCSE',subject:'Physics',className:'Form 5',title:'BGCSE Physics — Electricity',topics:'Current, voltage, resistance',questions:[
-  {q:'What is the SI unit of electric current?',o:['Volt','Ohm','Ampere','Watt'],a:2},
-  {q:'Which instrument measures current?',o:['Voltmeter','Ammeter','Thermometer','Barometer'],a:1},
-  {q:'If V = 12 V and R = 4 Ω, what is the current?',o:['2 A','3 A','4 A','8 A'],a:1}
- ]}
+  {id:'psle-maths',level:'PSLE',subject:'Mathematics',className:'Standard 7',title:'PSLE Mathematics',topics:'Numbers and fractions',questions:[
+{q:'What is 3/4 of 20?',o:['5','10','15','18'],a:2},
+{q:'What is 25% as a fraction?',o:['1/2','1/3','1/4','3/4'],a:2}
+]},
+{id:'psle-english',level:'PSLE',subject:'English',className:'Standard 7',title:'PSLE English',topics:'Grammar and vocabulary',questions:[
+{q:'Choose the correct sentence.',o:['She go to school.','She goes to school.','She going school.','She gone school.'],a:1}
+]},
+{id:'jce-maths',level:'JCE',subject:'Mathematics',className:'Form 3',title:'JCE Mathematics',topics:'Algebra',questions:[
+{q:'Solve 2x + 3 = 11.',o:['3','4','5','7'],a:1}
+]},
+{id:'jce-science',level:'JCE',subject:'Integrated Science',className:'Form 3',title:'JCE Integrated Science',topics:'Cells and energy',questions:[
+{q:'Which structure controls most cell activities?',o:['Cell wall','Nucleus','Vacuole','Cytoplasm'],a:1}
+]},
+{id:'bgcse-biology',level:'BGCSE',subject:'Biology',className:'Form 5',title:'BGCSE Biology',topics:'Cells and genetics',questions:[
+{q:'What is the basic unit of inheritance?',o:['Tissue','Organ','Gene','Enzyme'],a:2}
+]},
+{id:'bgcse-physics',level:'BGCSE',subject:'Physics',className:'Form 5',title:'BGCSE Physics',topics:'Electricity',questions:[
+{q:'What is the SI unit of electric current?',o:['Volt','Ohm','Ampere','Watt'],a:2}
+]}
 ];
 function renderBotswanaExams(){
  const level=document.getElementById('becLevel')?.value||'all';
@@ -611,59 +600,7 @@ async function sendPasswordReset(){
 }
 async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
 (async()=>{if(!lesediAuthClient)return;const {data}=await lesediAuthClient.auth.getSession();if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
-// Botswana practice catalogue: sample questions, not official BEC past papers.
-renderBotswanaExams();
-{id:'psle-maths',level:'PSLE',subject:'Mathematics',className:'Standard 7',title:'PSLE Mathematics',topics:'Numbers and fractions',questions:[
-{q:'What is 3/4 of 20?',o:['5','10','15','18'],a:2},
-{q:'What is 25% as a fraction?',o:['1/2','1/3','1/4','3/4'],a:2}
-]},
-{id:'psle-english',level:'PSLE',subject:'English',className:'Standard 7',title:'PSLE English',topics:'Grammar and vocabulary',questions:[
-{q:'Choose the correct sentence.',o:['She go to school.','She goes to school.','She going school.','She gone school.'],a:1}
-]},
-{id:'jce-maths',level:'JCE',subject:'Mathematics',className:'Form 3',title:'JCE Mathematics',topics:'Algebra',questions:[
-{q:'Solve 2x + 3 = 11.',o:['3','4','5','7'],a:1}
-]},
-{id:'jce-science',level:'JCE',subject:'Integrated Science',className:'Form 3',title:'JCE Integrated Science',topics:'Cells and energy',questions:[
-{q:'Which structure controls most cell activities?',o:['Cell wall','Nucleus','Vacuole','Cytoplasm'],a:1}
-]},
-{id:'bgcse-biology',level:'BGCSE',subject:'Biology',className:'Form 5',title:'BGCSE Biology',topics:'Cells and genetics',questions:[
-{q:'What is the basic unit of inheritance?',o:['Tissue','Organ','Gene','Enzyme'],a:2}
-]},
-{id:'bgcse-physics',level:'BGCSE',subject:'Physics',className:'Form 5',title:'BGCSE Physics',topics:'Electricity',questions:[
-{q:'What is the SI unit of electric current?',o:['Volt','Ohm','Ampere','Watt'],a:2}
-]}
-];
 
-function renderBotswanaExams(){
- const target=document.getElementById('becCards');
- if(!target)return;
- target.innerHTML=botswanaPracticeSets.map(x=>`
- <div class="tile">
- <span class="pill">${x.level}</span>
- <h3>${x.title}</h3>
- <p>${x.className} • ${x.subject}</p>
- <p class="small muted">${x.topics}</p>
- <button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')">Open practice set</button>
- </div>`).join('');
-}
-
-function openPracticeSet(id){
- const set=botswanaPracticeSets.find(x=>x.id===id);
- if(!set)return;
- const out=document.getElementById('becPreview');
- if(!out)return;
- out.innerHTML=`
- <div class="lesson-output">
- <h3>${set.title}</h3>
- <p>${set.level} • ${set.className} • ${set.subject}</p>
- <div class="notice">Demonstration questions only, not official BEC past papers.</div>
- ${set.questions.map((q,i)=>`
- <div class="lesson-block">
- <b>${i+1}. ${q.q}</b>
- <ol type="A">${q.o.map(o=>`<li>${o}</li>`).join('')}</ol>
- </div>`).join('')}
- </div>`;
-}
   renderBotswanaExams();
 
 </script>
