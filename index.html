@@ -1076,7 +1076,7 @@ function renderBotswanaExams(clearPreview=true){
  const list=availablePractice().filter(x=>(level==='all'||x.level===level)&&(!query||[x.subject,x.title,x.topics,x.className,x.level,x.pack_code==='psle-mathematics'?'PSLE Mathematics Practice Pack':''].join(' ').toLowerCase().includes(query)));
  const target=document.getElementById('becCards'); if(!target)return;
  if(clearPreview){practiceOpenRequest++;$('becPreview').replaceChildren();}
- target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><p class="small muted">${x.question_count??x.questions.length} questions${x.minutes?' · about '+Number(x.minutes)+' minutes':''}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')"> ${x.pack_code?(x.available?'Open pack quiz':'View pack access'):'Open free sample'}</button><p class="small muted">${x.pack_code?'PSLE Mathematics Practice Pack':'Free sample'}</p></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
+ target.innerHTML=list.length?list.map(x=>`<div class="tile"><div class="tile-icon">${x.level==='PSLE'?'📘':x.level==='JCE'?'📗':'📕'}</div><span class="pill">${x.level}</span><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.className)} • ${escapeHTML(x.subject)}</p><p class="small muted">Topics: ${escapeHTML(x.topics)}</p><p class="small muted">${x.question_count??x.questions.length} questions${x.minutes?' · about '+Number(x.minutes)+' minutes':''}</p><button class="btn primary" type="button" onclick="openPracticeSet('${x.id}')"> ${x.pack_code?(x.available?'Start practice':'View pack access'):'Start free practice'}</button><p class="small muted">${x.pack_code?'PSLE Mathematics Practice Pack':'Free sample'}</p></div>`).join(''):'<div class="notice">No practice sets are available for this selection yet. Try another level or clear your search.</div>';
 }
 async function openPracticeSet(id){
  const entry=availablePractice().find(x=>x.id===id);if(!entry)return;
@@ -1097,20 +1097,7 @@ async function openPracticeSet(id){
   }
   set={...entry,questions};
  }
- out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Independent revision questions. A teacher or examiner should verify them before using them in an assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" data-take-practice>Take practice quiz</button> <button class="btn outline" type="button" data-send-practice>Send questions to Examination Studio</button></div>`;
- out.querySelector('[data-take-practice]').onclick=()=>takeLibraryPractice(set);
- out.querySelector('[data-send-practice]').onclick=()=>{
-  $('examTitle').value=set.title;
-  $('examClass').value=set.className+' '+set.subject;
-  $('examQuestions').value=set.questions.map((question,index)=>
-   (index+1)+'. '+question.q+'\n'+question.o.map((option,position)=>
-    String.fromCharCode(65+position)+') '+option).join('\n')
-  ).join('\n\n');
-  $('examKey').value='';
-  $('digitalQuestions').replaceChildren();
-  $('examStatus').textContent='';
-  go('exam');
- };
+ takeLibraryPractice(set);
 }
 
 function takeLibraryPractice(set){
