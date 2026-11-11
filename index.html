@@ -163,7 +163,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="lesson">
+<section class="page" id="lesson"><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><fieldset id="syllabusObjectives"><legend>Choose learning objectives</legend></fieldset><p><button type="button" class="btn primary" id="applySyllabus">Use selected objectives</button></p></div></details>
   <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable teaching plan using your topic or extracted document.</p></div></div>
   <div class="card">
     <div class="two-col">
@@ -1198,7 +1198,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
@@ -1500,5 +1500,75 @@ async function uploadDocumentToCloud(){
   mount('steam-assessments',true);
 })();
 </script>
-</body>
+<script>
+(() => {
+ const picker=$('syllabusPicker'),status=$('syllabusStatus'),fields=$('syllabusFields');
+ const standard=$('syllabusStandard'),subject=$('syllabusSubject'),topic=$('syllabusTopic');
+ const objectives=$('syllabusObjectives');
+ let rows=[],request=0;
+ function clear(){
+  request++;rows=[];fields.hidden=true;
+  [standard,subject,topic].forEach(select=>select.replaceChildren());
+  objectives.querySelectorAll('label').forEach(label=>label.remove());
+  status.textContent='Sign in with an approved teacher account to select syllabus objectives.';
+ }
+ function choices(select,values,label=value=>value){
+  const previous=select.value;
+  select.replaceChildren(...[...new Set(values)].map(value=>new Option(label(value),value)));
+  if([...select.options].some(option=>option.value===previous))select.value=previous;
+ }
+ function showObjectives(){
+  objectives.querySelectorAll('label').forEach(label=>label.remove());
+  rows.filter(row=>String(row.standard)===standard.value&&row.subject===subject.value&&row.topic===topic.value).forEach(row=>{
+   const label=document.createElement('label');label.style.display='block';
+   const input=document.createElement('input');input.type='checkbox';input.value=row.id;input.style.width='auto';
+   label.append(input,document.createTextNode(' '+row.code+' · '+row.objective+' (PDF p. '+row.source_page+')'));
+   objectives.append(label);
+  });
+ }
+ function showTopics(){
+  choices(topic,rows.filter(row=>String(row.standard)===standard.value&&row.subject===subject.value).map(row=>row.topic));
+  showObjectives();
+ }
+ function showSubjects(){
+  choices(subject,rows.filter(row=>String(row.standard)===standard.value).map(row=>row.subject));
+  showTopics();
+ }
+ async function load(){
+  const user=cloudUser;
+  if(!user){clear();return}
+  const call=++request;
+  status.textContent='Loading syllabus objectives…';
+  const {data,error}=await lesediAuthClient.from('lesedi_syllabus_objectives')
+   .select('id,standard,subject,topic,code,objective,source_page')
+   .order('standard').order('subject').order('topic').order('id');
+  if(call!==request||cloudUser?.id!==user.id)return;
+  rows=error?[]:data;
+  fields.hidden=!rows.length;
+  if(error){status.textContent='Could not load the Syllabus Bank. Close and reopen this panel to retry.';return}
+  if(!rows.length){status.textContent='No syllabus objectives are available for this account. Ask the administrator to enable teacher access.';return}
+  status.textContent='Choose a topic and the objectives you want to teach.';
+  choices(standard,rows.map(row=>row.standard),value=>'Standard '+value);
+  showSubjects();
+ }
+ picker.addEventListener('toggle',()=>{if(picker.open)load()});
+ standard.onchange=showSubjects;subject.onchange=showTopics;topic.onchange=showObjectives;
+ $('applySyllabus').onclick=()=>{
+  if(!cloudUser)return;
+  const selected=new Set([...objectives.querySelectorAll('input:checked')].map(input=>input.value));
+  const chosen=rows.filter(row=>selected.has(String(row.id)));
+  if(!chosen.length){status.textContent='Select at least one objective.';return}
+  if(['lpTopic','lpSubject','lpClass','lpOutcomes'].some(id=>$(id).value)&&!confirm('Replace the topic, subject, class and outcomes in the open planner?'))return;
+  const first=chosen[0];
+  $('lpTopic').value=first.topic;
+  $('lpSubject').value=first.subject;
+  $('lpClass').value='Standard '+first.standard;
+  $('lpLevel').value='Primary (Standards 1–7)';
+  $('lpOutcomes').value=chosen.map(row=>row.code+' '+row.objective+' (syllabus PDF p. '+row.source_page+')').join('\n');
+  status.textContent='Objectives added. Set the duration, then select Generate lesson plan.';
+  $('lpTopic').scrollIntoView({block:'nearest'});
+ };
+ document.addEventListener('lesedi-syllabus-signout',()=>{clear();picker.open=false});
+})();
+</script></body>
 </html>
