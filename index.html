@@ -137,7 +137,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button class="btn primary" onclick="generatePlan()">Create editable lesson plan</button>
   </div>
   <div id="lessonResult" style="margin-top:16px"></div>
-  <div class="card" style="margin-top:16px"><h3>Saved lesson plans</h3><div id="savedPlans" class="muted small">No plans saved on this device yet.</div></div>
+  <div class="card" style="margin-top:16px"><h3>Saved lesson plans</h3><div id="savedPlans" class="muted small">No saved lesson plans.</div></div>
 </section>
 
 <section class="page" id="scheme">
@@ -318,7 +318,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <div class="section-head"><div><h2>My Resource Library</h2><p>Items saved locally in this browser during the prototype.</p></div></div>
   <div class="card"><h3>Saved documents</h3><div id="savedDocs" class="muted small">No saved documents.</div></div>
   <div class="card"><h3>Saved examination drafts</h3><div id="savedExams" class="muted small">No examination drafts.</div></div>
-  <div class="notice">Local browser storage is not a backup and does not synchronise between devices. A production platform needs secure cloud storage and user-specific access permissions.</div>
+  <div class="notice" id="cloudLibraryStatus" role="status">Sign in to see your private cloud library.</div>
+  <div class="card"><h3>Original uploaded files</h3><div id="cloudFiles">Sign in to see your files.</div></div>
 </section>
 
 <section class="page" id="settings">
@@ -343,11 +344,35 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 const $=id=>document.getElementById(id);
-const store={
- get(k){try{return JSON.parse(localStorage.getItem('elsh_'+k)||'[]')}catch{return[]}},
- set(k,v){localStorage.setItem('elsh_'+k,JSON.stringify(v))}
-};
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library')renderLibrary();if(id==='lesson')renderPlans();if(id==='home')refreshStats();window.scrollTo({top:0,behavior:'smooth'})}
+const resourceTable='lesedi_private_resources';
+const fileBucket='lesedi-private-files';
+let cloudUser=null;
+let cloudItems={docs:[],plans:[],exams:[]};
+let cloudRead=0;
+async function loadCloudResources(){
+ const request=++cloudRead;
+ const user=cloudUser;
+ if(!user)return;
+ const {data,error}=await lesediAuthClient.from(resourceTable).select('id,kind,payload,created_at').eq('owner_id',user.id).order('created_at',{ascending:false}).order('id',{ascending:false}).limit(200);
+ if(request!==cloudRead||cloudUser?.id!==user.id)return;
+ if(error){$('cloudLibraryStatus').textContent='Could not load cloud resources. Please try refreshing the library.';return}
+ cloudItems={docs:[],plans:[],exams:[]};
+ data.forEach(row=>cloudItems[row.kind].push({...row.payload,id:row.id,date:new Date(row.created_at).toLocaleString()}));
+ $('cloudLibraryStatus').textContent='Private resources saved to your account. Showing up to 200 recent items.';
+ refreshStats();renderPlans();renderLibrary();
+}
+async function saveCloudResource(kind,payload){
+ const user=cloudUser;
+ if(!user){showToast('Sign in before saving to your cloud library.');return false}
+ const {error}=await lesediAuthClient.from(resourceTable).insert({owner_id:user.id,kind,payload});
+ if(cloudUser?.id!==user.id)return false;
+ if(error){showToast('Cloud save failed. Your current draft is still open.');return false}
+ await loadCloudResources();
+ return cloudUser?.id===user.id;
+}
+const store={get(kind){return cloudItems[kind]}};
+
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='home')refreshStats();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
 
@@ -399,7 +424,11 @@ async function extractDocument(){
 }
 function useTextForLesson(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return} $('lpSource').value=$('extractedText').value; $('lpTopic').value=$('docTitle').value||$('lpTopic').value;go('lesson')}
 function useTextForExam(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return}$('examQuestions').value=$('extractedText').value;$('examTitle').value=$('docTitle').value||'';go('exam')}
-function saveDocument(){const title=$('docTitle').value.trim(),content=$('extractedText').value.trim();if(!content){showToast('There is no extracted text to save.');return}const a=store.get('docs');a.unshift({title:title||'Untitled document',content,date:new Date().toLocaleString()});store.set('docs',a.slice(0,30));refreshStats();showToast('Saved on this device.')}
+async function saveDocument(){
+ const title=$('docTitle').value.trim()||'Untitled document',content=$('extractedText').value.trim();
+ if(!content){showToast('There is no extracted text to save.');return}
+ if(await saveCloudResource('docs',{title,content}))showToast('Document saved to your cloud library.');
+}
 function generatePlan(){
  const topic=$('lpTopic').value.trim();if(!topic){showToast('Enter a lesson topic first.');return}
  const data={topic,level:$('lpLevel').value,subject:$('lpSubject').value,className:$('lpClass').value,duration:$('lpDuration').value,size:$('lpSize').value,outcomes:$('lpOutcomes').value,source:$('lpSource').value};
@@ -417,11 +446,27 @@ function generatePlan(){
  <p class="small muted">Draft for teacher review. Confirm curriculum alignment, accuracy, timings and suitability before use.</p>
  <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn primary" onclick="window.print()">Print / Save PDF</button><button class="btn outline" onclick="saveCurrentPlan()">Save plan</button></div></div>`;
  $('lessonResult').innerHTML=html;window.currentPlan={...data,html,date:new Date().toLocaleString()};}
-function saveCurrentPlan(){if(!window.currentPlan){showToast('Create a plan first.');return}const a=store.get('plans');a.unshift(window.currentPlan);store.set('plans',a.slice(0,50));refreshStats();renderPlans();showToast('Lesson plan saved on this device.')}
+async function saveCurrentPlan(){
+ if(!window.currentPlan){showToast('Create a plan first.');return}
+ const {html,date,...plan}=window.currentPlan;
+ if(await saveCloudResource('plans',plan))showToast('Lesson plan saved to your cloud library.');
+}
 function renderPlans(){const a=store.get('plans');$('savedPlans').innerHTML=a.length?a.map((p,i)=>`<div class="list-item"><div><b>${escapeHTML(p.topic)}</b><div class="small muted">${escapeHTML(p.level)} • ${escapeHTML(p.date)}</div></div><button class="btn outline" onclick="openSavedPlan(${i})">View</button></div>`).join(''):'No plans saved on this device yet.'}
-function openSavedPlan(i){const p=store.get('plans')[i];if(p){$('lessonResult').innerHTML=p.html;window.currentPlan=p;go('lesson')}}
+function openSavedPlan(i){
+ const p=store.get('plans')[i];
+ if(!p)return;
+ const fields={lpTopic:'topic',lpLevel:'level',lpSubject:'subject',lpClass:'className',lpDuration:'duration',lpSize:'size',lpOutcomes:'outcomes',lpSource:'source'};
+ for(const [field,key] of Object.entries(fields))$(field).value=typeof p[key]==='string'?p[key]:'';
+ generatePlan();go('lesson');
+}
 function buildScheme(){const topics=$('swTopics').value.split('\n').map(x=>x.trim()).filter(Boolean),weeks=Math.max(1,Math.min(20,Number($('swWeeks').value)||10));if(!topics.length){showToast('Enter at least one topic.');return}let rows='';for(let i=0;i<weeks;i++){const topic=topics[i%topics.length];rows+=`<tr><td>${i+1}</td><td>${escapeHTML(topic)}</td><td>To be completed by teacher</td><td>Teacher-selected activities and resources</td><td>Classwork / questioning / exercise</td></tr>`}$('schemeOutput').innerHTML=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML($('swSubject').value)} — ${escapeHTML($('swClass').value)} — ${escapeHTML($('swTerm').value)}</h3><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr>${['Week','Topic','Learning outcomes','Activities/resources','Assessment'].map(x=>`<th style="text-align:left;padding:9px;border-bottom:2px solid #2457c5">${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">Draft planner. Replace placeholders with the official syllabus sequence and school calendar.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`}
-function saveExamDraft(){const title=$('examTitle').value.trim(),questions=$('examQuestions').value.trim();if(!title||!questions){showToast('Enter an assessment title and question content.');return}const a=store.get('exams');a.unshift({title,subject:$('examClass').value,questions,key:$('examKey').value,date:new Date().toLocaleString(),status:'Draft — teacher verification required'});store.set('exams',a.slice(0,50));$('examStatus').innerHTML='<div class="success">Examination draft saved on this device. It is not published and no answer key has been assumed.</div>';renderLibrary()}
+async function saveExamDraft(){
+ const title=$('examTitle').value.trim(),questions=$('examQuestions').value.trim();
+ if(!title||!questions){showToast('Enter an assessment title and question content.');return}
+ if(await saveCloudResource('exams',{title,subject:$('examClass').value,questions,key:$('examKey').value,status:'Draft'})){
+  $('examStatus').textContent='Draft saved privately. Teacher verification is required before publication.';
+ }
+}
 let learnerExamQuestions = [
   {
     question: "What is 15% of P200?",
@@ -506,8 +551,15 @@ function submitDigitalExam(){
 }
   function makeResource(){const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;if(!topic){showToast('Enter a topic first.');return}const output=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML(type)}: ${escapeHTML(topic)}</h3><p><b>Purpose:</b> Support learning and revision on ${escapeHTML(topic)}.</p><p><b>Key concepts:</b> Identify the main concepts from the approved syllabus and source notes.</p><p><b>Learning activity:</b> Ask learners to explain, practise and apply the topic using examples.</p><p><b>Check understanding:</b> Include short questions and a teacher-reviewed task.</p>${source?`<h4>Source notes</h4><div class="preview">${escapeHTML(source)}</div>`:'<p class="muted small">Add source notes to make this resource specific and factually grounded.</p>'}<p class="small muted">This is a structured outline, not a verified subject resource. Review content before distribution.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`;$('resourceOutput').innerHTML=output}
 function aiPlaceholder(){const p=$('aiPrompt').value.trim();if(!p){showToast('Enter a request first.');return}$('aiResult').innerHTML='<div class="notice"><b>AI request prepared.</b><br>Task: '+escapeHTML($('aiTask').value)+'<br>Request: '+escapeHTML(p)+'<br><br>To generate a real response, connect this form to a secure backend AI endpoint. Never place a private API key in this HTML file.</div>'}
-function renderLibrary(){const docs=store.get('docs'),exams=store.get('exams');$('savedDocs').innerHTML=docs.length?docs.map(d=>`<div class="list-item"><div><b>${escapeHTML(d.title)}</b><div class="small muted">${escapeHTML(d.date)} • ${d.content.length} characters</div></div><button class="btn outline" onclick="loadDoc('${encodeURIComponent(d.title)}')">Load</button></div>`).join(''):'No saved documents.';$('savedExams').innerHTML=exams.length?exams.map(e=>`<div class="list-item"><div><b>${escapeHTML(e.title)}</b><div class="small muted">${escapeHTML(e.status)} • ${escapeHTML(e.date)}</div></div><span class="pill">DRAFT</span></div>`).join(''):'No examination drafts.'}
-function loadDoc(title){const d=store.get('docs').find(x=>x.title===decodeURIComponent(title));if(d){$('docTitle').value=d.title;$('extractedText').value=d.content;go('convert')}}
+function renderLibrary(){const docs=store.get('docs'),exams=store.get('exams');$('savedDocs').innerHTML=docs.length?docs.map(d=>`<div class="list-item"><div><b>${escapeHTML(d.title)}</b><div class="small muted">${escapeHTML(d.date)} • ${d.content.length} characters</div></div><button class="btn outline" onclick="loadDoc('${d.id}')">Load</button></div>`).join(''):'No saved documents.';$('savedExams').innerHTML=exams.length?exams.map(e=>`<div class="list-item"><div><b>${escapeHTML(e.title)}</b><div class="small muted">${escapeHTML(e.status)} • ${escapeHTML(e.date)}</div></div><button type="button" class="btn outline" onclick="openCloudExam(\'${e.id}\')">Open draft</button></div>`).join(''):'No examination drafts.'}
+function openCloudExam(id){
+ const exam=store.get('exams').find(item=>item.id===id);
+ if(!exam)return;
+ $('examTitle').value=exam.title;$('examClass').value=exam.subject;
+ $('examQuestions').value=exam.questions;$('examKey').value=exam.key;
+ go('exam');
+}
+function loadDoc(id){const d=store.get('docs').find(x=>x.id===id);if(d){$('docTitle').value=d.title;$('extractedText').value=d.content;go('convert')}}
 refreshStats();renderPlans();renderLibrary();
 </script>
 <script>
@@ -705,6 +757,9 @@ async function saveLesediCustomerProfile(user){
  return saved;
 }
 function showSignedInCustomer(user,profile,openDashboard=false){
+ cloudUser=user;
+ loadCloudResources();
+ loadCloudFiles();
  const [title,description,links,pending]=getCustomerDashboard(profile.account_type);
  $('authPanel').style.display='none';
  $('authSignedIn').style.display='block';
@@ -755,7 +810,11 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';$('customerDashboardLinks').replaceChildren();$('customerAccountNav').textContent='Customer Login';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+ ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
+ $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
+ $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
+ refreshStats();renderPlans();renderLibrary();$('customerDashboardLinks').replaceChildren();$('customerAccountNav').textContent='Customer Login';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
 (async()=>{if(!lesediAuthClient)return;const {data}=await lesediAuthClient.auth.getSession();if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
 
   renderBotswanaExams();
@@ -812,23 +871,45 @@ document.getElementById('exam-message').innerHTML =
 'You selected ' + level + '. Examination papers and digital quizzes will appear here when added by the administrator.';
 document.getElementById('exam-library').scrollIntoView({behavior:'smooth'});
 }
+async function loadCloudFiles(){
+ const user=cloudUser;
+ if(!user)return;
+ const bucket=lesediAuthClient.storage.from(fileBucket);
+ const {data,error}=await bucket.list(user.id,{limit:100,sortBy:{column:'created_at',order:'desc'}});
+ if(cloudUser?.id!==user.id)return;
+ const list=$('cloudFiles');
+ list.textContent=error?'Could not load uploaded files.':data.length?'':'No uploaded files.';
+ if(error)return;
+ data.filter(file=>file.id).forEach(file=>{
+  const row=document.createElement('div');
+  row.className='list-item';
+  const button=document.createElement('button');
+  button.type='button';button.className='btn outline';button.textContent='Download '+file.name.slice(37);
+  button.onclick=async()=>{
+   const {data:blob,error}=await bucket.download(user.id+'/'+file.name);
+   if(cloudUser?.id!==user.id)return;
+   if(error){showToast('Download failed. Please try again.');return}
+   const url=URL.createObjectURL(blob);
+   const link=document.createElement('a');link.href=url;link.download=file.name.slice(37);link.click();
+   setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
+  row.append(button);list.append(row);
+ });
+}
 async function uploadDocumentToCloud(){
- const file = document.getElementById('fileInput').files[0];
- if(!file){alert('Please choose a file first.');return;}
- if(!lesediAuthClient){alert('Supabase is not connected.');return;}
-
- const {data:{user},error:userError}=await lesediAuthClient.auth.getUser();
- if(userError || !user){alert('Please log in first.');return;}
-
- const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
- const path=user.id+'/'+Date.now()+'-'+safeName;
-
- const {error}=await lesediAuthClient.storage
-  .from('lesedi-examinations')
-  .upload(path,file,{upsert:false,contentType:file.type||'application/octet-stream'});
-
- if(error){alert('Upload failed: '+error.message);return;}
- alert('Your examination file has been saved securely.');
+ const file=$('fileInput').files[0],user=cloudUser;
+ if(!file){showToast('Choose a PDF, DOCX or TXT file first.');return}
+ if(!user){showToast('Sign in before uploading a file.');return}
+ const types={pdf:'application/pdf',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',txt:'text/plain'};
+ const extension=file.name.split('.').pop().toLowerCase();
+ if(!Object.hasOwn(types,extension)||file.size>20971520){showToast('Choose a PDF, DOCX or TXT file up to 20 MB.');return}
+ const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_').slice(-150);
+ const path=user.id+'/'+crypto.randomUUID()+'-'+safeName;
+ const {error}=await lesediAuthClient.storage.from(fileBucket).upload(path,file,{upsert:false,contentType:types[extension]});
+ if(cloudUser?.id!==user.id)return;
+ if(error){showToast('Cloud upload failed. Please try again.');return}
+ showToast('Original file saved to your private cloud library.');
+ loadCloudFiles();
 }
 </script>
 <footer style="background:#102a56;color:white;text-align:center;padding:25px 10px;margin-top:40px;">
