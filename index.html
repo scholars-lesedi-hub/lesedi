@@ -49,7 +49,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 .toast{position:fixed;right:20px;bottom:20px;background:#102b5c;color:white;padding:12px 18px;border-radius:10px;display:none;z-index:50;box-shadow:0 5px 20px #0002}
 @media(max-width:1000px){.shell{grid-template-columns:210px 1fr}main{padding:18px}.stats{grid-template-columns:repeat(2,1fr)}.tiles{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){header{padding:10px 14px}.brand h1{font-size:14px}.header-actions .user-pill{display:none}.shell{display:block}aside{min-height:0;padding:8px;position:sticky;top:70px;z-index:15}nav{display:flex;overflow:auto;gap:4px}nav button{white-space:nowrap;width:auto;padding:9px 11px;font-size:12px}.nav-label,.aside-foot{display:none}main{padding:14px}.hero{padding:22px;display:block}.hero-art{display:none}.stats{gap:8px}.stat{padding:12px}.stat .number{font-size:22px}.tiles,.two-col,.three-col{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}}
-@media print{header,aside,.no-print,footer{display:none!important}.shell{display:block}main{padding:0}.page{display:none!important}#lesson.page.active,#scheme.page.active{display:block!important}#scheme.page.active .scheme-controls{display:none!important}.lesson-output{border:0}}
+@media print{header,aside,.no-print,footer{display:none!important}.shell{display:block}main{padding:0}.page{display:none!important}#lesson.page.active,#scheme.page.active,#resources.page.active{display:block!important}#resources.page.active .resource-controls{display:none!important}#scheme.page.active .scheme-controls{display:none!important}.lesson-output{border:0}}
 </style>
 <style>.hero-art.lesedi-logo{display:block;min-width:0;flex:0 1 270px}.lesedi-logo img{display:block;width:min(100%,270px);height:auto;margin:auto;border-radius:14px;background:white}@media(max-width:760px){.hero-art.lesedi-logo{margin-top:20px}.lesedi-logo img{width:min(100%,220px)}}</style></head>
 <body>
@@ -142,6 +142,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </div>
 
 </section>
+ <section class="card" id="overview-packages"><h2>Custom Topic-Test &amp; Packages</h2>
+ <div class="notice"><strong>Custom Topic-Test · P10 per test</strong><p>Request a digital test on one topic. Include the subject, class level and topic in your message.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a Custom Topic-Test</button></div>
+ <p><strong>One month free when subscriptions open.</strong> Try 5 lesson plans, 20 new questions per subject, 2 published assessments and 1 scheme of work. No automatic charge. Trial activation and limits are pending.</p><div class="three-col">
+ <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p></article>
+ <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p></article>
+ <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p></article>
+ </div>
+ <p>Online checkout is pending.</p><button type="button" class="btn outline" onclick="go('payments')">View payment options</button></section>
 </section>
 
 <section class="page" id="convert">
@@ -234,12 +242,12 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 
 <section class="page" id="resources">
   <div class="section-head"><div><h2>Teaching Resources Studio</h2><p>Prepare classroom materials from your topic and source notes.</p></div></div>
-  <div class="card">
+  <div class="card"><div class="resource-controls">
     <div class="field"><label>Topic</label><input id="resTopic" placeholder="Enter a topic"></div>
     <div class="field"><label>Resource type</label><select id="resType"><option>Revision notes outline</option><option>Worksheet outline</option><option>Flashcards outline</option><option>Study summary outline</option><option>Class activity outline</option><option>Homework outline</option></select></div>
     <div class="field"><label>Source information</label><textarea id="resSource" placeholder="Paste source material, syllabus notes or key points."></textarea></div>
     <button class="btn primary" onclick="makeResource()">Create resource outline</button>
-    <div id="resourceOutput"></div>
+    </div><div id="resourceOutput"></div>
   </div>
 </section>
 
@@ -321,12 +329,11 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="payments"><div class="section-head"><div><h2>Packages &amp; Payments</h2><p>Online checkout is pending.</p></div></div><div class="three-col">
-      <div class="price-card"><span class="pill">INDIVIDUAL</span><h3>Starter</h3><div class="price">P50 <small class="muted">/ month</small></div><p class="small muted">For individual teachers and learners creating resources and quizzes.</p></div>
-      <div class="price-card"><span class="pill">TEACHER</span><h3>Professional</h3><div class="price">P100 <small class="muted">/ month</small></div><p class="small muted">For teachers preparing lesson plans, schemes, worksheets and assessments.</p></div>
-      <div class="price-card"><span class="pill">SCHOOLS</span><h3>Institution</h3><div class="price">P800 <small class="muted">/ month</small></div><p class="small muted">For schools and education centres. Final institutional pricing can be agreed.</p></div>
-    </div>
-    <div class="card"><h3>Pay to Cell</h3><p>Payment contact <strong>+267 71823638</strong>.</p><p>Ask the administrator to confirm the recipient, package and amount before sending money. Package access is confirmed manually.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a payment</button></div></section>
+<section class="page" id="payments"><div class="section-head"><div><h2>Packages &amp; Payments</h2><p>Online checkout is pending.</p></div></div><p><strong>One month free when subscriptions open.</strong> Try 5 lesson plans, 20 new questions per subject, 2 published assessments and 1 scheme of work. No automatic charge. Trial activation and limits are pending.</p><div class="three-col">
+ <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p></article>
+ <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p></article>
+ <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p></article>
+ </div><div class="card"><h3>Pay to Cell</h3><p>Payment contact <strong>+267 71823638</strong>.</p><p>Ask the administrator to confirm the recipient, package and amount before sending money. Package access is confirmed manually.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a payment</button></div></section>
 <section class="page" id="feedback"><div class="section-head"><div><h2>Feedback &amp; Support</h2><p>Send a private message to the Lesedi administrator and check for replies.</p></div></div><div class="card"><p id="feedbackStatus" role="status"></p><div id="feedbackPanel" hidden><label class="field" id="feedbackCustomerLabel" hidden>Customer conversation<select id="feedbackCustomer"></select></label><div id="feedbackMessages"></div><form id="feedbackForm"><label class="field">Message<textarea id="feedbackBody" required maxlength="2000"></textarea></label><button class="btn primary">Send message</button></form></div></div></section>
 <section class="page" id="professional-forum"><div class="section-head"><div><h2>Professional Forum</h2><p>Discuss teaching, assessments, STEAM and other educational topics. Keep learner names and records private.</p></div></div><div class="card"><p id="forumStatus" role="status"></p><div id="forumPanel" hidden><form id="forumNew"><label class="field">Discussion title<input id="forumTitle" required maxlength="120"></label><label class="field">Opening message<textarea id="forumBody" required maxlength="2000"></textarea></label><button class="btn primary">Start discussion</button></form><div id="forumThreads"></div><div id="forumDiscussion"></div></div></div></section>
 
@@ -446,13 +453,16 @@ function renderNotesBank(){
   const summary=document.createElement('summary');summary.textContent='Read notes';
   const body=document.createElement('p');body.textContent=note.content;body.style.whiteSpace='pre-wrap';
   preview.append(summary,body);card.append(title,detail,preview);
-  for(const [label,page] of [['Use in Lesson Plan','lesson'],['Use in Assessment Draft','exam']]){
+  for(const [label,page] of [['Use in Lesson Plan','lesson'],['Use in Assessment Draft','exam'],['Use in Teaching Resources','resources']]){
    const button=document.createElement('button');
    button.className='btn outline';button.type='button';button.textContent=label;
    button.style.marginTop='10px';button.style.marginRight='8px';
    button.onclick=()=>{
     if(!cloudUser)return;
-    if(page==='lesson'){
+    if(page==='resources'){
+     if($('resSource').value&&$('resSource').value!==note.content&&!confirm('Replace the source notes in Teaching Resources?'))return;
+     $('resTopic').value=note.topic;$('resSource').value=note.content;
+    }else if(page==='lesson'){
      if($('lpSource').value&&$('lpSource').value!==note.content&&!confirm('Replace the source text in your open lesson plan?'))return;
      $('lpSource').value=note.content;
      if(!$('lpTopic').value)$('lpTopic').value=note.topic;
@@ -943,7 +953,28 @@ async function submitDigitalExam(){
  });
  $('learnerExamArea').innerHTML='<h3>Preview complete</h3><p>Marks: '+score+' / '+total+'</p><p>Preview results are not recorded.</p><button type="button" class="btn outline" onclick="startDigitalExam()">Restart preview</button>';
 }
-  function makeResource(){const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;if(!topic){showToast('Enter a topic first.');return}const output=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML(type)}: ${escapeHTML(topic)}</h3><p><b>Purpose:</b> Support learning and revision on ${escapeHTML(topic)}.</p><p><b>Key concepts:</b> Identify the main concepts from the approved syllabus and source notes.</p><p><b>Learning activity:</b> Ask learners to explain, practise and apply the topic using examples.</p><p><b>Check understanding:</b> Include short questions and a teacher-reviewed task.</p>${source?`<h4>Source notes</h4><div class="preview">${escapeHTML(source)}</div>`:'<p class="muted small">Add source notes to make this resource specific and factually grounded.</p>'}<p class="small muted">This is a structured outline, not a verified subject resource. Review content before distribution.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`;$('resourceOutput').innerHTML=output}
+  function makeResource(){
+ const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;
+ if(!topic){showToast('Enter a topic first.');return}
+ const templates={
+  'Revision notes outline':[['Key points','Write the main ideas here.'],['Example','Add a worked example.'],['Quick self-check','Write a question learners can answer from the notes.']],
+  'Worksheet outline':[['Instructions','Explain what learners should do.'],['Questions','1. Write a question.\n\n2. Write a question.'],['Answer space','1. ____________________\n\n2. ____________________']],
+  'Flashcards outline':[['Card 1 — prompt','Write a term or question.'],['Card 1 — answer','Write the definition or answer.'],['Card 2 — prompt','Write a second term or question.'],['Card 2 — answer','Write the definition or answer.']],
+  'Study summary outline':[['Main idea','Summarise the topic in one sentence.'],['Supporting points','Add the most important details.'],['What to remember','Write one takeaway.']],
+  'Class activity outline':[['Materials','List what the class needs.'],['Steps','Write the steps learners should follow.'],['Share and reflect','Add a discussion question.']],
+  'Homework outline':[['Instructions','Explain what to complete and when it is due.'],['Tasks','1. Write a task.\n\n2. Write a task.'],['Submission','Explain how learners should hand in their work.']]
+ };
+ const output=$('resourceOutput');output.replaceChildren();
+ const card=document.createElement('article');card.className='lesson-output';output.append(card);
+ const heading=document.createElement('h3');heading.textContent=type.replace(/ outline$/,'')+' · '+topic;card.append(heading);
+ const help=document.createElement('p');help.className='no-print';help.textContent='Click any section to edit it before printing.';card.append(help);
+ const parts=templates[type]||templates['Revision notes outline'];
+ for(const [label,text] of source?[...parts,['Source notes',source]]:parts){
+  const title=document.createElement('h4');title.textContent=label;card.append(title);
+  const field=document.createElement('div');field.contentEditable='plaintext-only';field.setAttribute('role','textbox');field.setAttribute('aria-label',label);field.textContent=text;field.style.cssText='white-space:pre-wrap;min-height:2rem;padding:.5rem;border-bottom:1px solid #cbd5e1';card.append(field);
+ }
+ const print=document.createElement('button');print.type='button';print.className='btn primary no-print';print.textContent='Print / Save PDF';print.onclick=()=>window.print();card.append(print);
+}
 function aiPlaceholder(){const p=$('aiPrompt').value.trim();if(!p){showToast('Enter a request first.');return}$('aiResult').innerHTML='<div class="notice"><b>AI request prepared.</b><br>Task: '+escapeHTML($('aiTask').value)+'<br>Request: '+escapeHTML(p)+'<br><br>To generate a real response, connect this form to a secure backend AI endpoint. Never place a private API key in this HTML file.</div>'}
 function renderLibrary(){const docs=store.get('docs'),exams=store.get('exams');$('savedDocs').innerHTML=docs.length?docs.map(d=>`<div class="list-item"><div><b>${escapeHTML(d.title)}</b><div class="small muted">${escapeHTML(d.date)} • ${d.content.length} characters</div></div><button class="btn outline" onclick="loadDoc('${d.id}')">Load</button></div>`).join(''):'No saved documents.';$('savedExams').innerHTML=exams.length?exams.map(e=>`<div class="list-item"><div><b>${escapeHTML(e.title)}</b><div class="small muted">${escapeHTML(e.status)} • ${escapeHTML(e.date)}</div></div><button type="button" class="btn outline" onclick="openCloudExam(\'${e.id}\')">Open draft</button></div>`).join(''):'No examination drafts.'}
 function openCloudExam(id){
@@ -1252,7 +1283,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
@@ -1366,14 +1397,7 @@ async function uploadDocumentToCloud(){
   <p>© 2026 Education Lesedi Scholars Hub. All Rights Reserved.</p>
   <p>Powered by Education Lesedi AI Learning System.</p>
   <p>Quality Digital Education for Everyone.</p>
-</footer><section style="background:#f4f7ff;padding:30px 15px;text-align:center;border-radius:12px;margin:30px auto;max-width:900px;">
-  <h2 style="color:#102a56;">Buy an Individual Topic</h2>
-  <h1 style="color:#d49a00;">P10.00</h1>
-  <p>Choose one educational topic and receive a digital quiz or learning assessment.</p>
-  <p>Available for Pre-Primary, Primary, Junior Secondary, Senior Secondary and Tertiary education.</p>
-  <p><strong>One topic. One affordable price.</strong></p>
-  <p>Ask Lesedi support about custom topic orders.</p>
-</section><style>.notes-subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:1rem}.notes-runner:not(:empty){margin-top:1.5rem;padding:1rem;border:1px solid #c8d4e4;border-radius:12px;scroll-margin-top:1rem}.notes-options label{display:block;padding:.6rem}.notes-options textarea{display:block;width:100%;min-height:8rem}.notes-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:1rem}.notes-runner li{margin-bottom:.6rem}</style>
+</footer><style>.notes-subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:1rem}.notes-runner:not(:empty){margin-top:1.5rem;padding:1rem;border:1px solid #c8d4e4;border-radius:12px;scroll-margin-top:1rem}.notes-options label{display:block;padding:.6rem}.notes-options textarea{display:block;width:100%;min-height:8rem}.notes-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:1rem}.notes-runner li{margin-bottom:.6rem}</style>
 <script>
 (() => {
   const bank = [
