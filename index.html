@@ -73,7 +73,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <button data-page="steam-assessments"><span class="ico">✧</span>STEAM Assessments</button>
 <button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
     <button data-page="assistant"><span class="ico">✧</span>AI Teacher Assistant</button>
-    <button data-page="payments"><span class="ico">💳</span>Packages & Payments</button>
+    <button data-page="feedback"><span class="ico">✉</span>Feedback &amp; Support</button>
+<button data-page="professional-forum"><span class="ico">☏</span>Professional Forum</button>
+<button data-page="payments"><span class="ico">💳</span>Packages & Payments</button>
     <div class="nav-label">MANAGEMENT</div>
     <button data-page="analytics"><span class="ico">▥</span>Results & Analytics</button>
     <button data-page="school"><span class="ico">⌂</span>School & Classes</button>
@@ -308,51 +310,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="payments">
-  <div class="section-head"><div><h2>Packages & International Payments</h2><p>Choose a service package, then pay using an approved payment channel.</p></div><span class="pill">SECURE CHECKOUT DESIGN</span></div>
-  <div class="notice"><b>Payment setup status:</b> This page is prepared for integration, but it does not yet collect or confirm money. Live checkout requires merchant approval, provider API credentials and a secure server. Never treat a screenshot or uploaded proof as confirmation.</div>
-  <div class="card">
-    <h3>Choose your package</h3>
-    <div class="three-col">
-      <div class="price-card"><span class="pill">INDIVIDUAL</span><h3>Starter</h3><div class="price">P50 <small class="muted">/ month</small></div><p class="small muted">For individual teachers and learners creating resources and quizzes.</p><button class="btn primary" onclick="selectPackage('Starter','50')">Choose Starter</button></div>
-      <div class="price-card"><span class="pill">TEACHER</span><h3>Professional</h3><div class="price">P100 <small class="muted">/ month</small></div><p class="small muted">For teachers preparing lesson plans, schemes, worksheets and assessments.</p><button class="btn primary" onclick="selectPackage('Professional','100')">Choose Professional</button></div>
-      <div class="price-card"><span class="pill">SCHOOLS</span><h3>Institution</h3><div class="price">P800 <small class="muted">/ month</small></div><p class="small muted">For schools and education centres. Final institutional pricing can be agreed.</p><button class="btn primary" onclick="selectPackage('Institution','800')">Choose Institution</button></div>
+<section class="page" id="payments"><div class="section-head"><div><h2>Packages &amp; Payments</h2><p>Online checkout is pending.</p></div></div><div class="three-col">
+      <div class="price-card"><span class="pill">INDIVIDUAL</span><h3>Starter</h3><div class="price">P50 <small class="muted">/ month</small></div><p class="small muted">For individual teachers and learners creating resources and quizzes.</p></div>
+      <div class="price-card"><span class="pill">TEACHER</span><h3>Professional</h3><div class="price">P100 <small class="muted">/ month</small></div><p class="small muted">For teachers preparing lesson plans, schemes, worksheets and assessments.</p></div>
+      <div class="price-card"><span class="pill">SCHOOLS</span><h3>Institution</h3><div class="price">P800 <small class="muted">/ month</small></div><p class="small muted">For schools and education centres. Final institutional pricing can be agreed.</p></div>
     </div>
-    <p class="small muted">These are proposed launch prices for the prototype and can be changed before launch. One-off conversion services can also be priced separately: quizzes P25–P50; full examinations P75–P150; reports P50–P100.</p>
-  </div>
-  <div class="two-col" style="margin-top:16px">
-    <div class="card">
-      <h3>Checkout details</h3>
-      <div class="field"><label>Selected package</label><input id="payPackage" value="Starter" readonly></div>
-      <div class="field"><label>Amount (BWP)</label><input id="payAmount" value="50" readonly></div>
-      <div class="field"><label>Your email for receipt and account activation</label><input id="payEmail" type="email" placeholder="you@example.com"></div>
-      <div class="field"><label>Country / region</label><select id="payCountry"><option value="BW">Botswana</option><option value="ZA">South Africa</option><option value="NA">Namibia</option><option value="ZW">Zimbabwe</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="OTHER">Other country</option></select></div>
-      <div class="field"><label>Display currency</label><select id="payCurrency"><option value="BWP">Botswana Pula (BWP)</option><option value="USD">US Dollar (USD)</option><option value="ZAR">South African Rand (ZAR)</option><option value="GBP">Pound Sterling (GBP)</option><option value="EUR">Euro (EUR)</option></select></div>
-      <p class="small muted">International checkout should show the final converted amount and fees on the payment provider's hosted checkout. This prototype does not calculate live exchange rates.</p>
-    </div>
-    <div class="card">
-      <h3>Select payment method</h3>
-      <label class="pay-method"><input type="radio" name="payMethod" value="orange" checked><span><strong>Orange Money Botswana</strong><span class="small muted">Merchant number: +267 77980825 • QR / approved Web Payment with OTP.</span></span></label>
-      <label class="pay-method"><input type="radio" name="payMethod" value="myzaka"><span><strong>Mascom MyZakaPay</strong><span class="small muted">Merchant number: +267 71823638 • Scan your official MyZaka merchant QR code.</span></span></label>
-      <label class="pay-method"><input type="radio" name="payMethod" value="card"><span><strong>International debit / credit card</strong><span class="small muted">Visa / Mastercard through a Botswana-approved acquiring bank or gateway.</span></span></label>
-      <button class="btn gold" style="width:100%;margin-top:14px" onclick="beginPayment()">Continue to payment instructions</button>
-      <div id="paymentInstructions" class="small muted" style="margin-top:12px">Select a package and payment method to see the next steps.</div>
-    </div>
-  </div>
-  <div class="card" style="margin-top:16px">
-    <h3>Merchant QR code setup (administrator)</h3>
-    <p class="small muted">Upload the official QR image issued by Orange Money / MyZaka for your registered merchant account. Do not create a QR code from the phone number and assume it will collect payments.</p>
-    <div class="field"><label>Upload official merchant QR image</label><input id="merchantQrFile" type="file" accept="image/png,image/jpeg,image/webp" onchange="previewMerchantQR(event)"></div>
-    <div id="merchantQrArea" class="muted small">No merchant QR image uploaded in this browser session.</div>
-  </div>
-  <div class="card" style="margin-top:16px">
-    <h3>How OTP and payment confirmation must work</h3>
-    <div class="payment-step"><b>1. Create transaction on the secure server.</b><br><span class="small muted">The server creates a unique payment reference and sends the customer to the provider's official checkout or approved payment flow.</span></div>
-    <div class="payment-step"><b>2. Customer authorises payment with the provider.</b><br><span class="small muted">For Orange Money Web Payment, the customer obtains the temporary OTP using the official Orange Money USSD process and enters it only in the approved provider payment flow. Never ask for the customer's wallet PIN or secret code.</span></div>
-    <div class="payment-step"><b>3. Verify payment server-to-server.</b><br><span class="small muted">A signed provider callback / webhook or authenticated transaction lookup confirms success. Only then should the platform activate the package and issue access.</span></div>
-    <div class="payment-step"><b>4. MyZakaPay QR.</b><br><span class="small muted">MyZakaPay's public merchant flow supports scanning a merchant QR. A website API / OTP flow must be confirmed directly with Mascom before automating payment status.</span></div>
-  </div>
-</section>
+    <div class="card"><h3>Pay to Cell</h3><p>Payment contact <strong>+267 71823638</strong>.</p><p>Ask the administrator to confirm the recipient, package and amount before sending money. Package access is confirmed manually.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a payment</button></div></section>
+<section class="page" id="feedback"><div class="section-head"><div><h2>Feedback &amp; Support</h2><p>Send a private message to the Lesedi administrator and check for replies.</p></div></div><div class="card"><p id="feedbackStatus" role="status"></p><div id="feedbackPanel" hidden><label class="field" id="feedbackCustomerLabel" hidden>Customer conversation<select id="feedbackCustomer"></select></label><div id="feedbackMessages"></div><form id="feedbackForm"><label class="field">Message<textarea id="feedbackBody" required maxlength="2000"></textarea></label><button class="btn primary">Send message</button></form></div></div></section>
+<section class="page" id="professional-forum"><div class="section-head"><div><h2>Professional Forum</h2><p>Discuss teaching, assessments, STEAM and other educational topics. Keep learner names and records private.</p></div></div><div class="card"><p id="forumStatus" role="status"></p><div id="forumPanel" hidden><form id="forumNew"><label class="field">Discussion title<input id="forumTitle" required maxlength="120"></label><label class="field">Opening message<textarea id="forumBody" required maxlength="2000"></textarea></label><button class="btn primary">Start discussion</button></form><div id="forumThreads"></div><div id="forumDiscussion"></div></div></div></section>
 
 <section class="page" id="analytics">
   <div class="section-head"><div><h2>Results &amp; Analytics</h2></div></div>
@@ -523,30 +488,9 @@ async function saveCloudResource(kind,payload){
 }
 const store={get(kind){return cloudItems[kind]}};
 
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();window.scrollTo({top:0,behavior:'smooth'})}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
-
-function selectPackage(name,amount){$('payPackage').value=name;$('payAmount').value=amount;showToast(name+' package selected.');}
-function beginPayment(){
- const method=document.querySelector('input[name="payMethod"]:checked')?.value;
- const pkg=$('payPackage').value, amount=$('payAmount').value, currency=$('payCurrency').value, country=$('payCountry').value;
- const email=$('payEmail').value.trim();
- if(!email || !email.includes('@')){showToast('Enter a valid email address for your receipt.');$('payEmail').focus();return;}
- const box=$('paymentInstructions');
- if(method==='orange'){
-  box.innerHTML='<div class="notice"><b>Orange Money selected</b><br>Merchant contact: +267 77980825<br>Package: '+escapeHTML(pkg)+' • P'+escapeHTML(amount)+' BWP<br><br>For live online payment, the secure Orange Money Web Payment API must be enabled for your registered merchant account. The customer will authorise the transaction through Orange’s official flow and OTP. This prototype cannot create or verify an Orange transaction yet. Do not send your Orange PIN or secret code to anyone.</div>';
- }else if(method==='myzaka'){
-  box.innerHTML='<div class="notice"><b>MyZakaPay selected</b><br>Merchant contact: +267 71823638<br>Package: '+escapeHTML(pkg)+' • P'+escapeHTML(amount)+' BWP<br><br>Scan the official MyZaka merchant QR displayed by the merchant, then confirm the payment in the MyZaka service. A live website checkout and automatic activation require Mascom merchant/API approval. This prototype cannot verify a MyZaka payment yet.</div>';
- }else{
-  box.innerHTML='<div class="notice"><b>International card selected</b><br>Package: '+escapeHTML(pkg)+' • '+escapeHTML(amount)+' BWP base price<br>Customer region: '+escapeHTML(country)+' • Display currency: '+escapeHTML(currency)+'<br><br>At launch, connect an approved Botswana bank/acquirer or gateway that supports international Visa/Mastercard and hosted checkout. The provider must calculate and disclose the final converted amount. No card details should be entered on this prototype.</div>';
- }
-}
-function previewMerchantQR(event){
- const f=event.target.files?.[0];if(!f)return;
- if(!f.type.startsWith('image/')){showToast('Please choose a QR image file.');return;}
- const reader=new FileReader();reader.onload=()=>{$('merchantQrArea').innerHTML='<p><b>QR image preview (temporary on this device)</b></p><img class="qr-preview" alt="Uploaded merchant QR code" src="'+reader.result+'"><p class="small muted">This preview is not yet stored centrally or verified by the payment provider.</p>';};reader.readAsDataURL(f);
-}
 
 function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function refreshStats(){$('statDocs').textContent=store.get('docs').length;$('statPlans').textContent=store.get('plans').length}
@@ -1294,7 +1238,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
@@ -1368,13 +1312,7 @@ async function uploadDocumentToCloud(){
   <p>Choose one educational topic and receive a digital quiz or learning assessment.</p>
   <p>Available for Pre-Primary, Primary, Junior Secondary, Senior Secondary and Tertiary education.</p>
   <p><strong>One topic. One affordable price.</strong></p>
-  <button onclick="document.getElementById('topicPurchaseMessage').style.display='block'"
-    style="background:#102a56;color:white;padding:12px 25px;border:0;border-radius:7px;cursor:pointer;">
-    Buy One Topic – P10
-  </button>
-  <p id="topicPurchaseMessage" style="display:none;color:#102a56;font-weight:bold;">
-    Please contact Education Lesedi Scholars Hub to arrange your P10 topic purchase.
-  </p>
+  <p>Ask Lesedi support about custom topic orders.</p>
 </section><style>.notes-subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:1rem}.notes-runner:not(:empty){margin-top:1.5rem;padding:1rem;border:1px solid #c8d4e4;border-radius:12px;scroll-margin-top:1rem}.notes-options label{display:block;padding:.6rem}.notes-options textarea{display:block;width:100%;min-height:8rem}.notes-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:1rem}.notes-runner li{margin-bottom:.6rem}</style>
 <script>
 (() => {
@@ -1670,5 +1608,122 @@ async function uploadDocumentToCloud(){
  };
  document.addEventListener('lesedi-syllabus-signout',()=>{clear();picker.open=false;$('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true});
 })();
+</script><script>
+let communityRole=null,communityRequest=0,forumThread=null;
+function resetCommunity(){
+ communityRequest++;communityRole=null;forumThread=null;
+ for(const id of ['feedbackMessages','feedbackCustomer','forumThreads','forumDiscussion'])$(id).replaceChildren();
+ for(const id of ['feedbackBody','forumTitle','forumBody'])$(id).value='';
+ $('feedbackPanel').hidden=true;$('forumPanel').hidden=true;
+}
+function communityText(parent,tag,value){
+ const node=document.createElement(tag);node.textContent=value;
+ if(tag==='p')node.style.whiteSpace='pre-wrap';
+ parent.append(node);return node;
+}
+async function refreshCommunity(page){
+ const user=cloudUser,isFeedback=page==='feedback';
+ const status=$(isFeedback?'feedbackStatus':'forumStatus');
+ const panel=$(isFeedback?'feedbackPanel':'forumPanel');
+ if(!user){panel.hidden=true;status.textContent='Sign in to continue.';return}
+ const request=++communityRequest;
+ try{
+  const access=await lesediAuthClient.from('lesedi_community_access').select('role').eq('user_id',user.id).maybeSingle();
+  if(request!==communityRequest||cloudUser?.id!==user.id)return;
+  if(access.error)throw access.error;
+  communityRole=access.data?.role??null;
+  if(!isFeedback&&!communityRole){panel.hidden=true;status.textContent='This forum is for approved professionals.';return}
+  panel.hidden=false;
+  if(isFeedback){
+   const admin=communityRole==='admin',select=$('feedbackCustomer');
+   $('feedbackCustomerLabel').hidden=!admin;
+   const previous=select.value;
+   const query=lesediAuthClient.from('lesedi_feedback_messages').select('customer_id,sender_id,body,created_at').order('created_at',{ascending:false}).limit(200);
+   const {data,error}=await (admin?query:query.eq('customer_id',user.id));
+   if(request!==communityRequest||cloudUser?.id!==user.id)return;
+   if(error)throw error;
+   if(admin){
+    const ids=[...new Set(data.map(row=>row.customer_id))];
+    select.replaceChildren(...ids.map(id=>new Option(id,id)));
+    if(ids.includes(previous))select.value=previous;
+   }
+   const messages=$('feedbackMessages');
+   messages.replaceChildren();
+   const target=admin?select.value:user.id;
+   for(const row of data.filter(item=>item.customer_id===target).reverse()){
+    communityText(messages,'p',(row.sender_id===row.customer_id?'Customer':'Lesedi support')+' · '+new Date(row.created_at).toLocaleString()+'\n'+row.body);
+   }
+   status.textContent=messages.children.length?'Messages refresh while this page is open.':'No messages yet.';
+  }else{
+   const {data,error}=await lesediAuthClient.from('lesedi_forum_threads').select('id,title,body,created_at').order('created_at',{ascending:false}).limit(50);
+   if(request!==communityRequest||cloudUser?.id!==user.id)return;
+   if(error)throw error;
+   const list=$('forumThreads');list.replaceChildren();
+   for(const row of data){
+    const card=document.createElement('article');card.className='card';list.append(card);
+    const button=communityText(card,'button',row.title);button.type='button';button.className='btn outline';
+    button.onclick=()=>{if(forumThread!==row.id)$('forumDiscussion').replaceChildren();forumThread=row.id;refreshCommunity(page)};
+    if(communityRole==='admin')addForumDelete(card,'lesedi_forum_threads',row.id);
+   }
+   status.textContent=data.length?'Choose a discussion or start a new one.':'No discussions yet.';
+   const discussion=$('forumDiscussion');
+   const selected=data.find(row=>row.id===forumThread);
+   if(!selected){discussion.replaceChildren();return}
+   const replies=await lesediAuthClient.from('lesedi_forum_replies').select('id,body,created_at').eq('thread_id',selected.id).order('created_at').limit(100);
+   if(request!==communityRequest||cloudUser?.id!==user.id)return;
+   if(replies.error)throw replies.error;
+   const existing=discussion.querySelector('textarea')?.value||'';
+   discussion.replaceChildren();
+   communityText(discussion,'h3',selected.title);communityText(discussion,'p',selected.body);
+   for(const row of replies.data){
+    communityText(discussion,'p',row.body);
+    if(communityRole==='admin')addForumDelete(discussion,'lesedi_forum_replies',row.id);
+   }
+   const form=document.createElement('form');
+   const label=communityText(form,'label','Reply');
+   const input=document.createElement('textarea');input.required=true;input.maxLength=2000;input.value=existing;label.append(input);
+   const submit=communityText(form,'button','Post reply');submit.className='btn primary';
+   form.onsubmit=event=>{event.preventDefault();communityInsert('lesedi_forum_replies',{thread_id:selected.id,body:input.value.trim()},page,[input],submit)};
+   discussion.append(form);
+  }
+ }catch(error){if(request===communityRequest&&cloudUser?.id===user.id)status.textContent='Could not load this page. Please try again.'}
+}
+function addForumDelete(parent,table,id){
+ const button=communityText(parent,'button','Remove');button.type='button';button.className='btn outline';
+ button.onclick=async()=>{
+  if(!confirm('Remove this forum post?'))return;
+  const {error}=await lesediAuthClient.from(table).delete().eq('id',id);
+  if(error){showToast('Could not remove the post.');return}
+  refreshCommunity('professional-forum');
+ };
+}
+async function communityInsert(table,record,page,inputs,button){
+ const user=cloudUser;
+ if(!user||!record.body)return;
+ button.disabled=true;
+ try{
+  const {error}=await lesediAuthClient.from(table).insert(record);
+  if(cloudUser?.id!==user.id)return;
+  if(error)throw error;
+  inputs.forEach(input=>input.value='');
+  await refreshCommunity(page);
+ }catch(error){if(cloudUser?.id===user.id)showToast('Could not send. Check your access and try again.')}
+ finally{button.disabled=false}
+}
+$('feedbackCustomer').onchange=()=>refreshCommunity('feedback');
+$('feedbackForm').onsubmit=event=>{
+ event.preventDefault();
+ const target=communityRole==='admin'?$('feedbackCustomer').value:cloudUser?.id;
+ if(!target){showToast('Select a customer conversation first.');return}
+ const input=$('feedbackBody');
+ communityInsert('lesedi_feedback_messages',{customer_id:target,body:input.value.trim()},'feedback',[input],event.currentTarget.querySelector('button'));
+};
+$('forumNew').onsubmit=event=>{
+ event.preventDefault();
+ const title=$('forumTitle'),body=$('forumBody');
+ if(!title.value.trim())return;
+ communityInsert('lesedi_forum_threads',{title:title.value.trim(),body:body.value.trim()},'professional-forum',[title,body],event.currentTarget.querySelector('button'));
+};
+setInterval(()=>{if(!document.hidden&&cloudUser&&$('feedback').classList.contains('active'))refreshCommunity('feedback')},10000);
 </script></body>
 </html>
