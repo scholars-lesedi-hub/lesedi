@@ -322,7 +322,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     </form>
     <div id="authStatus" class="notice" role="status" aria-live="polite">Choose Customer Login or Create Account.</div>
   </div>
-  <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3 id="customerDashboardTitle">My Dashboard</h3><p id="authWelcome"></p><p id="authType"></p><div id="customerDashboardLinks" style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0"></div><p class="notice" id="customerDashboardPending"></p><button class="btn outline" type="button" onclick="signOutCustomer()">Sign out</button></div>
+  <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3 id="customerDashboardTitle">My Dashboard</h3><p id="authWelcome"></p><p id="authType"></p><div id="customerDashboardLinks" style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0"></div><p class="notice" id="customerDashboardPending"></p><section class="card" aria-labelledby="usageTitle"><h3 id="usageTitle">My Usage</h3><p id="usageStatus" role="status"></p><ul id="usageItems"></ul><button class="btn outline" type="button" onclick="loadMyUsage()">Refresh usage</button></section><button class="btn outline" type="button" onclick="signOutCustomer()">Sign out</button></div>
 </section>
 
 <section class="page" id="assistant">
@@ -514,7 +514,8 @@ async function saveCloudResource(kind,payload){
  if(!user){showToast('Sign in before saving to your cloud library.');return false}
  const {error}=await lesediAuthClient.from(resourceTable).insert({owner_id:user.id,kind,payload});
  if(cloudUser?.id!==user.id)return false;
- if(error){showToast('Cloud save failed. Your current draft is still open.');return false}
+ if(error){showToast(/^(Monthly |Your package is inactive)/.test(error.message)?error.message:'Cloud save failed. Your current draft is still open.');return false}
+ if(kind==='plans')loadMyUsage();
  await loadCloudResources();
  return cloudUser?.id===user.id;
 }
@@ -881,6 +882,7 @@ $('publishLiveExam').onclick=async()=>{
   $('publishedExamLink').replaceChildren(link);
   $('resultsExamCode').value=data;
   status.textContent='Published. Access code: '+data;
+  loadMyUsage();
  }catch(error){if(cloudUser?.id===user.id)status.textContent=error.message}
  finally{button.disabled=false}
 };
@@ -1305,6 +1307,7 @@ async function saveLesediCustomerProfile(user){
 }
 function showSignedInCustomer(user,profile,openDashboard=false){
  cloudUser=user;
+ loadMyUsage();
  publishedPractice=[];practiceOpenRequest++;renderBotswanaExams();
  if($('botswana-exams').classList.contains('active'))loadPublishedPractice();
  checkOwnerBanks(user);
@@ -1361,7 +1364,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearMyUsage();practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
@@ -1913,5 +1916,41 @@ async function readOwnerBank(offset){
  prev.onclick=()=>readOwnerBank(Math.max(0,offset-25));next.onclick=()=>readOwnerBank(offset+25);
 }
 $('ownerBankKind').onchange=()=>readOwnerBank(0);
+</script><script>
+let usageRequest=0;
+function clearMyUsage(){
+ usageRequest++;
+ $('usageStatus').textContent='';
+ $('usageItems').replaceChildren();
+}
+async function loadMyUsage(){
+ const user=cloudUser;
+ if(!user){clearMyUsage();return}
+ const request=++usageRequest,status=$('usageStatus'),list=$('usageItems');
+ status.textContent='Loading package usage…';
+ list.replaceChildren();
+ const {data,error}=await lesediAuthClient.rpc('lesedi_my_usage');
+ if(request!==usageRequest||cloudUser?.id!==user.id)return;
+ if(error||!data){status.textContent='Package usage is unavailable. Try again later.';return}
+ if(!data.enrolled){status.textContent='Package limits are being tested. This account is not enrolled in the pilot.';return}
+ const plans={trial:['One-month trial',5,2,20],individual:['Individual',10,4,40],professional:['Professional',40,15,150],school:['School & Institution',null,null,null]};
+ const [label,lessonLimit,examLimit,questionLimit]=plans[data.plan];
+ const date=value=>new Intl.DateTimeFormat('en-BW',{dateStyle:'medium',timeZone:'Africa/Gaborone'}).format(new Date(value));
+ status.textContent=label+' · '+(data.active?'Active until ':'Inactive · End date ')+date(data.expires_at);
+ const count=kind=>data.usage.find(row=>row.kind===kind)?.used??0;
+ function line(label,used,limit){
+  const item=document.createElement('li');
+  item.textContent=label+': '+used+(limit===null?' used · Unlimited':' of '+limit);
+  list.append(item);
+ }
+ line('Lesson plans saved',count('plans'),lessonLimit);
+ line('Assessments published',count('exams'),examLimit);
+ const subjects=data.usage.filter(row=>row.kind==='questions');
+ if(subjects.length)subjects.forEach(row=>line('New questions published · '+row.subject,row.used,questionLimit));
+ else line('New questions published per subject',0,questionLimit);
+ const period=document.createElement('li');
+ period.textContent='Current usage period started '+date(data.period_start)+'.';
+ list.append(period);
+}
 </script></body>
 </html>
