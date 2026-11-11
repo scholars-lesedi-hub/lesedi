@@ -68,7 +68,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <button data-page="take-exam"><span class="ico">▷</span>Take an Exam</button>
 <button data-page="exam"><span class="ico">✓</span>Examination Studio</button>
     <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
-    <button data-page="notes-bank"><span class="ico">▤</span>Create from a Topic</button>
+    <button type="button" data-page="owner-banks" id="ownerBanksNav" style="display:none"><span class="ico">▤</span>Owner Banks</button>
+<button data-page="notes-bank"><span class="ico">▤</span>Create from a Topic</button>
 <button data-page="subject-notes"><span class="ico">▤</span>Subject Question Bank</button>
 <button data-page="steam-assessments"><span class="ico">✧</span>STEAM Assessments</button>
 <button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
@@ -355,6 +356,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
+<section class="page" id="owner-banks"><h2>Owner Banks</h2><div class="card"><p>Read the private source entries. Edit them in Supabase Table Editor.</p><label class="field">Source bank<select id="ownerBankKind"><option value="notes">Notes Bank</option><option value="syllabus">Syllabus Bank</option></select></label><p id="ownerBankStatus" role="status"></p><div id="ownerBankRows"></div><button type="button" class="btn outline" id="ownerBankPrev">Previous</button> <button type="button" class="btn outline" id="ownerBankNext">Next</button></div></section>
 <section class="page" id="notes-bank">
  <div class="section-head"><div><h2>Create from a Topic</h2><p>Choose a topic to start a lesson, resource or assessment draft.</p></div></div>
  <div class="card" id="notesSignIn"><p>Sign in to create from a topic.</p><button class="btn primary" type="button" onclick="go('account');showLoginForm()">Sign in</button></div>
@@ -512,7 +514,7 @@ async function saveCloudResource(kind,payload){
 }
 const store={get(kind){return cloudItems[kind]}};
 
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
 
@@ -1235,6 +1237,7 @@ async function saveLesediCustomerProfile(user){
 }
 function showSignedInCustomer(user,profile,openDashboard=false){
  cloudUser=user;
+ checkOwnerBanks(user);
  if($('notes-bank').classList.contains('active'))loadNotesBank();
  loadCloudResources();
  loadCloudFiles();
@@ -1288,7 +1291,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
@@ -1805,5 +1808,40 @@ $('forumNew').onsubmit=event=>{
  communityInsert('lesedi_forum_threads',{title:title.value.trim(),body:body.value.trim()},'professional-forum',[title,body],event.currentTarget.querySelector('button'));
 };
 setInterval(()=>{if(!document.hidden&&cloudUser&&$('feedback').classList.contains('active'))refreshCommunity('feedback')},10000);
+</script><script>
+let ownerBankRequest=0;
+function clearOwnerBanks(){
+ ownerBankRequest++;
+ $('ownerBanksNav').style.display='none';
+ $('ownerBankRows').replaceChildren();
+ $('ownerBankStatus').textContent='';
+}
+async function checkOwnerBanks(user){
+ clearOwnerBanks();
+ const request=ownerBankRequest;
+ const {data,error}=await lesediAuthClient.rpc('lesedi_is_bank_owner');
+ if(request!==ownerBankRequest||cloudUser?.id!==user.id)return;
+ if(!error&&data===true)$('ownerBanksNav').style.display='';
+}
+async function readOwnerBank(offset){
+ const user=cloudUser,request=++ownerBankRequest;
+ const output=$('ownerBankRows'),status=$('ownerBankStatus');
+ const prev=$('ownerBankPrev'),next=$('ownerBankNext');
+ output.replaceChildren();prev.disabled=true;next.disabled=true;
+ if(!user){status.textContent='Sign in with the owner account.';return}
+ status.textContent='Loading private entries…';
+ const {data,error}=await lesediAuthClient.rpc('lesedi_owner_bank_entries',{p_kind:$('ownerBankKind').value,p_offset:offset});
+ if(request!==ownerBankRequest||cloudUser?.id!==user.id)return;
+ if(error){status.textContent='Owner access is required or the database update is pending.';return}
+ status.textContent=data.length?'Showing entries '+(offset+1)+'–'+(offset+data.length)+'.':'No entries on this page.';
+ for(const row of data){
+  const entry=document.createElement('details'),label=document.createElement('summary'),body=document.createElement('p');
+  entry.className='card';label.textContent=[row.level,row.subject,row.topic,row.code].filter(Boolean).join(' · ');
+  body.textContent=row.content;body.style.whiteSpace='pre-wrap';entry.append(label,body);output.append(entry);
+ }
+ prev.disabled=offset===0;next.disabled=data.length<25;
+ prev.onclick=()=>readOwnerBank(Math.max(0,offset-25));next.onclick=()=>readOwnerBank(offset+25);
+}
+$('ownerBankKind').onchange=()=>readOwnerBank(0);
 </script></body>
 </html>
