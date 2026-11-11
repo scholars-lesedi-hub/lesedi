@@ -163,13 +163,12 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
       <div class="field"><label>Resource title</label><input id="docTitle" placeholder="e.g. Standard 7 Mathematics Test"></div>
       <div class="field"><label>What do you want to create?</label><select id="docPurpose"><option>Extract and organise text</option><option>Lesson plan</option><option>Scheme of work</option><option>Worksheet</option><option>Digital examination</option><option>Revision notes</option><option>Study summary</option></select></div>
     </div>
-    <button id="extractDocumentButton" class="btn primary" id="extractBtn" onclick="extractDocument()">Read and extract document</button>
+    <button id="extractDocumentButton" class="btn primary" onclick="extractDocument()">Read and extract document</button>
     <div id="extractStatus" aria-live="polite"></div>
     <div class="field"><label>Extracted text — review and correct before using</label><textarea id="extractedText" rows="12" placeholder="Your extracted document text will appear here. You can also paste text directly."></textarea></div>
     <label><input id="forceDocumentOcr" type="checkbox" style="width:auto"> Run OCR on every PDF page</label><div class="notice">Review the extracted text against the original paper. Check diagrams, maths symbols and question numbering, then enter and verify the answer key separately.</div>
-    <button class="btn gold" onclick="useTextForLesson()">Use content for lesson plan</button>
-    <button class="btn outline" onclick="useTextForExam()">Prepare examination draft</button>
-    <button class="btn outline" onclick="saveDocument()">Save to this device</button>
+    <button type="button" class="btn gold" onclick="continueConvertedDocument()">Continue with selected tool</button>
+    <button class="btn outline" onclick="saveDocument()">Save to cloud library</button>
   </div>
 </section>
 
@@ -207,7 +206,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
       </div><button type="button" class="btn outline" id="loadSchemeTopics">Load topics and outcomes</button></div>
     </details>
     <div class="two-col"><div class="field"><label>Subject</label><input id="swSubject" placeholder="e.g. Mathematics"></div><div class="field"><label>Class / level</label><input id="swClass" placeholder="e.g. Form 2"></div><div class="field"><label>Term</label><select id="swTerm"><option>Term 1</option><option>Term 2</option><option>Term 3</option><option>Annual plan</option></select></div><div class="field"><label>Number of weeks</label><input id="swWeeks" type="number" min="1" max="20" value="10"></div></div>
-    <div class="field"><label>Topics (one topic per line)</label><textarea id="swTopics" placeholder="Whole numbers&#10;Fractions&#10;Decimals&#10;Percentages"></textarea></div>
+    <details id="schemeDocumentReference" hidden><summary>Reviewed source text</summary><pre id="schemeDocumentText" style="white-space:pre-wrap;font:inherit"></pre></details><div class="field"><label>Topics (one topic per line)</label><textarea id="swTopics" placeholder="Whole numbers&#10;Fractions&#10;Decimals&#10;Percentages"></textarea></div>
     <button class="btn primary" onclick="buildScheme()">Build scheme table</button></div>
     <div id="schemeOutput"></div>
   </div>
@@ -610,8 +609,41 @@ async function extractDocument(){
   button.disabled=false;
  }
 }
-function useTextForLesson(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return} $('lpSource').value=$('extractedText').value; $('lpTopic').value=$('docTitle').value||$('lpTopic').value;go('lesson')}
-function useTextForExam(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return}$('examQuestions').value=$('extractedText').value;$('examTitle').value=$('docTitle').value||'';$('examKey').value='';$('digitalQuestions').replaceChildren();go('exam')}
+function continueConvertedDocument(){
+ const source=$('extractedText').value.trim();
+ const title=$('docTitle').value.trim();
+ const purpose=$('docPurpose').value;
+ if(!source){showToast('Extract or paste some source text first.');return}
+ if(purpose==='Extract and organise text'){
+  showToast('Your text is ready to edit or save to your cloud library.');$('extractedText').focus();return;
+ }
+ if(purpose==='Lesson plan'){
+  if($('lpSource').value.trim()&&!confirm('Replace the source text in the open lesson plan?'))return;
+  $('lpSource').value=source;
+  if(title)$('lpTopic').value=title;
+  $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
+  go('lesson');return;
+ }
+ if(purpose==='Scheme of work'){
+  $('schemeDocumentText').textContent=source;
+  $('schemeDocumentReference').hidden=false;$('schemeDocumentReference').open=true;
+  go('scheme');return;
+ }
+ if(purpose==='Digital examination'){
+  if(($('examQuestions').value.trim()||$('digitalQuestions').children.length)&&!confirm('Replace the questions and answer key in the open examination draft?'))return;
+  $('examQuestions').value=source;
+  if(title)$('examTitle').value=title;
+  $('examKey').value='';$('digitalQuestions').replaceChildren();
+  $('examReferencePanel').hidden=true;$('examReferenceNotes').textContent='';
+  $('examStatus').textContent='Reviewed text added. Import numbered questions to start editing.';
+  go('exam');return;
+ }
+ const types={'Worksheet':'Worksheet outline','Revision notes':'Revision notes outline','Study summary':'Study summary outline'};
+ if(!Object.hasOwn(types,purpose))return;
+ if(($('resSource').value.trim()||$('resourceOutput').children.length)&&!confirm('Replace the open teaching resource?'))return;
+ $('resTopic').value=title||'Untitled resource';$('resSource').value=source;$('resType').value=types[purpose];
+ makeResource();go('resources');
+}
 async function saveDocument(){
  const title=$('docTitle').value.trim()||'Untitled document',content=$('extractedText').value.trim();
  if(!content){showToast('There is no extracted text to save.');return}
@@ -697,7 +729,7 @@ document.addEventListener('lesedi-syllabus-signout',()=>{
  $('schemeSyllabusFields').hidden=true;$('schemeSyllabus').open=false;
  $('schemeSyllabusStatus').textContent='Sign in with an approved teacher account to load syllabus topics.';
  for(const id of ['swSubject','swClass','swTopics'])$(id).value='';
- $('schemeOutput').replaceChildren();
+ $('schemeOutput').replaceChildren();$('schemeDocumentText').textContent='';$('schemeDocumentReference').hidden=true;
 });
 function buildScheme(){
  const topics=$('swTopics').value.split('\n').map(topic=>topic.trim()).filter(Boolean);
