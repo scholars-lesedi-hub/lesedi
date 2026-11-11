@@ -66,7 +66,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="scheme"><span class="ico">▦</span>Scheme of Work</button>
 <button data-page="exam"><span class="ico">✓</span>Examination Studio</button>
     <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
-    <button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
+    <button data-page="subject-notes"><span class="ico">▤</span>Subject Question Bank</button>
+<button data-page="steam-assessments"><span class="ico">✧</span>STEAM Assessments</button>
+<button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
     <button data-page="assistant"><span class="ico">✧</span>AI Teacher Assistant</button>
     <button data-page="payments"><span class="ico">💳</span>Packages & Payments</button>
     <div class="nav-label">MANAGEMENT</div>
@@ -313,7 +315,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="library">
+<section class="page" id="subject-notes"><div class="section-head"><div><h2>Subject Question Bank</h2><p>Choose a subject to practise with questions drawn from the uploaded notes. Each attempt shuffles the questions and options.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="steam-assessments"><div class="section-head"><div><h2>STEAM Assessments</h2><p>Choose a subject and start a short STEAM quiz, test or exam. Each includes an applied written task for teacher review.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="library">
   <div class="section-head"><div><h2>My Resource Library</h2><p>Items saved locally in this browser during the prototype.</p></div></div>
   <div class="card"><h3>Saved documents</h3><div id="savedDocs" class="muted small">No saved documents.</div></div>
   <div class="card"><h3>Saved examination drafts</h3><div id="savedExams" class="muted small">No examination drafts.</div></div>
@@ -692,5 +694,160 @@ async function uploadDocumentToCloud(){
   <p id="topicPurchaseMessage" style="display:none;color:#102a56;font-weight:bold;">
     Please contact Education Lesedi Scholars Hub to arrange your P10 topic purchase.
   </p>
-</section></body>
+</section><style>.notes-subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:1rem}.notes-runner:not(:empty){margin-top:1.5rem;padding:1rem;border:1px solid #c8d4e4;border-radius:12px;scroll-margin-top:1rem}.notes-options label{display:block;padding:.6rem}.notes-options textarea{display:block;width:100%;min-height:8rem}.notes-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:1rem}.notes-runner li{margin-bottom:.6rem}</style>
+<script>
+(() => {
+  const bank = [
+    ['Agriculture','Standard 5','Agriculture Notes 5-7.pdf',[
+      ['A farmer grows only sorghum and beans. Which farming system is this?','Arable','Pastoral','Mixed','Fishing'],
+      ['A farm keeps goats and grows maize. Which system does it use?','Mixed','Arable','Pastoral','Forestry'],
+      ['Which branch studies the properties of soil?','Soil science','Animal science','Agricultural economics','Horticulture'],
+      ['Which farm activity creates employment?','Hiring workers to harvest crops','Leaving every field idle','Closing a farm shop','Throwing away planting tools']
+    ],'Sketch or describe a farm that combines livestock and crops. Explain one way the two activities could support each other.'],
+    ['Environmental Science','Standard 1','Environmental Science 1 Notes final.pdf',[
+      ['Which thing can grow?','A seedling','A pencil','A table','A bucket'],
+      ['What gives us light and warmth during the day?','The Sun','The Moon','A cloud','The wind'],
+      ['What helps keep the schoolyard clean?','Putting rubbish in a bin','Dropping paper on the ground','Leaving wrappers by the door','Scattering litter'],
+      ['Which is a living thing?','A bird','A car','A chair','A house']
+    ],'Describe a sign or picture that could help children keep their classroom clean. Explain what it would show.'],
+    ['Cultural Studies','Standard 7','Culture Notes 7 WITH PERMISSIONS.pdf',[
+      ['Which is an example of a language in the Bakalaka notes?','Sekalaka','Delele','Hossana','Leteisi'],
+      ['Which would you record under traditional shelter?','The materials used to build a home','The words of a song','The ingredients in a meal','The name of a dance'],
+      ['Which pair best fits a display about food and dress?','A traditional meal and an item of clothing','A dance and a language','A shelter and a belief','A farming tool and a house plan'],
+      ['Where would you place information about how a community grows crops?','Activities','Language','Dance','Dress']
+    ],'Plan a small display about a Botswana community using two categories from the notes. Describe what you would show and how visitors would understand it.'],
+    ['CAPA','Standard 4','CAPA 4 NOTES TERM I,II &III.pdf',[
+      ['Which shape could brace a rectangular frame?','Triangle','Circle','Oval','Spiral'],
+      ['Which is an example of body percussion?','Clapping your hands','Playing a flute','Turning a page','Looking at a drum'],
+      ['How can you show a shadow in a pencil drawing?','Use darker shading','Erase the whole shape','Draw only the outline','Make the shaded side lighter'],
+      ['What is a safe workshop habit?','Put tools away after use','Run between benches','Leave tools in the walkway','Taste an unknown material']
+    ],'Describe a cardboard frame you could strengthen with a diagonal brace. Explain where the brace goes and why.'],
+    ['Science · Heat Transfer','Level to be confirmed','Heat transfer notes.pdf',[
+      ['A metal spoon warms up while it rests in hot soup. How does heat travel along the spoon?','Conduction','Convection','Radiation','Evaporation'],
+      ['How does heat from the Sun reach Earth through space?','Radiation','Conduction','Convection','Freezing'],
+      ['In a heated liquid, what usually happens to the warmer, less dense liquid?','It rises','It sinks','It freezes','It stops moving'],
+      ['Which direction does heat naturally transfer?','From warmer to cooler regions','From cooler to warmer regions only','Upwards in every material','Sideways only']
+    ],'Design a simple cover to keep a warm drink warm longer. Identify a material and explain which type of heat transfer it reduces.']
+  ];
+  const formats = {Quiz:2,Test:3,Exam:4};
+  const shuffle = items => {
+    const copy = [...items];
+    for(let i=copy.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [copy[i],copy[j]]=[copy[j],copy[i]];
+    }
+    return copy;
+  };
+  function mount(id, steam) {
+    const section=document.getElementById(id);
+    const content=section.querySelector('.notes-subjects');
+    const runner=section.querySelector('.notes-runner');
+    let attempt;
+    bank.forEach(([subject,level,source,questions,challenge])=>{
+      const card=document.createElement('article');
+      card.className='card';
+      const heading=document.createElement('h3');
+      heading.textContent=subject;
+      const detail=document.createElement('p');
+      detail.textContent=level+' · '+source;
+      card.append(heading,detail);
+      for(const format of Object.keys(formats)){
+        const button=document.createElement('button');
+        button.className='btn outline';
+        button.type='button';
+        button.textContent=format;
+        button.onclick=()=>{
+          if(attempt && !confirm('Start a new assessment and discard the current answers?'))return;
+          const items=shuffle(questions).slice(0,formats[format]).map(([text,...options])=>({text,key:options[0],options:shuffle(options)}));
+          if(steam)items.push({text:challenge});
+          attempt={subject,format,items,answers:Array(items.length).fill(''),index:0};
+          show();
+          runner.scrollIntoView({block:'start'});
+        };
+        card.append(button,document.createTextNode(' '));
+      }
+      content.append(card);
+    });
+    function show(){
+      const {items,answers,index,subject,format}=attempt;
+      const item=items[index];
+      runner.innerHTML='<h3>'+escapeHTML(subject)+' '+format+'</h3><p>Question '+(index+1)+' of '+items.length+'</p><form><fieldset><legend>'+escapeHTML(item.text)+'</legend><div class="notes-options"></div></fieldset><div class="notes-actions"></div></form>';
+      const options=runner.querySelector('.notes-options');
+      if(item.options){
+        item.options.forEach(option=>{
+          const label=document.createElement('label');
+          const input=document.createElement('input');
+          input.type='radio';
+          input.name='response';
+          input.value=option;
+          input.checked=answers[index]===option;
+          label.append(input,document.createTextNode(' '+option));
+          options.append(label);
+        });
+      }else{
+        const label=document.createElement('label');
+        label.textContent='Written answer for teacher review';
+        const input=document.createElement('textarea');
+        input.name='response';
+        input.value=answers[index];
+        label.append(input);
+        options.append(label);
+      }
+      const form=runner.querySelector('form');
+      const actions=runner.querySelector('.notes-actions');
+      const save=()=>{answers[index]=(new FormData(form).get('response')||'').trim()};
+      action(actions,'Previous',()=>{save();attempt.index--;show()},index===0);
+      action(actions,index===items.length-1?'Review answers':'Next',()=>{
+        save();
+        if(index===items.length-1){review();return}
+        attempt.index++;
+        show();
+      });
+      form.onsubmit=e=>e.preventDefault();
+    }
+    function action(parent,label,handler,disabled=false){
+      const button=document.createElement('button');
+      button.className='btn outline';
+      button.type='button';
+      button.textContent=label;
+      button.onclick=handler;
+      button.disabled=disabled;
+      parent.append(button);
+    }
+    function review(){
+      const {items,answers}=attempt;
+      runner.innerHTML='<h3>Review answers</h3><ol></ol><div class="notes-actions"></div>';
+      const list=runner.querySelector('ol');
+      items.forEach((item,i)=>{
+        const row=document.createElement('li');
+        row.textContent=item.text+' — '+(answers[i]||'Unanswered')+' ';
+        action(row,'Change answer',()=>{attempt.index=i;show()});
+        list.append(row);
+      });
+      const actions=runner.querySelector('.notes-actions');
+      const incomplete=answers.some(answer=>!answer);
+      if(incomplete)actions.append(document.createTextNode('Answer every question before submitting. '));
+      action(actions,'Submit assessment',()=>{
+        const objective=items.filter(item=>item.options);
+        const score=items.reduce((sum,item,i)=>sum+Number(item.key===answers[i]),0);
+        runner.innerHTML='<h3>Assessment submitted</h3><p>Objective score: '+score+' / '+objective.length+'</p>';
+        items.forEach((item,i)=>{
+          if(item.options)return;
+          const title=document.createElement('h4');
+          title.textContent='Written response · teacher review';
+          const response=document.createElement('p');
+          response.textContent=answers[i];
+          const note=document.createElement('p');
+          note.textContent='Show this response to your teacher or tutor for marking.';
+          runner.append(title,response,note);
+        });
+        attempt=null;
+      },incomplete);
+    }
+  }
+  mount('subject-notes',false);
+  mount('steam-assessments',true);
+})();
+</script>
+</body>
 </html>
