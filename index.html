@@ -612,7 +612,7 @@ async function sendPasswordReset(){
 async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';document.getElementById('authPanel').style.display='block';showLoginForm();authMessage('You have signed out.');}
 (async()=>{if(!lesediAuthClient)return;const {data}=await lesediAuthClient.auth.getSession();if(data.session){try{const p=await saveLesediCustomerProfile(data.session.user);showSignedInCustomer(data.session.user,p);}catch(e){document.getElementById('authPanel').style.display='block';authMessage('Signed in, but profile saving needs attention: '+e.message,true);}}})();
 // Botswana practice catalogue: sample questions, not official BEC past papers.
-const botswanaPracticeSets = [
+renderBotswanaExams();
 {id:'psle-maths',level:'PSLE',subject:'Mathematics',className:'Standard 7',title:'PSLE Mathematics',topics:'Numbers and fractions',questions:[
 {q:'What is 3/4 of 20?',o:['5','10','15','18'],a:2},
 {q:'What is 25% as a fraction?',o:['1/2','1/3','1/4','3/4'],a:2}
