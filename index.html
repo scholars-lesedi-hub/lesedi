@@ -65,6 +65,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="convert"><span class="ico">⇧</span>Hardcopy Converter</button>
     <button data-page="lesson"><span class="ico">▤</span>Lesson Plan Studio</button>
     <button data-page="scheme"><span class="ico">▦</span>Scheme of Work</button>
+<button data-page="take-exam"><span class="ico">▷</span>Take an Exam</button>
 <button data-page="exam"><span class="ico">✓</span>Examination Studio</button>
     <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
     <button data-page="notes-bank"><span class="ico">▤</span>Notes Bank</button>
@@ -152,6 +153,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
+<section class="page" id="take-exam">
+ <div class="section-head"><div><h2>Take an Exam</h2><p>Sign in, enter the code your teacher gave you, then click an answer and select Next.</p></div></div>
+ <div class="card"><form id="joinLiveExam"><label class="field">Exam code<input id="liveExamCode" required maxlength="16" autocomplete="off"></label><button class="btn primary">Open exam</button></form><p id="liveExamStatus" role="status"></p><div id="liveExamRunner"></div></div>
+</section>
 <section class="page" id="exam">
   <div class="section-head"><div><h2>Examination Studio</h2><p>Prepare a digital assessment draft from reviewed questions.</p></div></div>
   <div class="card">
@@ -159,9 +164,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <details id="examReferencePanel" hidden><summary>Notes for this assessment</summary><pre id="examReferenceNotes" style="white-space:pre-wrap;font:inherit"></pre></details>
     <div class="field"><label>Question text</label><textarea id="examQuestions" placeholder="Paste or type questions here."></textarea></div>
     <div class="field"><label>Teacher-verified answer key (optional)</label><textarea id="examKey" placeholder="Enter verified answers separately. Leave blank if not yet checked."></textarea></div>
-    <div class="notice">Before publishing, check each question and answer key. Upload official papers or marking schemes only if Education Lesedi has permission to use them. Written responses require teacher review.</div>
+    <div class="notice">Before publishing, check each question and answer key. Upload official papers or marking schemes only if Education Lesedi has permission to use them. Set the accepted answers before publishing an automatically marked exam.</div>
     <div class="card"><h3>Digital questions</h3><p>Import numbered questions from the text above, or add a question manually. Review the wording and choose the verified answer for each multiple-choice question.</p><button type="button" class="btn outline" onclick="importDigitalQuestions()">Import numbered questions</button> <button type="button" class="btn outline" onclick="addDigitalQuestion()">Add question</button><div id="digitalQuestions"></div></div><button class="btn primary" onclick="saveExamDraft()">Save examination draft</button>
     <div id="examStatus"></div>
+ <div class="card"><h3>Publish an auto-marked exam</h3><p>Set the subject and enter the accepted answers and marks. The exam total is the sum of the question marks.</p><label class="field">Exam total<input id="publishExamTotal" type="number" min="1" max="10000" step="1" placeholder="e.g. 20"></label><p><button type="button" class="btn primary" id="publishLiveExam">Publish and get learner link</button></p><p id="publishExamStatus" role="status"></p><div id="publishedExamLink"></div></div>
     <div class="card" id="digitalExamRunner">
   <h3>Digital Examination Preview</h3>
   <p>Learners will answer one question at a time.</p>
@@ -301,8 +307,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <section class="page" id="analytics">
   <div class="section-head"><div><h2>Results &amp; Analytics</h2></div></div>
   <div class="card">
-    <h3>Class results are coming</h3>
-    <p class="muted">When learner submissions are connected, this page will show class scores, topics that need more practice, and progress across assessments.</p>
+    <h3>Published exam submissions</h3><form id="liveExamResults"><label class="field">Exam code<input id="resultsExamCode" required maxlength="16"></label><button class="btn primary">Load submissions</button></form><p id="examResultsStatus" role="status"></p><div id="examResultsList"></div>
+    <p class="muted">Enter the code of an exam you published to see objective scores and total marks.</p>
     <button class="btn outline" type="button" onclick="go('exam')">Open Examination Studio</button>
   </div>
 </section>
@@ -633,7 +639,7 @@ function parseDigitalQuestions(text){
   else if(current&&option)current.options[option[1].toUpperCase()]=option[2];
   else if(current&&line.trim())current.text+='\n'+line.trim();
  }
- return questions.map(q=>({text:q.text,marks:q.marks,type:Object.keys(q.options).length?'objective':'written',options:['A','B','C','D'].map(letter=>q.options[letter]||'')}));
+ return questions.map(q=>({text:q.text,marks:q.marks,type:Object.keys(q.options).length?'objective':'short',options:['A','B','C','D'].map(letter=>q.options[letter]||'')}));
 }
 function importDigitalQuestions(){
  const questions=parseDigitalQuestions($('examQuestions').value);
@@ -646,18 +652,19 @@ function importDigitalQuestions(){
 }
 function addDigitalQuestion(q={}){
  const card=document.createElement('div');card.className='card';
- card.innerHTML='<label class="field">Question text<textarea data-q="text"></textarea></label><label class="field">Type<select data-q="type"><option value="objective">Multiple choice</option><option value="written">Written response</option></select></label><label class="field">Marks<input data-q="marks" type="number" min="1" max="100" step="1"></label><div data-q="choices"></div><label class="field" data-q="rubricRow">Marking guidance<textarea data-q="rubric"></textarea></label><button type="button" class="btn outline" data-q="remove">Remove question</button>';
+ card.innerHTML='<label class="field">Question text<textarea data-q="text"></textarea></label><label class="field">Type<select data-q="type"><option value="objective">Multiple choice</option><option value="short">Short answer</option><option value="list">List</option></select></label><label class="field">Marks<input data-q="marks" type="number" min="1" max="100" step="1"></label><div data-q="choices"></div><label class="field" data-q="rubricRow"><span data-q="keyLabel"></span><textarea data-q="rubric"></textarea></label><button type="button" class="btn outline" data-q="remove">Remove question</button>';
  const field=key=>card.querySelector('[data-q="'+key+'"]');
  field('text').value=q.text||'';
- field('type').value=q.type||'objective';
+ field('type').value=q.type==='written'?'short':q.type||'objective';
  field('marks').value=q.marks||1;
- field('rubric').value=q.rubric||'';
+ field('rubric').value=q.accepted||'';
  field('choices').innerHTML=['A','B','C','D'].map((letter,i)=>'<label class="field">Option '+letter+'<input data-q="option'+i+'"></label>').join('')+'<label class="field">Verified correct option<select data-q="answer"><option value="">Choose an answer</option><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select></label>';
  for(let i=0;i<4;i++)field('option'+i).value=q.options?.[i]||'';
  field('answer').value=q.answer??'';
  const toggle=()=>{
-  field('choices').hidden=field('type').value==='written';
-  field('rubricRow').style.display=field('type').value==='written'?'':'none';
+  field('choices').hidden=field('type').value!=='objective';
+  field('rubricRow').style.display=field('type').value==='objective'?'none':'';
+  field('keyLabel').textContent=field('type').value==='list'?'Correct list items (one per line or separated by semicolons)':'Accepted answers (separate alternatives with |)';
  };
  field('type').onchange=toggle;toggle();
  field('remove').onclick=()=>card.remove();
@@ -669,7 +676,11 @@ function readDigitalQuestions(){
   const text=read('text'),type=read('type'),marks=Number(read('marks'));
   const fail=message=>{throw Error('Question '+(i+1)+': '+message)};
   if(!text||!Number.isInteger(marks)||marks<1||marks>100)fail('enter question text and whole-number marks from 1 to 100.');
-  if(type==='written')return {text,type,marks,rubric:read('rubric')};
+  if(type!=='objective'){
+   const accepted=read('rubric');
+   if(!accepted.split(type==='list'?/[;\n]+/:/\|/).some(item=>item.trim()))fail('enter an accepted answer.');
+   return {text,type,marks,accepted};
+  }
   const options=[0,1,2,3].map(j=>read('option'+j));
   const answer=read('answer');
   if(options.filter(Boolean).length<2||!answer||!options[Number(answer)])fail('enter at least two options and select a verified answer.');
@@ -691,7 +702,90 @@ const demoDigitalQuestions=[
  {text:'What is the square root of 144?',type:'objective',options:['10','11','12','14'],answer:2,marks:1}
 ];
 let previewQuestions=[],previewAnswers=[],previewIndex=0;
+let activeExamCode='',submittingLiveExam=false;
+function resetLiveExam(){
+ activeExamCode='';
+ $('liveExamRunner').replaceChildren();
+ $('liveExamStatus').textContent='';
+ $('publishedExamLink').replaceChildren();
+ $('publishExamStatus').textContent='';
+ $('publishExamTotal').value='';
+ $('examResultsList').replaceChildren();
+ $('examResultsStatus').textContent='';
+}
+$('publishLiveExam').onclick=async()=>{
+ if(!cloudUser){showToast('Sign in to publish an exam.');return}
+ const title=$('examTitle').value.trim(),status=$('publishExamStatus');
+ const subject=$('examClass').value.trim();
+ if(!title||!subject){status.textContent='Enter a title and subject.';return}
+ let questions;
+ try{questions=readDigitalQuestions()}catch(error){status.textContent=error.message;return}
+ if(!questions.length){status.textContent='Import or add digital questions before publishing.';return}
+ const total=questions.reduce((sum,question)=>sum+question.marks,0);
+ if(Number($('publishExamTotal').value)!==total){status.textContent='Question marks add up to '+total+'. Set the exam total to match, or adjust the marks.';return}
+ const user=cloudUser,button=$('publishLiveExam');
+ button.disabled=true;status.textContent='Publishing…';
+ try{
+  const {data,error}=await lesediAuthClient.rpc('lesedi_publish_exam',{p_title:title,p_subject:subject,p_questions:questions});
+  if(cloudUser?.id!==user.id)return;
+  if(error)throw error;
+  const url=new URL(location.pathname,location.origin);
+  url.searchParams.set('exam',data);
+  const link=document.createElement('a');link.href=url.href;link.textContent=url.href;
+  $('publishedExamLink').replaceChildren(link);
+  $('resultsExamCode').value=data;
+  status.textContent='Published. Access code: '+data;
+ }catch(error){if(cloudUser?.id===user.id)status.textContent=error.message}
+ finally{button.disabled=false}
+};
+$('joinLiveExam').onsubmit=async event=>{
+ event.preventDefault();
+ const status=$('liveExamStatus');
+ if(!cloudUser){status.textContent='Sign in before opening an exam. Your code will stay here.';return}
+ if(activeExamCode&&previewAnswers.some(Boolean)&&!confirm('Open this exam and discard your current answers?'))return;
+ const user=cloudUser,code=$('liveExamCode').value.trim().toUpperCase();
+ const button=event.currentTarget.querySelector('button');
+ button.disabled=true;status.textContent='Opening exam…';
+ try{
+  const {data,error}=await lesediAuthClient.rpc('lesedi_open_exam',{p_code:code});
+  if(cloudUser?.id!==user.id)return;
+  if(error)throw error;
+  if(!data){status.textContent='Exam code not found.';return}
+  activeExamCode=code;previewQuestions=data.questions;
+  previewAnswers=Array(previewQuestions.length).fill('');previewIndex=0;
+  status.textContent=data.title+' · '+data.subject;renderDigitalQuestion();
+ }catch(error){if(cloudUser?.id===user.id)status.textContent=error.message}
+ finally{button.disabled=false}
+};
+$('liveExamResults').onsubmit=async event=>{
+ event.preventDefault();
+ const status=$('examResultsStatus'),list=$('examResultsList');
+ list.replaceChildren();
+ if(!cloudUser){status.textContent='Sign in to view your exam submissions.';return}
+ const user=cloudUser,button=event.currentTarget.querySelector('button');
+ button.disabled=true;status.textContent='Loading submissions…';
+ try{
+  const {data,error}=await lesediAuthClient.rpc('lesedi_exam_results',{p_code:$('resultsExamCode').value.trim()});
+  if(cloudUser?.id!==user.id)return;
+  if(error)throw error;
+  if(!data){status.textContent='No exam found for this code in your account.';return}
+  status.textContent=data.title+' · '+data.submissions.length+' submission(s)';
+  for(const row of data.submissions){
+   const card=document.createElement('article');card.className='card';
+   const summary=document.createElement('p');summary.textContent='Learner ID '+row.learner_id+' · '+row.marks+'/'+row.total+' marks';
+   const responses=document.createElement('ol');
+   row.answers.forEach((answer,i)=>{const item=document.createElement('li');item.textContent=data.questions[i]+' — '+answer;responses.append(item)});
+   card.append(summary,responses);list.append(card);
+  }
+ }catch(error){if(cloudUser?.id===user.id)status.textContent=error.message}
+ finally{button.disabled=false}
+};
+const incomingExamCode=new URLSearchParams(location.search).get('exam');
+if(incomingExamCode){$('liveExamCode').value=incomingExamCode;go('take-exam');}
+
 function startDigitalExam(){
+ if(activeExamCode&&previewAnswers.some(Boolean)&&!confirm('Start a preview and discard your current exam answers?'))return;
+ activeExamCode='';$('liveExamRunner').replaceChildren();
  try{
   previewQuestions=readDigitalQuestions();
   if(!previewQuestions.length&&$('examQuestions').value.trim()){
@@ -703,11 +797,11 @@ function startDigitalExam(){
  previewIndex=0;renderDigitalQuestion();
 }
 function renderDigitalQuestion(){
- const area=$('learnerExamArea'),q=previewQuestions[previewIndex];
+ const area=$(activeExamCode?'liveExamRunner':'learnerExamArea'),q=previewQuestions[previewIndex];
  area.innerHTML='<h4>Question '+(previewIndex+1)+' of '+previewQuestions.length+'</h4><p style="white-space:pre-wrap">'+escapeHTML(q.text)+'</p><div data-response></div><p><button type="button" class="btn outline" data-prev>Previous</button> <button type="button" class="btn primary" data-next></button></p>';
  const response=area.querySelector('[data-response]');
- if(q.type==='written'){
-  const label=document.createElement('label');label.className='field';label.textContent='Your written response';
+ if(q.type!=='objective'){
+  const label=document.createElement('label');label.className='field';label.textContent=q.type==='list'?'Enter one item per line or separate items with semicolons':'Type your short answer';
   const input=document.createElement('textarea');input.value=previewAnswers[previewIndex];
   input.oninput=()=>{previewAnswers[previewIndex]=input.value};
   label.append(input);response.append(label);
@@ -723,17 +817,41 @@ function renderDigitalQuestion(){
  }
  const prev=area.querySelector('[data-prev]'),next=area.querySelector('[data-next]');
  prev.disabled=previewIndex===0;prev.onclick=()=>{previewIndex--;renderDigitalQuestion()};
- next.textContent=previewIndex===previewQuestions.length-1?'Submit preview':'Next';
+ next.textContent=previewIndex===previewQuestions.length-1?(activeExamCode?'Submit exam':'Submit preview'):'Next';
  next.onclick=()=>{if(previewIndex<previewQuestions.length-1){previewIndex++;renderDigitalQuestion()}else submitDigitalExam()};
 }
-function submitDigitalExam(){
+async function submitDigitalExam(){
  if(previewAnswers.some(answer=>!answer.trim())){showToast('Answer every question before submitting.');return}
- let score=0,total=0,written=0;
+ if(activeExamCode){
+  if(submittingLiveExam)return;
+  const user=cloudUser,code=activeExamCode;
+  if(!user){showToast('Sign in to submit.');return}
+  submittingLiveExam=true;
+  const runner=$('liveExamRunner');
+  runner.querySelectorAll('button,input,textarea').forEach(control=>control.disabled=true);
+  try{
+   const {data,error}=await lesediAuthClient.rpc('lesedi_submit_exam',{p_code:code,p_answers:previewAnswers});
+   if(cloudUser?.id!==user.id||activeExamCode!==code)return;
+   if(error)throw error;
+   runner.textContent='Exam submitted. Marks: '+data.marks+' / '+data.total+'.';
+   activeExamCode='';previewAnswers=[];
+  }catch(error){
+   if(cloudUser?.id===user.id&&activeExamCode===code){showToast(error.message);renderDigitalQuestion()}
+  }finally{submittingLiveExam=false}
+  return;
+ }
+ let score=0,total=0;
+ const normalize=value=>value.toLowerCase().replace(/\s+/g,' ').trim();
+ const list=value=>value.split(/[;\n]+/).map(normalize).filter(Boolean).sort();
  previewQuestions.forEach((q,i)=>{
-  if(q.type==='written'){written++;return}
-  total+=q.marks;if(q.answer===Number(previewAnswers[i]))score+=q.marks;
+  const answer=previewAnswers[i];
+  const correct=q.type==='objective'?q.answer===Number(answer)
+   :q.type==='short'?q.accepted.split('|').map(normalize).includes(normalize(answer))
+   :JSON.stringify(list(answer))===JSON.stringify(list(q.accepted));
+  total+=q.marks;
+  if(correct)score+=q.marks;
  });
- $('learnerExamArea').innerHTML='<h3>Preview complete</h3><p>Objective marks: '+score+' / '+total+'</p>'+(written?'<p>Written responses for teacher review: '+written+'</p>':'')+'<p>Preview results are not recorded.</p><button type="button" class="btn outline" onclick="startDigitalExam()">Restart preview</button>';
+ $('learnerExamArea').innerHTML='<h3>Preview complete</h3><p>Marks: '+score+' / '+total+'</p><p>Preview results are not recorded.</p><button type="button" class="btn outline" onclick="startDigitalExam()">Restart preview</button>';
 }
   function makeResource(){const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;if(!topic){showToast('Enter a topic first.');return}const output=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML(type)}: ${escapeHTML(topic)}</h3><p><b>Purpose:</b> Support learning and revision on ${escapeHTML(topic)}.</p><p><b>Key concepts:</b> Identify the main concepts from the approved syllabus and source notes.</p><p><b>Learning activity:</b> Ask learners to explain, practise and apply the topic using examples.</p><p><b>Check understanding:</b> Include short questions and a teacher-reviewed task.</p>${source?`<h4>Source notes</h4><div class="preview">${escapeHTML(source)}</div>`:'<p class="muted small">Add source notes to make this resource specific and factually grounded.</p>'}<p class="small muted">This is a structured outline, not a verified subject resource. Review content before distribution.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`;$('resourceOutput').innerHTML=output}
 function aiPlaceholder(){const p=$('aiPrompt').value.trim();if(!p){showToast('Enter a request first.');return}$('aiResult').innerHTML='<div class="notice"><b>AI request prepared.</b><br>Task: '+escapeHTML($('aiTask').value)+'<br>Request: '+escapeHTML(p)+'<br><br>To generate a real response, connect this form to a secure backend AI endpoint. Never place a private API key in this HTML file.</div>'}
@@ -978,7 +1096,7 @@ function showSignedInCustomer(user,profile,openDashboard=false){
   actions.append(button);
  });
  $('customerDashboardPending').textContent=pending+' will appear here when the shared database features are connected.';
- if(openDashboard)go('account');
+ if(openDashboard)go(incomingExamCode?'take-exam':'account');
 }
 document.getElementById('authRegisterForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!lesediAuthClient){authMessage('The secure login service did not load. Refresh the page and try again.',true);return;}
@@ -1010,7 +1128,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
