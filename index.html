@@ -68,7 +68,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <button data-page="take-exam"><span class="ico">▷</span>Take an Exam</button>
 <button data-page="exam"><span class="ico">✓</span>Examination Studio</button>
     <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
-    <button data-page="notes-bank"><span class="ico">▤</span>Notes Bank</button>
+    <button data-page="notes-bank"><span class="ico">▤</span>Create from a Topic</button>
 <button data-page="subject-notes"><span class="ico">▤</span>Subject Question Bank</button>
 <button data-page="steam-assessments"><span class="ico">✧</span>STEAM Assessments</button>
 <button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
@@ -172,7 +172,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="lesson"><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><fieldset id="syllabusObjectives"><legend>Choose learning objectives</legend></fieldset><p><button type="button" class="btn primary" id="applySyllabus">Use topic and outcomes</button></p></div></details>
+<section class="page" id="lesson"><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><p><button type="button" class="btn primary" id="applySyllabus">Use topic and outcomes</button></p></div></details>
   <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable teaching plan using your topic or extracted document.</p></div></div>
   <div class="card">
     <div class="two-col">
@@ -356,8 +356,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </section>
 
 <section class="page" id="notes-bank">
- <div class="section-head"><div><h2>Notes Bank</h2><p>Find subject notes to use in a lesson plan or assessment draft.</p></div></div>
- <div class="card" id="notesSignIn"><p>Sign in to browse the Notes Bank.</p><button class="btn primary" type="button" onclick="go('account');showLoginForm()">Sign in</button></div>
+ <div class="section-head"><div><h2>Create from a Topic</h2><p>Choose a topic to start a lesson, resource or assessment draft.</p></div></div>
+ <div class="card" id="notesSignIn"><p>Sign in to create from a topic.</p><button class="btn primary" type="button" onclick="go('account');showLoginForm()">Sign in</button></div>
  <div id="notesWorkspace" hidden>
   <div class="card two-col">
    <label class="field">Subject<select id="notesSubject"><option value="">All subjects</option></select></label>
@@ -421,8 +421,7 @@ async function loadNotesBank(){
  $('notesWorkspace').hidden=false;
  $('notesSignIn').hidden=true;
  $('notesStatus').textContent='Loading notes…';
- const {data,error}=await lesediAuthClient.from('lesedi_notes_bank')
-  .select('id,subject,level,topic,content').eq('published',true).order('subject').order('topic').limit(500);
+ const {data,error}=await lesediAuthClient.rpc('lesedi_topic_catalogue');
  if(request!==notesRequest||cloudUser?.id!==user.id)return;
  if(error){
   bankNotes=[];
@@ -449,32 +448,36 @@ function renderNotesBank(){
   const card=document.createElement('article');card.className='card';
   const title=document.createElement('h3');title.textContent=note.topic;
   const detail=document.createElement('p');detail.textContent=note.subject+' · '+note.level;
-  const preview=document.createElement('details');
-  const summary=document.createElement('summary');summary.textContent='Read notes';
-  const body=document.createElement('p');body.textContent=note.content;body.style.whiteSpace='pre-wrap';
-  preview.append(summary,body);card.append(title,detail,preview);
+  card.append(title,detail);
   for(const [label,page] of [['Use in Lesson Plan','lesson'],['Use in Assessment Draft','exam'],['Use in Teaching Resources','resources']]){
    const button=document.createElement('button');
    button.className='btn outline';button.type='button';button.textContent=label;
    button.style.marginTop='10px';button.style.marginRight='8px';
-   button.onclick=()=>{
-    if(!cloudUser)return;
-    if(page==='resources'){
-     if($('resSource').value&&$('resSource').value!==note.content&&!confirm('Replace the source notes in Teaching Resources?'))return;
-     $('resTopic').value=note.topic;$('resSource').value=note.content;
-    }else if(page==='lesson'){
-     if($('lpSource').value&&$('lpSource').value!==note.content&&!confirm('Replace the source text in your open lesson plan?'))return;
-     $('lpSource').value=note.content;
-     if(!$('lpTopic').value)$('lpTopic').value=note.topic;
-     if(!$('lpSubject').value)$('lpSubject').value=note.subject;
-    }else{
-     $('examReferenceNotes').textContent=note.content;
-     $('examReferencePanel').hidden=false;
-     $('examReferencePanel').open=true;
-     if(!$('examTitle').value)$('examTitle').value=note.topic;
-     if(!$('examClass').value)$('examClass').value=note.subject+' · '+note.level;
-    }
-    go(page);
+   button.onclick=async()=>{
+    const user=cloudUser;
+    if(!user)return;
+    const fields=page==='lesson'?['lpTopic','lpOutcomes']:page==='resources'?['resTopic','resSource']:['examTitle','examQuestions'];
+    if(fields.some(id=>$(id).value.trim())&&!confirm('Replace the open draft with this topic?'))return;
+    button.disabled=true;
+    try{
+     const {data,error}=await lesediAuthClient.rpc('lesedi_topic_draft',{p_id:note.id,p_kind:page});
+     if(cloudUser?.id!==user.id)return;
+     if(error||!data){showToast('Could not open this draft. Please try again.');return}
+     $(fields[0]).value=note.topic;$(fields[1]).value=data;
+     if(page==='lesson'){
+      $('lpSubject').value=note.subject;$('lpClass').value=note.level;
+      $('lpLevel').value='Primary (Standards 1–7)';$('lpSource').value='';
+      $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
+      generatePlan();
+     }
+     if(page==='resources')makeResource();
+     if(page==='exam'){
+      $('examClass').value=note.subject+' · '+note.level;
+      $('examKey').value='';$('digitalQuestions').replaceChildren();
+      $('examReferencePanel').hidden=true;$('examReferenceNotes').textContent='';
+     }
+     go(page);
+    }finally{button.disabled=false}
    };
    card.append(button);
   }
@@ -659,8 +662,7 @@ async function loadSchemeSyllabus(){
  const request=++schemeSyllabusRequest;
  status.textContent='Loading syllabus…';
  $('schemeSyllabusFields').hidden=true;
- const {data,error}=await lesediAuthClient.from('lesedi_syllabus_objectives')
-  .select('id,standard,subject,topic,code,objective,source_page').order('standard').order('subject').order('id');
+ const {data,error}=await lesediAuthClient.rpc('lesedi_syllabus_catalogue');
  if(request!==schemeSyllabusRequest||cloudUser?.id!==user.id)return;
  schemeSyllabusRows=error?[]:data;
  if(error){status.textContent='Could not load the syllabus. Close and reopen to retry.';return}
@@ -672,12 +674,15 @@ async function loadSchemeSyllabus(){
 }
 $('schemeSyllabus').addEventListener('toggle',()=>{if($('schemeSyllabus').open)loadSchemeSyllabus()});
 $('schemeStandard').onchange=updateSchemeSubjects;
-$('loadSchemeTopics').onclick=()=>{
- if(!cloudUser)return;
+$('loadSchemeTopics').onclick=async()=>{
+ const user=cloudUser;
+ if(!user)return;
  const standard=$('schemeStandard').value,subject=$('schemeSubject').value;
- const rows=schemeSyllabusRows.filter(row=>String(row.standard)===standard&&row.subject===subject);
- if(!rows.length)return;
  if($('swTopics').value.trim()&&!confirm('Replace the topic list with syllabus topics?'))return;
+ const request=++schemeSyllabusRequest;
+ const {data:rows,error}=await lesediAuthClient.rpc('lesedi_syllabus_plan',{p_standard:Number(standard),p_subject:subject,p_topic:null});
+ if(request!==schemeSyllabusRequest||cloudUser?.id!==user.id)return;
+ if(error||!rows?.length){showToast('No scheme draft is available for this subject.');return}
  schemeSelectedRows=rows;
  $('swSubject').value=subject;
  $('swClass').value='Standard '+standard;
@@ -705,7 +710,7 @@ function buildScheme(){
  const body=output.querySelector('tbody');
  for(let i=0;i<weeks;i++){
   const topic=topics[i]||'';
-  const outcomes=matching.filter(row=>row.topic===topic).map(row=>row.code+' '+row.objective+' (PDF p. '+row.source_page+')').join('\n');
+  const outcomes=matching.filter(row=>row.topic===topic).map(row=>row.code+' '+row.outcome).join('\n');
   const tr=document.createElement('tr');
   const values=[String(i+1),topic,outcomes,'',''];
   const labels=['Week','Topic','Learning outcomes','Activities and resources','Assessment'];
@@ -1622,12 +1627,12 @@ async function uploadDocumentToCloud(){
 (() => {
  const picker=$('syllabusPicker'),status=$('syllabusStatus'),fields=$('syllabusFields');
  const standard=$('syllabusStandard'),subject=$('syllabusSubject'),topic=$('syllabusTopic');
- const objectives=$('syllabusObjectives');
+
  let rows=[],request=0;
  function clear(){
   request++;rows=[];fields.hidden=true;
   [standard,subject,topic].forEach(select=>select.replaceChildren());
-  objectives.querySelectorAll('label').forEach(label=>label.remove());
+
   status.textContent='Sign in with an approved teacher account to select syllabus objectives.';
  }
  function choices(select,values,label=value=>value){
@@ -1635,18 +1640,9 @@ async function uploadDocumentToCloud(){
   select.replaceChildren(...[...new Set(values)].map(value=>new Option(label(value),value)));
   if([...select.options].some(option=>option.value===previous))select.value=previous;
  }
- function showObjectives(){
-  objectives.querySelectorAll('label').forEach(label=>label.remove());
-  rows.filter(row=>String(row.standard)===standard.value&&row.subject===subject.value&&row.topic===topic.value).forEach(row=>{
-   const label=document.createElement('label');label.style.display='block';
-   const input=document.createElement('input');input.type='checkbox';input.value=row.id;input.checked=true;input.style.width='auto';
-   label.append(input,document.createTextNode(' '+row.code+' · '+row.objective+' (PDF p. '+row.source_page+')'));
-   objectives.append(label);
-  });
- }
  function showTopics(){
   choices(topic,rows.filter(row=>String(row.standard)===standard.value&&row.subject===subject.value).map(row=>row.topic));
-  showObjectives();
+
  }
  function showSubjects(){
   choices(subject,rows.filter(row=>String(row.standard)===standard.value).map(row=>row.subject));
@@ -1657,32 +1653,32 @@ async function uploadDocumentToCloud(){
   if(!user){clear();return}
   const call=++request;
   status.textContent='Loading syllabus objectives…';
-  const {data,error}=await lesediAuthClient.from('lesedi_syllabus_objectives')
-   .select('id,standard,subject,topic,code,objective,source_page')
-   .order('standard').order('subject').order('topic').order('id');
+  const {data,error}=await lesediAuthClient.rpc('lesedi_syllabus_catalogue');
   if(call!==request||cloudUser?.id!==user.id)return;
   rows=error?[]:data;
   fields.hidden=!rows.length;
   if(error){status.textContent='Could not load the Syllabus Bank. Close and reopen this panel to retry.';return}
   if(!rows.length){status.textContent='No syllabus objectives are available for this account. Ask the administrator to enable teacher access.';return}
-  status.textContent='Choose a topic. Its outcomes are selected automatically. Untick any you want to leave out.';
+  status.textContent='Choose a topic, then load its editable lesson outcomes.';
   choices(standard,rows.map(row=>row.standard),value=>'Standard '+value);
   showSubjects();
  }
  picker.addEventListener('toggle',()=>{if(picker.open)load()});
- standard.onchange=showSubjects;subject.onchange=showTopics;topic.onchange=showObjectives;
- $('applySyllabus').onclick=()=>{
-  if(!cloudUser)return;
-  const selected=new Set([...objectives.querySelectorAll('input:checked')].map(input=>input.value));
-  const chosen=rows.filter(row=>selected.has(String(row.id)));
-  if(!chosen.length){status.textContent='Select at least one objective.';return}
-  if(['lpTopic','lpSubject','lpClass','lpOutcomes'].some(id=>$(id).value)&&!confirm('Replace the topic, subject, class and outcomes in the open planner?'))return;
+ standard.onchange=showSubjects;subject.onchange=showTopics;
+ $('applySyllabus').onclick=async()=>{
+  const user=cloudUser;
+  if(!user)return;
+  if(['lpTopic','lpSubject','lpClass','lpOutcomes'].some(id=>$(id).value)&&!confirm('Replace the lesson details in the open planner?'))return;
+  const call=++request;
+  const {data:chosen,error}=await lesediAuthClient.rpc('lesedi_syllabus_plan',{p_standard:Number(standard.value),p_subject:subject.value,p_topic:topic.value});
+  if(call!==request||cloudUser?.id!==user.id)return;
+  if(error||!chosen?.length){status.textContent='No lesson draft is available for this topic.';return}
   const first=chosen[0];
   $('lpTopic').value=first.topic;
   $('lpSubject').value=first.subject;
   $('lpClass').value='Standard '+first.standard;
   $('lpLevel').value='Primary (Standards 1–7)';
-  $('lpOutcomes').value=chosen.map(row=>row.code+' '+row.objective+' (syllabus PDF p. '+row.source_page+')').join('\n');
+  $('lpOutcomes').value=chosen.map(row=>row.code+' '+row.outcome).join('\n');
   const summary=$('lpSyllabusSummary');
   summary.textContent='Standard '+first.standard+' · '+first.subject+' · '+first.topic+' · '+chosen.length+' learning outcome(s) loaded';
   summary.hidden=false;
