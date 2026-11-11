@@ -157,7 +157,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <div class="two-col"><div class="field"><label>Assessment title</label><input id="examTitle" placeholder="e.g. End of Term Science Test"></div><div class="field"><label>Subject / class</label><input id="examClass" placeholder="e.g. Standard 7 Science"></div></div>
     <div class="field"><label>Question text</label><textarea id="examQuestions" placeholder="Paste or type questions here."></textarea></div>
     <div class="field"><label>Teacher-verified answer key (optional)</label><textarea id="examKey" placeholder="Enter verified answers separately. Leave blank if not yet checked."></textarea></div>
-    <div class="notice">No answer is assumed to be correct. Questions and answer keys must be checked by an authorised teacher before an examination is published. Essays and long answers require teacher review or teacher-approved marking.</div>
+    <div class="notice">Before publishing, check each question and answer key. Upload official papers or marking schemes only if Education Lesedi has permission to use them. Written responses require teacher review.</div>
     <button class="btn primary" onclick="saveExamDraft()">Save examination draft</button>
     <div id="examStatus"></div>
     <div class="card" id="digitalExamRunner">
@@ -303,7 +303,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <div class="tile"><div class="tile-icon">🔎</div><h3>Learning gaps</h3><p>Identify topics that need further teaching.</p></div>
     <div class="tile"><div class="tile-icon">📈</div><h3>Progress over time</h3><p>Compare assessments across terms.</p></div>
   </div>
-  <div class="notice">Live learner analytics require student accounts, completed assessments and a central database. No learner data is being collected by this prototype.</div>
+  <div class="notice">Class results will appear here when learner submissions are connected.</div>
 </section>
 
 <section class="page" id="school">
@@ -316,7 +316,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </section>
 
 <section class="page" id="subject-notes"><div class="section-head"><div><h2>Subject Question Bank</h2><p>Choose a subject to practise with questions drawn from the uploaded notes. Each attempt shuffles the questions and options.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="steam-assessments"><div class="section-head"><div><h2>STEAM Assessments</h2><p>Choose a subject and start a short STEAM quiz, test or exam. The Agriculture school garden unit includes labelled STEAM questions.</p></div></div><details class="card"><summary><strong>Teacher introduction to STEAM</strong></summary><p>A short introduction for teachers and tutors. No certificate is awarded.</p><h3>1. Start with a practical problem</h3><p>Use the Standard 5 school garden unit. Ask learners how they could water seedlings using a recycled bottle and a limited amount of water.</p><h3>2. Label the skill learners demonstrate</h3><p>Use Science for investigating, Technology for selecting or using tools, Engineering for designing and testing, Arts for purposeful visual communication, and Mathematics for measuring, calculating or interpreting data. Add a secondary label only when the question assesses that skill too.</p><h3>3. Choose the evidence and marking method</h3><p>The quiz checks three objective skills. The test adds a design task. The exam adds visual communication and a design-and-calculation task. Objective items are automatically marked. Use the rubrics below to award marks for written work.</p><h3>4. Review before publishing</h3><p>Use the Examination Studio to prepare a school assessment. Check the level, question wording, answer key and rubric before approving and publishing it.</p><h3>Worked examples for teacher marking</h3><details><summary>Engineering marking example</summary><p>A recycled bottle drip system empties too quickly. Describe one design change and a fair test to check whether it works.</p><p>3 marks. Award 1 for a feasible design change, 1 for keeping relevant conditions the same, and 1 for comparing the time or water delivered.</p><p><strong>Sample full-credit response.</strong> Use a smaller outlet. Start both bottles with the same amount of water and keep them at the same height. Time how long each takes to deliver 250 mL.</p></details><details><summary>Arts marking example</summary><p>Plan a three-panel illustrated guide showing younger learners how to fill, place and check the bottle. Describe what each panel shows and how you would make the order clear.</p><p>3 marks. Award 1 for covering all three steps in order, 1 for visuals that clarify each step, and 1 for a clear sequence cue such as arrows or numbers.</p><p><strong>Sample full-credit response.</strong> Panel 1 shows water pouring into the bottle, panel 2 shows the bottle beside a seedling, and panel 3 shows a learner checking the water level. Large numbers and arrows show the order.</p></details><details><summary>Engineering + Mathematics marking example</summary><p>A bottle delivers 250 mL in 20 minutes. If it runs at the same rate, how much will it deliver in 60 minutes? Explain how you would check that prediction with your prototype.</p><p>3 marks. Award 1 for 750 mL, 1 for showing three 20-minute intervals or equivalent reasoning, and 1 for a feasible 60-minute test using a measuring container.</p><p><strong>Sample full-credit response.</strong> 60 ÷ 20 = 3, so 3 × 250 mL = 750 mL. Run the bottle for 60 minutes with enough water and measure what collects in a marked jug.</p></details></details><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="library">
-  <div class="section-head"><div><h2>My Resource Library</h2><p>Items saved locally in this browser during the prototype.</p></div></div>
+  <div class="section-head"><div><h2>My Resource Library</h2><p>Sign in to find your private uploads, saved documents and exam drafts.</p></div></div>
   <div class="card"><h3>Saved documents</h3><div id="savedDocs" class="muted small">No saved documents.</div></div>
   <div class="card"><h3>Saved examination drafts</h3><div id="savedExams" class="muted small">No examination drafts.</div></div>
   <div class="notice" id="cloudLibraryStatus" role="status">Sign in to see your private cloud library.</div>
@@ -665,7 +665,18 @@ function renderBotswanaExams(){
 function openPracticeSet(id){
  const set=botswanaPracticeSets.find(x=>x.id===id); if(!set)return;
  const out=document.getElementById('becPreview');
- out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Sample practice questions for demonstration. These are not represented as official BEC past-paper questions. Teacher/examiner verification is required before formal assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" onclick="document.getElementById('examTitle').value='${escapeHTML(set.title).replace(/'/g,'&#39;')}';document.getElementById('examClass').value='${escapeHTML(set.className+' '+set.subject).replace(/'/g,'&#39;')}';document.getElementById('examQuestions').value=${JSON.stringify(set.questions.map((q,i)=>`${i+1}. ${q.q}\n${q.o.map((o,j)=>String.fromCharCode(65+j)+') '+o).join('\n')}`).join('\n\n'))};go('exam')">Send questions to Examination Studio</button></div>`;
+ out.innerHTML=`<div class="lesson-output"><h3>${escapeHTML(set.title)}</h3><p class="muted small">${escapeHTML(set.level)} • ${escapeHTML(set.className)} • ${escapeHTML(set.subject)}</p><div class="notice">Independent revision questions. A teacher or examiner should verify them before using them in an assessment.</div>${set.questions.map((q,i)=>`<div class="lesson-block"><b>${i+1}. ${escapeHTML(q.q)}</b><ol type="A">${q.o.map(o=>`<li>${escapeHTML(o)}</li>`).join('')}</ol></div>`).join('')}<button class="btn outline" type="button" data-send-practice>Send questions to Examination Studio</button></div>`;
+ out.querySelector('[data-send-practice]').onclick=()=>{
+  $('examTitle').value=set.title;
+  $('examClass').value=set.className+' '+set.subject;
+  $('examQuestions').value=set.questions.map((question,index)=>
+   (index+1)+'. '+question.q+'\n'+question.o.map((option,position)=>
+    String.fromCharCode(65+position)+') '+option).join('\n')
+  ).join('\n\n');
+  $('examKey').value='';
+  $('examStatus').textContent='';
+  go('exam');
+ };
 }
 
 // Supabase email registration and sign-in.
