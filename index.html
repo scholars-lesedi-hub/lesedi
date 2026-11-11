@@ -160,7 +160,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <div class="field"><label>Question text</label><textarea id="examQuestions" placeholder="Paste or type questions here."></textarea></div>
     <div class="field"><label>Teacher-verified answer key (optional)</label><textarea id="examKey" placeholder="Enter verified answers separately. Leave blank if not yet checked."></textarea></div>
     <div class="notice">Before publishing, check each question and answer key. Upload official papers or marking schemes only if Education Lesedi has permission to use them. Written responses require teacher review.</div>
-    <button class="btn primary" onclick="saveExamDraft()">Save examination draft</button>
+    <div class="card"><h3>Digital questions</h3><p>Import numbered questions from the text above, or add a question manually. Review the wording and choose the verified answer for each multiple-choice question.</p><button type="button" class="btn outline" onclick="importDigitalQuestions()">Import numbered questions</button> <button type="button" class="btn outline" onclick="addDigitalQuestion()">Add question</button><div id="digitalQuestions"></div></div><button class="btn primary" onclick="saveExamDraft()">Save examination draft</button>
     <div id="examStatus"></div>
     <div class="card" id="digitalExamRunner">
   <h3>Digital Examination Preview</h3>
@@ -585,7 +585,7 @@ async function extractDocument(){
  }
 }
 function useTextForLesson(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return} $('lpSource').value=$('extractedText').value; $('lpTopic').value=$('docTitle').value||$('lpTopic').value;go('lesson')}
-function useTextForExam(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return}$('examQuestions').value=$('extractedText').value;$('examTitle').value=$('docTitle').value||'';go('exam')}
+function useTextForExam(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return}$('examQuestions').value=$('extractedText').value;$('examTitle').value=$('docTitle').value||'';$('examKey').value='';$('digitalQuestions').replaceChildren();go('exam')}
 async function saveDocument(){
  const title=$('docTitle').value.trim()||'Untitled document',content=$('extractedText').value.trim();
  if(!content){showToast('There is no extracted text to save.');return}
@@ -622,94 +622,118 @@ function openSavedPlan(i){
  generatePlan();go('lesson');
 }
 function buildScheme(){const topics=$('swTopics').value.split('\n').map(x=>x.trim()).filter(Boolean),weeks=Math.max(1,Math.min(20,Number($('swWeeks').value)||10));if(!topics.length){showToast('Enter at least one topic.');return}let rows='';for(let i=0;i<weeks;i++){const topic=topics[i%topics.length];rows+=`<tr><td>${i+1}</td><td>${escapeHTML(topic)}</td><td>To be completed by teacher</td><td>Teacher-selected activities and resources</td><td>Classwork / questioning / exercise</td></tr>`}$('schemeOutput').innerHTML=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML($('swSubject').value)} — ${escapeHTML($('swClass').value)} — ${escapeHTML($('swTerm').value)}</h3><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr>${['Week','Topic','Learning outcomes','Activities/resources','Assessment'].map(x=>`<th style="text-align:left;padding:9px;border-bottom:2px solid #2457c5">${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">Draft planner. Replace placeholders with the official syllabus sequence and school calendar.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`}
+
+function parseDigitalQuestions(text){
+ const questions=[];
+ let current=null;
+ for(const line of text.split(/\r?\n/)){
+  const heading=line.match(/^\s*(?:Question\s+)?\d+[.)]\s+(.+)/i);
+  const option=line.match(/^\s*([A-D])[.)]\s+(.+)/i);
+  if(heading){current={text:heading[1],options:{},marks:1};questions.push(current)}
+  else if(current&&option)current.options[option[1].toUpperCase()]=option[2];
+  else if(current&&line.trim())current.text+='\n'+line.trim();
+ }
+ return questions.map(q=>({text:q.text,marks:q.marks,type:Object.keys(q.options).length?'objective':'written',options:['A','B','C','D'].map(letter=>q.options[letter]||'')}));
+}
+function importDigitalQuestions(){
+ const questions=parseDigitalQuestions($('examQuestions').value);
+ if(!questions.length){showToast('No numbered questions found. Use a format like 1. Question text, or add questions manually.');return}
+ const list=$('digitalQuestions');
+ if(list.children.length&&!confirm('Replace the current digital questions with the imported text?'))return;
+ list.replaceChildren();
+ questions.forEach(addDigitalQuestion);
+ showToast('Imported '+questions.length+' question(s). Verify each question and answer.');
+}
+function addDigitalQuestion(q={}){
+ const card=document.createElement('div');card.className='card';
+ card.innerHTML='<label class="field">Question text<textarea data-q="text"></textarea></label><label class="field">Type<select data-q="type"><option value="objective">Multiple choice</option><option value="written">Written response</option></select></label><label class="field">Marks<input data-q="marks" type="number" min="1" max="100" step="1"></label><div data-q="choices"></div><label class="field" data-q="rubricRow">Marking guidance<textarea data-q="rubric"></textarea></label><button type="button" class="btn outline" data-q="remove">Remove question</button>';
+ const field=key=>card.querySelector('[data-q="'+key+'"]');
+ field('text').value=q.text||'';
+ field('type').value=q.type||'objective';
+ field('marks').value=q.marks||1;
+ field('rubric').value=q.rubric||'';
+ field('choices').innerHTML=['A','B','C','D'].map((letter,i)=>'<label class="field">Option '+letter+'<input data-q="option'+i+'"></label>').join('')+'<label class="field">Verified correct option<select data-q="answer"><option value="">Choose an answer</option><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select></label>';
+ for(let i=0;i<4;i++)field('option'+i).value=q.options?.[i]||'';
+ field('answer').value=q.answer??'';
+ const toggle=()=>{
+  field('choices').hidden=field('type').value==='written';
+  field('rubricRow').style.display=field('type').value==='written'?'':'none';
+ };
+ field('type').onchange=toggle;toggle();
+ field('remove').onclick=()=>card.remove();
+ $('digitalQuestions').append(card);
+}
+function readDigitalQuestions(){
+ return [...$('digitalQuestions').children].map((card,i)=>{
+  const read=key=>card.querySelector('[data-q="'+key+'"]').value.trim();
+  const text=read('text'),type=read('type'),marks=Number(read('marks'));
+  const fail=message=>{throw Error('Question '+(i+1)+': '+message)};
+  if(!text||!Number.isInteger(marks)||marks<1||marks>100)fail('enter question text and whole-number marks from 1 to 100.');
+  if(type==='written')return {text,type,marks,rubric:read('rubric')};
+  const options=[0,1,2,3].map(j=>read('option'+j));
+  const answer=read('answer');
+  if(options.filter(Boolean).length<2||!answer||!options[Number(answer)])fail('enter at least two options and select a verified answer.');
+  return {text,type,marks,options,answer:Number(answer)};
+ });
+}
 async function saveExamDraft(){
  const title=$('examTitle').value.trim(),questions=$('examQuestions').value.trim();
- if(!title||!questions){showToast('Enter an assessment title and question content.');return}
- if(await saveCloudResource('exams',{title,subject:$('examClass').value,questions,key:$('examKey').value,status:'Draft'})){
-  $('examStatus').textContent='Draft saved privately. Teacher verification is required before publication.';
+ let digitalQuestions;
+ try{digitalQuestions=readDigitalQuestions()}catch(error){showToast(error.message);return}
+ if(!title||(!questions&&!digitalQuestions.length)){showToast('Enter an assessment title and at least one question.');return}
+ if(await saveCloudResource('exams',{title,subject:$('examClass').value,questions,key:$('examKey').value,status:'Draft',digitalQuestions})){
+  $('examStatus').textContent='Draft saved privately. Review it before publication.';
  }
 }
-let learnerExamQuestions = [
-  {
-    question: "What is 15% of P200?",
-    options: ["P15", "P20", "P30", "P40"],
-    answer: 2
-  },
-  {
-    question: "Solve: 3x + 6 = 18.",
-    options: ["2", "3", "4", "6"],
-    answer: 2
-  },
-  {
-    question: "What is the square root of 144?",
-    options: ["10", "11", "12", "14"],
-    answer: 2
-  }
+const demoDigitalQuestions=[
+ {text:'What is 15% of P200?',type:'objective',options:['P15','P20','P30','P40'],answer:2,marks:1},
+ {text:'Solve: 3x + 6 = 18.',type:'objective',options:['2','3','4','6'],answer:2,marks:1},
+ {text:'What is the square root of 144?',type:'objective',options:['10','11','12','14'],answer:2,marks:1}
 ];
-
-let learnerCurrentQuestion = 0;
-let learnerAnswers = {};
-
+let previewQuestions=[],previewAnswers=[],previewIndex=0;
 function startDigitalExam(){
-  learnerCurrentQuestion = 0;
-  learnerAnswers = {};
-  renderDigitalQuestion();
+ try{
+  previewQuestions=readDigitalQuestions();
+  if(!previewQuestions.length&&$('examQuestions').value.trim()){
+   showToast('Import or add digital questions before previewing your draft.');return;
+  }
+  if(!previewQuestions.length)previewQuestions=demoDigitalQuestions;
+ }catch(error){showToast(error.message);return}
+ previewAnswers=Array(previewQuestions.length).fill('');
+ previewIndex=0;renderDigitalQuestion();
 }
-
 function renderDigitalQuestion(){
-  const q = learnerExamQuestions[learnerCurrentQuestion];
-  const area = document.getElementById('learnerExamArea');
-
-  area.innerHTML = `
-    <h4>Question ${learnerCurrentQuestion + 1} of ${learnerExamQuestions.length}</h4>
-    <p><b>${q.question}</b></p>
-    ${q.options.map((option, i) => `
-      <label style="display:block;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;cursor:pointer">
-        <input type="radio" name="learnerAnswer" value="${i}"
-          ${learnerAnswers[learnerCurrentQuestion] === i ? 'checked' : ''}
-          onchange="learnerAnswers[learnerCurrentQuestion]=Number(this.value)">
-        ${String.fromCharCode(65+i)}. ${option}
-      </label>
-    `).join('')}
-    <p>Answered: ${Object.keys(learnerAnswers).length} / ${learnerExamQuestions.length}</p>
-    <button class="btn outline" onclick="previousDigitalQuestion()" ${learnerCurrentQuestion===0?'disabled':''}>Previous</button>
-    <button class="btn primary" onclick="nextDigitalQuestion()">
-      ${learnerCurrentQuestion===learnerExamQuestions.length-1?'Submit':'Next'}
-    </button>
-  `;
-}
-
-function previousDigitalQuestion(){
-  if(learnerCurrentQuestion>0){
-    learnerCurrentQuestion--;
-    renderDigitalQuestion();
-  }
-}
-
-function nextDigitalQuestion(){
-  if(learnerCurrentQuestion<learnerExamQuestions.length-1){
-    learnerCurrentQuestion++;
-    renderDigitalQuestion();
-  }else{
-    submitDigitalExam();
-  }
-}
-
-function submitDigitalExam(){
-  const unanswered = learnerExamQuestions.length - Object.keys(learnerAnswers).length;
-
-  if(unanswered>0){
-    alert('Please answer all questions before submitting. Unanswered: '+unanswered);
-    return;
-  }
-
-  let score = 0;
-  learnerExamQuestions.forEach((q,i)=>{
-    if(learnerAnswers[i]===q.answer) score++;
+ const area=$('learnerExamArea'),q=previewQuestions[previewIndex];
+ area.innerHTML='<h4>Question '+(previewIndex+1)+' of '+previewQuestions.length+'</h4><p style="white-space:pre-wrap">'+escapeHTML(q.text)+'</p><div data-response></div><p><button type="button" class="btn outline" data-prev>Previous</button> <button type="button" class="btn primary" data-next></button></p>';
+ const response=area.querySelector('[data-response]');
+ if(q.type==='written'){
+  const label=document.createElement('label');label.className='field';label.textContent='Your written response';
+  const input=document.createElement('textarea');input.value=previewAnswers[previewIndex];
+  input.oninput=()=>{previewAnswers[previewIndex]=input.value};
+  label.append(input);response.append(label);
+ }else{
+  q.options.forEach((option,i)=>{
+   if(!option)return;
+   const label=document.createElement('label');label.style.display='block';
+   const input=document.createElement('input');input.type='radio';input.name='digitalPreviewAnswer';input.style.width='auto';
+   input.checked=previewAnswers[previewIndex]===String(i);
+   input.onchange=()=>{previewAnswers[previewIndex]=String(i)};
+   label.append(input,document.createTextNode(' '+String.fromCharCode(65+i)+'. '+option));response.append(label);
   });
-
-  document.getElementById('learnerExamArea').innerHTML =
-    '<h3>Examination submitted</h3><p>Your score: '+score+' / '+learnerExamQuestions.length+'</p>';
+ }
+ const prev=area.querySelector('[data-prev]'),next=area.querySelector('[data-next]');
+ prev.disabled=previewIndex===0;prev.onclick=()=>{previewIndex--;renderDigitalQuestion()};
+ next.textContent=previewIndex===previewQuestions.length-1?'Submit preview':'Next';
+ next.onclick=()=>{if(previewIndex<previewQuestions.length-1){previewIndex++;renderDigitalQuestion()}else submitDigitalExam()};
+}
+function submitDigitalExam(){
+ if(previewAnswers.some(answer=>!answer.trim())){showToast('Answer every question before submitting.');return}
+ let score=0,total=0,written=0;
+ previewQuestions.forEach((q,i)=>{
+  if(q.type==='written'){written++;return}
+  total+=q.marks;if(q.answer===Number(previewAnswers[i]))score+=q.marks;
+ });
+ $('learnerExamArea').innerHTML='<h3>Preview complete</h3><p>Objective marks: '+score+' / '+total+'</p>'+(written?'<p>Written responses for teacher review: '+written+'</p>':'')+'<p>Preview results are not recorded.</p><button type="button" class="btn outline" onclick="startDigitalExam()">Restart preview</button>';
 }
   function makeResource(){const topic=$('resTopic').value.trim(),source=$('resSource').value.trim(),type=$('resType').value;if(!topic){showToast('Enter a topic first.');return}const output=`<div class="lesson-output" style="margin-top:16px"><h3>${escapeHTML(type)}: ${escapeHTML(topic)}</h3><p><b>Purpose:</b> Support learning and revision on ${escapeHTML(topic)}.</p><p><b>Key concepts:</b> Identify the main concepts from the approved syllabus and source notes.</p><p><b>Learning activity:</b> Ask learners to explain, practise and apply the topic using examples.</p><p><b>Check understanding:</b> Include short questions and a teacher-reviewed task.</p>${source?`<h4>Source notes</h4><div class="preview">${escapeHTML(source)}</div>`:'<p class="muted small">Add source notes to make this resource specific and factually grounded.</p>'}<p class="small muted">This is a structured outline, not a verified subject resource. Review content before distribution.</p><button class="btn primary no-print" onclick="window.print()">Print / Save PDF</button></div>`;$('resourceOutput').innerHTML=output}
 function aiPlaceholder(){const p=$('aiPrompt').value.trim();if(!p){showToast('Enter a request first.');return}$('aiResult').innerHTML='<div class="notice"><b>AI request prepared.</b><br>Task: '+escapeHTML($('aiTask').value)+'<br>Request: '+escapeHTML(p)+'<br><br>To generate a real response, connect this form to a secure backend AI endpoint. Never place a private API key in this HTML file.</div>'}
@@ -719,6 +743,7 @@ function openCloudExam(id){
  if(!exam)return;
  $('examTitle').value=exam.title;$('examClass').value=exam.subject;
  $('examQuestions').value=exam.questions;$('examKey').value=exam.key;
+ $('digitalQuestions').replaceChildren();(exam.digitalQuestions||[]).forEach(addDigitalQuestion);
  go('exam');
 }
 function loadDoc(id){const d=store.get('docs').find(x=>x.id===id);if(d){$('docTitle').value=d.title;$('extractedText').value=d.content;go('convert')}}
@@ -768,6 +793,7 @@ function openPracticeSet(id){
     String.fromCharCode(65+position)+') '+option).join('\n')
   ).join('\n\n');
   $('examKey').value='';
+  $('digitalQuestions').replaceChildren();
   $('examStatus').textContent='';
   go('exam');
  };
@@ -984,7 +1010,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearNotesBank();cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
