@@ -163,19 +163,22 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="lesson"><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><fieldset id="syllabusObjectives"><legend>Choose learning objectives</legend></fieldset><p><button type="button" class="btn primary" id="applySyllabus">Use selected objectives</button></p></div></details>
+<section class="page" id="lesson"><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><fieldset id="syllabusObjectives"><legend>Choose learning objectives</legend></fieldset><p><button type="button" class="btn primary" id="applySyllabus">Use topic and outcomes</button></p></div></details>
   <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable teaching plan using your topic or extracted document.</p></div></div>
   <div class="card">
     <div class="two-col">
-      <div class="field"><label>Lesson topic</label><input id="lpTopic" placeholder="e.g. Photosynthesis"></div>
-      <div class="field"><label>Education level</label><select id="lpLevel"><option>Pre-primary</option><option>Primary (Standards 1–7)</option><option>Junior secondary (Forms 1–3)</option><option>Senior secondary (Forms 4–5)</option><option>Adult education</option><option>Technical and vocational</option><option>Tertiary education</option><option>Teacher development</option><option>Special and inclusive education</option></select></div>
-      <div class="field"><label>Subject</label><input id="lpSubject" placeholder="e.g. Integrated Science"></div>
-      <div class="field"><label>Class / Form</label><input id="lpClass" placeholder="e.g. Standard 7"></div>
       <div class="field"><label>Duration</label><select id="lpDuration"><option>40 minutes</option><option>60 minutes</option><option>80 minutes</option><option>Double period</option><option>Other / flexible</option></select></div>
       <div class="field"><label>Class size</label><input id="lpSize" type="number" min="1" placeholder="e.g. 35"></div>
     </div>
+    <p id="lpSyllabusSummary" class="notice" hidden></p>
+    <details id="lpManualFields" open><summary>Lesson details and learning outcomes</summary>
+    <div class="two-col"><div class="field"><label>Lesson topic</label><input id="lpTopic" placeholder="e.g. Photosynthesis"></div>
+      <div class="field"><label>Education level</label><select id="lpLevel"><option>Pre-primary</option><option>Primary (Standards 1–7)</option><option>Junior secondary (Forms 1–3)</option><option>Senior secondary (Forms 4–5)</option><option>Adult education</option><option>Technical and vocational</option><option>Tertiary education</option><option>Teacher development</option><option>Special and inclusive education</option></select></div>
+      <div class="field"><label>Subject</label><input id="lpSubject" placeholder="e.g. Integrated Science"></div>
+      <div class="field"><label>Class / Form</label><input id="lpClass" placeholder="e.g. Standard 7"></div></div>
     <div class="field"><label>Learning outcomes / curriculum requirements (optional)</label><textarea id="lpOutcomes" placeholder="Paste the relevant syllabus outcomes or learning objectives."></textarea></div>
     <div class="field"><label>Source content (optional — from your converted document)</label><textarea id="lpSource" placeholder="Paste notes or extracted source content here."></textarea></div>
+    </details>
     <button class="btn primary" onclick="generatePlan()">Create editable lesson plan</button>
   </div>
   <div id="lessonResult" style="margin-top:16px"></div>
@@ -660,6 +663,7 @@ async function saveCurrentPlan(){
 }
 function renderPlans(){const a=store.get('plans');$('savedPlans').innerHTML=a.length?a.map((p,i)=>`<div class="list-item"><div><b>${escapeHTML(p.topic)}</b><div class="small muted">${escapeHTML(p.level)} • ${escapeHTML(p.date)}</div></div><button class="btn outline" onclick="openSavedPlan(${i})">View</button></div>`).join(''):'No plans saved on this device yet.'}
 function openSavedPlan(i){
+ $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
  const p=store.get('plans')[i];
  if(!p)return;
  const fields={lpTopic:'topic',lpLevel:'level',lpSubject:'subject',lpClass:'className',lpDuration:'duration',lpSize:'size',lpOutcomes:'outcomes',lpSource:'source'};
@@ -1521,7 +1525,7 @@ async function uploadDocumentToCloud(){
   objectives.querySelectorAll('label').forEach(label=>label.remove());
   rows.filter(row=>String(row.standard)===standard.value&&row.subject===subject.value&&row.topic===topic.value).forEach(row=>{
    const label=document.createElement('label');label.style.display='block';
-   const input=document.createElement('input');input.type='checkbox';input.value=row.id;input.style.width='auto';
+   const input=document.createElement('input');input.type='checkbox';input.value=row.id;input.checked=true;input.style.width='auto';
    label.append(input,document.createTextNode(' '+row.code+' · '+row.objective+' (PDF p. '+row.source_page+')'));
    objectives.append(label);
   });
@@ -1547,7 +1551,7 @@ async function uploadDocumentToCloud(){
   fields.hidden=!rows.length;
   if(error){status.textContent='Could not load the Syllabus Bank. Close and reopen this panel to retry.';return}
   if(!rows.length){status.textContent='No syllabus objectives are available for this account. Ask the administrator to enable teacher access.';return}
-  status.textContent='Choose a topic and the objectives you want to teach.';
+  status.textContent='Choose a topic. Its outcomes are selected automatically. Untick any you want to leave out.';
   choices(standard,rows.map(row=>row.standard),value=>'Standard '+value);
   showSubjects();
  }
@@ -1565,10 +1569,14 @@ async function uploadDocumentToCloud(){
   $('lpClass').value='Standard '+first.standard;
   $('lpLevel').value='Primary (Standards 1–7)';
   $('lpOutcomes').value=chosen.map(row=>row.code+' '+row.objective+' (syllabus PDF p. '+row.source_page+')').join('\n');
-  status.textContent='Objectives added. Set the duration, then select Generate lesson plan.';
-  $('lpTopic').scrollIntoView({block:'nearest'});
+  const summary=$('lpSyllabusSummary');
+  summary.textContent='Standard '+first.standard+' · '+first.subject+' · '+first.topic+' · '+chosen.length+' learning outcome(s) loaded';
+  summary.hidden=false;
+  $('lpManualFields').open=false;
+  status.textContent='Outcomes added. Set the duration and class size, then create the lesson plan.';
+  $('lpDuration').focus();
  };
- document.addEventListener('lesedi-syllabus-signout',()=>{clear();picker.open=false});
+ document.addEventListener('lesedi-syllabus-signout',()=>{clear();picker.open=false;$('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true});
 })();
 </script></body>
 </html>
