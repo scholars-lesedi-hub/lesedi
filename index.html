@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#102b5c">
 <title>Education Lesedi Scholars Hub | Click • Press • Learn</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/tesseract.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -104,17 +105,17 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <section class="page" id="convert">
   <div class="section-head"><div><h2>Hardcopy-to-Digital Converter</h2><p>Upload a document, extract its text and review it before creating resources.</p></div><span class="pill">DOCUMENT WORKSPACE</span></div>
   <div class="card">
-    <div class="dropzone"><div style="font-size:35px">📤</div><strong>Upload your teaching or examination material</strong><p class="muted small">Supported in this prototype: PDF, DOCX and TXT. Image OCR and scanned-PDF recognition need an OCR service.</p><input id="fileInput" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"></div><button type="button" onclick="uploadDocumentToCloud()" style="background:#102b5c;color:white;padding:12px 20px;border:0;border-radius:8px;margin-top:12px;cursor:pointer;">
+    <div class="dropzone"><div style="font-size:35px">📤</div><strong>Upload your teaching or examination material</strong><p class="muted small">Extract text from PDF, DOCX, TXT or a clear JPG, PNG or WebP photo. Scanned pages are read with English OCR.</p><input id="fileInput" type="file" accept=".pdf,.docx,.txt,.jpg,.jpeg,.png,.webp"></div><button type="button" onclick="uploadDocumentToCloud()" style="background:#102b5c;color:white;padding:12px 20px;border:0;border-radius:8px;margin-top:12px;cursor:pointer;">
   Save Original File Securely
 </button>
     <div class="two-col">
       <div class="field"><label>Resource title</label><input id="docTitle" placeholder="e.g. Standard 7 Mathematics Test"></div>
       <div class="field"><label>What do you want to create?</label><select id="docPurpose"><option>Extract and organise text</option><option>Lesson plan</option><option>Scheme of work</option><option>Worksheet</option><option>Digital examination</option><option>Revision notes</option><option>Study summary</option></select></div>
     </div>
-    <button class="btn primary" id="extractBtn" onclick="extractDocument()">Read and extract document</button>
+    <button id="extractDocumentButton" class="btn primary" id="extractBtn" onclick="extractDocument()">Read and extract document</button>
     <div id="extractStatus" aria-live="polite"></div>
     <div class="field"><label>Extracted text — review and correct before using</label><textarea id="extractedText" rows="12" placeholder="Your extracted document text will appear here. You can also paste text directly."></textarea></div>
-    <div class="notice">The converter does not invent missing questions or answer keys. Scanned pages may need OCR. Always compare extracted content with the original document.</div>
+    <label><input id="forceDocumentOcr" type="checkbox" style="width:auto"> Run OCR on every PDF page</label><div class="notice">Review the extracted text against the original paper. Check diagrams, maths symbols and question numbering, then enter and verify the answer key separately.</div>
     <button class="btn gold" onclick="useTextForLesson()">Use content for lesson plan</button>
     <button class="btn outline" onclick="useTextForExam()">Prepare examination draft</button>
     <button class="btn outline" onclick="saveDocument()">Save to this device</button>
@@ -399,28 +400,95 @@ function previewMerchantQR(event){
 
 function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function refreshStats(){$('statDocs').textContent=store.get('docs').length;$('statPlans').textContent=store.get('plans').length}
+let extractionRunning=false;
 async function extractDocument(){
- const f=$('fileInput').files[0];if(!f){showToast('Choose a PDF, DOCX or TXT file first.');return}
- if(f.size>20*1024*1024){showToast('For this prototype, choose a file smaller than 20 MB.');return}
- $('extractStatus').textContent='Reading document…';
- $('docTitle').value=$('docTitle').value||f.name.replace(/\.[^.]+$/,'');
+ const file=$('fileInput').files[0];
+ const status=$('extractStatus');
+ if(extractionRunning)return;
+ if(!file){showToast('Choose a PDF, photo, DOCX or TXT file first.');return}
+ if(file.size>20*1024*1024){showToast('Choose a file up to 20 MB.');return}
+ extractionRunning=true;
+ const button=$('extractDocumentButton');
+ button.disabled=true;
+ status.textContent='Reading document…';
+ const extension=file.name.split('.').pop().toLowerCase();
+ const forceOcr=$('forceDocumentOcr').checked;
+ const ocrPages=[],reviewPages=[];
+ let worker,pdf;
+ let pageLabel='image';
+ async function recognize(image){
+  if(!window.Tesseract)throw Error('The OCR library did not load. Refresh the page and try again.');
+  worker??=await Tesseract.createWorker('eng',1,{
+   logger:message=>{
+    if(message.status==='recognizing text')status.textContent='Reading '+pageLabel+' with OCR · '+Math.round(message.progress*100)+'%';
+   }
+  });
+  const {data}=await worker.recognize(image);
+  return {text:data.text.trim(),confidence:data.confidence};
+ }
  try{
   let text='';
-  if(f.name.toLowerCase().endsWith('.pdf')){
-   if(!window.pdfjsLib)throw Error('PDF reader library did not load.');
+  if(extension==='pdf'){
+   if(!window.pdfjsLib)throw Error('The PDF reader did not load. Refresh the page and try again.');
    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-   const data=new Uint8Array(await f.arrayBuffer());const pdf=await pdfjsLib.getDocument({data}).promise;
+   pdf=await pdfjsLib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;
    const pages=[];
-   for(let n=1;n<=pdf.numPages;n++){const page=await pdf.getPage(n);const tc=await page.getTextContent();pages.push(tc.items.map(x=>x.str).join(' '))}
+   for(let n=1;n<=pdf.numPages;n++){
+    pageLabel='page '+n+' of '+pdf.numPages;
+    status.textContent='Reading '+pageLabel+'…';
+    const page=await pdf.getPage(n);
+    const content=await page.getTextContent();
+    const embedded=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim();
+    let pageText=embedded;
+    if(forceOcr||embedded.replace(/\s/g,'').length<30){
+     const initial=page.getViewport({scale:1});
+     const viewport=page.getViewport({scale:Math.min(2.5,2400/Math.max(initial.width,initial.height))});
+     const canvas=document.createElement('canvas');
+     canvas.width=Math.ceil(viewport.width);
+     canvas.height=Math.ceil(viewport.height);
+     try{
+      await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;
+      const result=await recognize(canvas);
+      ocrPages.push(n);
+      if(result.text&&(!embedded||forceOcr||result.text.length>embedded.length))pageText=result.text;
+      if(!result.text||result.confidence<70)reviewPages.push(n);
+     }catch(error){
+      reviewPages.push(n);
+      console.warn('OCR failed on PDF page '+n,error);
+     }finally{canvas.width=0;canvas.height=0}
+    }
+    pages.push(pageText);
+    page.cleanup();
+   }
+   if(pages.every(page=>!page))throw Error('No readable text was found. Check that the scan is clear and that OCR loaded, then try again.');
    text=pages.join('\n\n');
-   if(text.trim().length<30)throw Error('This PDF appears to be scanned or image-only. OCR is not connected yet; use a searchable PDF or paste the text for now.');
-  }else if(f.name.toLowerCase().endsWith('.docx')){
-   if(!window.mammoth)throw Error('Word reader library did not load.');
-   const result=await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()});text=result.value;
-  }else if(f.name.toLowerCase().endsWith('.txt')){text=await f.text()}
-  else throw Error('Unsupported file. Please use PDF, DOCX or TXT.');
-  $('extractedText').value=text;$('extractStatus').innerHTML='<div class="success">Extracted text from '+escapeHTML(f.name)+'. Review the content carefully against the original before using it.</div>';
- }catch(e){$('extractStatus').innerHTML='<div class="notice">'+escapeHTML(e.message)+'</div>'}
+  }else if(['png','jpg','jpeg','webp'].includes(extension)){
+   const result=await recognize(file);
+   text=result.text;
+   if(!text)throw Error('OCR found no readable text in this photo. Try a sharper image with better lighting.');
+   ocrPages.push(1);
+   if(result.confidence<70)reviewPages.push(1);
+  }else if(extension==='docx'){
+   if(!window.mammoth)throw Error('The Word reader did not load. Refresh the page and try again.');
+   text=(await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()})).value;
+  }else if(extension==='txt'){
+   text=await file.text();
+  }else throw Error('Choose a PDF, JPG, PNG, WebP, DOCX or TXT file.');
+  if(!text.trim())throw Error('No readable text was found.');
+  if($('fileInput').files[0]!==file)return;
+  $('docTitle').value=$('docTitle').value||file.name.replace(/\.[^.]+$/,'');
+  $('extractedText').value=text;
+  const result=['Text extracted. Compare it with the original before using it.'];
+  if(ocrPages.length)result.push('OCR processed '+ocrPages.length+' page(s).');
+  if(reviewPages.length)result.push('Check these pages closely for missing or uncertain text: '+reviewPages.join(', ')+'.');
+  status.textContent=result.join(' ');
+ }catch(error){
+  status.textContent=error.message;
+ }finally{
+  await Promise.allSettled([worker?.terminate(),pdf?.destroy()]);
+  extractionRunning=false;
+  button.disabled=false;
+ }
 }
 function useTextForLesson(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return} $('lpSource').value=$('extractedText').value; $('lpTopic').value=$('docTitle').value||$('lpTopic').value;go('lesson')}
 function useTextForExam(){if(!$('extractedText').value.trim()){showToast('Extract or paste some source text first.');return}$('examQuestions').value=$('extractedText').value;$('examTitle').value=$('docTitle').value||'';go('exam')}
