@@ -90,7 +90,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="account" id="customerAccountNav"><span class="ico">👤</span>Customer Login</button>
     <button data-page="settings"><span class="ico">⚙</span>Platform Setup</button>
   </nav>
-  <div class="aside-foot"><b>Education Lesedi Scholars Hub</b><br>tobetsa-digital-answer · tsaya teko ka maranyane<br><br>Helpdesk<br>educationlesedihelpdesk@gmail.com<br>Orange Money: +267 77980825<br>MyZaka: +267 71823638</div>
+  <div class="aside-foot"><b>Education Lesedi Scholars Hub</b><br>tobetsa-digital-answer · tsaya teko ka maranyane<br><br>Helpdesk<br>educationlesedihelpdesk@gmail.com<br><a href="https://wa.me/26777980825" target="_blank" rel="noopener noreferrer" style="color:inherit">WhatsApp +267 77980825</a><br>WhatsApp Business coming soon: +267 71823638</div>
 </aside>
 <main>
 <section class="page active" id="home">
@@ -152,10 +152,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
  <section class="card" id="overview-packages"><h2>Custom Topic-Test &amp; Packages</h2>
  <div class="notice"><strong>Custom Topic-Test · P10 per test</strong><p>Request a digital test on one topic. Include the subject, class level and topic in your message.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a Custom Topic-Test</button></div>
  <p><strong>One month free when subscriptions open.</strong> Try 5 lesson plans, 20 new questions per subject, 2 published assessments and 1 scheme of work. No automatic charge. Trial activation and limits are pending.</p><div class="three-col">
- <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p></article>
- <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p></article>
- <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p></article>
- </div><article class="price-card"><h3>BEC Practice</h3><div class="price">P100</div><ul><li>Standard 7 — PSLE</li><li>Form 3 — JC (JCE)</li><li>Form 5 — BGCSE</li></ul><p>One package covering all three levels. Independent revision questions.</p><p>Includes Mathematics practice at all three levels: 12 topic quizzes and 3 mixed revision tests. Access lasts 30 days from activation. Free samples are available separately.</p><p>Checkout is pending.</p><button type="button" class="btn outline" onclick="showExams('PSLE')">Explore PSLE</button> <button type="button" class="btn outline" onclick="showExams('JCE')">Explore JC</button> <button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore BGCSE</button></article>
+ <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p><button type="button" class="btn outline" onclick="showPackagePayment('individual')">Payment options</button></article>
+ <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p><button type="button" class="btn outline" onclick="showPackagePayment('professional')">Payment options</button></article>
+ <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p><button type="button" class="btn outline" onclick="showPackagePayment('school')">Payment options</button></article>
+ </div><article class="price-card"><h3>BEC Practice</h3><div class="price">P100</div><ul><li>Standard 7 — PSLE</li><li>Form 3 — JC (JCE)</li><li>Form 5 — BGCSE</li></ul><p>One package covering all three levels. Independent revision questions.</p><p>Includes Mathematics practice at all three levels: 12 topic quizzes and 3 mixed revision tests. Access lasts 30 days from activation. Free samples are available separately.</p><p>Checkout is pending.</p><button type="button" class="btn outline" onclick="showExams('PSLE')">Explore PSLE</button> <button type="button" class="btn outline" onclick="showExams('JCE')">Explore JC</button> <button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore BGCSE</button><button type="button" class="btn outline" onclick="showPackagePayment('bec-practice')">Payment options</button></article>
  <p>Online checkout is pending.</p><button type="button" class="btn outline" onclick="go('payments')">View payment options</button></section>
 </section>
 
@@ -337,10 +337,17 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </section>
 
 <section class="page" id="payments"><div class="section-head"><div><h2>Packages &amp; Payments</h2><p>Online checkout is pending.</p></div></div><p><strong>One month free when subscriptions open.</strong> Try 5 lesson plans, 20 new questions per subject, 2 published assessments and 1 scheme of work. No automatic charge. Trial activation and limits are pending.</p><div class="three-col">
- <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p></article>
- <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p></article>
- <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p></article>
- </div><article class="price-card"><h3>BEC Practice</h3><div class="price">P100</div><ul><li>Standard 7 — PSLE</li><li>Form 3 — JC (JCE)</li><li>Form 5 — BGCSE</li></ul><p>One package covering all three levels. Independent revision questions.</p><p>Includes Mathematics practice at all three levels: 12 topic quizzes and 3 mixed revision tests. Access lasts 30 days from activation. Free samples are available separately.</p><p>Checkout is pending.</p><button type="button" class="btn outline" onclick="showExams('PSLE')">Explore PSLE</button> <button type="button" class="btn outline" onclick="showExams('JCE')">Explore JC</button> <button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore BGCSE</button></article><div class="card"><h3>Pay to Cell</h3><p>Payment contact <strong>+267 71823638</strong>.</p><p>Ask the administrator to confirm the recipient, package and amount before sending money. Package access is confirmed manually.</p><button type="button" class="btn outline" onclick="go('feedback')">Ask about a payment</button></div></section>
+ <article class="price-card"><h3>Individual</h3><div class="price">P100 <small>/ month</small></div><p>Subject practice, STEAM quizzes and a private library.</p><p>Each month: 10 lesson plans, 40 new questions per subject, 4 published assessments and 2 schemes of work.</p><button type="button" class="btn outline" onclick="showPackagePayment('individual')">Payment options</button></article>
+ <article class="price-card"><h3>Professional</h3><div class="price">P150 <small>/ month</small></div><p>Paper-to-digital conversion, syllabus planning and results for your published assessments.</p><p>Each month: 40 lesson plans, 150 new questions per subject, 15 published assessments and 6 schemes of work.</p><button type="button" class="btn outline" onclick="showPackagePayment('professional')">Payment options</button></article>
+ <article class="price-card"><h3>School &amp; Institution</h3><div class="price">From P800 <small>/ month</small></div><p>Creation tools for authorised staff, with no planned monthly creation caps. Final price by school quote. Shared school reporting is planned.</p><button type="button" class="btn outline" onclick="showPackagePayment('school')">Payment options</button></article>
+ </div><article class="price-card"><h3>BEC Practice</h3><div class="price">P100</div><ul><li>Standard 7 — PSLE</li><li>Form 3 — JC (JCE)</li><li>Form 5 — BGCSE</li></ul><p>One package covering all three levels. Independent revision questions.</p><p>Includes Mathematics practice at all three levels: 12 topic quizzes and 3 mixed revision tests. Access lasts 30 days from activation. Free samples are available separately.</p><p>Checkout is pending.</p><button type="button" class="btn outline" onclick="showExams('PSLE')">Explore PSLE</button> <button type="button" class="btn outline" onclick="showExams('JCE')">Explore JC</button> <button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore BGCSE</button><button type="button" class="btn outline" onclick="showPackagePayment('bec-practice')">Payment options</button></article><div class="card" id="paymentMethods" tabindex="-1"><h3>Payment methods</h3>
+<p id="paymentSelected" role="status">Choose a package above to see payment instructions.</p>
+<label class="field">Months to pay in advance<select id="paymentMonths"><option value="1">1 month</option><option value="3">3 months</option><option value="6">6 months</option><option value="12">12 months</option></select></label>
+<p>Confirm the recipient and amount with Lesedi before sending money. Access is activated after the payment is verified.</p>
+<ul><li><strong>Orange Money</strong> · +267 77980825</li><li><strong>Pay to Cell</strong> · +267 71823638</li><li><strong>Visa</strong> · Hosted card checkout is coming soon.</li></ul>
+<p><a class="btn outline" id="paymentWhatsApp" href="https://wa.me/26777980825" target="_blank" rel="noopener noreferrer">WhatsApp +267 77980825</a></p>
+<p>WhatsApp Business coming soon · +267 71823638</p>
+<div id="paymentAccount" hidden><label><input type="checkbox" id="renewalInterest" style="width:auto"> Notify me when automatic Visa renewal is available</label><p id="paymentHistoryStatus" role="status"></p><h4>Verified payments</h4><ul id="paymentHistory"></ul></div></div></section>
 <section class="page" id="feedback"><div class="section-head"><div><h2>Feedback &amp; Support</h2><p>Send a private message to the Lesedi administrator and check for replies.</p></div></div><div class="card"><p id="feedbackStatus" role="status"></p><div id="feedbackPanel" hidden><label class="field" id="feedbackCustomerLabel" hidden>Customer conversation<select id="feedbackCustomer"></select></label><div id="feedbackMessages"></div><form id="feedbackForm"><label class="field">Message<textarea id="feedbackBody" required maxlength="2000"></textarea></label><button class="btn primary">Send message</button></form></div></div></section>
 <section class="page" id="professional-forum"><div class="section-head"><div><h2>Professional Forum</h2><p>Discuss teaching, assessments, STEAM and other educational topics. Keep learner names and records private.</p></div></div><div class="card"><p id="forumStatus" role="status"></p><div id="forumPanel" hidden><form id="forumNew"><label class="field">Discussion title<input id="forumTitle" required maxlength="120"></label><label class="field">Opening message<textarea id="forumBody" required maxlength="2000"></textarea></label><button class="btn primary">Start discussion</button></form><div id="forumThreads"></div><div id="forumDiscussion"></div></div></div></section>
 
@@ -521,7 +528,7 @@ async function saveCloudResource(kind,payload){
 }
 const store={get(kind){return cloudItems[kind]}};
 
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
 
@@ -1364,7 +1371,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearMyUsage();practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearPaymentHistory();clearMyUsage();practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
@@ -1952,5 +1959,59 @@ async function loadMyUsage(){
  period.textContent='Current usage period started '+date(data.period_start)+'.';
  list.append(period);
 }
+</script><script>
+const paymentPlans={individual:['Individual',100],professional:['Professional',150],school:['School & Institution',800],'bec-practice':['BEC Practice',100]};
+let paymentPlan='',paymentRead=0;
+function updatePaymentLink(){
+ const entry=paymentPlans[paymentPlan];if(!entry)return;
+ const [name,price]=entry,months=Number($('paymentMonths').value);
+ const offer=paymentPlan==='bec-practice'?'30-day pass':months+' month(s)';
+ const amount=(paymentPlan==='school'?'From ':'')+'P'+price*months;
+ $('paymentSelected').textContent=name+' · '+offer+' · '+amount;
+ const message='Hello Lesedi, please confirm payment details for '+name+' ('+offer+', '+amount+').';
+ $('paymentWhatsApp').href='https://wa.me/26777980825?text='+encodeURIComponent(message);
+}
+function showPackagePayment(plan){
+ if(!Object.hasOwn(paymentPlans,plan))return;
+ paymentPlan=plan;
+ $('paymentMonths').value='1';
+ $('paymentMonths').disabled=plan==='bec-practice';
+ updatePaymentLink();go('payments');$('paymentMethods').focus({preventScroll:true});$('paymentMethods').scrollIntoView({block:'start'});
+}
+function clearPaymentHistory(){
+ paymentRead++;$('paymentAccount').hidden=true;$('paymentHistory').replaceChildren();$('renewalInterest').checked=false;$('paymentHistoryStatus').textContent='';
+}
+async function loadPaymentHistory(){
+ const user=cloudUser;
+ if(!user){clearPaymentHistory();return}
+ const read=++paymentRead;
+ const {data,error}=await lesediAuthClient.rpc('lesedi_my_payment_history');
+ if(read!==paymentRead||cloudUser?.id!==user.id)return;
+ const status=$('paymentHistoryStatus'),list=$('paymentHistory');
+ $('paymentAccount').hidden=false;
+ $('renewalInterest').disabled=!!error;
+ list.replaceChildren();
+ if(error){status.textContent='Payment history is unavailable.';return}
+ $('renewalInterest').checked=data.interested;
+ status.textContent=data.payments.length?'':'No verified payments yet.';
+ for(const row of data.payments){
+  const item=document.createElement('li');
+  item.textContent=(paymentPlans[row.package]?.[0]||row.package)+' · P'+row.amount_bwp+' · '+row.method+' · '+row.reference+' · Access until '+new Date(row.access_until).toLocaleDateString('en-BW',{timeZone:'Africa/Gaborone'});
+  list.append(item);
+ }
+}
+$('paymentMonths').onchange=updatePaymentLink;
+$('renewalInterest').onchange=async event=>{
+ const user=cloudUser,box=event.currentTarget;
+ if(!user)return;
+ const chosen=box.checked;
+ box.disabled=true;
+ try{
+  const {error}=await lesediAuthClient.rpc('lesedi_set_renewal_interest',{p_interested:chosen});
+  if(cloudUser?.id!==user.id)return;
+  if(error){box.checked=!chosen;showToast('Could not save your preference.');return}
+  showToast('Preference saved. No automatic charge has been set up.');
+ }finally{box.disabled=false}
+};
 </script></body>
 </html>
