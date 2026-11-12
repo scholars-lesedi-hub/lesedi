@@ -256,7 +256,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 
 <section class="page" id="take-exam">
  <div class="section-head"><div><h2>Take an Exam</h2><p>Sign in, enter the code your teacher gave you, then click an answer and select Next.</p></div></div>
- <div class="card"><form id="joinLiveExam"><label class="field">Exam code<input id="liveExamCode" required maxlength="16" autocomplete="off"></label><button class="btn primary">Open exam</button></form><p id="liveExamStatus" role="status"></p><div id="liveExamRunner"></div></div>
+ <div class="card"><form id="joinLiveExam"><label class="field">Exam code<input id="liveExamCode" required maxlength="16" autocomplete="off"></label><button class="btn primary">Open exam</button></form><button type="button" class="btn outline" id="signInForExam" hidden>Sign in to take this test</button><p id="liveExamStatus" role="status"></p><div id="liveExamRunner"></div></div>
 </section>
 <section class="page" id="exam">
   <div class="section-head"><div><h2>Examination Studio</h2><p>Prepare a digital assessment draft from reviewed questions.</p></div></div>
@@ -1005,7 +1005,7 @@ $('publishLiveExam').onclick=async()=>{
 $('joinLiveExam').onsubmit=async event=>{
  event.preventDefault();
  const status=$('liveExamStatus');
- if(!cloudUser){status.textContent='Sign in before opening an exam. Your code will stay here.';return}
+ if(!cloudUser){rememberExamCode($('liveExamCode').value);showExamSignIn();return}
  if(activeExamCode&&previewAnswers.some(Boolean)&&!confirm('Open this exam and discard your current answers?'))return;
  const user=cloudUser,code=$('liveExamCode').value.trim().toUpperCase();
  const button=event.currentTarget.querySelector('button');
@@ -1044,8 +1044,35 @@ $('liveExamResults').onsubmit=async event=>{
  }catch(error){if(cloudUser?.id===user.id)status.textContent=error.message}
  finally{button.disabled=false}
 };
-const incomingExamCode=new URLSearchParams(location.search).get('exam');
-if(incomingExamCode){$('liveExamCode').value=incomingExamCode;go('take-exam');}
+const examParams=new URLSearchParams(location.search);
+const pendingExamKey='lesedi.pendingExam';
+const normalizeExamCode=value=>String(value||'').trim().slice(0,16).toUpperCase();
+let pendingExamCode=normalizeExamCode(examParams.get('exam'));
+function rememberExamCode(value){
+ pendingExamCode=normalizeExamCode(value);
+ try{
+  if(pendingExamCode)sessionStorage.setItem(pendingExamKey,pendingExamCode);
+  else sessionStorage.removeItem(pendingExamKey);
+ }catch{}
+}
+function showExamSignIn(){
+ $('signInForExam').hidden=!pendingExamCode;
+ $('liveExamStatus').textContent=pendingExamCode?'Sign in to open this test.':'Enter your exam code first.';
+}
+$('signInForExam').onclick=()=>{
+ rememberExamCode($('liveExamCode').value);
+ if(!pendingExamCode){showExamSignIn();return}
+ go('account');showLoginForm();
+ authMessage('Sign in or create an account to continue to your test.');
+};
+if(!pendingExamCode&&!examParams.has('reset')){
+ try{pendingExamCode=normalizeExamCode(sessionStorage.getItem(pendingExamKey));}catch{}
+}
+if(pendingExamCode&&!examParams.has('reset')){
+ rememberExamCode(pendingExamCode);
+ $('liveExamCode').value=pendingExamCode;
+ go('take-exam');showExamSignIn();
+}
 
 function startDigitalExam(){
  if(activeExamCode&&previewAnswers.some(Boolean)&&!confirm('Start a preview and discard your current exam answers?'))return;
@@ -1459,7 +1486,14 @@ function showSignedInCustomer(user,profile,openDashboard=false){
   actions.append(button);
  });
  $('customerDashboardPending').textContent=pending+' will appear here when the shared database features are connected.';
- if(openDashboard)go(incomingExamCode?'take-exam':'account');
+ $('signInForExam').hidden=true;
+ if(pendingExamCode&&!examParams.has('reset')){
+  const code=pendingExamCode;
+  rememberExamCode('');
+  $('liveExamCode').value=code;
+  go('take-exam');
+  $('joinLiveExam').requestSubmit();
+ }else if(openDashboard)go('account');
 }
 document.getElementById('authRegisterForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!lesediAuthClient){authMessage('The secure login service did not load. Refresh the page and try again.',true);return;}
