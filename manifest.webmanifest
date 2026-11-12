@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "Education Lesedi Scholars Hub",
+  "short_name": "Education Lesedi",
+  "description": "Take digital tests, learn a topic and convert teaching materials.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#102b5c",
+  "icons": [
+    {"src": "lesedi-icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "lesedi-icons/icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
