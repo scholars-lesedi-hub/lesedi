@@ -215,6 +215,33 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <details id="schemeDocumentReference" hidden><summary>Reviewed source text</summary><pre id="schemeDocumentText" style="white-space:pre-wrap;font:inherit"></pre></details><div class="field"><label>Topics (one topic per line)</label><textarea id="swTopics" placeholder="Whole numbers&#10;Fractions&#10;Decimals&#10;Percentages"></textarea></div>
     <button class="btn primary" onclick="buildScheme()">Build scheme table</button></div>
     <div id="schemeOutput"></div>
+<details id="schemeTest" class="card no-print" style="margin-top:16px">
+  <summary><strong>Create a printable test from your scheme</strong></summary>
+  <p>Build the scheme table and edit its outcomes. Save each term you want to include. Saved terms are available in this browser.</p>
+  <div class="actions">
+    <button type="button" class="btn outline" id="stSave">Save this term</button>
+    <button type="button" class="btn outline" id="stLoad">Load covered topics</button>
+  </div>
+  <div class="two-col">
+    <label class="field">Paper<select id="stPeriod"><option>End of Term</option><option>End of Year</option></select></label>
+    <label class="field">School name<input id="stSchool"></label>
+    <label class="field">School year<input id="stYear" inputmode="numeric" placeholder="2026"></label>
+    <label class="field">Total marks<input type="number" id="stMarks" min="1" max="200" value="20"></label>
+    <label class="field">Duration (minutes)<input type="number" id="stTime" min="1" max="360" value="40"></label>
+    <label class="field">Draft question style<select id="stType"><option value="written">Written response</option><option value="short">Short answer / calculation</option><option value="list">List</option><option value="objective">Multiple choice / true or false</option><option value="matching">Matching (print)</option></select></label>
+  </div>
+  <div id="stCoverage"></div>
+  <button type="button" class="btn primary" id="stBuild">Draft question paper</button>
+  <p id="stStatus" role="status"></p>
+  <div id="stQuestions"></div>
+  <div id="stActions" hidden>
+    <button type="button" class="btn outline" id="stAdd">Add question</button>
+    <button type="button" class="btn outline" id="stPrint">Print question paper</button>
+    <button type="button" class="btn outline" id="stGuide">Print marking guide</button>
+    <button type="button" class="btn primary" id="stDigital">Use as digital test</button>
+  </div>
+</details>
+
   </div>
 </section>
 
@@ -2222,6 +2249,181 @@ $('renewalInterest').onchange=async event=>{
     else index++;
     render();
   });
+})();
+</script><script>
+(() => {
+ const get=id=>document.getElementById(id);
+ const val=id=>get(id).value.trim();
+ const say=message=>{get('stStatus').textContent=message;};
+ const coverage=get('stCoverage'), questions=get('stQuestions');
+ let loaded=[], paper=null, owner, loadedContext;
+ const context=()=>JSON.stringify([val('swSubject'),val('swClass'),val('swTerm'),val('stYear'),val('stPeriod')]);
+ const account=()=>cloudUser?.id || 'guest';
+ function resetForAccount(){
+  if(owner===account())return;
+  owner=account();
+  loaded=[];paper=null;
+  coverage.replaceChildren();questions.replaceChildren();
+  get('stSchool').value='';
+  get('stActions').hidden=true;
+  say('');
+ }
+ const key=()=>JSON.stringify(['lesedi-test-scheme',account(),val('swSubject'),val('swClass'),val('stYear'),val('swTerm')]);
+ function current(){
+  const table=get('schemeOutput').querySelector('tbody');
+  if(!table)return [];
+  const heading=get('schemeOutput').querySelector('h3').textContent;
+  if(heading!==[val('swSubject'),val('swClass'),val('swTerm')].filter(Boolean).join(' · '))return [];
+  return Array.from(table.rows).flatMap(row=>{
+   const topic=row.cells[1].innerText.trim();
+   const outcomes=row.cells[2].innerText.split(/\n/).map(line=>line.trim()).filter(Boolean);
+   return topic?(outcomes.length?outcomes:['']).map(outcome=>({topic,outcome,term:val('swTerm')})):[];
+  });
+ }
+ function requireContext(){
+  if(!val('swSubject')||!val('swClass')||!/^\d{4}$/.test(val('stYear')))throw Error('Enter the subject, class and school year.');
+ }
+ function run(id,action){
+  get(id).onclick=()=>{
+   resetForAccount();
+   try{action()}catch(error){say(error.message)}
+  };
+ }
+ get('schemeTest').addEventListener('toggle',resetForAccount);
+ get('customerAccountNav')?.addEventListener('click',()=>{get('schemeTest').open=false;});
+ run('stSave',()=>{
+  requireContext();
+  const rows=current();
+  if(!rows.length)throw Error('Build the scheme table for this subject, class and term first.');
+  localStorage.setItem(key(),JSON.stringify(rows));
+  say(val('swTerm')+' saved for '+val('stYear')+'.');
+ });
+ run('stLoad',()=>{
+  requireContext();
+  const active=current();
+  const terms=val('stPeriod')==='End of Year'?[...get('swTerm').options].map(item=>item.value):[val('swTerm')];
+  const identity=key();
+  const rows=terms.flatMap(term=>{
+   if(term===val('swTerm')&&active.length)return active;
+   const parts=JSON.parse(identity);
+   parts[parts.length-1]=term;
+   return JSON.parse(localStorage.getItem(JSON.stringify(parts))||'[]');
+  });
+  loaded=Array.from(new Map(rows.map(row=>[JSON.stringify([row.topic,row.outcome]),row])).values());
+  loadedContext=context();
+  coverage.replaceChildren();
+  loaded.forEach((row,index)=>{
+   const label=document.createElement('label');
+   label.style.display='block';
+   const input=document.createElement('input');
+   input.type='checkbox';input.checked=true;input.value=index;input.style.width='auto';
+   label.append(input,' '+row.term+' · '+row.topic+(row.outcome?' · '+row.outcome:' (topic only)'));
+   coverage.append(label);
+  });
+  const missing=terms.filter(term=>!rows.some(row=>row.term===term));
+  say(loaded.length?loaded.length+' topics or outcomes loaded. Untick anything your class did not cover.'+(missing.length?' Missing schemes: '+missing.join(', ')+'.':''):'Build or save a scheme before loading topics.');
+ });
+ const types=[['written','Written response'],['short','Short answer / calculation'],['list','List'],['objective','Multiple choice / true or false'],['matching','Matching (print)']];
+ function addQuestion(row={text:'',marks:1,type:'written',coverage:'',guide:''}){
+  const card=document.createElement('div');card.className='card';
+  card.innerHTML='<label class="field">Coverage<input data-st="coverage"></label><label class="field">Question type<select data-st="type"></select></label><label class="field">Question<textarea data-st="text"></textarea></label><label class="field" data-st-options>Options (one per line)<textarea data-st="options"></textarea></label><label class="field">Marks<input data-st="marks" type="number" min="1" max="100"></label><label class="field">Marking guide / accepted answer<textarea data-st="guide"></textarea></label><button type="button" class="btn outline">Remove question</button>';
+  const field=name=>card.querySelector('[data-st="'+name+'"]');
+  field('type').append(...types.map(([value,label])=>new Option(label,value)));
+  for(const name of ['coverage','type','text','marks','guide'])field(name).value=row[name];
+  function update(){
+   card.querySelector('[data-st-options]').hidden=field('type').value!=='objective';
+  }
+  field('type').onchange=update;update();
+  card.querySelector('button').onclick=()=>card.remove();
+  questions.append(card);
+ }
+ const prompt=(row,marks)=>{
+  const outcome=row.outcome.replace(/^\S*\d[\d.]*\s+/,'').trim().replace(/[.;]+$/,'');
+  if(outcome && /^(explain|describe|identify|state|compare|list|name|define|outline|draw|calculate|solve|give|discuss|classify|distinguish)\b/i.test(outcome))
+   return outcome[0].toUpperCase()+outcome.slice(1)+'.';
+  return marks===1?'State one fact about '+row.topic+'.':'Explain one important idea about '+row.topic+' and support your answer with an example.';
+ };
+ run('stBuild',()=>{
+  requireContext();
+  if(loadedContext!==context())throw Error('Load covered topics for the current paper settings first.');
+  const selected=Array.from(coverage.querySelectorAll('input:checked'),item=>loaded[Number(item.value)]);
+  const marks=Number(val('stMarks')), minutes=Number(val('stTime'));
+  if(!selected.length)throw Error('Load and select the topics or outcomes you covered.');
+  if(!Number.isInteger(marks)||marks<selected.length||marks>200)throw Error('Enter up to 200 whole marks, with at least one mark per selected outcome.');
+  if(!Number.isInteger(minutes)||minutes<1||minutes>360)throw Error('Enter a duration from 1 to 360 minutes.');
+  if(questions.children.length&&!confirm('Replace the current question paper draft?'))return;
+  paper={title:val('stPeriod')+' '+(val('stPeriod')==='End of Term'?val('swTerm')+' ':'')+'Test',subject:val('swSubject'),level:val('swClass'),year:val('stYear'),marks,minutes};
+  const type=val('stType');
+  questions.replaceChildren();
+  const count=Math.max(selected.length,Math.ceil(marks/100));
+  for(let i=0;i<count;i++){
+   const row=selected[i%selected.length], share=Math.floor(marks/count)+(i<marks%count?1:0);
+   addQuestion({coverage:row.term+' · '+row.topic+(row.outcome?' · '+row.outcome:''),text:prompt(row,share),type,marks:share,guide:''});
+  }
+  get('stActions').hidden=false;
+  say('Review the draft questions and enter your answers and marking criteria. For multiple choice or true/false, enter the options. For matching, put both columns in the question text.');
+ });
+ run('stAdd',()=>addQuestion());
+ function read(guideRequired){
+  if(!paper||!questions.children.length)throw Error('Draft at least one question.');
+  const rows=Array.from(questions.children,(card,i)=>{
+   const value=name=>card.querySelector('[data-st="'+name+'"]').value.trim();
+   const text=value('text'),marks=Number(value('marks')),type=value('type'),guide=value('guide');
+   const options=value('options').split(/\n/).map(line=>line.trim()).filter(Boolean);
+   if(!text||!Number.isInteger(marks)||marks<1||marks>100)throw Error('Question '+(i+1)+' needs text and 1–100 whole marks.');
+   if(type==='objective'&&(options.length<2||options.length>4||new Set(options.map(option=>option.toLowerCase())).size!==options.length))throw Error('Question '+(i+1)+' needs two to four distinct options.');
+   if(guideRequired&&!guide)throw Error('Enter the marking guide or accepted answer for Question '+(i+1)+'.');
+   return {text,marks,type,guide,options,coverage:value('coverage')};
+  });
+  const total=rows.reduce((sum,row)=>sum+row.marks,0);
+  if(total!==paper.marks)throw Error('Question marks add to '+total+'. Adjust them to match the paper total of '+paper.marks+'.');
+  return rows;
+ }
+ function print(guide){
+  const rows=read(guide);
+  const win=window.open('','_blank');
+  if(!win)throw Error('Allow pop-ups for this site to open the print view.');
+  win.opener=null;
+  const doc=win.document;
+  doc.title=paper.title+(guide?' — Marking Guide':'');
+  doc.documentElement.lang='en';
+  function add(parent,tag,text){
+   const item=doc.createElement(tag);item.textContent=text;parent.append(item);return item;
+  }
+  add(doc.head,'style','@page{margin:18mm}body{font:12pt/1.45 Arial,sans-serif;color:#111;max-width:780px;margin:24px auto;padding:0 12px}h1{font-size:20pt}h2{font-size:13pt}article{break-inside:avoid;margin:18px 0}p,li{white-space:pre-wrap}.answer-line{border-bottom:1px solid #888;height:20px}@media print{button{display:none}body{margin:0;padding:0}}');
+  add(doc.body,'button','Print / Save as PDF').onclick=()=>win.print();
+  if(val('stSchool'))add(doc.body,'h2',val('stSchool'));
+  add(doc.body,'h1',doc.title);
+  add(doc.body,'p',[paper.subject,paper.level,paper.year,paper.minutes+' minutes',paper.marks+' marks'].join(' · '));
+  if(!guide)add(doc.body,'p','Name: ______________________________  Class: __________  Date: __________\nAnswer all questions.');
+  rows.forEach((row,i)=>{
+   const item=add(doc.body,'article','');
+   add(item,'h2','Question '+(i+1)+' ['+row.marks+(row.marks===1?' mark]':' marks]'));
+   add(item,'p',row.text);
+   if(row.type==='objective')row.options.forEach((option,j)=>add(item,'div','ABCD'[j]+'. '+option));
+   if(guide){add(item,'p',row.guide);if(row.coverage)add(item,'p','Coverage: '+row.coverage);}
+   else if(row.type!=='objective')for(let j=0;j<Math.min(8,row.marks+1);j++)add(item,'div','').className='answer-line';
+  });
+ }
+ run('stPrint',()=>print(false));
+ run('stGuide',()=>print(true));
+ run('stDigital',()=>{
+  const rows=read(true).map((row,i)=>{
+   if(row.type==='matching'||row.type==='written')throw Error('Question '+(i+1)+' is print-only. To transfer it, edit it into a short answer, list, or multiple-choice question with a markable answer.');
+   const answer=row.options.findIndex(option=>option.toLowerCase()===row.guide.toLowerCase());
+   if(row.type==='objective'&&answer<0)throw Error('Question '+(i+1)+': enter the exact correct option as the accepted answer.');
+   return {...row,answer,accepted:row.guide};
+  });
+  if((get('digitalQuestions').children.length||val('examQuestions')||val('examTitle'))&&!confirm('Replace the open Examination Studio draft?'))return;
+  get('examTitle').value=paper.title;
+  get('examClass').value=paper.subject+' · '+paper.level;
+  get('examQuestions').value=rows.map((row,i)=>(i+1)+'. '+row.text).join('\n');
+  get('examKey').value=rows.map((row,i)=>(i+1)+'. '+row.guide).join('\n');
+  get('digitalQuestions').replaceChildren();
+  rows.forEach(addDigitalQuestion);
+  go('exam');
+  showToast('Questions and answers copied. Preview or save your examination draft.');
+ });
 })();
 </script></body>
 </html>
