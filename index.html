@@ -75,7 +75,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
     <button type="button" data-page="owner-banks" id="ownerBanksNav" style="display:none"><span class="ico">▤</span>Owner Banks</button>
 <button data-page="notes-bank"><span class="ico">▤</span>Create from a Topic</button>
-<button data-page="subject-notes"><span class="ico">▤</span>Subject Question Bank</button>
+<button data-page="learning-notes"><span class="ico">▤</span>Learning Notes</button>
+    <button data-page="subject-notes"><span class="ico">▤</span>Subject Question Bank</button>
 <button data-page="steam-assessments"><span class="ico">✧</span>STEAM Assessments</button>
 <button data-page="resources"><span class="ico">▣</span>Teaching Resources</button>
     <button data-page="assistant"><span class="ico">✧</span>AI Teacher Assistant</button>
@@ -420,6 +421,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <p id="notesStatus" role="status"></p>
   <div id="notesList"></div>
  </div>
+</section>
+<section class="page" id="learning-notes">
+ <div class="section-head"><div><h2>Learning Notes</h2><p>Choose a level and subject. Read a short lesson and try the warm-up.</p></div></div>
+ <div class="two-col">
+  <label class="field">Level<select id="learningLevel"></select></label>
+  <label class="field">Subject<select id="learningSubject"></select></label>
+ </div>
+ <div id="learningResults"></div>
 </section>
 <section class="page" id="subject-notes"><div class="section-head"><div><h2>Subject Question Bank</h2><p>Choose a subject to practise with questions drawn from the uploaded notes. Each attempt shuffles the questions and options.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="steam-assessments"><div class="section-head"><div><h2>STEAM Assessments</h2><p>Choose a subject and start a short STEAM quiz, test or exam. The Agriculture school garden unit includes labelled STEAM questions.</p></div></div><details class="card"><summary><strong>Teacher introduction to STEAM</strong></summary><p>A short introduction for teachers and tutors. No certificate is awarded.</p><h3>1. Start with a practical problem</h3><p>Use the Standard 5 school garden unit. Ask learners how they could water seedlings using a recycled bottle and a limited amount of water.</p><h3>2. Label the skill learners demonstrate</h3><p>Use Science for investigating, Technology for selecting or using tools, Engineering for designing and testing, Arts for purposeful visual communication, and Mathematics for measuring, calculating or interpreting data. Add a secondary label only when the question assesses that skill too.</p><h3>3. Choose the evidence and marking method</h3><p>The quiz checks three objective skills. The test adds a design task. The exam adds visual communication and a design-and-calculation task. Objective items are automatically marked. Use the rubrics below to award marks for written work.</p><h3>4. Review before publishing</h3><p>Use the Examination Studio to prepare a school assessment. Check the level, question wording, answer key and rubric before approving and publishing it.</p><h3>Worked examples for teacher marking</h3><details><summary>Engineering marking example</summary><p>A recycled bottle drip system empties too quickly. Describe one design change and a fair test to check whether it works.</p><p>3 marks. Award 1 for a feasible design change, 1 for keeping relevant conditions the same, and 1 for comparing the time or water delivered.</p><p><strong>Sample full-credit response.</strong> Use a smaller outlet. Start both bottles with the same amount of water and keep them at the same height. Time how long each takes to deliver 250 mL.</p></details><details><summary>Arts marking example</summary><p>Plan a three-panel illustrated guide showing younger learners how to fill, place and check the bottle. Describe what each panel shows and how you would make the order clear.</p><p>3 marks. Award 1 for covering all three steps in order, 1 for visuals that clarify each step, and 1 for a clear sequence cue such as arrows or numbers.</p><p><strong>Sample full-credit response.</strong> Panel 1 shows water pouring into the bottle, panel 2 shows the bottle beside a seedling, and panel 3 shows a learner checking the water level. Large numbers and arrows show the order.</p></details><details><summary>Engineering + Mathematics marking example</summary><p>A bottle delivers 250 mL in 20 minutes. If it runs at the same rate, how much will it deliver in 60 minutes? Explain how you would check that prediction with your prototype.</p><p>3 marks. Award 1 for 750 mL, 1 for showing three 20-minute intervals or equivalent reasoning, and 1 for a feasible 60-minute test using a measuring container.</p><p><strong>Sample full-credit response.</strong> 60 ÷ 20 = 3, so 3 × 250 mL = 750 mL. Run the bottle for 60 minutes with enough water and measure what collects in a marked jug.</p></details></details><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="library">
   <div class="section-head"><div><h2>My Resource Library</h2><p>Sign in to find your private uploads, saved documents and exam drafts.</p></div></div>
@@ -1265,14 +1274,54 @@ async function openPracticeSet(id){
  takeLibraryPractice(set);
 }
 
+const learningNotes=[["Standard 1","Environmental Science","Living things","Living things grow and need resources to stay alive.","A bean seed can grow into a plant when it gets suitable water and warmth. A pebble does not grow.","Which is living: a kitten or a spoon?","A kitten.","Think about which thing can grow and needs food or water."],["Standard 2","Mathematics","Tens and ones","A group of ten is one ten. Loose units are ones.","36 has 3 tens and 6 ones, so 36 = 30 + 6.","How many tens are in 54?","5 tens.","Look at the digit immediately to the left of the ones."],["Standard 3","English","Main idea","The main idea is what the whole passage is mostly about.","A paragraph about watering seedlings, removing weeds and checking leaves is mainly about caring for plants.","What is the main idea of a paragraph about brushing, flossing and visiting the dentist?","Looking after your teeth.","Look for what the details have in common."],["Standard 4","CAPA","Shapes, shading and rhythm","Shapes can strengthen a frame. Shading shows light and dark. Body percussion uses the body to make sound.","A diagonal strip splits a square frame into two triangles. A darker pencil tone can show the part of an object facing away from light.","What could you add across a square frame to help it hold its shape?","A diagonal brace.","Think about whether the question is about strength, tone, sound or safe tool use."],["Standard 5","Agriculture","Farming systems","Farming systems can be grouped by whether they produce crops, rear animals, or do both.","An orchard grows fruit for sale. A farm with an orchard and a flock of sheep has both crop and animal production.","How would you group a farm that raises cattle and grows millet?","Mixed farming.","Identify whether the farmer grows crops, keeps animals, or does both."],["Standard 5","Setswana","Potsolotso","Potsolotso ke puisano e mo go yone motho a botsang dipotso go bona tshedimosetso.","Fa o botsolotsa motlhokomedi wa laeborari, o ka botsa gore laeborari e bula leng.","Kwala potso e o ka e botsang motlhokomedi wa laeborari.","Sekai: A nka adima buka malatsi a le kae?","Akanya gore o batla go itse eng pele o kwala potso."],["Standard 6","Science","Heat transfer","Conduction transfers thermal energy through direct contact. Convection involves moving liquid or gas. Radiation can travel through empty space.","A pan handle warms by conduction. Air moves above a heater by convection. You can feel radiation from a warm fire.","Which process carries energy from a hot iron to cloth it touches?","Conduction.","Look for contact, movement of a fluid, or transfer without contact."],["Standard 6","Social Studies","Settlement and transport","Where people live affects which services and transport they can reach.","A learner in a town might take a bus. A learner in a village without a bus route might walk or use shared transport.","Name one factor that affects how someone gets to school.","Distance, road conditions or available transport.","Think about the distance and what transport is available."],["Standard 7","Cultural Studies","Recording community life","A community study can organise evidence under language, food, dress, shelter and activities.","A photo of a thatched roof belongs under shelter. A recorded greeting belongs under language.","Where would you place a recipe for a traditional meal?","Food.","Identify what the item describes before choosing its category."],["Standard 7","Religious and Moral Education","Choices and consequences","Choices can affect the person making them and other people.","Returning a lost ruler helps its owner and can build trust in the class.","What is one possible consequence of spreading an unverified rumour?","It could upset someone or damage trust.","Consider who could be affected and what happens next."],["PSLE","Mathematics","Fractions, decimals and percentages","To find a fraction of a quantity, divide by the denominator and multiply by the numerator. To change a decimal to a percent, multiply by 100.","To find ⅔ of 18, divide 18 by 3 to get 6, then multiply 6 by 2 to get 12. Also, 0.32 = 32%.","What is ⅗ of 25?","15.","For a fraction of an amount, find one equal part first. For percentages, think in hundredths."],["JCE","Mathematics","Algebra, ratio and measurement","Keep an equation balanced by doing the same operation to both sides. For ratio shares, divide the total by the sum of the parts. Check measurement units before calculating.","For 3x + 4 = 19, subtract 4 from both sides, then divide by 3 to get x = 5. To share 40 in the ratio 1:3, each part is 10, giving shares of 10 and 30.","Solve 2x + 7 = 21.","x = 7.","For equations, undo addition or subtraction first. For ratios, count the total number of parts."],["BGCSE","Mathematics","Percentages, algebra and data","Use a multiplier for percentage change. Isolate an unknown by keeping both sides balanced. For a simple probability, divide favourable outcomes by equally likely outcomes.","A 15% increase on 80 gives 80 × 1.15 = 92. A bag with 2 red and 6 blue counters gives a probability of 2/8 = 1/4 for red.","Decrease 120 by 25%.","90.","Identify the topic and write the relevant multiplier, equation or probability fraction before substituting values."]];
+function appendLearningNote(parent,note,includeHint=false){
+ const [level,subject,topic,summary,example,warmup,answer,hint]=note;
+ const details=document.createElement('details');
+ details.className='card';
+ function line(container,tag,text){
+  const el=document.createElement(tag);el.textContent=text;container.append(el);return el;
+ }
+ line(details,'summary','Learn This Topic · '+topic);
+ line(details,'p',level+' · '+subject);
+ line(details,'p',summary);
+ line(details,'p','Worked example: '+example);
+ line(details,'p','Warm-up: '+warmup);
+ const solution=line(details,'details','');
+ line(solution,'summary','Check warm-up answer');
+ line(solution,'p',answer);
+ parent.append(details);
+ if(includeHint){
+  const help=line(parent,'details','');
+  line(help,'summary','Show Hint');
+  line(help,'p',hint);
+ }
+}
+const learningLevel=$('learningLevel'),learningSubject=$('learningSubject');
+const levelsForNotes=[...Array.from({length:7},(_,i)=>'Standard '+(i+1)),'PSLE','Form 1','Form 2','Form 3','JCE','Form 4','Form 5','BGCSE'];
+learningLevel.replaceChildren(new Option('All levels',''),...levelsForNotes.map(level=>new Option(level,level)));
+function renderLearningNotes(){
+ const level=learningLevel.value;
+ const rows=learningNotes.filter(note=>!level||note[0]===level);
+ const subject=learningSubject.value;
+ learningSubject.replaceChildren(new Option('All subjects',''),...[...new Set(rows.map(note=>note[1]))].sort().map(name=>new Option(name,name)));
+ if([...learningSubject.options].some(option=>option.value===subject))learningSubject.value=subject;
+ const out=$('learningResults');out.replaceChildren();
+ for(const note of rows.filter(note=>!learningSubject.value||note[1]===learningSubject.value))appendLearningNote(out,note);
+ if(!out.children.length)out.textContent='No lessons have been added for this selection yet.';
+}
+learningLevel.onchange=learningSubject.onchange=renderLearningNotes;
+renderLearningNotes();
 function takeLibraryPractice(set){
  const area=$('becPreview');
  const answers=Array(set.questions.length).fill(null);
+ const note=learningNotes.find(item=>item[0]===set.level&&item[1]===set.subject);
  let index=0;
  function render(){
   const question=set.questions[index];
   area.innerHTML='<div class="card"><h3>'+escapeHTML(set.title)+'</h3><p>Question '+(index+1)+' of '+answers.length+'</p><p>'+escapeHTML(question.q)+'</p><div data-options></div><p data-message role="status"></p><button type="button" class="btn outline" data-back>Previous</button> <button type="button" class="btn primary" data-forward></button></div>';
   const options=area.querySelector('[data-options]');
+  if(note)appendLearningNote(options.parentElement,note,true);
   question.o.forEach((option,i)=>{
    const label=document.createElement('label');label.style.display='block';
    const input=document.createElement('input');input.type='radio';input.name='libraryPracticeAnswer';input.style.width='auto';
@@ -1290,6 +1339,7 @@ function takeLibraryPractice(set){
    const score=set.questions.reduce((sum,q,i)=>sum+(q.a===answers[i]?mark(q):0),0);
    area.innerHTML='<div class="card"><h3>Practice complete</h3><p>Marks: '+score+' / '+total+'</p><div data-practice-feedback></div><button type="button" class="btn outline" data-restart>Try again</button></div>';
    const feedback=area.querySelector('[data-practice-feedback]');
+   if(note&&score<total)appendLearningNote(feedback,note);
    set.questions.forEach((q,i)=>{
     const detail=document.createElement('p');
     detail.textContent=(i+1)+'. '+(q.a===answers[i]?'Correct. ':'Your answer: '+q.o[answers[i]]+'. ')+
@@ -1748,6 +1798,8 @@ async function uploadDocumentToCloud(){
       const garden = steam && subject==='Agriculture';
       detail.textContent=level+' · '+(garden?'School garden watering':source);
       card.append(heading,detail);
+      const note=learningNotes.find(item=>(item[0]===level&&item[1]===subject)||(!steam&&subject==='Science · Heat Transfer'&&item[2]==='Heat transfer'));
+      if(!steam&&note)appendLearningNote(card,note);
       for(const format of Object.keys(formats)){
         const button=document.createElement('button');
         button.className='btn outline';
@@ -1762,7 +1814,7 @@ async function uploadDocumentToCloud(){
                 : {...item})
             : shuffle(questions).slice(0,formats[format]).map(([text,...options])=>({text,key:options[0],options:shuffle(options)}));
           if(steam&&!garden)items.push({text:challenge});
-          attempt={subject,format,items,answers:Array(items.length).fill(''),index:0};
+          attempt={subject,format,items,note:steam?null:note,answers:Array(items.length).fill(''),index:0};
           show();
           runner.scrollIntoView({block:'start'});
         };
@@ -1801,6 +1853,7 @@ async function uploadDocumentToCloud(){
         options.append(label);
       }
       const form=runner.querySelector('form');
+      if(attempt.note)appendLearningNote(form,attempt.note,true);
       const actions=runner.querySelector('.notes-actions');
       const save=()=>{answers[index]=(new FormData(form).get('response')||'').trim()};
       action(actions,'Previous',()=>{save();attempt.index--;show()},index===0);
