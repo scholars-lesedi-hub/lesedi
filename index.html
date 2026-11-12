@@ -207,7 +207,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <details id="schemeSyllabus"><summary><strong>Create from syllabus</strong></summary>
       <p id="schemeSyllabusStatus" role="status">Sign in with an approved teacher account to load syllabus topics.</p>
       <div id="schemeSyllabusFields" hidden><div class="two-col">
-        <label class="field">Standard<select id="schemeStandard"></select></label>
+        <label class="field">Level or standard<select id="schemeStandard"></select></label>
         <label class="field">Subject<select id="schemeSubject"></select></label>
       </div><button type="button" class="btn outline" id="loadSchemeTopics">Load topics and outcomes</button></div>
     </details>
@@ -481,7 +481,7 @@ function renderNotesBank(){
      $(fields[0]).value=note.topic;$(fields[1]).value=data;
      if(page==='lesson'){
       $('lpSubject').value=note.subject;$('lpClass').value=note.level;
-      $('lpLevel').value='Primary (Standards 1–7)';$('lpSource').value='';
+      $('lpLevel').value=Number(first.standard)===8?'Junior secondary (Forms 1–3)':'Primary (Standards 1–7)';$('lpSource').value='';
       $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
       generatePlan();
      }
@@ -702,6 +702,7 @@ function schemeChoices(select,values,label=value=>value){
  select.replaceChildren(...[...new Set(values)].map(value=>new Option(label(value),value)));
  if([...select.options].some(option=>option.value===previous))select.value=previous;
 }
+function syllabusClassLabel(value){return Number(value)===8?'Junior Secondary (JCE)':'Standard '+value;}
 function updateSchemeSubjects(){
  schemeChoices($('schemeSubject'),schemeSyllabusRows.filter(row=>String(row.standard)===$('schemeStandard').value).map(row=>row.subject));
 }
@@ -716,7 +717,7 @@ async function loadSchemeSyllabus(){
  schemeSyllabusRows=error?[]:data;
  if(error){status.textContent='Could not load the syllabus. Close and reopen to retry.';return}
  if(!data.length){status.textContent='No objectives are available for this account. Ask the administrator to enable syllabus access.';return}
- schemeChoices($('schemeStandard'),data.map(row=>row.standard),value=>'Standard '+value);
+ schemeChoices($('schemeStandard'),data.map(row=>row.standard),syllabusClassLabel);
  updateSchemeSubjects();
  $('schemeSyllabusFields').hidden=false;
  status.textContent='Choose the standard and subject for your scheme.';
@@ -734,7 +735,7 @@ $('loadSchemeTopics').onclick=async()=>{
  if(error||!rows?.length){showToast('No scheme draft is available for this subject.');return}
  schemeSelectedRows=rows;
  $('swSubject').value=subject;
- $('swClass').value='Standard '+standard;
+ $('swClass').value=syllabusClassLabel(standard);
  $('swTopics').value=[...new Set(rows.map(row=>row.topic))].join('\n');
  $('schemeSyllabusStatus').textContent='Topics loaded. Reorder the lines if needed, set the term and weeks, then build the scheme.';
 };
@@ -751,7 +752,7 @@ function buildScheme(){
  if(!topics.length){showToast('Enter at least one topic.');return}
  const weeks=Math.max(1,Math.min(20,Math.floor(Number($('swWeeks').value)||10)));
  const subject=$('swSubject').value.trim(),standard=$('swClass').value.trim();
- const matching=schemeSelectedRows.filter(row=>row.subject===subject&&'Standard '+row.standard===standard);
+ const matching=schemeSelectedRows.filter(row=>row.subject===subject&&syllabusClassLabel(row.standard)===standard);
  const output=$('schemeOutput');
  output.innerHTML='<div class="lesson-output" style="margin-top:16px"><h3></h3><p class="no-print" data-scheme-note></p><div style="overflow:auto"><table style="width:100%;border-collapse:collapse"><thead><tr>'+['Week','Topic','Learning outcomes','Activities and resources','Assessment','Lesson plan'].map((label,i)=>'<th scope="col" '+(i===5?'class="no-print"':'')+' style="text-align:left;padding:8px;border-bottom:2px solid #2457c5">'+label+'</th>').join('')+'</tr></thead><tbody></tbody></table></div><p><button type="button" class="btn outline no-print" onclick="window.print()">Print / Save PDF</button></p></div>';
  output.querySelector('h3').textContent=[subject,standard,$('swTerm').value].filter(Boolean).join(' · ');
@@ -1818,7 +1819,7 @@ async function uploadDocumentToCloud(){
   if(error){status.textContent='Could not load the Syllabus Bank. Close and reopen this panel to retry.';return}
   if(!rows.length){status.textContent='No syllabus objectives are available for this account. Ask the administrator to enable teacher access.';return}
   status.textContent='Choose a topic, then load its editable lesson outcomes.';
-  choices(standard,rows.map(row=>row.standard),value=>'Standard '+value);
+  choices(standard,rows.map(row=>row.standard),syllabusClassLabel);
   showSubjects();
  }
  picker.addEventListener('toggle',()=>{if(picker.open)load()});
@@ -1834,11 +1835,11 @@ async function uploadDocumentToCloud(){
   const first=chosen[0];
   $('lpTopic').value=first.topic;
   $('lpSubject').value=first.subject;
-  $('lpClass').value='Standard '+first.standard;
+  $('lpClass').value=syllabusClassLabel(first.standard);
   $('lpLevel').value='Primary (Standards 1–7)';
   $('lpOutcomes').value=chosen.map(row=>row.code+' '+row.outcome).join('\n');
   const summary=$('lpSyllabusSummary');
-  summary.textContent='Standard '+first.standard+' · '+first.subject+' · '+first.topic+' · '+chosen.length+' learning outcome(s) loaded';
+  summary.textContent=syllabusClassLabel(first.standard)+' · '+first.subject+' · '+first.topic+' · '+chosen.length+' learning outcome(s) loaded';
   summary.hidden=false;
   $('lpManualFields').open=false;
   status.textContent='Outcomes added. Set the duration and class size, then create the lesson plan.';
@@ -2090,3 +2091,4 @@ $('renewalInterest').onchange=async event=>{
 };
 </script></body>
 </html>
+
