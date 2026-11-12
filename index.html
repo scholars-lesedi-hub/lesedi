@@ -68,7 +68,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <nav>
     <div class="nav-label">WORKSPACE</div>
     <button class="active" data-page="home"><span class="ico">⌂</span>Overview</button>
-    <button data-page="convert"><span class="ico">⇧</span>Hardcopy Converter</button>
+    <button data-page="convert"><span class="ico">⇧</span>Softcopy Converter</button>
     <button data-page="lesson"><span class="ico">▤</span>Lesson Plan Studio</button>
     <button data-page="scheme"><span class="ico">▦</span>Scheme of Work</button>
 <button data-page="take-exam"><span class="ico">▷</span>Take an Exam</button>
@@ -103,7 +103,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
   <div class="section-head"><div><h2>What would you like to create?</h2><p>Choose a tool to get started.</p></div></div>
   <div class="tiles">
-    <button type="button" class="tile" onclick="go('convert')"><div class="tile-icon">📄</div><h3>Convert hardcopies</h3><p>Extract text from PDFs, Word files, text files, and clear photos. Check the extracted text against the original.</p></button>
+    <button type="button" class="tile" onclick="go('convert')"><div class="tile-icon">📄</div><h3>Softcopy Converter</h3><p>Extract text from PDFs, Word files, text files, and clear photos. Check the extracted text against the original.</p></button>
     <button type="button" class="tile" onclick="go('exam')"><div class="tile-icon">🧠</div><h3>Create examinations</h3><p>Create multiple-choice, short-answer, and list questions. Set accepted answers and marks, then share an exam that scores automatically.</p></button>
     <button type="button" class="tile" onclick="go('lesson')"><div class="tile-icon">📝</div><h3>Generate lesson plans</h3><p>Load available topics and learning outcomes from the Syllabus Bank to start a lesson plan.</p></button>
     <button type="button" class="tile" onclick="go('scheme')"><div class="tile-icon">🗓️</div><h3>Scheme of work</h3><p>Load syllabus topics and outcomes, then organise them by term and teaching week.</p></button>
@@ -160,14 +160,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </section>
 
 <section class="page" id="convert">
-  <div class="section-head"><div><h2>Hardcopy-to-Digital Converter</h2><p>Upload a document, extract its text and review it before creating resources.</p></div><span class="pill">DOCUMENT WORKSPACE</span></div>
+  <div class="section-head"><div><h2>Softcopy Converter</h2><p>Upload a document, extract its text and review it before creating resources.</p></div><span class="pill">DOCUMENT WORKSPACE</span></div>
   <div class="card">
     <div class="dropzone"><div style="font-size:35px">📤</div><strong>Upload your teaching or examination material</strong><p class="muted small">Extract text from PDF, DOCX, TXT or a clear JPG, PNG or WebP photo. Scanned pages are read with English OCR.</p><input id="fileInput" type="file" accept=".pdf,.docx,.txt,.jpg,.jpeg,.png,.webp"></div><button type="button" onclick="uploadDocumentToCloud()" style="background:#102b5c;color:white;padding:12px 20px;border:0;border-radius:8px;margin-top:12px;cursor:pointer;">
   Save Original File Securely
 </button>
     <div class="two-col">
       <div class="field"><label>Resource title</label><input id="docTitle" placeholder="e.g. Standard 7 Mathematics Test"></div>
-      <div class="field"><label>What do you want to create?</label><select id="docPurpose"><option>Extract and organise text</option><option>Lesson plan</option><option>Scheme of work</option><option>Worksheet</option><option>Digital examination</option><option>Revision notes</option><option>Study summary</option></select></div>
+      <div class="field"><label>What do you want to create?</label><select id="docPurpose"><option>Extract and organise text</option><option>Lesson plan</option><option>Scheme of work</option><option>Worksheet</option><option>Digital examination</option><option>Class exercise</option></select></div>
     </div>
     <button id="extractDocumentButton" class="btn primary" onclick="extractDocument()">Read and extract document</button>
     <div id="extractStatus" aria-live="polite"></div>
@@ -250,7 +250,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <div class="section-head"><div><h2>Teaching Resources Studio</h2><p>Prepare classroom materials from your topic and source notes.</p></div></div>
   <div class="card"><div class="resource-controls">
     <div class="field"><label>Topic</label><input id="resTopic" placeholder="Enter a topic"></div>
-    <div class="field"><label>Resource type</label><select id="resType"><option>Revision notes outline</option><option>Worksheet outline</option><option>Flashcards outline</option><option>Study summary outline</option><option>Class activity outline</option><option>Homework outline</option></select></div>
+    <div class="field"><label>Resource type</label><select id="resType"><option>Revision notes outline</option><option>Worksheet outline</option><option>Class exercise</option><option>Flashcards outline</option><option>Study summary outline</option><option>Class activity outline</option><option>Homework outline</option></select></div>
     <div class="field"><label>Source information</label><textarea id="resSource" placeholder="Paste source material, syllabus notes or key points."></textarea></div>
     <button class="btn primary" onclick="makeResource()">Create resource outline</button>
     </div><div id="resourceOutput"></div>
@@ -653,7 +653,7 @@ function continueConvertedDocument(){
   $('examStatus').textContent='Reviewed text added. Import numbered questions to start editing.';
   go('exam');return;
  }
- const types={'Worksheet':'Worksheet outline','Revision notes':'Revision notes outline','Study summary':'Study summary outline'};
+ const types={'Worksheet':'Worksheet outline','Class exercise':'Class exercise'};
  if(!Object.hasOwn(types,purpose))return;
  if(($('resSource').value.trim()||$('resourceOutput').children.length)&&!confirm('Replace the open teaching resource?'))return;
  $('resTopic').value=title||'Untitled resource';$('resSource').value=source;$('resType').value=types[purpose];
@@ -1023,8 +1023,18 @@ async function submitDigitalExam(){
  const card=document.createElement('article');card.className='lesson-output';output.append(card);
  const heading=document.createElement('h3');heading.textContent=type.replace(/ outline$/,'')+' · '+topic;card.append(heading);
  const help=document.createElement('p');help.className='no-print';help.textContent='Click any section to edit it before printing.';card.append(help);
- const parts=templates[type]||templates['Revision notes outline'];
- for(const [label,text] of source?[...parts,['Source notes',source]]:parts){
+ let parts=templates[type]||templates['Revision notes outline'];
+ if(type==='Class exercise'){
+  const questions=parseDigitalQuestions(source);
+  const tasks=questions.length?questions.map(q=>[q.text,...q.options.map((option,i)=>option?String.fromCharCode(65+i)+') '+option:'').filter(Boolean)].join('\n')):
+   ['Write two key points about '+topic+' in your own words.','Choose one idea from the reading and explain it using an example.','Use the reading to write and answer one question about '+topic+'.'];
+  parts=[['Instructions',questions.length?'Answer the questions below.':'Read the material, then answer the questions in your own words.']];
+  if(source&&!questions.length)parts.push(['Reading',source]);
+  tasks.forEach((task,i)=>parts.push(['Question '+(i+1),task],['Answer '+(i+1),'________________________________________']));
+ }else if(source){
+  parts=[...parts,['Source notes',source]];
+ }
+ for(const [label,text] of parts){
   const title=document.createElement('h4');title.textContent=label;card.append(title);
   const field=document.createElement('div');field.contentEditable='plaintext-only';field.setAttribute('role','textbox');field.setAttribute('aria-label',label);field.textContent=text;field.style.cssText='white-space:pre-wrap;min-height:2rem;padding:.5rem;border-bottom:1px solid #cbd5e1';card.append(field);
  }
@@ -1227,7 +1237,7 @@ const customerDashboards = {
         "exam"
       ],
       [
-        "Hardcopy Converter",
+        "Softcopy Converter",
         "convert"
       ],
       [
@@ -1242,7 +1252,7 @@ const customerDashboards = {
     "Convert papers and prepare assessment drafts for verification.",
     [
       [
-        "Hardcopy Converter",
+        "Softcopy Converter",
         "convert"
       ],
       [
@@ -1265,7 +1275,7 @@ const customerDashboards = {
         "exam"
       ],
       [
-        "Hardcopy Converter",
+        "Softcopy Converter",
         "convert"
       ],
       [
