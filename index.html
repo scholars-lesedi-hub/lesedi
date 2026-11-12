@@ -804,10 +804,72 @@ function importDigitalQuestions(){
  questions.forEach(addDigitalQuestion);
  showToast('Imported '+questions.length+' question(s). Verify each question and answer.');
 }
+function validQuestionPicture(value){
+ return typeof value==='string'&&value.length<=65000&&/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(value);
+}
+function addQuestionPicture(parent,value){
+ if(!validQuestionPicture(value))return;
+ const image=document.createElement('img');
+ image.src=value;image.alt='Illustration for this question';
+ image.style.cssText='display:block;max-width:100%;max-height:320px;width:auto;height:auto;margin:8px 0 16px';
+ parent.append(image);
+}
+async function prepareQuestionPicture(file){
+ if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>8*1024*1024){
+  throw Error('Choose a PNG, JPEG or WebP picture up to 8 MB.');
+ }
+ const image=await createImageBitmap(file);
+ try{
+  const canvas=document.createElement('canvas');
+  const scale=Math.min(1,800/Math.max(image.width,image.height));
+  for(const factor of [1,.75,.55]){
+   canvas.width=Math.max(1,Math.round(image.width*scale*factor));
+   canvas.height=Math.max(1,Math.round(image.height*scale*factor));
+   const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+   ctx.drawImage(image,0,0,canvas.width,canvas.height);
+   const picture=canvas.toDataURL('image/jpeg',.78);
+   if(validQuestionPicture(picture))return picture;
+  }
+  throw Error('This picture is too detailed. Try a cropped or smaller picture.');
+ }finally{image.close()}
+}
 function addDigitalQuestion(q={}){
  const card=document.createElement('div');card.className='card';
- card.innerHTML='<label class="field">Question text<textarea data-q="text"></textarea></label><label class="field">Type<select data-q="type"><option value="objective">Multiple choice</option><option value="short">Short answer</option><option value="list">List</option></select></label><label class="field">Marks<input data-q="marks" type="number" min="1" max="100" step="1"></label><div data-q="choices"></div><label class="field" data-q="rubricRow"><span data-q="keyLabel"></span><textarea data-q="rubric"></textarea></label><button type="button" class="btn outline" data-q="remove">Remove question</button>';
+ card.innerHTML='<label class="field">Question text<textarea data-q="text"></textarea></label><label class="field">Type<select data-q="type"><option value="objective">Multiple choice</option><option value="short">Short answer</option><option value="list">List</option></select></label><label class="field">Marks<input data-q="marks" type="number" min="1" max="100" step="1"></label><label class="field">Question picture (optional)<input data-q="pictureFile" type="file" accept="image/png,image/jpeg,image/webp"></label><div data-q="picturePreview"></div><p data-q="pictureStatus" role="status"></p><button type="button" class="btn outline" data-q="pictureRemove" hidden>Remove picture</button><div data-q="choices"></div><label class="field" data-q="rubricRow"><span data-q="keyLabel"></span><textarea data-q="rubric"></textarea></label><button type="button" class="btn outline" data-q="remove">Remove question</button>';
  const field=key=>card.querySelector('[data-q="'+key+'"]');
+ const pictureInput=field('pictureFile'),picturePreview=field('picturePreview'),pictureStatus=field('pictureStatus'),removePicture=field('pictureRemove');
+ function setPicture(value){
+  card.dataset.picture=validQuestionPicture(value)?value:'';
+  picturePreview.replaceChildren();
+  addQuestionPicture(picturePreview,card.dataset.picture);
+  removePicture.hidden=!card.dataset.picture;
+ }
+ let pictureRequest=0;
+ setPicture(q.picture);
+ pictureInput.onchange=async()=>{
+  const file=pictureInput.files[0];
+  if(!file)return;
+  const request=++pictureRequest;
+  card.dataset.pictureLoading='true';
+  removePicture.hidden=false;
+  pictureStatus.textContent='Preparing picture…';
+  try{
+   const picture=await prepareQuestionPicture(file);
+   if(request!==pictureRequest)return;
+   setPicture(picture);
+   pictureStatus.textContent='Picture attached.';
+  }catch(error){
+   if(request!==pictureRequest)return;
+   pictureStatus.textContent=error.message;
+   removePicture.hidden=!card.dataset.picture;
+  }finally{
+   if(request===pictureRequest){delete card.dataset.pictureLoading;pictureInput.value=''}
+  }
+ };
+ removePicture.onclick=()=>{
+  pictureRequest++;delete card.dataset.pictureLoading;pictureInput.value='';
+  setPicture('');pictureStatus.textContent='Picture removed.';
+ };
  field('text').value=q.text||'';
  field('type').value=q.type==='written'?'short':q.type||'objective';
  field('marks').value=q.marks||1;
@@ -829,16 +891,18 @@ function readDigitalQuestions(){
   const read=key=>card.querySelector('[data-q="'+key+'"]').value.trim();
   const text=read('text'),type=read('type'),marks=Number(read('marks'));
   const fail=message=>{throw Error('Question '+(i+1)+': '+message)};
+  if(card.dataset.pictureLoading)fail('wait for the picture to finish loading.');
+  const picture=validQuestionPicture(card.dataset.picture)?{picture:card.dataset.picture}:{};
   if(!text||!Number.isInteger(marks)||marks<1||marks>100)fail('enter question text and whole-number marks from 1 to 100.');
   if(type!=='objective'){
    const accepted=read('rubric');
    if(!accepted.split(type==='list'?/[;\n]+/:/\|/).some(item=>item.trim()))fail('enter an accepted answer.');
-   return {text,type,marks,accepted};
+   return {text,type,marks,accepted,...picture};
   }
   const options=[0,1,2,3].map(j=>read('option'+j));
   const answer=read('answer');
   if(options.filter(Boolean).length<2||!answer||!options[Number(answer)])fail('enter at least two options and select a verified answer.');
-  return {text,type,marks,options,answer:Number(answer)};
+  return {text,type,marks,options,answer:Number(answer),...picture};
  });
 }
 async function saveExamDraft(){
@@ -955,6 +1019,7 @@ function renderDigitalQuestion(){
  const area=$(activeExamCode?'liveExamRunner':'learnerExamArea'),q=previewQuestions[previewIndex];
  area.innerHTML='<h4>Question '+(previewIndex+1)+' of '+previewQuestions.length+'</h4><p style="white-space:pre-wrap">'+escapeHTML(q.text)+'</p><div data-response></div><p><button type="button" class="btn outline" data-prev>Previous</button> <button type="button" class="btn primary" data-next></button></p>';
  const response=area.querySelector('[data-response]');
+ addQuestionPicture(response,q.picture);
  if(q.type!=='objective'){
   const label=document.createElement('label');label.className='field';label.textContent=q.type==='list'?'Enter one item per line or separate items with semicolons':'Type your short answer';
   const input=document.createElement('textarea');input.value=previewAnswers[previewIndex];
