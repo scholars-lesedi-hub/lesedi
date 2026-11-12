@@ -241,8 +241,11 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </fieldset>
   <div id="stCoverage"></div>
   <button type="button" class="btn primary" id="stBuild">Draft question paper</button>
+  <button type="button" class="btn outline" id="stAiBuild">Draft with AI</button>
+  <p class="small muted">AI drafting sends the selected topics and outcomes to OpenAI. Use curriculum content only. Available to approved teachers.</p>
   <p id="stStatus" role="status"></p>
   <div id="stQuestions"></div>
+  <label id="stAiReviewLabel" hidden><input id="stAiReview" type="checkbox" style="width:auto"> I reviewed the questions, marking guide and marks.</label>
   <div id="stActions" hidden>
     <button type="button" class="btn outline" id="stAdd">Add question</button>
     <button type="button" class="btn outline" id="stPrint">Print question paper</button>
@@ -2307,13 +2310,18 @@ $('renewalInterest').onchange=async event=>{
  const val=id=>get(id).value.trim();
  const say=message=>{get('stStatus').textContent=message;};
  const coverage=get('stCoverage'), questions=get('stQuestions');
- let loaded=[], paper=null, owner, loadedContext;
+ let loaded=[], paper=null, owner, loadedContext, draftVersion=0;
+ const review=get('stAiReview');
+ const aiButton=get('stAiBuild');
+ questions.addEventListener('input',()=>{review.checked=false;draftVersion++;});
+ questions.addEventListener('click',()=>{review.checked=false;draftVersion++;});
  const context=()=>JSON.stringify([val('swSubject'),val('swClass'),val('swTerm'),val('stYear'),val('stPeriod')]);
  const account=()=>cloudUser?.id || 'guest';
  function resetForAccount(){
   if(owner===account())return;
   owner=account();
-  loaded=[];paper=null;
+  loaded=[];paper=null;draftVersion++;
+  review.checked=false;get('stAiReviewLabel').hidden=true;
   coverage.replaceChildren();questions.replaceChildren();
   for(const id of ['stSchool','stCoverTitle','stCoverDetails','stCoverText'])get(id).value='';
   get('stCoverAlign').value='center';
@@ -2336,9 +2344,9 @@ $('renewalInterest').onchange=async event=>{
   if(!val('swSubject')||!val('swClass')||!/^\d{4}$/.test(val('stYear')))throw Error('Enter the subject, class and school year.');
  }
  function run(id,action){
-  get(id).onclick=()=>{
+  get(id).onclick=async()=>{
    resetForAccount();
-   try{action()}catch(error){say(error.message)}
+   try{await action()}catch(error){say(error.message)}
   };
  }
  get('schemeTest').addEventListener('toggle',resetForAccount);
@@ -2385,6 +2393,7 @@ $('renewalInterest').onchange=async event=>{
   function update(){
    card.querySelector('[data-st-options]').hidden=field('type').value!=='objective';
   }
+  field('options').value=(row.options||[]).join('\n');
   field('type').onchange=update;update();
   card.querySelector('button').onclick=()=>card.remove();
   questions.append(card);
@@ -2395,7 +2404,7 @@ $('renewalInterest').onchange=async event=>{
    return outcome[0].toUpperCase()+outcome.slice(1)+'.';
   return marks===1?'State one fact about '+row.topic+'.':'Explain one important idea about '+row.topic+' and support your answer with an example.';
  };
- run('stBuild',()=>{
+ async function buildPaper(useAi){
   requireContext();
   if(loadedContext!==context())throw Error('Load covered topics for the current paper settings first.');
   const selected=Array.from(coverage.querySelectorAll('input:checked'),item=>loaded[Number(item.value)]);
@@ -2404,19 +2413,54 @@ $('renewalInterest').onchange=async event=>{
   if(!Number.isInteger(marks)||marks<selected.length||marks>200)throw Error('Enter up to 200 whole marks, with at least one mark per selected outcome.');
   if(!Number.isInteger(minutes)||minutes<1||minutes>360)throw Error('Enter a duration from 1 to 360 minutes.');
   if(questions.children.length&&!confirm('Replace the current question paper draft?'))return;
-  paper={title:val('stPeriod')+' '+(val('stPeriod')==='End of Term'?val('swTerm')+' ':'')+'Test',subject:val('swSubject'),level:val('swClass'),year:val('stYear'),marks,minutes};
+  const nextPaper={title:val('stPeriod')+' '+(val('stPeriod')==='End of Term'?val('swTerm')+' ':'')+'Test',subject:val('swSubject'),level:val('swClass'),year:val('stYear'),marks,minutes};
   const type=val('stType');
-  questions.replaceChildren();
   const count=Math.max(selected.length,Math.ceil(marks/100));
-  for(let i=0;i<count;i++){
-   const row=selected[i%selected.length], share=Math.floor(marks/count)+(i<marks%count?1:0);
-   addQuestion({coverage:row.term+' · '+row.topic+(row.outcome?' · '+row.outcome:''),text:prompt(row,share),type,marks:share,guide:''});
+  const tasks=Array.from({length:count},(_,i)=>{
+   const row=selected[i%selected.length];
+   return {...row,marks:Math.floor(marks/count)+(i<marks%count?1:0)};
+  });
+  let generated;
+  const request=++draftVersion;
+  if(useAi){
+   const user=cloudUser, settings=context();
+   if(!user||!lesediAuthClient)throw Error('Sign in with an approved teacher account to use AI drafting.');
+   if(count>12)throw Error('Select up to 12 outcomes for an AI draft.');
+   aiButton.disabled=true;
+   say('Drafting questions and a marking guide…');
+   try{
+    const {data,error}=await lesediAuthClient.functions.invoke('draft-printable-test',{body:{
+     subject:nextPaper.subject,level:nextPaper.level,type,
+     tasks:tasks.map(({topic,outcome,marks})=>({topic,outcome,marks}))
+    }});
+    if(cloudUser?.id!==user.id)return;
+    if(request!==draftVersion||settings!==context()||marks!==Number(val('stMarks'))||minutes!==Number(val('stTime'))||type!==val('stType')){
+     say('Paper settings or questions changed. Start a new AI draft to use the updated settings.');return;
+    }
+    if(error){
+     const detail=await error.context?.json?.().catch(()=>null);
+     throw Error(detail?.error||'AI drafting is unavailable. Try the standard draft button.');
+    }
+    if(!Array.isArray(data?.questions)||data.questions.length!==tasks.length)throw Error('AI returned an incomplete draft.');
+    generated=data.questions;
+   }finally{aiButton.disabled=false;}
   }
+  paper={...nextPaper,ai:useAi};
+  questions.replaceChildren();
+  tasks.forEach((row,i)=>{
+   const question=generated?.[i];
+   addQuestion({coverage:row.term+' · '+row.topic+(row.outcome?' · '+row.outcome:''),text:question?.text||prompt(row,row.marks),type,marks:row.marks,guide:question?.guide||'',options:question?.options});
+  });
+  review.checked=false;
+  get('stAiReviewLabel').hidden=!useAi;
   get('stActions').hidden=false;
-  say('Review the draft questions and enter your answers and marking criteria. For multiple choice or true/false, enter the options. For matching, put both columns in the question text.');
- });
- run('stAdd',()=>addQuestion());
+  say(useAi?'Review the questions, answers and marks before printing or transferring to Examination Studio.':'Review the draft and enter the answers and marking criteria.');
+ }
+ run('stBuild',()=>buildPaper(false));
+ run('stAiBuild',()=>buildPaper(true));
+ run('stAdd',()=>{review.checked=false;draftVersion++;addQuestion();});
  function read(guideRequired){
+  if(paper?.ai&&!review.checked)throw Error('Confirm that you have reviewed the AI questions and marking guide first.');
   if(!paper||!questions.children.length)throw Error('Draft at least one question.');
   const rows=Array.from(questions.children,(card,i)=>{
    const value=name=>card.querySelector('[data-st="'+name+'"]').value.trim();
