@@ -2713,7 +2713,7 @@ if ('serviceWorker' in navigator) {
  async function refreshAllowance(){
   const user=cloudUser?.id;
   if(!user||!lesediAuthClient)return;
-  const {data,error}=await lesediAuthClient.functions.invoke('mark-writing',{body:{mode:'allowance'}});
+  const {data,error}=await lesediAuthClient.functions.invoke('rapid-worker',{body:{mode:'allowance'}});
   if(user!==cloudUser?.id)return;
   get('wmAllowance').textContent=error?'Could not check allowance.':data?.error||data.remaining+' of '+data.limit+' papers remaining';
  }
@@ -2744,7 +2744,7 @@ if ('serviceWorker' in navigator) {
   }finally{bitmap.close();}
  }
  async function ai(body){
-  const {data,error}=await lesediAuthClient.functions.invoke('mark-writing',{body});
+  const {data,error}=await lesediAuthClient.functions.invoke('rapid-worker',{body});
   if(owner!==cloudUser?.id)return null;
   if(error){
    const detail=await error.context?.json?.().catch(()=>null);
