@@ -71,7 +71,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
  body.print-learning-topic #learning-notes > :not(#learningPrint){display:none!important}
  body.print-learning-topic #learningPrint{display:block!important}
 }
-</style></head>
+</style><style>#aiCopy[hidden]{display:none!important}</style>
+</head>
 <body>
 <header>
   <div class="brand"><div class="brand-mark">✦</div><div><h1>Education Lesedi Scholars Hub</h1><small>tobetsa-digital-answer · tsaya teko ka maranyane</small></div></div>
@@ -410,13 +411,15 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </section>
 
 <section class="page" id="assistant">
-  <div class="section-head"><div><h2>AI Teacher Assistant</h2><p>Workspace for an AI integration — connect a secure AI backend to activate responses.</p></div></div>
+  <div class="section-head"><div><h2>AI Teacher Assistant</h2><p>Draft lesson plans, practice questions and classroom explanations.</p></div></div>
   <div class="card">
-    <div class="notice">AI is not connected in this standalone HTML prototype. Do not put an API key in browser JavaScript. A secure server endpoint is required.</div>
-    <div class="field"><label>What would you like the assistant to help with?</label><textarea id="aiPrompt" placeholder="For example: Create differentiated activities for a Standard 6 lesson on fractions."></textarea></div>
+    <div class="notice">Sign in with an approved teacher account. Include the subject and level, leave out learner details, and review the draft before using it.</div>
+    <div class="field"><label>What would you like the assistant to help with?</label><textarea id="aiPrompt" maxlength="4000" placeholder="For example: Create differentiated activities for a Standard 6 lesson on fractions."></textarea></div>
     <div class="field"><label>Task</label><select id="aiTask"><option>Explain a topic</option><option>Draft a lesson plan</option><option>Create practice questions</option><option>Adapt content for different learning needs</option><option>Summarise source material</option></select></div>
-    <button class="btn primary" onclick="aiPlaceholder()">Prepare AI request</button>
-    <div id="aiResult"></div>
+    <button class="btn primary" type="button" id="aiGenerate" onclick="generateTeacherDraft()">Generate draft</button>
+    <button class="btn outline" type="button" id="aiCopy" onclick="copyTeacherDraft()" hidden>Copy draft</button>
+    <p id="aiStatus" role="status"></p>
+    <div id="aiResult" style="white-space:pre-wrap;overflow-wrap:anywhere"></div>
   </div>
 </section>
 
@@ -1235,7 +1238,38 @@ async function submitDigitalExam(){
  }
  const print=document.createElement('button');print.type='button';print.className='btn primary no-print';print.textContent='Print / Save PDF';print.onclick=()=>window.print();card.append(print);
 }
-function aiPlaceholder(){const p=$('aiPrompt').value.trim();if(!p){showToast('Enter a request first.');return}$('aiResult').innerHTML='<div class="notice"><b>AI request prepared.</b><br>Task: '+escapeHTML($('aiTask').value)+'<br>Request: '+escapeHTML(p)+'<br><br>To generate a real response, connect this form to a secure backend AI endpoint. Never place a private API key in this HTML file.</div>'}
+let teacherDraftRequest=0;
+function clearTeacherDraft(){
+ teacherDraftRequest++;
+ $('aiResult').textContent='';
+ $('aiStatus').textContent='';
+ $('aiCopy').hidden=true;
+}
+async function generateTeacherDraft(){
+ const user=cloudUser, prompt=$('aiPrompt').value.trim();
+ if(!user||!lesediAuthClient){$('aiStatus').textContent='Sign in with an approved teacher account first.';return;}
+ if(!prompt){$('aiStatus').textContent='Enter a request first.';return;}
+ clearTeacherDraft();
+ const request=teacherDraftRequest, button=$('aiGenerate');
+ button.disabled=true;
+ $('aiStatus').textContent='Generating draft…';
+ try{
+  const {data,error}=await lesediAuthClient.functions.invoke('teacher-assistant',{body:{task:$('aiTask').value,prompt}});
+  const detail=error?await error.context?.json?.().catch(()=>null):null;
+  if(request!==teacherDraftRequest||cloudUser?.id!==user.id)return;
+  if(error||!data?.answer)throw Error(detail?.error||'The assistant is unavailable. Check the teacher-assistant deployment.');
+  $('aiResult').textContent=data.answer;
+  $('aiCopy').hidden=false;
+  $('aiStatus').textContent='Draft ready for teacher review.';
+ }catch(error){
+  if(request===teacherDraftRequest&&cloudUser?.id===user.id)$('aiStatus').textContent=error.message;
+ }finally{button.disabled=false;}
+}
+async function copyTeacherDraft(){
+ try{await navigator.clipboard.writeText($('aiResult').textContent);$('aiStatus').textContent='Draft copied.';}
+ catch{$('aiStatus').textContent='Select the draft text and copy it manually.';}
+}
+
 function renderLibrary(){const docs=store.get('docs'),exams=store.get('exams');$('savedDocs').innerHTML=docs.length?docs.map(d=>`<div class="list-item"><div><b>${escapeHTML(d.title)}</b><div class="small muted">${escapeHTML(d.date)} • ${d.content.length} characters</div></div><button class="btn outline" onclick="loadDoc('${d.id}')">Load</button></div>`).join(''):'No saved documents.';$('savedExams').innerHTML=exams.length?exams.map(e=>`<div class="list-item"><div><b>${escapeHTML(e.title)}</b><div class="small muted">${escapeHTML(e.status)} • ${escapeHTML(e.date)}</div></div><button type="button" class="btn outline" onclick="openCloudExam(\'${e.id}\')">Open draft</button></div>`).join(''):'No examination drafts.'}
 function openCloudExam(id){
  const exam=store.get('exams').find(item=>item.id===id);
@@ -1689,7 +1723,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;window.dispatchEvent(new Event('lesedi-writing-open'));clearPaymentHistory();clearMyUsage();practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;clearTeacherDraft();$('aiPrompt').value='';window.dispatchEvent(new Event('lesedi-writing-open'));clearPaymentHistory();clearMyUsage();practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
