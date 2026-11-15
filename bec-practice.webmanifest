@@ -1,0 +1,23 @@
+{
+  "id": "./?app=bec-practice",
+  "name": "Lesedi BEC Practice",
+  "short_name": "BEC Practice",
+  "description": "Open PSLE, JC and BGCSE practice.",
+  "start_url": "./?app=bec-practice",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#102b5c",
+  "icons": [
+    {
+      "src": "lesedi-icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "lesedi-icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
