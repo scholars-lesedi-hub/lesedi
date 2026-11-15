@@ -62,7 +62,16 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <style>#lesediInstall[hidden],#lesediInstall [hidden]{display:none!important}</style>
 <style>@media(min-width:761px){.hero-actions .hero-convert{order:-2}.hero-actions .hero-writing{order:-1}}</style>
 <style>.hero-actions .hero-writing{flex-direction:column;gap:2px;font-size:1rem;line-height:1.15;padding:8px 14px}.hero-writing small{font-size:.75rem;font-weight:600}</style>
-</head>
+<style>
+.learning-topic .actions{display:flex;flex-wrap:wrap;gap:8px}
+.learning-topic .actions button{min-height:44px}
+.learning-exercise-label{align-self:center;font-weight:600;margin-inline-start:4px}
+@media print{
+ body.print-learning-topic .page.active#learning-notes{display:block!important}
+ body.print-learning-topic #learning-notes > :not(#learningPrint){display:none!important}
+ body.print-learning-topic #learningPrint{display:block!important}
+}
+</style></head>
 <body>
 <header>
   <div class="brand"><div class="brand-mark">✦</div><div><h1>Education Lesedi Scholars Hub</h1><small>tobetsa-digital-answer · tsaya teko ka maranyane</small></div></div>
@@ -275,20 +284,23 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
  <div class="card">
   <h3>1. Set the marking criteria</h3><p id="wmAllowance" role="status"></p>
   <label class="field">Writing type<select id="wmKind"><option>Composition</option><option>Formal letter</option><option>Informal letter</option></select></label>
+  <button type="button" class="btn primary" id="wmUseStarter">Use a starter rubric (20 marks)</button>
+  <p class="small muted" id="wmRubricStatus" role="status">Check that the starter rubric matches your assignment.</p>
+  <details id="wmRubricSettings"><summary>Custom criteria and rubric photo</summary>
   <label class="field">Assignment requirements<textarea id="wmRequirements" maxlength="2000" placeholder="For letters, specify the expected addresses, their placement, date, salutation, purpose, tone and closing."></textarea></label>
   <label class="field">Photo of criteria<input id="wmRubricPhoto" type="file" accept="image/*" capture="environment"></label>
   <button type="button" class="btn outline" id="wmScanRubric">Read rubric photo</button>
   <label class="field">Criteria and maximum marks (one per line)<textarea id="wmCriteria" rows="6" placeholder="Content | 8&#10;Organisation | 4&#10;Language | 8"></textarea></label>
   <button type="button" class="btn outline" id="wmSaveRubric">Save rubric on this device</button>
+  </details>
  </div>
  <div class="card">
   <h3>2. Read a learner’s writing</h3>
   <p>Take a clear photo of each page in order. Keep the full writing in view and cover the learner’s name and any real addresses.</p>
   <label class="field">Page photo<input id="wmPhoto" type="file" accept="image/*" capture="environment"></label>
-  <button type="button" class="btn outline" id="wmAddPhoto">Add page</button>
   <button type="button" class="btn outline" id="wmClearPhotos">Clear pages</button>
   <span id="wmPageCount">0 pages</span>
-  <button type="button" class="btn primary" id="wmMark">Read photos and suggest marks</button>
+  <button type="button" class="btn primary" id="wmMark">Suggest marks</button>
   <p id="wmStatus" role="status"></p>
  </div>
  <div id="wmReview" class="card" hidden></div>
@@ -460,7 +472,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <label class="field">Level<select id="learningLevel"></select></label>
   <label class="field">Subject<select id="learningSubject"></select></label>
  </div>
+ <label class="field">Find a topic<input id="learningSearch" type="search" placeholder="e.g. Fractions or Density"></label>
  <div id="learningResults"></div>
+ <div id="learningPrint" hidden></div>
 </section>
 <section class="page" id="subject-notes"><div class="section-head"><div><h2>Subject Question Bank</h2><p>Choose a subject to practise with questions drawn from the uploaded notes. Each attempt shuffles the questions and options.</p></div></div><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="steam-assessments"><div class="section-head"><div><h2>STEAM Assessments</h2><p>Choose a subject and start a short STEAM quiz, test or exam. The Agriculture school garden unit includes labelled STEAM questions.</p></div></div><details class="card"><summary><strong>Teacher introduction to STEAM</strong></summary><p>A short introduction for teachers and tutors. No certificate is awarded.</p><h3>1. Start with a practical problem</h3><p>Use the Standard 5 school garden unit. Ask learners how they could water seedlings using a recycled bottle and a limited amount of water.</p><h3>2. Label the skill learners demonstrate</h3><p>Use Science for investigating, Technology for selecting or using tools, Engineering for designing and testing, Arts for purposeful visual communication, and Mathematics for measuring, calculating or interpreting data. Add a secondary label only when the question assesses that skill too.</p><h3>3. Choose the evidence and marking method</h3><p>The quiz checks three objective skills. The test adds a design task. The exam adds visual communication and a design-and-calculation task. Objective items are automatically marked. Use the rubrics below to award marks for written work.</p><h3>4. Review before publishing</h3><p>Use the Examination Studio to prepare a school assessment. Check the level, question wording, answer key and rubric before approving and publishing it.</p><h3>Worked examples for teacher marking</h3><details><summary>Engineering marking example</summary><p>A recycled bottle drip system empties too quickly. Describe one design change and a fair test to check whether it works.</p><p>3 marks. Award 1 for a feasible design change, 1 for keeping relevant conditions the same, and 1 for comparing the time or water delivered.</p><p><strong>Sample full-credit response.</strong> Use a smaller outlet. Start both bottles with the same amount of water and keep them at the same height. Time how long each takes to deliver 250 mL.</p></details><details><summary>Arts marking example</summary><p>Plan a three-panel illustrated guide showing younger learners how to fill, place and check the bottle. Describe what each panel shows and how you would make the order clear.</p><p>3 marks. Award 1 for covering all three steps in order, 1 for visuals that clarify each step, and 1 for a clear sequence cue such as arrows or numbers.</p><p><strong>Sample full-credit response.</strong> Panel 1 shows water pouring into the bottle, panel 2 shows the bottle beside a seedling, and panel 3 shows a learner checking the water level. Large numbers and arrows show the order.</p></details><details><summary>Engineering + Mathematics marking example</summary><p>A bottle delivers 250 mL in 20 minutes. If it runs at the same rate, how much will it deliver in 60 minutes? Explain how you would check that prediction with your prototype.</p><p>3 marks. Award 1 for 750 mL, 1 for showing three 20-minute intervals or equivalent reasoning, and 1 for a feasible 60-minute test using a measuring container.</p><p><strong>Sample full-credit response.</strong> 60 ÷ 20 = 3, so 3 × 250 mL = 750 mL. Run the bottle for 60 minutes with enough water and measure what collects in a marked jug.</p></details></details><div class="notes-subjects"></div><div class="notes-runner" aria-live="polite"></div></section><section class="page" id="library">
   <div class="section-head"><div><h2>My Resource Library</h2><p>Sign in to find your private uploads, saved documents and exam drafts.</p></div></div>
@@ -1306,7 +1320,7 @@ async function openPracticeSet(id){
  takeLibraryPractice(set);
 }
 
-const learningNotes=[["Standard 1","Environmental Science","Living things","Living things grow and need resources to stay alive.","A bean seed can grow into a plant when it gets suitable water and warmth. A pebble does not grow.","Which is living: a kitten or a spoon?","A kitten.","Think about which thing can grow and needs food or water."],["Standard 2","Mathematics","Tens and ones","A group of ten is one ten. Loose units are ones.","36 has 3 tens and 6 ones, so 36 = 30 + 6.","How many tens are in 54?","5 tens.","Look at the digit immediately to the left of the ones."],["Standard 3","English","Main idea","The main idea is what the whole passage is mostly about.","A paragraph about watering seedlings, removing weeds and checking leaves is mainly about caring for plants.","What is the main idea of a paragraph about brushing, flossing and visiting the dentist?","Looking after your teeth.","Look for what the details have in common."],["Standard 4","CAPA","Shapes, shading and rhythm","Shapes can strengthen a frame. Shading shows light and dark. Body percussion uses the body to make sound.","A diagonal strip splits a square frame into two triangles. A darker pencil tone can show the part of an object facing away from light.","What could you add across a square frame to help it hold its shape?","A diagonal brace.","Think about whether the question is about strength, tone, sound or safe tool use."],["Standard 5","Agriculture","Farming systems","Farming systems can be grouped by whether they produce crops, rear animals, or do both.","An orchard grows fruit for sale. A farm with an orchard and a flock of sheep has both crop and animal production.","How would you group a farm that raises cattle and grows millet?","Mixed farming.","Identify whether the farmer grows crops, keeps animals, or does both."],["Standard 5","Setswana","Potsolotso","Potsolotso ke puisano e mo go yone motho a botsang dipotso go bona tshedimosetso.","Fa o botsolotsa motlhokomedi wa laeborari, o ka botsa gore laeborari e bula leng.","Kwala potso e o ka e botsang motlhokomedi wa laeborari.","Sekai: A nka adima buka malatsi a le kae?","Akanya gore o batla go itse eng pele o kwala potso."],["Standard 6","Science","Heat transfer","Conduction transfers thermal energy through direct contact. Convection involves moving liquid or gas. Radiation can travel through empty space.","A pan handle warms by conduction. Air moves above a heater by convection. You can feel radiation from a warm fire.","Which process carries energy from a hot iron to cloth it touches?","Conduction.","Look for contact, movement of a fluid, or transfer without contact."],["Standard 6","Social Studies","Settlement and transport","Where people live affects which services and transport they can reach.","A learner in a town might take a bus. A learner in a village without a bus route might walk or use shared transport.","Name one factor that affects how someone gets to school.","Distance, road conditions or available transport.","Think about the distance and what transport is available."],["Standard 7","Cultural Studies","Recording community life","A community study can organise evidence under language, food, dress, shelter and activities.","A photo of a thatched roof belongs under shelter. A recorded greeting belongs under language.","Where would you place a recipe for a traditional meal?","Food.","Identify what the item describes before choosing its category."],["Standard 7","Religious and Moral Education","Choices and consequences","Choices can affect the person making them and other people.","Returning a lost ruler helps its owner and can build trust in the class.","What is one possible consequence of spreading an unverified rumour?","It could upset someone or damage trust.","Consider who could be affected and what happens next."],["PSLE","Mathematics","Fractions, decimals and percentages","To find a fraction of a quantity, divide by the denominator and multiply by the numerator. To change a decimal to a percent, multiply by 100.","To find ⅔ of 18, divide 18 by 3 to get 6, then multiply 6 by 2 to get 12. Also, 0.32 = 32%.","What is ⅗ of 25?","15.","For a fraction of an amount, find one equal part first. For percentages, think in hundredths."],["JCE","Mathematics","Algebra, ratio and measurement","Keep an equation balanced by doing the same operation to both sides. For ratio shares, divide the total by the sum of the parts. Check measurement units before calculating.","For 3x + 4 = 19, subtract 4 from both sides, then divide by 3 to get x = 5. To share 40 in the ratio 1:3, each part is 10, giving shares of 10 and 30.","Solve 2x + 7 = 21.","x = 7.","For equations, undo addition or subtraction first. For ratios, count the total number of parts."],["BGCSE","Mathematics","Percentages, algebra and data","Use a multiplier for percentage change. Isolate an unknown by keeping both sides balanced. For a simple probability, divide favourable outcomes by equally likely outcomes.","A 15% increase on 80 gives 80 × 1.15 = 92. A bag with 2 red and 6 blue counters gives a probability of 2/8 = 1/4 for red.","Decrease 120 by 25%.","90.","Identify the topic and write the relevant multiplier, equation or probability fraction before substituting values."]];
+const learningNotes=[["Standard 1","Environmental Science","Living things","Living things grow and need resources to stay alive.","A bean seed can grow into a plant when it gets suitable water and warmth. A pebble does not grow.","Which is living: a kitten or a spoon?","A kitten.","Think about which thing can grow and needs food or water."],["Standard 2","Mathematics","Tens and ones","A group of ten is one ten. Loose units are ones.","36 has 3 tens and 6 ones, so 36 = 30 + 6.","How many tens are in 54?","5 tens.","Look at the digit immediately to the left of the ones."],["Standard 3","English","Main idea","The main idea is what the whole passage is mostly about.","A paragraph about watering seedlings, removing weeds and checking leaves is mainly about caring for plants.","What is the main idea of a paragraph about brushing, flossing and visiting the dentist?","Looking after your teeth.","Look for what the details have in common."],["Standard 4","CAPA","Shapes, shading and rhythm","Shapes can strengthen a frame. Shading shows light and dark. Body percussion uses the body to make sound.","A diagonal strip splits a square frame into two triangles. A darker pencil tone can show the part of an object facing away from light.","What could you add across a square frame to help it hold its shape?","A diagonal brace.","Think about whether the question is about strength, tone, sound or safe tool use."],["Standard 5","Agriculture","Farming systems","Farming systems can be grouped by whether they produce crops, rear animals, or do both.","An orchard grows fruit for sale. A farm with an orchard and a flock of sheep has both crop and animal production.","How would you group a farm that raises cattle and grows millet?","Mixed farming.","Identify whether the farmer grows crops, keeps animals, or does both."],["Standard 5","Setswana","Potsolotso","Potsolotso ke puisano e mo go yone motho a botsang dipotso go bona tshedimosetso.","Fa o botsolotsa motlhokomedi wa laeborari, o ka botsa gore laeborari e bula leng.","Kwala potso e o ka e botsang motlhokomedi wa laeborari.","Sekai: A nka adima buka malatsi a le kae?","Akanya gore o batla go itse eng pele o kwala potso."],["Standard 6","Science","Heat transfer","Conduction transfers thermal energy through direct contact. Convection involves moving liquid or gas. Radiation can travel through empty space.","A pan handle warms by conduction. Air moves above a heater by convection. You can feel radiation from a warm fire.","Which process carries energy from a hot iron to cloth it touches?","Conduction.","Look for contact, movement of a fluid, or transfer without contact."],["Standard 6","Social Studies","Settlement and transport","Where people live affects which services and transport they can reach.","A learner in a town might take a bus. A learner in a village without a bus route might walk or use shared transport.","Name one factor that affects how someone gets to school.","Distance, road conditions or available transport.","Think about the distance and what transport is available."],["Standard 7","Cultural Studies","Recording community life","A community study can organise evidence under language, food, dress, shelter and activities.","A photo of a thatched roof belongs under shelter. A recorded greeting belongs under language.","Where would you place a recipe for a traditional meal?","Food.","Identify what the item describes before choosing its category."],["Standard 7","Religious and Moral Education","Choices and consequences","Choices can affect the person making them and other people.","Returning a lost ruler helps its owner and can build trust in the class.","What is one possible consequence of spreading an unverified rumour?","It could upset someone or damage trust.","Consider who could be affected and what happens next."],["PSLE","Mathematics","Fractions, decimals and percentages","To find a fraction of a quantity, divide by the denominator and multiply by the numerator. To change a decimal to a percent, multiply by 100.","To find ⅔ of 18, divide 18 by 3 to get 6, then multiply 6 by 2 to get 12. Also, 0.32 = 32%.","What is ⅗ of 25?","15.","For a fraction of an amount, find one equal part first. For percentages, think in hundredths."],["JCE","Mathematics","Algebra, ratio and measurement","Keep an equation balanced by doing the same operation to both sides. For ratio shares, divide the total by the sum of the parts. Check measurement units before calculating.","For 3x + 4 = 19, subtract 4 from both sides, then divide by 3 to get x = 5. To share 40 in the ratio 1:3, each part is 10, giving shares of 10 and 30.","Solve 2x + 7 = 21.","x = 7.","For equations, undo addition or subtraction first. For ratios, count the total number of parts."],["BGCSE","Mathematics","Percentages, algebra and data","Use a multiplier for percentage change. Isolate an unknown by keeping both sides balanced. For a simple probability, divide favourable outcomes by equally likely outcomes.","A 15% increase on 80 gives 80 × 1.15 = 92. A bag with 2 red and 6 blue counters gives a probability of 2/8 = 1/4 for red.","Decrease 120 by 25%.","90.","Identify the topic and write the relevant multiplier, equation or probability fraction before substituting values."],["JCE","Mathematics","Ratio and scale","A scale compares a drawing length to the actual length in the same units.","At 1:200, 3 cm represents 600 cm, or 6 m.","At 1:200, what does 5 cm represent?","10 m.","Multiply by the scale factor before converting units."],["JCE","Mathematics","Probability","For equally likely outcomes, divide the number of favourable outcomes by the total number of outcomes.","A bag has 3 blue and 7 white counters. The probability of blue is 3/10.","What is the probability of drawing white?","7/10.","Count all the counters for the denominator."],["JCE","Mathematics","Standard form","Write a number as a × 10ⁿ, where 1 ≤ a < 10 and n is an integer.","56,000 = 5.6 × 10⁴ because 5.6 is multiplied by 10 four times.","Write 0.0032 in standard form.","3.2 × 10⁻³.","A number between zero and one has a negative exponent in standard form."],["JCE","Science","Density","Density is mass divided by volume. Use compatible units.","A block with a mass of 120 g and a volume of 40 cm³ has a density of 3 g/cm³.","Find the density of a 90 g sample with a volume of 30 cm³.","3 g/cm³.","Divide mass by volume."],["JCE","Science","Interpreting data","A trend describes the direction or pattern in a set of measurements. Support a claim with data.","Water temperatures of 20°C, 24°C and 28°C at equal intervals show a steady increase of 4°C per interval.","Describe the pattern in readings of 16°C, 14°C and 12°C at equal intervals.","The temperature falls by 2°C per interval.","Compare successive measurements."],["JCE","English","Making inferences","An inference combines a clue in the passage with a reasonable explanation.","Tumi stepped inside and shook water from her umbrella. A reasonable inference is that it had been raining. The wet umbrella is the clue.","Jon checked the clock twice and ran towards the bus stop. What can you infer?","He was probably worried about missing the bus. Checking the time and running support that inference.","Quote or describe a clue that supports your idea."],["JCE","English","Summarising a passage","A summary keeps the main points, groups related ideas and uses concise wording.","If a passage says a library opens earlier, adds weekend hours and welcomes more learners, a summary could say: The library extended its hours to serve more learners.","Summarise: The club collected bottles, sorted them and sent them to a recycling centre.","The club collected and sorted bottles for recycling.","Keep the main action and its purpose."],["JCE","Agriculture","Comparing crop growth","A fair comparison changes one factor and keeps other growing conditions as similar as possible.","To compare two watering schedules, use the same crop, soil and container size, then measure growth at consistent intervals.","Name two things to keep the same when comparing two watering schedules.","Examples include crop variety, soil type and container size.","Identify the one factor being tested first."],["JCE","Setswana","Go dira tshobokanyo","Tshobokanyo e kaya go kwala dintlha tsa botlhokwa tsa temana ka mafoko a a khutshwane.","Fa temana e bua ka go jala, go nosetsa le go tlhagola, o ka re: Bana ba tlhokomela tshingwana ya sekolo.","Sobokanya: Neo o ne a phutha matlakala, a a kgaoganya mme a a isa kwa lefelong la go a dirisa gape.","Neo o ne a phutha le go kgaoganya matlakala gore a dirisiwe gape.","Batla se motho a se dirileng le lebaka la sone."],["BGCSE","Mathematics","Standard form","Write a number as a × 10ⁿ, with 1 ≤ a < 10 and n a whole-number exponent, which can be negative.","72,000 = 7.2 × 10⁴. Moving the decimal four places right gives the original number.","Write 0.00056 in standard form.","5.6 × 10⁻⁴.","A positive number smaller than 1 has a negative exponent."],["BGCSE","Chemistry","Diffusion in fluids","Particles in liquids and gases move randomly. Diffusion gives a net movement from higher concentration to lower concentration.","A drop of dye spreads in still water because dye particles move away from the region where they are most concentrated.","Why does a scent spread through still air?","Scent particles move randomly and spread from higher to lower concentration.","Think about where the particles start out most concentrated."],["BGCSE","Physics","Speed and distance–time graphs","Average speed is total distance divided by total time. The slope of a distance–time graph shows speed.","A cyclist covers 150 m in 30 s at constant speed. The graph rises 150 m over 30 s, giving a slope of 5 m/s.","What does a horizontal line on a distance–time graph show?","The distance stays the same, so the object is stationary.","Check whether the distance changes while time passes."],["BGCSE","Biology","Osmosis","Osmosis is the net movement of water through a partially permeable membrane from higher water potential to lower water potential.","A potato strip in distilled water can gain mass because water enters its cells.","Why may a potato strip lose mass in concentrated salt solution?","Water moves out of its cells into the solution by osmosis.","Compare the water potential inside and outside the cells."],["BGCSE","Literature in English","Analysing character","Support interpretations of a character with evidence from their words, actions, or reactions. Explain how the evidence supports your claim.","A character gives away their only umbrella and walks home in the rain. The action suggests generosity because helping someone costs them something.","What might you infer about a character who apologises after wrongly blaming a friend?","They may take responsibility for their actions. The apology is evidence.","Use an action from the passage to justify your interpretation."],["BGCSE","Computer Studies","Tracing algorithms","A trace table records how variables change as each instruction runs.","Set total to 0, then add 2, 4 and 6 in turn. The total goes 0 → 2 → 6 → 12.","Start at 5, subtract 2 twice, then add 4. What is the final value?","7.","Record the value after each update."],["BGCSE","Agriculture","Pollination in maize and beans","Pollination transfers pollen from an anther to a stigma. Wind is the main carrier in maize. Insects can carry pollen between bean flowers.","Maize tassels release pollen into the air, while maize silks catch pollen. A visiting insect can carry bean pollen between flowers.","What carries pollen from maize tassels to maize silks?","Wind.","Think about what moves the pollen between parts of the plant."],["BGCSE","Accounting","Trial balance","A trial balance lists ledger balances in debit and credit columns. The totals should agree when debit and credit entries balance.","Buying equipment for P300 in cash increases equipment by a P300 debit and reduces cash by a P300 credit.","Can the trial balance agree if an entire transaction was never recorded?","Yes. Both the debit and the credit are missing, so the totals can still agree.","Ask whether the error affects both totals equally."],["BGCSE","Music","Rhythm in 4/4 time","A bar in 4/4 has four quarter-note beats. A half note lasts two beats, and a quarter note lasts one beat.","A half note followed by two quarter notes fills a bar because 2 + 1 + 1 = 4.","How many quarter notes fill the rest of a bar after one half note?","Two quarter notes.","Subtract the beats already used from four."],["PSLE","Mathematics","Adding fractions","Use a common denominator before adding the numerators.","1/3 + 1/6 = 2/6 + 1/6 = 1/2.","Work out 1/4 + 1/8.","3/8.","Rewrite one quarter in eighths."],["PSLE","Mathematics","Perimeter","Perimeter is the total distance around a shape. Express the side lengths in the same units before adding.","A rectangle 7 m long and 3 m wide has a perimeter of 7 + 3 + 7 + 3 = 20 m.","Find the perimeter of a rectangle 8 cm long and 5 cm wide.","26 cm.","Count each pair of opposite sides."],["PSLE","Mathematics","Reading timetables","Find the start and finish times. Count forward to work out the time between them.","A bus that leaves at 08:45 and arrives at 09:20 takes 15 minutes to reach 09:00 and another 20 minutes to arrive. The journey takes 35 minutes.","How long is a journey from 14:50 to 15:25?","35 minutes.","Count to 15:00 first."],["PSLE","Science","Decomposers in food chains","Decomposers such as fungi and bacteria break down dead material. This returns nutrients to the environment.","Fungi growing on fallen leaves break them down, returning nutrients to the soil.","What role do fungi play when they break down a fallen branch?","They act as decomposers.","Think about what happens to dead material."],["PSLE","Science","Reading a bar graph","Check the labels and scale before reading the height of a bar. Compare values by subtracting.","If a bar for sunny days reaches 8 and a bar for cloudy days reaches 5, there were 3 more sunny days.","One bar shows 12 rainy days and another shows 7 windy days. What is the difference?","5 days.","Subtract the smaller value from the larger one."],["PSLE","English","Making inferences","An inference is a reasonable conclusion supported by clues in the text.","A learner places a wet umbrella by the door. A reasonable inference is that it may have been raining.","A character whispers and switches off the light as footsteps approach. What might you infer?","The character may be trying to avoid being noticed. Whispering and turning off the light are clues.","Link your idea to an action in the passage."],["PSLE","English","Summarising main points","A summary gives the most important ideas in fewer words. Leave out details that do not change the main point.","If a passage says the class gathered cans, sorted them and sent them for recycling, a short summary is: The class collected and sorted cans for recycling.","Summarise: The library opened earlier on weekdays and added Saturday hours so more learners could visit.","The library extended its hours so more learners could visit.","Keep what changed and why."],["PSLE","Agriculture","Preventing soil erosion","Wind and flowing water can carry away topsoil. Plant cover and ground barriers can slow this loss.","Grass planted across a slope helps slow runoff, and its roots help hold soil in place.","Why is bare soil on a slope more likely to wash away?","There is less plant cover to slow the water or hold the soil.","Think about how rain moves downhill."],["PSLE","Social Studies","Conserving natural resources","Conservation means using resources carefully so they remain available over time.","A community can repair leaking taps to reduce water waste and protect its supply.","Name one way a school can conserve water.","For example, repair leaking taps or close taps after use.","Look for a place where water is being wasted."]];
 function appendLearningNote(parent,note,includeHint=false){
  const [level,subject,topic,summary,example,warmup,answer,hint]=note;
  const details=document.createElement('details');
@@ -1332,6 +1346,69 @@ function appendLearningNote(parent,note,includeHint=false){
 const learningLevel=$('learningLevel'),learningSubject=$('learningSubject');
 const levelsForNotes=[...Array.from({length:7},(_,i)=>'Standard '+(i+1)),'PSLE','Form 1','Form 2','Form 3','JCE','Form 4','Form 5','BGCSE'];
 learningLevel.replaceChildren(new Option('All levels',''),...levelsForNotes.map(level=>new Option(level,level)));
+function renderTopicCard(parent,note){
+ const [level,subject,topic,summary,example,question,answer,hint]=note;
+ function add(container,tag,text){
+  const element=document.createElement(tag);
+  element.textContent=text;
+  container.append(element);
+  return element;
+ }
+ const card=add(parent,'article','');
+ card.className='card learning-topic';
+ add(card,'h3',topic);
+ add(card,'p',level+' · '+subject);
+ const actions=add(card,'div','');
+ actions.className='actions';
+ const panels=[];
+ function toggle(label){
+  const button=add(actions,'button',label);
+  button.type='button';button.className='btn outline';
+  button.setAttribute('aria-expanded','false');
+  const panel=add(card,'div','');panel.hidden=true;
+  panels.push({panel,button});
+  button.onclick=()=>{
+   const open=panel.hidden;
+   for(const entry of panels){
+    entry.panel.hidden=entry.panel!==panel||!open;
+    entry.button.setAttribute('aria-expanded',String(!entry.panel.hidden));
+   }
+  };
+  return panel;
+ }
+ const lesson=toggle('Read notes');
+ add(lesson,'p',summary);
+ add(lesson,'p','Worked example: '+example);
+ add(actions,'span','Exercise').className='learning-exercise-label';
+ const exercise=toggle('Digital');
+ add(exercise,'p',question);
+ const response=add(exercise,'label','Your answer (optional)');
+ const input=add(response,'textarea','');input.rows=2;
+ for(const [label,text] of [['Show hint',hint],['Check answer',answer]]){
+  const details=add(exercise,'details','');
+  add(details,'summary',label);
+  add(details,'p',text);
+ }
+ const print=add(actions,'button','Print');
+ print.type='button';print.className='btn outline';
+ print.setAttribute('aria-label','Print exercise: '+topic);
+ print.onclick=()=>{
+  const sheet=$('learningPrint');
+  sheet.replaceChildren();
+  add(sheet,'h1',topic);
+  add(sheet,'p',level+' · '+subject);
+  add(sheet,'p','Name: __________________________  Date: __________');
+  add(sheet,'p',summary);
+  add(sheet,'p','Worked example: '+example);
+  add(sheet,'h2','Exercise');
+  add(sheet,'p',question);
+  for(let i=0;i<3;i++)add(sheet,'p','________________________________________________');
+  document.body.classList.add('print-learning-topic');
+  const cleanup=()=>document.body.classList.remove('print-learning-topic');
+  window.addEventListener('afterprint',cleanup,{once:true});
+  try{window.print()}catch(error){cleanup();window.removeEventListener('afterprint',cleanup);}
+ };
+}
 function renderLearningNotes(){
  const level=learningLevel.value;
  const rows=learningNotes.filter(note=>!level||note[0]===level);
@@ -1339,10 +1416,12 @@ function renderLearningNotes(){
  learningSubject.replaceChildren(new Option('All subjects',''),...[...new Set(rows.map(note=>note[1]))].sort().map(name=>new Option(name,name)));
  if([...learningSubject.options].some(option=>option.value===subject))learningSubject.value=subject;
  const out=$('learningResults');out.replaceChildren();
- for(const note of rows.filter(note=>!learningSubject.value||note[1]===learningSubject.value))appendLearningNote(out,note);
+ const query=$('learningSearch').value.trim().toLowerCase();
+ for(const note of rows.filter(note=>(!learningSubject.value||note[1]===learningSubject.value)&&note[2].toLowerCase().includes(query)))renderTopicCard(out,note);
  if(!out.children.length)out.textContent='No lessons have been added for this selection yet.';
 }
 learningLevel.onchange=learningSubject.onchange=renderLearningNotes;
+$('learningSearch').oninput=renderLearningNotes;
 renderLearningNotes();
 function takeLibraryPractice(set){
  const area=$('becPreview');
@@ -1816,12 +1895,335 @@ async function uploadDocumentToCloud(){
     }
     return copy;
   };
+  const syllabusPractice = [
+  [
+    "Mathematics",
+    "PSLE",
+    "Fractions, perimeter and time",
+    [
+      [
+        "What is 1/3 + 1/4?",
+        "7/12",
+        "2/7",
+        "1/7",
+        "1/12"
+      ],
+      [
+        "Find the perimeter of a rectangle 9 cm long and 4 cm wide.",
+        "26 cm",
+        "13 cm",
+        "36 cm",
+        "18 cm"
+      ],
+      [
+        "A lesson starts at 10:45 and ends at 11:20. How long is it?",
+        "35 minutes",
+        "25 minutes",
+        "45 minutes",
+        "75 minutes"
+      ],
+      [
+        "What is 25% of 32?",
+        "8",
+        "4",
+        "12",
+        "16"
+      ]
+    ]
+  ],
+  [
+    "Science",
+    "PSLE",
+    "Feeding relationships and data",
+    [
+      [
+        "Which organism is a producer in a food chain?",
+        "Grass",
+        "Rabbit",
+        "Hawk",
+        "Fungus"
+      ],
+      [
+        "What is a role of decomposers?",
+        "Break down dead material",
+        "Make sunlight",
+        "Stop plants using water",
+        "Turn into consumers when it rains"
+      ],
+      [
+        "In grass → grasshopper → frog, which organism feeds on grass?",
+        "Grasshopper",
+        "Frog",
+        "Grass",
+        "None"
+      ],
+      [
+        "A bar graph shows 11 sunny days and 6 rainy days. How many more sunny days were recorded?",
+        "5",
+        "6",
+        "11",
+        "17"
+      ]
+    ]
+  ],
+  [
+    "Mathematics",
+    "JCE",
+    "Ratio, probability and standard form",
+    [
+      [
+        "Divide 56 in the ratio 3:4. What is the larger share?",
+        "32",
+        "24",
+        "28",
+        "42"
+      ],
+      [
+        "A fair six-sided die is rolled. What is the probability of rolling a number greater than 4?",
+        "1/3",
+        "1/6",
+        "1/2",
+        "2/3"
+      ],
+      [
+        "Write 0.00081 in standard form.",
+        "8.1 × 10⁻⁴",
+        "8.1 × 10⁻³",
+        "8.1 × 10⁴",
+        "81 × 10⁻⁴"
+      ],
+      [
+        "On a scale drawing of 1:250, what actual length does 2 cm represent?",
+        "5 m",
+        "50 m",
+        "0.5 m",
+        "500 m"
+      ]
+    ]
+  ],
+  [
+    "Science",
+    "JCE",
+    "Density and interpreting data",
+    [
+      [
+        "What is the density of a block of mass 72 g and volume 24 cm³?",
+        "3 g/cm³",
+        "0.33 g/cm³",
+        "48 g/cm³",
+        "96 g/cm³"
+      ],
+      [
+        "Two blocks have the same volume. Which has the higher density?",
+        "The block with the greater mass",
+        "The block with the smaller mass",
+        "Both always have the same density",
+        "The block with the lighter colour"
+      ],
+      [
+        "A temperature rises from 18°C to 30°C in 4 minutes. What is the average rise per minute?",
+        "3°C per minute",
+        "4°C per minute",
+        "12°C per minute",
+        "48°C per minute"
+      ],
+      [
+        "In a fair test of how light affects seedlings, which factor should be changed deliberately?",
+        "Amount of light",
+        "Soil type",
+        "Amount of water",
+        "Seed variety"
+      ]
+    ]
+  ],
+  [
+    "Mathematics",
+    "BGCSE",
+    "Standard form, percentages and probability",
+    [
+      [
+        "Evaluate (3 × 10⁴) × (2 × 10⁻²).",
+        "6 × 10²",
+        "6 × 10⁻⁸",
+        "5 × 10²",
+        "6 × 10⁶"
+      ],
+      [
+        "A price of P200 increases by 15%. What is the new price?",
+        "P230",
+        "P215",
+        "P170",
+        "P235"
+      ],
+      [
+        "Solve 3x − 7 = 14.",
+        "7",
+        "3",
+        "5",
+        "21"
+      ],
+      [
+        "A bag contains 4 red and 6 blue counters. What is the probability of drawing red then blue without replacement?",
+        "4/15",
+        "6/25",
+        "2/5",
+        "2/3"
+      ]
+    ]
+  ],
+  [
+    "Physics",
+    "BGCSE",
+    "Motion and graphs",
+    [
+      [
+        "A runner covers 180 m in 24 s. What is the average speed?",
+        "7.5 m/s",
+        "4.5 m/s",
+        "12 m/s",
+        "24 m/s"
+      ],
+      [
+        "A vehicle speeds up from 6 m/s to 18 m/s in 4 s. What is the average acceleration?",
+        "3 m/s²",
+        "4.5 m/s²",
+        "6 m/s²",
+        "12 m/s²"
+      ],
+      [
+        "What does a horizontal segment on a distance–time graph show?",
+        "The object is stationary",
+        "The object speeds up",
+        "The object changes direction every second",
+        "The object moves at increasing speed"
+      ],
+      [
+        "An object moves at a constant speed of 8 m/s for 5 s. What distance does it cover?",
+        "40 m",
+        "13 m",
+        "3 m",
+        "1.6 m"
+      ]
+    ]
+  ]
+];
+  const steamSyllabusPractice = [
+  [
+    "Water-wise school garden",
+    "PSLE",
+    "Decomposition, measurement and data",
+    [
+      [
+        "Which material breaks down naturally to return nutrients to soil?",
+        "Dry leaves",
+        "Glass",
+        "Aluminium foil",
+        "Plastic bottle"
+      ],
+      [
+        "A watering can holds 4 litres. How much water do three full cans hold?",
+        "12 litres",
+        "7 litres",
+        "8 litres",
+        "16 litres"
+      ],
+      [
+        "Which graph best compares the volumes used by four groups on the same day?",
+        "Bar graph",
+        "Map",
+        "Clock face",
+        "Number line"
+      ],
+      [
+        "What makes instructions on a garden sign easier to follow?",
+        "Short numbered steps and clear drawings",
+        "Tiny text in random order",
+        "Decorations covering the words",
+        "Different instructions with no headings"
+      ]
+    ],
+    "Design a school garden watering plan. Sketch a labelled sign and explain how you would measure water use to compare two watering methods."
+  ],
+  [
+    "Floating rescue model",
+    "JCE",
+    "Density, fair tests and data",
+    [
+      [
+        "A block has a mass of 36 g and a volume of 12 cm³. What is its density?",
+        "3 g/cm³",
+        "0.33 g/cm³",
+        "24 g/cm³",
+        "48 g/cm³"
+      ],
+      [
+        "To compare two boat shapes fairly, what should stay the same?",
+        "The amount of building material",
+        "The shape being tested",
+        "The result",
+        "The name of the winning boat"
+      ],
+      [
+        "Which measurement best compares how much weight two model boats can support?",
+        "The largest load each holds before it sinks",
+        "The colour of each boat",
+        "The number of letters in each boat name",
+        "The time spent drawing each boat"
+      ],
+      [
+        "Which drawing best tells someone where to put a load?",
+        "A labelled top view showing the load position",
+        "An unlabelled border pattern",
+        "A list of team names",
+        "A picture of the room"
+      ]
+    ],
+    "Sketch two floating model designs, choose a material, and plan a fair load test. Explain how you would record the results and label the strongest design."
+  ],
+  [
+    "Safe-motion ramp model",
+    "BGCSE",
+    "Motion graphs, speed and acceleration",
+    [
+      [
+        "A model travels 2.4 m in 3 s. What is its average speed?",
+        "0.8 m/s",
+        "1.25 m/s",
+        "5.4 m/s",
+        "7.2 m/s"
+      ],
+      [
+        "Speed rises from 1 m/s to 5 m/s in 2 s. What is the average acceleration?",
+        "2 m/s²",
+        "3 m/s²",
+        "4 m/s²",
+        "10 m/s²"
+      ],
+      [
+        "Which graph feature gives acceleration on a speed–time graph?",
+        "Gradient",
+        "Area underneath",
+        "Horizontal axis label",
+        "Vertical intercept alone"
+      ],
+      [
+        "Which tool most directly helps calculate average speed from many recorded runs?",
+        "A spreadsheet with distance divided by time",
+        "A drawing app with no measurements",
+        "A music player",
+        "A photo gallery sorted by colour"
+      ]
+    ],
+    "Design a tabletop ramp test for a model vehicle. Draw its layout, choose how to measure motion, and explain how your graph would show whether a design change reduced speed."
+  ]
+];
   function mount(id, steam) {
     const section=document.getElementById(id);
     const content=section.querySelector('.notes-subjects');
     const runner=section.querySelector('.notes-runner');
     let attempt;
-    bank.forEach(([subject,level,source,questions,challenge])=>{
+    const sets = steam ? [...bank, ...steamSyllabusPractice] : [...bank, ...syllabusPractice];
+    sets.forEach(([subject,level,source,questions,challenge])=>{
       const card=document.createElement('article');
       card.className='card';
       const heading=document.createElement('h3');
@@ -1830,7 +2232,7 @@ async function uploadDocumentToCloud(){
       const garden = steam && subject==='Agriculture';
       detail.textContent=level+' · '+(garden?'School garden watering':source);
       card.append(heading,detail);
-      const note=learningNotes.find(item=>(item[0]===level&&item[1]===subject)||(!steam&&subject==='Science · Heat Transfer'&&item[2]==='Heat transfer'));
+      const note=learningNotes.find(item=>(item[0]===level&&item[1]===subject&&(level!=='BGCSE'||subject!=='Physics'||item[2]==='Speed and distance–time graphs'))||(!steam&&subject==='Science · Heat Transfer'&&item[2]==='Heat transfer'));
       if(!steam&&note)appendLearningNote(card,note);
       for(const format of Object.keys(formats)){
         const button=document.createElement('button');
@@ -2776,18 +3178,47 @@ if ('serviceWorker' in navigator) {
   const data=await ai({mode:'rubric',images:[await photo(get('wmRubricPhoto').files[0])]});
   if(data&&original===value('wmCriteria')){get('wmCriteria').value=data.text;clearReview();status('Check the criteria and maximum marks before saving.');}
  });
- action('wmAddPhoto',async()=>{
+ const starterRubrics={
+  'Composition':'Content and relevance | 8\nOrganisation | 4\nLanguage | 6\nSpelling and punctuation | 2',
+  'Formal letter':'Purpose and content | 8\nRequired layout and conventions | 4\nFormal tone and language | 6\nSpelling and punctuation | 2',
+  'Informal letter':'Purpose and content | 8\nRequired layout and conventions | 4\nFriendly tone and language | 6\nSpelling and punctuation | 2'
+ };
+ action('wmUseStarter',()=>{
+  if(value('wmCriteria')&&!confirm('Replace the current criteria with the starter rubric?'))return;
+  get('wmCriteria').value=starterRubrics[value('wmKind')];
+  get('wmRubricSettings').open=true;
+  clearReview();
+  get('wmRubricStatus').textContent='Starter rubric loaded. Check the criteria and add any requirements for this assignment.';
+ });
+ get('wmKind').addEventListener('change',()=>{
+  if(Object.values(starterRubrics).includes(value('wmCriteria'))){
+   get('wmCriteria').value=starterRubrics[value('wmKind')];
+  }else if(value('wmCriteria')){
+   get('wmRubricStatus').textContent='Check that your custom rubric fits the selected writing type.';
+   get('wmRubricSettings').open=true;
+  }
+ });
+ get('wmPhoto').onchange=async()=>{
+  const field=get('wmPhoto'),file=field.files[0];
+  field.value='';
+  if(!file||busy)return;
+  try{
+   sync();
+   if(!owner||!lesediAuthClient)throw Error('Sign in with an approved teacher account.');
+   busy=true;field.disabled=true;
   if(pages.length>=3)throw Error('Up to three pages per composition.');
-  const current=owner,image=await photo(get('wmPhoto').files[0]);
+  const current=owner,image=await photo(file);
   if(current!==cloudUser?.id)return;
   clearReview();pages.push(image);get('wmPhoto').value='';
   get('wmPageCount').textContent=pages.length+' page(s) in capture order';
-  status('Page added. Add another page or select Read photos and suggest marks.');
- });
+  status('Page added. Take another photo or tap Suggest marks.');
+  }catch(error){status(error.message);}
+  finally{busy=false;field.disabled=false;}
+ };
  action('wmClearPhotos',()=>{clearPages();clearReview();status('Photos cleared.');});
  action('wmMark',async()=>{
   const {criteria,kind,requirements}=rubric();
-  if(!pages.length)throw Error('Take a clear photo and tap Add page first.');
+  if(!pages.length)throw Error('Take a clear photo first.');
   const fingerprint=()=>JSON.stringify([value('wmKind'),value('wmRequirements'),value('wmCriteria')]);
   const requested=fingerprint();
   const current=owner;
