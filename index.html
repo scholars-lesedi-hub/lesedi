@@ -59,7 +59,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 @media(max-width:760px){.hero-actions{display:grid}.hero-actions .btn{width:100%;text-align:center}}
 </style><link rel="manifest" href="./manifest.webmanifest" id="lesediManifest">
 <script>
-const lesediQuickApps = new Map([["paper-to-digital",["Lesedi Paper to Digital","Paper to Digital","convert"]],["bec-practice",["Lesedi BEC Practice","BEC Practice","botswana-exams"]]]);
+const lesediQuickApps = new Map([["paper-to-digital",["Lesedi Paper to Digital","Paper to Digital","convert"]],["bec-practice",["Lesedi BEC Practice","BEC Practice","botswana-exams"]],["writing-marker",["Lesedi Writing Marker","Writing Marker","writing-marker"]]]);
 const lesediLaunchParams = new URLSearchParams(location.search);
 const lesediQuickKey = lesediLaunchParams.get('app');
 const lesediQuickApp = lesediQuickApps.get(lesediQuickKey);
@@ -120,6 +120,7 @@ if (lesediQuickApp) document.getElementById('lesediManifest').href='./'+lesediQu
   <div class="hero"><div><div class="eyebrow">Your digital education workspace</div><h2>Turn paper tests into digital assessments.</h2><p>Upload your materials, turn questions into a digital test, and let learners answer online.</p><div class="hero-actions"><button type="button" class="btn gold hero-convert" onclick="go('convert')"><span aria-hidden="true">⇧</span> Start converting materials</button><button type="button" class="btn light" onclick="openPrintableTest()">Create a Printable Test</button><button type="button" class="btn light" id="lesediSampleOpen">Try a Digital Test</button><button type="button" class="btn light hero-writing" onclick="go('writing-marker')"><span>WRITING MARKER</span><small>AI assistant for compositions, letters and essays</small></button></div><div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
 <a class="btn light" href="./?app=paper-to-digital">Install Paper to Digital</a>
 <a class="btn light" href="./?app=bec-practice">Install BEC Practice</a>
+<a class="btn light" href="./?app=writing-marker">Install Writing Marker</a>
 </div><div id="lesediInstall" style="margin-top:12px" hidden>
 <button class="btn light" type="button" id="lesediInstallButton" hidden disabled>Install Lesedi App</button>
 <details id="lesediInstallHelp"><summary>How to install Lesedi</summary><p>On Android, use Chrome’s menu and choose <strong>Install and create shortcut → Install</strong> if offered. On iPhone, use Safari’s <strong>Share → Add to Home Screen</strong>.</p></details>
