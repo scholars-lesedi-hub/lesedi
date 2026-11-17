@@ -86,7 +86,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="scheme"><span class="ico">▦</span>Scheme of Work &amp; Lesson Plans</button>
 <button data-page="take-exam"><span class="ico">▷</span>Take an Exam</button>
 <button data-page="exam"><span class="ico">✓</span>Examination Studio</button>
-    <button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
+    <button type="button" data-page="ready-made-tests">Ready-Made Tests</button>
+<button data-page="botswana-exams"><span class="ico">🇧🇼</span>Botswana Exam Library</button>
     <button type="button" data-page="owner-banks" id="ownerBanksNav" style="display:none"><span class="ico">▤</span>Owner Banks</button>
 <button data-page="notes-bank"><span class="ico">▤</span>Create from a Topic</button>
 <button data-page="learning-notes"><span class="ico">▤</span>Learning Notes</button>
@@ -338,6 +339,17 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
+<section class="page" id="ready-made-tests">
+  <h2>Ready-Made Tests</h2>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 01</h3>
+    <p>Whole numbers and operations · 30 questions · 40 marks</p>
+    <button type="button" id="readyAnswer" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide" class="btn outline">Marking Guide</button>
+  </article>
+  <div class="card" id="readyTestRunner"></div>
+</section>
 <section class="page" id="botswana-exams">
   <div class="section-head"><div><h2>Botswana Examination Library</h2><p>Browse syllabus-aligned practice areas for PSLE, JCE and BGCSE.</p></div><span class="pill">BOTSWANA</span></div>
   <div class="notice">Independent practice for PSLE, JCE and BGCSE. These sets are for revision and are not official BEC past papers.</div>
@@ -3116,5 +3128,416 @@ if ('serviceWorker' in navigator) {
   status('Check and edit the suggested marks and feedback before approval.');
  });
 })();
-</script></body>
+</script><div id="readyTestPrint"></div>
+<style>
+#readyTestPrint, #readyTestRunner:empty { display: none; }
+@media print {
+  body.ready-test-printing > :not(#readyTestPrint) { display: none !important; }
+  body.ready-test-printing { background: white !important; color: black !important; }
+  body.ready-test-printing > #readyTestPrint { display: block !important; color: black; }
+  #readyTestPrint li { break-inside: avoid; }
+  #readyTestPrint h3 { break-after: avoid; }
+}
+</style>
+<script>
+(() => {
+ const questions = [
+  {
+    "text": "Which numeral means six thousand and forty-two?",
+    "marks": 1,
+    "options": [
+      "6,402",
+      "6,042",
+      "6,420",
+      "6,240"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the value of the 7 in 8,735?",
+    "marks": 1,
+    "options": [
+      "7",
+      "70",
+      "700",
+      "7,000"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which is the expanded form of 4,306?",
+    "marks": 1,
+    "options": [
+      "4,000 + 30 + 6",
+      "400 + 300 + 6",
+      "4,000 + 300 + 60",
+      "4,000 + 300 + 6"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which symbol makes 5,089 □ 5,098 true?",
+    "marks": 1,
+    "options": [
+      "<",
+      ">",
+      "=",
+      "+"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which number is prime?",
+    "marks": 1,
+    "options": [
+      "21",
+      "25",
+      "31",
+      "39"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which pair contains one odd number and one even number?",
+    "marks": 1,
+    "options": [
+      "13 and 27",
+      "14 and 32",
+      "21 and 34",
+      "16 and 28"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Round 3,846 to the nearest ten.",
+    "marks": 1,
+    "options": [
+      "3,800",
+      "3,840",
+      "3,900",
+      "3,850"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Round 7,482 to the nearest hundred.",
+    "marks": 1,
+    "options": [
+      "7,400",
+      "7,500",
+      "7,480",
+      "8,000"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Round 6,529 to the nearest thousand.",
+    "marks": 1,
+    "options": [
+      "6,000",
+      "6,500",
+      "7,000",
+      "6,600"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Round each number to the nearest hundred to estimate 382 + 619.",
+    "marks": 1,
+    "options": [
+      "900",
+      "1,100",
+      "1,200",
+      "1,000"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which shows that changing the order of two numbers keeps their sum the same?",
+    "marks": 1,
+    "options": [
+      "28 + 15 = 15 + 28",
+      "28 + 15 = 28 − 15",
+      "28 + 15 = 28 + 0",
+      "28 + 15 = 15 + 15"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which number can you add to 736 to keep the answer at 736?",
+    "marks": 1,
+    "options": [
+      "1",
+      "0",
+      "10",
+      "736"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which number is a factor of 42?",
+    "marks": 1,
+    "options": [
+      "5",
+      "8",
+      "7",
+      "9"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the lowest common multiple of 6 and 8?",
+    "marks": 1,
+    "options": [
+      "12",
+      "48",
+      "14",
+      "24"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is the highest common factor of 18 and 30?",
+    "marks": 1,
+    "options": [
+      "6",
+      "3",
+      "9",
+      "12"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Work out 46 × 100.",
+    "marks": 1,
+    "options": [
+      "460",
+      "4,600",
+      "46,000",
+      "406"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Work out 24 × 30.",
+    "marks": 1,
+    "options": [
+      "72",
+      "620",
+      "720",
+      "7,200"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the remainder when 95 is divided by 8?",
+    "marks": 1,
+    "options": [
+      "3",
+      "5",
+      "6",
+      "7"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Work out 8,000 ÷ 1,000.",
+    "marks": 1,
+    "options": [
+      "8",
+      "80",
+      "800",
+      "8,000"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Work out 18 + 4 × 5.",
+    "marks": 1,
+    "options": [
+      "110",
+      "38",
+      "42",
+      "90"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Work out 2,485 + 1,760 + 325.",
+    "marks": 2,
+    "answer": 4570
+  },
+  {
+    "text": "Work out 8,004 − 2,687.",
+    "marks": 2,
+    "answer": 5317
+  },
+  {
+    "text": "Work out 34 × 26.",
+    "marks": 2,
+    "answer": 884
+  },
+  {
+    "text": "Work out 756 ÷ 7.",
+    "marks": 2,
+    "answer": 108
+  },
+  {
+    "text": "Work out (36 − 12) ÷ 4 + 9.",
+    "marks": 2,
+    "answer": 15
+  },
+  {
+    "text": "A school packs 18 exercise books into each of 24 boxes. How many exercise books are packed altogether?",
+    "marks": 2,
+    "answer": 432
+  },
+  {
+    "text": "The school garden produced 368 tomatoes. Learners packed 245 for a market. How many were left?",
+    "marks": 2,
+    "answer": 123
+  },
+  {
+    "text": "A teacher shares 216 counters equally among 8 groups. How many counters does each group receive?",
+    "marks": 2,
+    "answer": 27
+  },
+  {
+    "text": "List all the positive factors of 28.",
+    "marks": 2,
+    "answer": [
+      1,
+      2,
+      4,
+      7,
+      14,
+      28
+    ]
+  },
+  {
+    "text": "List all the positive multiples of 7 that are less than 40.",
+    "marks": 2,
+    "answer": [
+      7,
+      14,
+      21,
+      28,
+      35
+    ]
+  }
+];
+ const title = 'Standard 5 Mathematics · Ready-Made Test 01';
+ const total = questions.reduce((sum, q) => sum + q.marks, 0);
+ const area = document.getElementById('readyTestRunner');
+ const answers = [];
+ let index = 0;
+
+ function number(text) {
+   const value = text.trim();
+   return /^(?:\d+|\d{1,3}(?:,\d{3})+)$/.test(value) ? Number(value.replaceAll(',', '')) : NaN;
+ }
+ function correct(q, value) {
+   if (q.options) return value === String(q.answer);
+   if (!Array.isArray(q.answer)) return number(value) === q.answer;
+   const items = value.split(',').map(number);
+   return items.length === q.answer.length && new Set(items).size === items.length &&
+     items.every(item => q.answer.includes(item));
+ }
+ function render() {
+   const q = questions[index];
+   area.innerHTML = '<h3 tabindex="-1"></h3><p data-question></p><form><fieldset><legend>Answer</legend><div data-options></div></fieldset><p role="status"></p><button type="button" class="btn outline" data-back>Previous</button> <button class="btn primary" data-next></button></form>';
+   const heading = area.querySelector('h3');
+   heading.textContent = 'Question ' + (index + 1) + ' of ' + questions.length;
+   area.querySelector('[data-question]').textContent = q.text + ' [' + q.marks + (q.marks === 1 ? ' mark]' : ' marks]');
+   const options = area.querySelector('[data-options]');
+   (q.options || [Array.isArray(q.answer) ? 'Enter numbers separated by commas' : 'Enter your final answer']).forEach((option, i) => {
+     const label = document.createElement('label');
+     label.style.display = 'block';
+     const input = document.createElement('input');
+     input.name = 'response';
+     if (q.options) {
+       input.type = 'radio';
+       input.style.width = 'auto';
+       input.value = String(i);
+       input.checked = answers[index] === input.value;
+       label.append(input, ' ' + option);
+     } else {
+       input.type = 'text';
+       input.inputMode = 'decimal';
+       input.value = answers[index] || '';
+       label.append(option, input);
+     }
+     options.append(label);
+   });
+   const form = area.querySelector('form');
+   const save = () => answers[index] = String(new FormData(form).get('response') ?? '').trim();
+   const back = area.querySelector('[data-back]');
+   back.disabled = index === 0;
+   back.onclick = () => { save(); index--; render(); };
+   area.querySelector('[data-next]').textContent = index === questions.length - 1 ? 'Submit test' : 'Next';
+   form.onsubmit = event => {
+     event.preventDefault();
+     if (!save()) {
+       area.querySelector('[role="status"]').textContent = 'Enter an answer to continue.';
+       return;
+     }
+     if (index < questions.length - 1) { index++; render(); return; }
+     const score = questions.reduce((sum, question, i) => sum + (correct(question, answers[i]) ? question.marks : 0), 0);
+     area.innerHTML = '<h3 tabindex="-1">Test complete</h3><p role="status">Score: ' + score + ' / ' + total + '</p>';
+     area.querySelector('h3').focus();
+   };
+   heading.focus();
+ }
+ function printTest(guide) {
+   const paper = document.getElementById('readyTestPrint');
+   const answer = q => q.options ? 'ABCD'[q.answer] + '. ' + q.options[q.answer] :
+     Array.isArray(q.answer) ? q.answer.join(', ') : q.answer.toLocaleString('en-US');
+   paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total + ' marks</p>' + (guide
+     ? '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
+     : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
+   const sections = [
+     ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
+     ['B · Short answers', 20, 28, 'Write your final answer.'],
+     ['C · Lists', 28, 30, 'Separate the numbers with commas.']
+   ];
+   for (const [label, start, end, instructions] of sections) {
+     const section = document.createElement('section');
+     section.innerHTML = '<h3>' + label + '</h3>' + (guide ? '' : '<p>' + instructions + '</p>');
+     const list = document.createElement('ol');
+     list.start = start + 1;
+     for (const q of questions.slice(start, end)) {
+       const item = document.createElement('li');
+       item.textContent = (guide ? answer(q) : q.text) + ' [' + q.marks + ']';
+       if (!guide && q.options) {
+         const choices = document.createElement('ol');
+         choices.type = 'A';
+         for (const option of q.options) {
+           const choice = document.createElement('li');
+           choice.textContent = option;
+           choices.append(choice);
+         }
+         item.append(choices);
+       } else if (!guide) {
+         const line = document.createElement('p');
+         line.textContent = '________________________________________________';
+         item.append(line);
+       }
+       list.append(item);
+     }
+     section.append(list);
+     paper.append(section);
+   }
+   document.body.classList.add('ready-test-printing');
+   try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
+ }
+ document.getElementById('readyAnswer').onclick = () => {
+   answers.length = 0;
+   index = 0;
+   render();
+ };
+ document.getElementById('readyPrint').onclick = () => printTest(false);
+ document.getElementById('readyGuide').onclick = () => printTest(true);
+})();
+</script>
+</body>
 </html>
