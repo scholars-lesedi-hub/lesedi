@@ -362,6 +362,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint03" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide03" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 04</h3>
+    <p>Fractions and decimals · 30 questions · 40 marks</p>
+    <button type="button" id="readyAnswer04" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint04" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide04" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -4020,6 +4027,298 @@ if ('serviceWorker' in navigator) {
     "working": "1,250 + 750 = 2,000"
   }
 ];
+ const test04 = [
+  {
+    "text": "Which fraction means three out of eight equal parts?",
+    "marks": 1,
+    "options": [
+      "3/8",
+      "8/3",
+      "3/5",
+      "5/8"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is the denominator of 5/9?",
+    "marks": 1,
+    "options": [
+      "5",
+      "4",
+      "9",
+      "14"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which fraction is equivalent to 1/2?",
+    "marks": 1,
+    "options": [
+      "2/3",
+      "3/6",
+      "3/8",
+      "4/6"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which fraction is greatest?",
+    "marks": 1,
+    "options": [
+      "1/8",
+      "3/8",
+      "5/8",
+      "7/8"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which fraction is smallest?",
+    "marks": 1,
+    "options": [
+      "1/2",
+      "1/3",
+      "1/4",
+      "1/6"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is 2/7 + 3/7?",
+    "marks": 1,
+    "options": [
+      "5/14",
+      "5/7",
+      "6/7",
+      "1/7"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 7/10 − 3/10?",
+    "marks": 1,
+    "options": [
+      "1/10",
+      "10/10",
+      "4/10",
+      "4/20"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which fraction equals one whole?",
+    "marks": 1,
+    "options": [
+      "6/6",
+      "6/7",
+      "1/6",
+      "5/6"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which fraction is greater than 1/2?",
+    "marks": 1,
+    "options": [
+      "1/4",
+      "2/6",
+      "3/4",
+      "4/10"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is one quarter of 20?",
+    "marks": 1,
+    "options": [
+      "4",
+      "5",
+      "10",
+      "15"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which decimal means seven tenths?",
+    "marks": 1,
+    "options": [
+      "0.07",
+      "0.17",
+      "7.0",
+      "0.7"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which digit is in the hundredths place in 4.36?",
+    "marks": 1,
+    "options": [
+      "6",
+      "3",
+      "4",
+      "0"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which decimal equals 3/10?",
+    "marks": 1,
+    "options": [
+      "0.03",
+      "0.13",
+      "0.3",
+      "3.0"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which decimal is greatest?",
+    "marks": 1,
+    "options": [
+      "0.25",
+      "0.52",
+      "0.05",
+      "0.5"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which decimal equals 0.40?",
+    "marks": 1,
+    "options": [
+      "4.0",
+      "0.04",
+      "0.14",
+      "0.4"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which list is in order from smallest to greatest?",
+    "marks": 1,
+    "options": [
+      "0.09, 0.19, 0.9",
+      "0.9, 0.19, 0.09",
+      "0.19, 0.09, 0.9",
+      "0.09, 0.9, 0.19"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 1.5 + 0.4?",
+    "marks": 1,
+    "options": [
+      "1.54",
+      "1.9",
+      "1.1",
+      "5.5"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 2.75 − 0.25?",
+    "marks": 1,
+    "options": [
+      "2.05",
+      "3.00",
+      "2.50",
+      "2.70"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which decimal equals one half?",
+    "marks": 1,
+    "options": [
+      "0.05",
+      "0.2",
+      "0.15",
+      "0.5"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which number is exactly halfway between 0.2 and 0.4?",
+    "marks": 1,
+    "options": [
+      "0.3",
+      "0.35",
+      "0.25",
+      "0.6"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A class has 24 learners. Three quarters bring a reading book. How many learners bring a book? Enter a whole number.",
+    "marks": 2,
+    "answer": 18,
+    "format": "integer",
+    "working": "24 ÷ 4 × 3 = 18"
+  },
+  {
+    "text": "Lebo ate 2/8 of a pizza and Kabelo ate 3/8 of the same pizza. What fraction of the pizza did they eat altogether? Enter a fraction such as 1/2.",
+    "marks": 2,
+    "answer": "5/8",
+    "format": "fraction",
+    "working": "2/8 + 3/8 = 5/8"
+  },
+  {
+    "text": "A jug was full. A family used 3/10 of the water. What fraction of the water remains? Enter a fraction such as 1/2.",
+    "marks": 2,
+    "answer": "7/10",
+    "format": "fraction",
+    "working": "10/10 − 3/10 = 7/10"
+  },
+  {
+    "text": "Add 1/2 and 1/4. Enter a fraction such as 1/2.",
+    "marks": 2,
+    "answer": "3/4",
+    "format": "fraction",
+    "working": "2/4 + 1/4 = 3/4"
+  },
+  {
+    "text": "Subtract 1/4 from 3/4. Enter a fraction such as 1/2.",
+    "marks": 2,
+    "answer": "1/2",
+    "format": "fraction",
+    "working": "3/4 − 1/4 = 2/4 = 1/2"
+  },
+  {
+    "text": "Write 37/100 as a decimal. Enter your answer as a decimal.",
+    "marks": 2,
+    "answer": "0.37",
+    "format": "decimal",
+    "working": "37 hundredths = 0.37"
+  },
+  {
+    "text": "Write 0.65 as a fraction. Enter a fraction such as 1/2.",
+    "marks": 2,
+    "answer": "13/20",
+    "format": "fraction",
+    "working": "0.65 = 65/100 = 13/20"
+  },
+  {
+    "text": "Work out 3.46 + 2.7. Enter your answer as a decimal.",
+    "marks": 2,
+    "answer": "6.16",
+    "format": "decimal",
+    "working": "3.46 + 2.70 = 6.16"
+  },
+  {
+    "text": "Work out 8.20 − 3.75. Enter your answer as a decimal.",
+    "marks": 2,
+    "answer": "4.45",
+    "format": "decimal",
+    "working": "8.20 − 3.75 = 4.45"
+  },
+  {
+    "text": "A relay team runs 1.25 km in the first leg and 0.8 km in the second leg. How many kilometres do they run altogether? Enter your answer as a decimal.",
+    "marks": 2,
+    "answer": "2.05",
+    "format": "decimal",
+    "working": "1.25 + 0.80 = 2.05 km"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions.reduce((sum, q) => sum + q.marks, 0);
@@ -4033,6 +4332,15 @@ if ('serviceWorker' in navigator) {
  }
  function correct(q, value) {
    if (q.options) return value === String(q.answer);
+   if (q.format === 'fraction') {
+     const match = /^(\d{1,12})\s*\/\s*(\d{1,12})$/.exec(value);
+     if (!match || Number(match[2]) === 0) return false;
+     const [numerator, denominator] = q.answer.split('/').map(Number);
+     return Number(match[1]) * denominator === Number(match[2]) * numerator;
+   }
+   if (q.format === 'decimal') {
+     return /^(?:\d+(?:\.\d+)?|\.\d+)$/.test(value) && Number(value) === Number(q.answer);
+   }
    if (q.unit === '24-hour time') return value === q.answer;
    if (q.unit === 'pula') {
      const amount = value.replace(/^P\s*/i, '');
@@ -4063,7 +4371,7 @@ if ('serviceWorker' in navigator) {
        label.append(input, ' ' + option);
      } else {
        input.type = 'text';
-       input.inputMode = q.unit === '24-hour time' ? 'text' : 'decimal';
+       input.inputMode = q.unit === '24-hour time' || q.format === 'fraction' ? 'text' : 'decimal';
        input.value = answers[index] || '';
        label.append(option, input);
      }
@@ -4099,11 +4407,13 @@ if ('serviceWorker' in navigator) {
      return q.answer.toLocaleString('en-US') + ' ' + q.unit;
    };
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total + ' marks</p>' + (guide
-     ? '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
+     ? questions === test04
+       ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
+       : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 ? [
+   const sections = questions === test03 || questions === test04 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
-     ['B · Short answers', 20, 30, 'Give each answer in the requested unit.']
+     ['B · Short answers', 20, 30, 'Follow the instructions for each answer.']
    ] : [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, 28, 'Write your final answer.'],
@@ -4139,7 +4449,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03]]) {
+ for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04]]) {
    const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
