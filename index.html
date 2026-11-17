@@ -397,6 +397,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint08" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide08" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 6 Mathematics · Ready-Made Test 01</h3>
+    <p>Mixed revision · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswerS601" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrintS601" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuideS601" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -5595,6 +5602,348 @@ if ('serviceWorker' in navigator) {
     "working": "6 × 10 + 5 = 65"
   }
 ];
+ const standard6Test01 = [
+  {
+    "text": "Which is the expanded form of 305,407?",
+    "marks": 1,
+    "options": [
+      "300,000 + 5,000 + 400 + 7",
+      "300,000 + 50,000 + 40 + 7",
+      "30,000 + 5,000 + 400 + 7",
+      "300,000 + 5,000 + 40 + 7"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Round 76,549 to the nearest thousand.",
+    "marks": 1,
+    "options": [
+      "76,000",
+      "76,500",
+      "77,000",
+      "80,000"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the greatest common factor of 24 and 36?",
+    "marks": 1,
+    "options": [
+      "6",
+      "12",
+      "18",
+      "24"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the lowest common multiple of 9 and 15?",
+    "marks": 1,
+    "options": [
+      "15",
+      "24",
+      "30",
+      "45"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is 96 ÷ (4 × 3)?",
+    "marks": 1,
+    "options": [
+      "8",
+      "12",
+      "24",
+      "72"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which fraction is equal to 0.625?",
+    "marks": 1,
+    "options": [
+      "3/5",
+      "2/3",
+      "5/8",
+      "7/8"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 1/3 + 1/6?",
+    "marks": 1,
+    "options": [
+      "2/9",
+      "1/2",
+      "1/9",
+      "2/6"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 3/4 − 1/8?",
+    "marks": 1,
+    "options": [
+      "1/2",
+      "1/4",
+      "2/8",
+      "5/8"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which is equal to 35%?",
+    "marks": 1,
+    "options": [
+      "0.035",
+      "3.5",
+      "0.35",
+      "35"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 15% of 200?",
+    "marks": 1,
+    "options": [
+      "15",
+      "20",
+      "30",
+      "35"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Simplify the ratio 12 to 18.",
+    "marks": 1,
+    "options": [
+      "3 to 2",
+      "2 to 3",
+      "4 to 9",
+      "6 to 18"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 2.4 × 10?",
+    "marks": 1,
+    "options": [
+      "0.24",
+      "2.4",
+      "240",
+      "24"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "How many kilograms is 3,750 g?",
+    "marks": 1,
+    "options": [
+      "3.75 kg",
+      "37.5 kg",
+      "375 kg",
+      "0.375 kg"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A bus leaves at 14:35 and arrives at 16:10. How long is the journey?",
+    "marks": 1,
+    "options": [
+      "85 minutes",
+      "105 minutes",
+      "95 minutes",
+      "125 minutes"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the area of a triangle with a base of 8 cm and a perpendicular height of 5 cm?",
+    "marks": 1,
+    "options": [
+      "13 cm²",
+      "20 cm²",
+      "26 cm²",
+      "40 cm²"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Two angles of a triangle are 45° and 65°. What is the third angle?",
+    "marks": 1,
+    "options": [
+      "60°",
+      "65°",
+      "75°",
+      "70°"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is the mean of 4, 8, 9 and 11?",
+    "marks": 1,
+    "options": [
+      "8",
+      "9",
+      "10",
+      "32"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is the range of 12, 5, 19, 8 and 14?",
+    "marks": 1,
+    "options": [
+      "7",
+      "12",
+      "14",
+      "19"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A survey records 18 walkers, 12 cyclists and 10 bus riders. What fraction of the learners cycled?",
+    "marks": 1,
+    "options": [
+      "2/5",
+      "3/10",
+      "3/5",
+      "1/4"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "The gaps in 4, 7, 12, 19, … increase by 2 each time. What comes next?",
+    "marks": 1,
+    "options": [
+      "24",
+      "25",
+      "26",
+      "28"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A shop received 48 boxes with 125 pens in each box. It sold 2,385 pens. How many pens remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 3615,
+    "working": "48 × 125 − 2,385 = 3,615"
+  },
+  {
+    "text": "A school shares 1,728 notebooks equally among 24 classes. How many does each class receive? Enter a whole number.",
+    "marks": 2,
+    "answer": 72,
+    "working": "1,728 ÷ 24 = 72"
+  },
+  {
+    "text": "Two sprinklers turn on together. One runs every 12 minutes and the other every 18 minutes. After how many minutes will they next turn on together? Enter a whole number.",
+    "marks": 2,
+    "answer": 36,
+    "working": "The lowest common multiple of 12 and 18 is 36."
+  },
+  {
+    "text": "Work out 150 − (42 + 18) ÷ 5. Enter a whole number.",
+    "marks": 2,
+    "answer": 138,
+    "working": "150 − 60 ÷ 5 = 138"
+  },
+  {
+    "text": "A farmer plants vegetables on 3/8 of an 80 m² plot. How many square metres does the farmer plant? Enter a whole number.",
+    "marks": 2,
+    "answer": 30,
+    "working": "80 ÷ 8 × 3 = 30"
+  },
+  {
+    "text": "A tank was full. A family used 1/3 of its water in the morning and 1/4 in the afternoon. How many twelfths of the tank remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 5,
+    "working": "12 − 4 − 3 = 5 twelfths"
+  },
+  {
+    "text": "A survey found that 35% of 120 learners prefer football. How many learners prefer football? Enter a whole number.",
+    "marks": 2,
+    "answer": 42,
+    "working": "120 × 35 ÷ 100 = 42"
+  },
+  {
+    "text": "The ratio of red counters to blue counters is 2 to 5. There are 35 counters altogether. How many are blue? Enter a whole number.",
+    "marks": 2,
+    "answer": 25,
+    "working": "35 ÷ 7 × 5 = 25"
+  },
+  {
+    "text": "A recipe uses 3 cups of flour for 12 rolls. How many cups are needed for 28 rolls at the same rate? Enter a whole number.",
+    "marks": 2,
+    "answer": 7,
+    "working": "28 ÷ 4 = 7"
+  },
+  {
+    "text": "A plank is 5.25 m long. A carpenter cuts off 1.8 m. How many centimetres remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 345,
+    "working": "525 − 180 = 345 cm"
+  },
+  {
+    "text": "A bag of flour weighs 2.75 kg and a bag of sugar weighs 1.4 kg. What is their total mass in grams? Enter a whole number.",
+    "marks": 2,
+    "answer": 4150,
+    "working": "2,750 + 1,400 = 4,150 g"
+  },
+  {
+    "text": "A container holds 8 L. A learner pours in five bottles of 1.25 L each. How many millilitres of space remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 1750,
+    "working": "8,000 − 5 × 1,250 = 1,750 mL"
+  },
+  {
+    "text": "A journey starts at 08:47 and ends at 11:05. How long is it in minutes? Enter a whole number.",
+    "marks": 2,
+    "answer": 138,
+    "working": "13 + 120 + 5 = 138 minutes"
+  },
+  {
+    "text": "A shirt costs P160. A shop takes 15% off the price. How many pula does the customer pay? Enter a whole number.",
+    "marks": 2,
+    "answer": 136,
+    "working": "160 − (160 × 15 ÷ 100) = 136"
+  },
+  {
+    "text": "A rectangular garden is 16 m long and 9 m wide. A 2 m gap is left for a gate. How many metres of fence are needed? Enter a whole number.",
+    "marks": 2,
+    "answer": 48,
+    "working": "2 × (16 + 9) − 2 = 48 m"
+  },
+  {
+    "text": "A triangle has a base of 14 cm and a perpendicular height of 9 cm. What is its area in square centimetres? Enter a whole number.",
+    "marks": 2,
+    "answer": 63,
+    "working": "14 × 9 ÷ 2 = 63 cm²"
+  },
+  {
+    "text": "One angle on a straight line is 117°. What is the size in degrees of the adjacent angle that completes the straight line? Enter a whole number.",
+    "marks": 2,
+    "answer": 63,
+    "working": "180 − 117 = 63°"
+  },
+  {
+    "text": "A pattern starts at 14 and increases by 9 each time. What is the twelfth term? Enter a whole number.",
+    "marks": 2,
+    "answer": 113,
+    "working": "14 + 11 × 9 = 113"
+  },
+  {
+    "text": "The mean of four scores is 18. Three scores are 14, 21 and 17. What is the fourth score? Enter a whole number.",
+    "marks": 2,
+    "answer": 20,
+    "working": "4 × 18 − (14 + 21 + 17) = 20"
+  },
+  {
+    "text": "A class collected 24, 31, 19, 28 and 33 bottles over five days. How many bottles did it collect on average per day? Enter a whole number.",
+    "marks": 2,
+    "answer": 27,
+    "working": "(24 + 31 + 19 + 28 + 33) ÷ 5 = 27"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -5685,11 +6034,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? questions === test04
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07 || questions === test08
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -5727,8 +6076,8 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08]]) {
-   const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
+ for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6]]) {
+   const testTitle = 'Standard ' + standard + ' Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
      title = testTitle;
