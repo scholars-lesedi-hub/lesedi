@@ -355,6 +355,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint02" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide02" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 03</h3>
+    <p>Measurement, time, money and geometry · 30 questions · 40 marks</p>
+    <button type="button" id="readyAnswer03" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint03" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide03" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -3721,6 +3728,298 @@ if ('serviceWorker' in navigator) {
     ]
   }
 ];
+ const test03 = [
+  {
+    "text": "Which unit is best for measuring the length of a classroom?",
+    "marks": 1,
+    "options": [
+      "Millimetres",
+      "Grams",
+      "Metres",
+      "Litres"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many centimetres are in 3 m?",
+    "marks": 1,
+    "options": [
+      "30",
+      "300",
+      "3,000",
+      "13"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which length is greatest?",
+    "marks": 1,
+    "options": [
+      "85 cm",
+      "750 mm",
+      "9 cm",
+      "1 m"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which unit is best for measuring the mass of a bag of maize meal?",
+    "marks": 1,
+    "options": [
+      "Kilograms",
+      "Kilometres",
+      "Litres",
+      "Centimetres"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many grams are in 2 kg?",
+    "marks": 1,
+    "options": [
+      "20",
+      "200",
+      "2,000",
+      "20,000"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many millilitres are in half a litre?",
+    "marks": 1,
+    "options": [
+      "50",
+      "500",
+      "1,000",
+      "1,500"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which unit is best for measuring the amount of water in a teaspoon?",
+    "marks": 1,
+    "options": [
+      "Kilograms",
+      "Metres",
+      "Hours",
+      "Millilitres"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What time is quarter past seven in the morning?",
+    "marks": 1,
+    "options": [
+      "07:15",
+      "07:45",
+      "06:45",
+      "07:30"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 14:20 on a 12-hour clock?",
+    "marks": 1,
+    "options": [
+      "4:20 p.m.",
+      "2:20 a.m.",
+      "2:20 p.m.",
+      "4:20 a.m."
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many minutes are in 1 hour 30 minutes?",
+    "marks": 1,
+    "options": [
+      "60",
+      "90",
+      "100",
+      "130"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A lesson starts at 08:10 and ends at 08:45. How long is the lesson?",
+    "marks": 1,
+    "options": [
+      "25 min",
+      "30 min",
+      "45 min",
+      "35 min"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "How many thebe make P1?",
+    "marks": 1,
+    "options": [
+      "100",
+      "10",
+      "50",
+      "1,000"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A ruler costs P6.50. What is the change from P10.00?",
+    "marks": 1,
+    "options": [
+      "P2.50",
+      "P4.50",
+      "P3.50",
+      "P16.50"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "One pencil costs P2.00. How much do four pencils cost?",
+    "marks": 1,
+    "options": [
+      "P6.00",
+      "P8.00",
+      "P10.00",
+      "P12.00"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which amount is equal to P4.75?",
+    "marks": 1,
+    "options": [
+      "47 thebe",
+      "450 thebe",
+      "405 thebe",
+      "475 thebe"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which shape has five sides?",
+    "marks": 1,
+    "options": [
+      "Pentagon",
+      "Hexagon",
+      "Rectangle",
+      "Triangle"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many right angles does a rectangle have?",
+    "marks": 1,
+    "options": [
+      "1",
+      "2",
+      "4",
+      "3"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many lines of symmetry does a square have?",
+    "marks": 1,
+    "options": [
+      "2",
+      "4",
+      "1",
+      "8"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What type of lines run side by side and stay the same distance apart?",
+    "marks": 1,
+    "options": [
+      "Curved lines",
+      "Intersecting lines",
+      "Perpendicular lines",
+      "Parallel lines"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is the perimeter of a square with sides of 6 cm?",
+    "marks": 1,
+    "options": [
+      "24 cm",
+      "12 cm",
+      "36 cm",
+      "18 cm"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A ribbon is 2 m 40 cm long. Neo cuts off 75 cm. How much ribbon is left? Give your answer in cm.",
+    "marks": 2,
+    "answer": 165,
+    "unit": "cm",
+    "working": "240 − 75 = 165"
+  },
+  {
+    "text": "A jug holds 2 L of juice. A teacher pours 250 mL into each of five cups. How much juice remains in the jug? Give your answer in mL.",
+    "marks": 2,
+    "answer": 750,
+    "unit": "mL",
+    "working": "2,000 − (5 × 250) = 750"
+  },
+  {
+    "text": "A basket contains 1 kg 350 g of apples and 850 g of oranges. What is the total mass of the fruit? Give your answer in g.",
+    "marks": 2,
+    "answer": 2200,
+    "unit": "g",
+    "working": "1,350 + 850 = 2,200"
+  },
+  {
+    "text": "A bus leaves at 09:35 and arrives at 11:05. How long does the journey take? Give your answer in minutes.",
+    "marks": 2,
+    "answer": 90,
+    "unit": "minutes",
+    "working": "60 + 30 = 90"
+  },
+  {
+    "text": "A football match starts at 15:45 and lasts 50 minutes. What time does it finish? Use 24-hour time.",
+    "marks": 2,
+    "answer": "16:35",
+    "unit": "24-hour time",
+    "working": "15:45 + 15 min = 16:00, then add 35 min"
+  },
+  {
+    "text": "A notebook costs P12.50 and a pen costs P4.75. How much change will you get if you pay P20.00 for both? Give your answer in pula.",
+    "marks": 2,
+    "answer": 2.75,
+    "unit": "pula",
+    "working": "20.00 − (12.50 + 4.75) = 2.75"
+  },
+  {
+    "text": "Thato saves P3.50 each day for six days. How much more does Thato need to buy a book costing P25.00? Give your answer in pula.",
+    "marks": 2,
+    "answer": 4,
+    "unit": "pula",
+    "working": "25.00 − (6 × 3.50) = 4.00"
+  },
+  {
+    "text": "A rectangular garden is 9 m long and 4 m wide. How much fencing is needed to go all the way around it? Give your answer in m.",
+    "marks": 2,
+    "answer": 26,
+    "unit": "m",
+    "working": "2 × (9 + 4) = 26"
+  },
+  {
+    "text": "A rectangular mat is 8 m long and 3 m wide. What is its area? Give your answer in m².",
+    "marks": 2,
+    "answer": 24,
+    "unit": "m²",
+    "working": "8 × 3 = 24"
+  },
+  {
+    "text": "A walk consists of a 1 km 250 m section followed by a 750 m section. What is the total distance? Give your answer in m.",
+    "marks": 2,
+    "answer": 2000,
+    "unit": "m",
+    "working": "1,250 + 750 = 2,000"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions.reduce((sum, q) => sum + q.marks, 0);
@@ -3734,6 +4033,11 @@ if ('serviceWorker' in navigator) {
  }
  function correct(q, value) {
    if (q.options) return value === String(q.answer);
+   if (q.unit === '24-hour time') return value === q.answer;
+   if (q.unit === 'pula') {
+     const amount = value.replace(/^P\s*/i, '');
+     return /^\d+(?:\.\d{1,2})?$/.test(amount) && Number(amount) === q.answer;
+   }
    if (!Array.isArray(q.answer)) return number(value) === q.answer;
    const items = value.split(',').map(number);
    return items.length === q.answer.length && new Set(items).size === items.length &&
@@ -3759,7 +4063,7 @@ if ('serviceWorker' in navigator) {
        label.append(input, ' ' + option);
      } else {
        input.type = 'text';
-       input.inputMode = 'decimal';
+       input.inputMode = q.unit === '24-hour time' ? 'text' : 'decimal';
        input.value = answers[index] || '';
        label.append(option, input);
      }
@@ -3786,12 +4090,21 @@ if ('serviceWorker' in navigator) {
  }
  function printTest(guide, questions, title) {
    const paper = document.getElementById('readyTestPrint');
-   const answer = q => q.options ? 'ABCD'[q.answer] + '. ' + q.options[q.answer] :
+   const displayAnswer = q => q.options ? 'ABCD'[q.answer] + '. ' + q.options[q.answer] :
      Array.isArray(q.answer) ? q.answer.join(', ') : q.answer.toLocaleString('en-US');
+   const answer = q => {
+     if (!q.unit) return displayAnswer(q);
+     if (q.unit === '24-hour time') return q.answer;
+     if (q.unit === 'pula') return 'P' + q.answer.toFixed(2);
+     return q.answer.toLocaleString('en-US') + ' ' + q.unit;
+   };
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total + ' marks</p>' + (guide
      ? '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = [
+   const sections = questions === test03 ? [
+     ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
+     ['B · Short answers', 20, 30, 'Give each answer in the requested unit.']
+   ] : [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, 28, 'Write your final answer.'],
      ['C · Lists', 28, 30, 'Separate the numbers with commas.']
@@ -3803,7 +4116,7 @@ if ('serviceWorker' in navigator) {
      list.start = start + 1;
      for (const q of questions.slice(start, end)) {
        const item = document.createElement('li');
-       item.textContent = (guide ? answer(q) : q.text) + ' [' + q.marks + ']';
+       item.textContent = (guide ? answer(q) + (q.working ? ' · ' + q.working : '') : q.text) + ' [' + q.marks + ']';
        if (!guide && q.options) {
          const choices = document.createElement('ol');
          choices.type = 'A';
@@ -3826,7 +4139,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02]]) {
+ for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03]]) {
    const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
