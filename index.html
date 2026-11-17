@@ -390,6 +390,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint07" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide07" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 08</h3>
+    <p>Mixed revision · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswer08" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint08" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide08" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -5246,6 +5253,348 @@ if ('serviceWorker' in navigator) {
     "working": "4 × 8 + 4 = 36"
   }
 ];
+ const test08 = [
+  {
+    "text": "Which number has 5 hundreds, 2 tens and 9 ones?",
+    "marks": 1,
+    "options": [
+      "592",
+      "529",
+      "259",
+      "925"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which number rounds to 350 to the nearest ten?",
+    "marks": 1,
+    "options": [
+      "344",
+      "356",
+      "348",
+      "361"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which pair has a product of 48?",
+    "marks": 1,
+    "options": [
+      "7 and 6",
+      "8 and 7",
+      "9 and 5",
+      "6 and 8"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which number is divisible by both 2 and 5?",
+    "marks": 1,
+    "options": [
+      "70",
+      "45",
+      "62",
+      "33"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 9 × (12 − 5)?",
+    "marks": 1,
+    "options": [
+      "58",
+      "67",
+      "63",
+      "103"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the remainder when 59 is divided by 6?",
+    "marks": 1,
+    "options": [
+      "4",
+      "5",
+      "3",
+      "9"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which fraction is equivalent to 4/6?",
+    "marks": 1,
+    "options": [
+      "2/3",
+      "2/6",
+      "3/4",
+      "4/3"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which fraction is halfway between 2/8 and 6/8?",
+    "marks": 1,
+    "options": [
+      "3/8",
+      "5/8",
+      "6/8",
+      "4/8"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What does the digit 7 represent in 2.74?",
+    "marks": 1,
+    "options": [
+      "7 ones",
+      "7 hundredths",
+      "7 tenths",
+      "7 tens"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 0.68 + 0.27?",
+    "marks": 1,
+    "options": [
+      "0.85",
+      "0.95",
+      "0.925",
+      "1.05"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which length is equal to 450 cm?",
+    "marks": 1,
+    "options": [
+      "45 m",
+      "0.45 m",
+      "450 m",
+      "4.5 m"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which container holds the most liquid?",
+    "marks": 1,
+    "options": [
+      "2 L",
+      "1,750 mL",
+      "1 L 800 mL",
+      "950 mL"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A programme begins at 18:55 and lasts 20 minutes. When does it end?",
+    "marks": 1,
+    "options": [
+      "19:05",
+      "18:15",
+      "19:15",
+      "19:25"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How much more is P8.20 than P6.85?",
+    "marks": 1,
+    "options": [
+      "P1.25",
+      "P1.35",
+      "P1.45",
+      "P2.35"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which angle is larger than a right angle and smaller than a straight angle?",
+    "marks": 1,
+    "options": [
+      "Acute",
+      "Right",
+      "Straight",
+      "Obtuse"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which pair of sides on a rectangle is always parallel?",
+    "marks": 1,
+    "options": [
+      "Opposite sides",
+      "Adjacent sides",
+      "Any two sides",
+      "No sides"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What comes next in 5, 9, 8, 12, 11, … if the rule is add 4, then subtract 1?",
+    "marks": 1,
+    "options": [
+      "10",
+      "14",
+      "15",
+      "16"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A number machine adds 4, then doubles the result. What is the output for 7?",
+    "marks": 1,
+    "options": [
+      "18",
+      "22",
+      "15",
+      "28"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A tally shows 7 learners chose art, 13 chose music and 8 chose sport. What is the difference between the highest and lowest counts?",
+    "marks": 1,
+    "options": [
+      "5",
+      "7",
+      "20",
+      "6"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A bar chart scale goes 0, 5, 10, 15 and 20. A bar ends halfway between 10 and 20. What value does it show?",
+    "marks": 1,
+    "options": [
+      "15",
+      "12",
+      "18",
+      "25"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A recycling team collected 2,408 cans in May and 1,795 in June. It sent 3,600 cans for recycling. How many cans did it have left? Enter a whole number.",
+    "marks": 2,
+    "answer": 603,
+    "working": "2408 + 1795 − 3600 = 603"
+  },
+  {
+    "text": "A printer prints 48 worksheets each minute for 15 minutes. How many worksheets does it print? Enter a whole number.",
+    "marks": 2,
+    "answer": 720,
+    "working": "48 × 15 = 720"
+  },
+  {
+    "text": "A farmer packs 785 oranges into boxes of 12. How many oranges remain after filling as many complete boxes as possible? Enter a whole number.",
+    "marks": 2,
+    "answer": 5,
+    "working": "785 remainder when divided by 12 = 5"
+  },
+  {
+    "text": "Two bells ring together now. One rings every 9 minutes and the other every 12 minutes. After how many minutes do they next ring together? Enter a whole number.",
+    "marks": 2,
+    "answer": 36,
+    "working": "The first common positive multiple of 9 and 12 is 36 minutes."
+  },
+  {
+    "text": "Find the greatest common factor of 24 and 42. Enter a whole number.",
+    "marks": 2,
+    "answer": 6,
+    "working": "The common factors are 1, 2, 3 and 6. The greatest is 6."
+  },
+  {
+    "text": "Work out 90 − (18 + 12) ÷ 5. Enter a whole number.",
+    "marks": 2,
+    "answer": 84,
+    "working": "90 − (18 + 12) ÷ 5 = 84"
+  },
+  {
+    "text": "Three fifths of 65 library books are fiction. How many are fiction? Enter a whole number.",
+    "marks": 2,
+    "answer": 39,
+    "working": "65 × 3 ÷ 5 = 39"
+  },
+  {
+    "text": "A class used 2/9 of a roll of paper on Monday and 4/9 on Tuesday. How many ninths of the roll are left? Enter a whole number.",
+    "marks": 2,
+    "answer": 3,
+    "working": "9 − 2 − 4 = 3"
+  },
+  {
+    "text": "Write 2.07 as a number of hundredths. How many hundredths is it? Enter a whole number.",
+    "marks": 2,
+    "answer": 207,
+    "working": "200 + 7 = 207"
+  },
+  {
+    "text": "A rope is 3.60 m long. A 1.45 m piece is cut off. How many centimetres of rope remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 215,
+    "working": "360 − 145 = 215"
+  },
+  {
+    "text": "A parcel contains two bags that weigh 1 kg 275 g each. What is their combined mass in grams? Enter a whole number.",
+    "marks": 2,
+    "answer": 2550,
+    "working": "2 × 1275 = 2550"
+  },
+  {
+    "text": "A tank contains 5 L of water. A learner pours out three jugs of 750 mL each. How many millilitres remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 2750,
+    "working": "5000 − 3 × 750 = 2750"
+  },
+  {
+    "text": "A trip starts at 12:48 and ends at 14:06. How many minutes does it take? Enter a whole number.",
+    "marks": 2,
+    "answer": 78,
+    "working": "14 × 60 + 6 − (12 × 60 + 48) = 78"
+  },
+  {
+    "text": "Two lunch boxes cost P14.50 each. How many pula in change should you get from P40? Enter a whole number.",
+    "marks": 2,
+    "answer": 11,
+    "working": "40 − 2 × 14.5 = 11"
+  },
+  {
+    "text": "A square garden has a perimeter of 36 m. How many metres long is one side? Enter a whole number.",
+    "marks": 2,
+    "answer": 9,
+    "working": "36 ÷ 4 = 9"
+  },
+  {
+    "text": "A floor is 9 m long and 5 m wide. A rug covers 12 square metres. How many square metres are uncovered? Enter a whole number.",
+    "marks": 2,
+    "answer": 33,
+    "working": "9 × 5 − 12 = 33"
+  },
+  {
+    "text": "A pattern starts at 23 and decreases by 4 each time. What is the sixth term? Enter a whole number.",
+    "marks": 2,
+    "answer": 3,
+    "working": "23 − 5 × 4 = 3"
+  },
+  {
+    "text": "A machine subtracts 2 from its input, then triples the result. Its output is 27. What was its input? Enter a whole number.",
+    "marks": 2,
+    "answer": 11,
+    "working": "27 ÷ 3 + 2 = 11"
+  },
+  {
+    "text": "A survey counted 18 walkers, 12 bus riders and 7 cyclists. How many learners took part if each chose one answer? Enter a whole number.",
+    "marks": 2,
+    "answer": 37,
+    "working": "18 + 12 + 7 = 37"
+  },
+  {
+    "text": "A pictograph shows six full symbols and half a symbol. Each full symbol stands for 10 seedlings. How many seedlings are represented? Enter a whole number.",
+    "marks": 2,
+    "answer": 65,
+    "working": "6 × 10 + 5 = 65"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -5336,11 +5685,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? questions === test04
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -5378,7 +5727,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07]]) {
+ for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08]]) {
    const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
