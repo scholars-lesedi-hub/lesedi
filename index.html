@@ -261,6 +261,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <label class="field">Cover title (optional)<input id="stCoverTitle" maxlength="140" placeholder="Use the test title"></label>
     <label class="field">Heading alignment<select id="stCoverAlign"><option value="center">Centred</option><option value="left">Left</option></select></label>
     <label class="field">Learner details<textarea id="stCoverDetails" rows="3" maxlength="220" placeholder="Name: __________  Class: ______  Date: ______"></textarea></label>
+    <label class="field">Topics covered (optional)<input id="stCoverTopics" maxlength="240" placeholder="Use the topics from the test questions"></label>
     <label class="field">Instructions and other cover text<textarea id="stCoverText" rows="5" maxlength="500" placeholder="Answer all questions. Write neatly."></textarea></label>
     <p class="small muted">Leave fields blank to use the defaults. Open Print question paper to preview the cover.</p>
   </fieldset>
@@ -2909,7 +2910,7 @@ $('renewalInterest').onchange=async event=>{
   loaded=[];paper=null;draftVersion++;
   review.checked=false;get('stAiReviewLabel').hidden=true;
   coverage.replaceChildren();questions.replaceChildren();
-  for(const id of ['stSchool','stCreator','stCoverTitle','stCoverDetails','stCoverText'])get(id).value='';
+  for(const id of ['stSchool','stCreator','stCoverTitle','stCoverTopics','stCoverDetails','stCoverText'])get(id).value='';
   get('stCoverAlign').value='center';
   get('stActions').hidden=true;
   say('');
@@ -3092,6 +3093,15 @@ $('renewalInterest').onchange=async event=>{
    add(headings,'h1',doc.title);
    add(headings,'p',metadata);
    add(headings,'p','Prepared by '+creator);
+   const selectedTopics = [...new Set(rows.map(row => {
+    const coverage = row.coverage || '';
+    return (coverage.split(' · ')[1] || coverage).trim();
+   }).filter(Boolean))];
+   const topics = val('stCoverTopics').trim() || selectedTopics.join('; ');
+   if(topics){
+    add(cover,'h2','Topics covered');
+    add(cover,'p',topics);
+   }
    if(!guide){
    add(cover,'p',val('stCoverDetails')||'Name: ______________________________  Class: __________  Date: __________').className='st-cover-details';
    add(cover,'p',val('stCoverText')||'Answer all questions.');
@@ -3427,6 +3437,30 @@ if ('serviceWorker' in navigator) {
    };
    heading.focus();
  }
+ const coverTopics = {
+  "5-01": "Place value, rounding, whole-number operations, factors and multiples",
+  "5-02": "Place value, rounding, whole-number operations, factors and multiples",
+  "5-03": "Metric units, elapsed time, Botswana currency, shapes, perimeter and area",
+  "5-04": "Equivalent fractions, fraction operations, decimal place value and conversions",
+  "5-05": "Number patterns, input–output rules, tallies, charts and pictographs",
+  "5-06": "Whole numbers, fractions and decimals, measurement, time, money, geometry, patterns and data handling",
+  "5-07": "Whole numbers, fractions and decimals, measurement, time, money, geometry, patterns and data handling",
+  "5-08": "Whole numbers, fractions and decimals, measurement, time, money, geometry, patterns and data handling",
+  "6-01": "Whole numbers, fractions and decimals, measurement, time, money, geometry, patterns and data handling, percentages and ratios",
+  "6-02": "Whole numbers, fractions and decimals, measurement, time, money, geometry, patterns and data handling, percentages and ratios",
+  "6-03": "Place value, rounding, whole-number operations, factors and multiples, estimation and order of operations",
+  "6-04": "Equivalent fractions, fraction operations, decimal rounding and conversions",
+  "6-05": "Percentage conversions and change, discounts, equivalent ratios and sharing",
+  "6-06": "Metric conversions, elapsed time, perimeter, area and volume",
+  "7-01": "Whole numbers, fractions and decimals, measurement, time, money, geometry, patterns and data handling, percentages and ratios",
+  "7-02": "Whole numbers, fractions and decimals, measurement, time, money, geometry, patterns and data handling, percentages and ratios, simple equations",
+  "7-03": "Place value, rounding, whole-number operations, factors and multiples, estimation and order of operations",
+  "7-04": "Fraction operations, mixed numbers, decimal operations, rounding and conversions",
+  "7-05": "Percentage change, discounts, ratio sharing, unit prices and map scales",
+  "7-06": "Metric conversions, timetables, elapsed time, perimeter, area and volume",
+  "7-07": "Angles, polygons, symmetry, transformations and 3D shapes",
+  "7-08": "Sequences, input–output rules, mean, median, mode, range and charts"
+};
  function printTest(guide, questions, title, testKey) {
    const paper = document.getElementById('readyTestPrint');
    const displayAnswer = q => q.options ? 'ABCD'[q.answer] + '. ' + q.options[q.answer] :
@@ -3451,6 +3485,11 @@ if ('serviceWorker' in navigator) {
    const credit = document.createElement('p');
    credit.textContent = 'Prepared by ' + creator;
    cover.prepend(credit);
+   const topicHeading = document.createElement('h3');
+   topicHeading.textContent = 'Topics covered';
+   const topicSummary = document.createElement('p');
+   topicSummary.textContent = coverTopics[testKey];
+   cover.append(topicHeading, topicSummary);
    const logo = document.querySelector('.hero-art.lesedi-logo img');
    if (logo) cover.append(logo.cloneNode(false));
    paper.append(cover);
