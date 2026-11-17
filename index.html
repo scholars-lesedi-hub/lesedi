@@ -467,6 +467,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrintS704" class="btn outline">Print Test</button>
     <button type="button" id="readyGuideS704" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 7 Mathematics · Ready-Made Test 05</h3>
+    <p>Percentages, ratios and proportion · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswerS705" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrintS705" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuideS705" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -8784,6 +8791,348 @@ if ('serviceWorker' in navigator) {
     "working": "12.6 ÷ 0.45 = 28"
   }
 ];
+ const standard7Test05 = [
+  {
+    "text": "Convert 0.045 to a percentage.",
+    "options": [
+      "45%",
+      "4.5%",
+      "0.45%",
+      "0.045%"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "Which fraction equals 62.5%?",
+    "options": [
+      "5/8",
+      "3/5",
+      "2/3",
+      "5/16"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "What is 18% of 250?",
+    "options": [
+      "18",
+      "25",
+      "55",
+      "45"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "What is 150% of 84?",
+    "options": [
+      "56",
+      "84",
+      "126",
+      "134"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "A P450 bag is discounted by 20%. What is the sale price?",
+    "options": [
+      "P90",
+      "P430",
+      "P360",
+      "P540"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "A monthly fee rises from P80 to P92. What is the percentage increase?",
+    "options": [
+      "12%",
+      "15%",
+      "20%",
+      "92%"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "A club drops from 150 to 120 members. What is the percentage decrease?",
+    "options": [
+      "20%",
+      "25%",
+      "30%",
+      "80%"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "A learner gets 27 marks out of 36. What is the percentage score?",
+    "options": [
+      "70%",
+      "72%",
+      "80%",
+      "75%"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "Which percentage equals 7/20?",
+    "options": [
+      "14%",
+      "28%",
+      "70%",
+      "35%"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "A store has sold 60% of 350 notebooks. How many remain?",
+    "options": [
+      "210",
+      "290",
+      "140",
+      "60"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "Simplify the ratio 42 to 63.",
+    "options": [
+      "3 to 2",
+      "2 to 3",
+      "6 to 7",
+      "7 to 9"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "Which ratio is equivalent to 7 to 11?",
+    "options": [
+      "21 to 33",
+      "14 to 33",
+      "14 to 18",
+      "11 to 7"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "A mixture contains sand and cement in the ratio 5 to 2. What fraction is cement?",
+    "options": [
+      "2/7",
+      "2/5",
+      "5/7",
+      "5/2"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "Share 56 counters in the ratio 3 to 4. How many go in the smaller share?",
+    "options": [
+      "18",
+      "28",
+      "32",
+      "24"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "The ratio of blue to red beads is 4 to 9. There are 36 red beads. How many are blue?",
+    "options": [
+      "12",
+      "20",
+      "16",
+      "81"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "If 5 tickets cost P65, how much do 8 cost at the same price per ticket?",
+    "options": [
+      "P91",
+      "P104",
+      "P96",
+      "P112"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "A printer makes 48 copies in 6 minutes. How many does it make in 9 minutes at the same rate?",
+    "options": [
+      "56",
+      "72",
+      "64",
+      "81"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "A recipe uses 300 g of flour for 12 scones. How much flour is needed for 18 scones?",
+    "options": [
+      "450 g",
+      "400 g",
+      "500 g",
+      "600 g"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "On a map, 1 cm represents 4 km. What distance does 6.5 cm represent?",
+    "options": [
+      "24 km",
+      "28 km",
+      "32 km",
+      "26 km"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "Which pack costs less per pencil?",
+    "options": [
+      "Six pencils for P18",
+      "Eight pencils for P24",
+      "Ten pencils for P25",
+      "Four pencils for P14"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "Find 16% of 375. Enter a whole number.",
+    "answer": 60,
+    "marks": 2,
+    "working": "375 × 16 ÷ 100 = 60"
+  },
+  {
+    "text": "Find 37.5% of 256. Enter a whole number.",
+    "answer": 96,
+    "marks": 2,
+    "working": "256 × 3 ÷ 8 = 96"
+  },
+  {
+    "text": "Find 125% of 144. Enter a whole number.",
+    "answer": 180,
+    "marks": 2,
+    "working": "144 × 5 ÷ 4 = 180"
+  },
+  {
+    "text": "A learner scores 51 out of 68. What is the percentage score? Enter a whole number.",
+    "answer": 75,
+    "marks": 2,
+    "working": "51 × 100 ÷ 68 = 75"
+  },
+  {
+    "text": "A jacket costs P640. It is discounted by 35%. What is the sale price in pula? Enter a whole number.",
+    "answer": 416,
+    "marks": 2,
+    "working": "640 × 65 ÷ 100 = 416"
+  },
+  {
+    "text": "A school's enrolment rises from 320 to 376. What is the increase as a percentage, rounded to the nearest whole percent? Round halves up. Enter a whole number.",
+    "answer": 18,
+    "marks": 2,
+    "working": "56 ÷ 320 × 100 = 17.5%, which rounds to 18%."
+  },
+  {
+    "text": "A tank is 72% full and holds 54 L of water. What is its full capacity in litres? Enter a whole number.",
+    "answer": 75,
+    "marks": 2,
+    "working": "54 × 100 ÷ 72 = 75"
+  },
+  {
+    "text": "A P560 bicycle is reduced by 15%, then by a further P24. What is the final price in pula? Enter a whole number.",
+    "answer": 452,
+    "marks": 2,
+    "working": "560 × 85 ÷ 100 − 24 = 452"
+  },
+  {
+    "text": "A nursery starts with 450 seedlings and sells 64%. How many remain? Enter a whole number.",
+    "answer": 162,
+    "marks": 2,
+    "working": "450 × 36 ÷ 100 = 162"
+  },
+  {
+    "text": "A fee increases from P125 to P155. What is the percentage increase? Enter a whole number.",
+    "answer": 24,
+    "marks": 2,
+    "working": "30 × 100 ÷ 125 = 24"
+  },
+  {
+    "text": "Share P945 in the ratio 4 to 5. How many pula are in the larger share? Enter a whole number.",
+    "answer": 525,
+    "marks": 2,
+    "working": "945 ÷ 9 × 5 = 525"
+  },
+  {
+    "text": "The ratio of red to green counters is 7 to 11. There are 77 green counters. How many are red? Enter a whole number.",
+    "answer": 49,
+    "marks": 2,
+    "working": "77 ÷ 11 × 7 = 49"
+  },
+  {
+    "text": "A mixture contains juice and water in the ratio 3 to 8. How many litres of water are in 66 L of mixture? Enter a whole number.",
+    "answer": 48,
+    "marks": 2,
+    "working": "66 ÷ 11 × 8 = 48"
+  },
+  {
+    "text": "A class has girls and boys in the ratio 5 to 4. There are 36 learners. How many girls are there? Enter a whole number.",
+    "answer": 20,
+    "marks": 2,
+    "working": "36 ÷ 9 × 5 = 20"
+  },
+  {
+    "text": "A recipe for 16 rolls needs 360 g of flour. How many grams are needed for 28 rolls? Enter a whole number.",
+    "answer": 630,
+    "marks": 2,
+    "working": "360 × 28 ÷ 16 = 630"
+  },
+  {
+    "text": "Seven identical notebooks cost P98. How many pula do eleven cost? Enter a whole number.",
+    "answer": 154,
+    "marks": 2,
+    "working": "98 ÷ 7 × 11 = 154"
+  },
+  {
+    "text": "A machine makes 180 labels in 12 minutes. How many can it make in 35 minutes at the same rate? Enter a whole number.",
+    "answer": 525,
+    "marks": 2,
+    "working": "180 ÷ 12 × 35 = 525"
+  },
+  {
+    "text": "On a map, 2 cm represents 7 km. How many kilometres does 12 cm represent? Enter a whole number.",
+    "answer": 42,
+    "marks": 2,
+    "working": "12 ÷ 2 × 7 = 42"
+  },
+  {
+    "text": "Two clubs share P880 in the ratio 3 to 5. The club with the smaller share spends 20% of its share. How many pula does it have left? Enter a whole number.",
+    "answer": 264,
+    "marks": 2,
+    "working": "880 ÷ 8 × 3 × 80 ÷ 100 = 264"
+  },
+  {
+    "text": "A shop sells two packs of 12 pens for P60 altogether. At the same unit price, how many pula do 38 pens cost? Enter a whole number.",
+    "answer": 95,
+    "marks": 2,
+    "working": "60 × 38 ÷ 24 = 95"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -8874,11 +9223,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? (questions === test04 || questions === standard6Test04 || questions === standard7Test04)
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03 || questions === standard7Test05
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test04 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03 || questions === standard7Test04 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test04 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03 || questions === standard7Test04 || questions === standard7Test05 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -8916,7 +9265,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6], ['S606', '06', standard6Test06, 6], ['S701', '01', standard7Test01, 7], ['S702', '02', standard7Test02, 7], ['S703', '03', standard7Test03, 7], ['S704', '04', standard7Test04, 7]]) {
+ for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6], ['S606', '06', standard6Test06, 6], ['S701', '01', standard7Test01, 7], ['S702', '02', standard7Test02, 7], ['S703', '03', standard7Test03, 7], ['S704', '04', standard7Test04, 7], ['S705', '05', standard7Test05, 7]]) {
    const testTitle = 'Standard ' + standard + ' Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
