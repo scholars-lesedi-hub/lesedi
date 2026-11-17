@@ -348,6 +348,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 02</h3>
+    <p>Whole numbers and operations · 30 questions · 40 marks</p>
+    <button type="button" id="readyAnswer02" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint02" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide02" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -3141,7 +3148,7 @@ if ('serviceWorker' in navigator) {
 </style>
 <script>
 (() => {
- const questions = [
+ const test01 = [
   {
     "text": "Which numeral means six thousand and forty-two?",
     "marks": 1,
@@ -3426,7 +3433,296 @@ if ('serviceWorker' in navigator) {
     ]
   }
 ];
- const title = 'Standard 5 Mathematics · Ready-Made Test 01';
+ const test02 = [
+  {
+    "text": "Which numeral means seven thousand and eighty-three?",
+    "marks": 1,
+    "options": [
+      "7083",
+      "7380",
+      "7803",
+      "7038"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is the value of 4 in 9,462?",
+    "marks": 1,
+    "options": [
+      "40",
+      "4000",
+      "400",
+      "4"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which is the expanded form of 5,207?",
+    "marks": 1,
+    "options": [
+      "5000 + 20 + 7",
+      "5000 + 200 + 7",
+      "500 + 200 + 7",
+      "5000 + 200 + 70"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which symbol makes 6,390 □ 6,309 true?",
+    "marks": 1,
+    "options": [
+      "<",
+      "=",
+      "+",
+      ">"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which number is prime?",
+    "marks": 1,
+    "options": [
+      "33",
+      "37",
+      "45",
+      "49"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which pair contains one odd and one even number?",
+    "marks": 1,
+    "options": [
+      "18 and 25",
+      "12 and 24",
+      "15 and 31",
+      "20 and 36"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Round 5,673 to the nearest ten.",
+    "marks": 1,
+    "options": [
+      "5600",
+      "5680",
+      "5670",
+      "5700"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Round 2,951 to the nearest hundred.",
+    "marks": 1,
+    "options": [
+      "2900",
+      "2950",
+      "2800",
+      "3000"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Round 4,392 to the nearest thousand.",
+    "marks": 1,
+    "options": [
+      "4000",
+      "4400",
+      "5000",
+      "4300"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Round each number to the nearest hundred to estimate 472 + 524.",
+    "marks": 1,
+    "options": [
+      "900",
+      "1000",
+      "1100",
+      "1200"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which equation shows that changing the grouping of addends keeps the sum the same?",
+    "marks": 1,
+    "options": [
+      "12 + 8 = 8 + 12",
+      "12 + 0 = 12",
+      "(12 + 8) + 5 = 12 + (8 + 5)",
+      "12 + 8 = 12 − 8"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which number added to 2,419 leaves it unchanged?",
+    "marks": 1,
+    "options": [
+      "1",
+      "100",
+      "2419",
+      "0"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which number is a factor of 48?",
+    "marks": 1,
+    "options": [
+      "8",
+      "7",
+      "9",
+      "10"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is the lowest common multiple of 8 and 12?",
+    "marks": 1,
+    "options": [
+      "16",
+      "24",
+      "32",
+      "48"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the highest common factor of 24 and 36?",
+    "marks": 1,
+    "options": [
+      "6",
+      "8",
+      "12",
+      "18"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Work out 73 × 100.",
+    "marks": 1,
+    "options": [
+      "73",
+      "730",
+      "73000",
+      "7300"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Work out 32 × 40.",
+    "marks": 1,
+    "options": [
+      "128",
+      "1280",
+      "1320",
+      "12800"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the remainder when 87 is divided by 5?",
+    "marks": 1,
+    "options": [
+      "2",
+      "3",
+      "4",
+      "7"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Work out 9,000 ÷ 1,000.",
+    "marks": 1,
+    "options": [
+      "90",
+      "900",
+      "9",
+      "9000"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Work out 29 − 3 × 6.",
+    "marks": 1,
+    "options": [
+      "156",
+      "26",
+      "12",
+      "11"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Work out 3,618 + 2,047 + 506.",
+    "marks": 2,
+    "answer": 6171
+  },
+  {
+    "text": "Work out 9,100 − 3,746.",
+    "marks": 2,
+    "answer": 5354
+  },
+  {
+    "text": "Work out 47 × 23.",
+    "marks": 2,
+    "answer": 1081
+  },
+  {
+    "text": "Work out 864 ÷ 8.",
+    "marks": 2,
+    "answer": 108
+  },
+  {
+    "text": "Work out (45 − 15) ÷ 5 + 12.",
+    "marks": 2,
+    "answer": 18
+  },
+  {
+    "text": "A library puts 16 books on each of 27 shelves. How many books are there altogether?",
+    "marks": 2,
+    "answer": 432
+  },
+  {
+    "text": "A school has 725 sheets of paper and uses 368. How many sheets are left?",
+    "marks": 2,
+    "answer": 357
+  },
+  {
+    "text": "A teacher shares 294 counters equally among 7 groups. How many does each group receive?",
+    "marks": 2,
+    "answer": 42
+  },
+  {
+    "text": "List all the positive factors of 36.",
+    "marks": 2,
+    "answer": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      9,
+      12,
+      18,
+      36
+    ]
+  },
+  {
+    "text": "List all the positive multiples of 9 that are less than 50.",
+    "marks": 2,
+    "answer": [
+      9,
+      18,
+      27,
+      36,
+      45
+    ]
+  }
+];
+ let questions = test01;
+ let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions.reduce((sum, q) => sum + q.marks, 0);
  const area = document.getElementById('readyTestRunner');
  const answers = [];
@@ -3447,7 +3743,7 @@ if ('serviceWorker' in navigator) {
    const q = questions[index];
    area.innerHTML = '<h3 tabindex="-1"></h3><p data-question></p><form><fieldset><legend>Answer</legend><div data-options></div></fieldset><p role="status"></p><button type="button" class="btn outline" data-back>Previous</button> <button class="btn primary" data-next></button></form>';
    const heading = area.querySelector('h3');
-   heading.textContent = 'Question ' + (index + 1) + ' of ' + questions.length;
+   heading.textContent = title + ' · Question ' + (index + 1) + ' of ' + questions.length;
    area.querySelector('[data-question]').textContent = q.text + ' [' + q.marks + (q.marks === 1 ? ' mark]' : ' marks]');
    const options = area.querySelector('[data-options]');
    (q.options || [Array.isArray(q.answer) ? 'Enter numbers separated by commas' : 'Enter your final answer']).forEach((option, i) => {
@@ -3488,7 +3784,7 @@ if ('serviceWorker' in navigator) {
    };
    heading.focus();
  }
- function printTest(guide) {
+ function printTest(guide, questions, title) {
    const paper = document.getElementById('readyTestPrint');
    const answer = q => q.options ? 'ABCD'[q.answer] + '. ' + q.options[q.answer] :
      Array.isArray(q.answer) ? q.answer.join(', ') : q.answer.toLocaleString('en-US');
@@ -3530,13 +3826,18 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- document.getElementById('readyAnswer').onclick = () => {
-   answers.length = 0;
-   index = 0;
-   render();
- };
- document.getElementById('readyPrint').onclick = () => printTest(false);
- document.getElementById('readyGuide').onclick = () => printTest(true);
+ for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02]]) {
+   const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
+   document.getElementById('readyAnswer' + suffix).onclick = () => {
+     questions = test;
+     title = testTitle;
+     answers.length = 0;
+     index = 0;
+     render();
+   };
+   document.getElementById('readyPrint' + suffix).onclick = () => printTest(false, test, testTitle);
+   document.getElementById('readyGuide' + suffix).onclick = () => printTest(true, test, testTitle);
+ }
 })();
 </script>
 </body>
