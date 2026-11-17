@@ -383,6 +383,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint06" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide06" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 07</h3>
+    <p>Mixed revision · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswer07" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint07" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide07" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -4897,9 +4904,351 @@ if ('serviceWorker' in navigator) {
     "working": "17 + 24 + 19 = 60"
   }
 ];
+ const test07 = [
+  {
+    "text": "What is the value of 8 in 28,491?",
+    "marks": 1,
+    "options": [
+      "80",
+      "8,000",
+      "800",
+      "80,000"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Round 6,849 to the nearest 100.",
+    "marks": 1,
+    "options": [
+      "6,800",
+      "6,900",
+      "6,850",
+      "7,000"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which number is a multiple of 9?",
+    "marks": 1,
+    "options": [
+      "38",
+      "46",
+      "54",
+      "62"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which number has exactly two positive factors?",
+    "marks": 1,
+    "options": [
+      "1",
+      "9",
+      "15",
+      "19"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is 72 − 8 × 5?",
+    "marks": 1,
+    "options": [
+      "320",
+      "32",
+      "64",
+      "24"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 156 ÷ 12?",
+    "marks": 1,
+    "options": [
+      "13",
+      "12",
+      "14",
+      "16"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which fraction is equivalent to 3/5?",
+    "marks": 1,
+    "options": [
+      "3/10",
+      "5/8",
+      "6/10",
+      "9/20"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which fraction is closest to one whole?",
+    "marks": 1,
+    "options": [
+      "1/8",
+      "3/8",
+      "5/8",
+      "7/8"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which decimal is equal to 9/100?",
+    "marks": 1,
+    "options": [
+      "0.9",
+      "0.09",
+      "0.009",
+      "9.0"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 4.20 − 1.65?",
+    "marks": 1,
+    "options": [
+      "2.55",
+      "2.45",
+      "3.45",
+      "3.65"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many millilitres are in 1.5 litres?",
+    "marks": 1,
+    "options": [
+      "150",
+      "15,000",
+      "1,500",
+      "105"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many metres are in 2 km 75 m?",
+    "marks": 1,
+    "options": [
+      "275",
+      "207",
+      "2,750",
+      "2,075"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is 17:10 on a 12-hour clock?",
+    "marks": 1,
+    "options": [
+      "7:10 p.m.",
+      "5:10 p.m.",
+      "5:10 a.m.",
+      "7:10 a.m."
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A book costs P18.50 and a ruler costs P4.25. What is the total?",
+    "marks": 1,
+    "options": [
+      "P22.75",
+      "P23.75",
+      "P22.25",
+      "P23.25"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many lines of symmetry does a rectangle that is not a square have?",
+    "marks": 1,
+    "options": [
+      "0",
+      "1",
+      "2",
+      "4"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the perimeter of an equilateral triangle with sides 9 cm long?",
+    "marks": 1,
+    "options": [
+      "18 cm",
+      "36 cm",
+      "81 cm",
+      "27 cm"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What comes next in 64, 32, 16, 8, …?",
+    "marks": 1,
+    "options": [
+      "0",
+      "4",
+      "6",
+      "2"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A number machine multiplies by 4 then subtracts 3. What is the output for 6?",
+    "marks": 1,
+    "options": [
+      "21",
+      "24",
+      "27",
+      "18"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A tally records 6 learners for chess, 11 for choir and 8 for drama. Which club had the most votes?",
+    "marks": 1,
+    "options": [
+      "Chess",
+      "Drama",
+      "Choir",
+      "All had equal votes"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "One full symbol represents 6 books. How many books does half a symbol represent?",
+    "marks": 1,
+    "options": [
+      "1",
+      "2",
+      "6",
+      "3"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A school has 1,245 exercise books and receives 876 more. It gives out 549. How many remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 1572,
+    "working": "1245 + 876 − 549 = 1572"
+  },
+  {
+    "text": "A shop packs 36 bottles per crate. How many bottles are in 24 crates? Enter a whole number.",
+    "marks": 2,
+    "answer": 864,
+    "working": "36 × 24 = 864"
+  },
+  {
+    "text": "A library shares 936 books equally among 12 classes. How many does each get? Enter a whole number.",
+    "marks": 2,
+    "answer": 78,
+    "working": "936 ÷ 12 = 78"
+  },
+  {
+    "text": "Find the lowest common multiple of 8 and 12. Enter a whole number.",
+    "marks": 2,
+    "answer": 24,
+    "working": "The first common positive multiple of 8 and 12 is 24."
+  },
+  {
+    "text": "Find the greatest common factor of 18 and 30. Enter a whole number.",
+    "marks": 2,
+    "answer": 6,
+    "working": "The common factors are 1, 2, 3 and 6. The greatest is 6."
+  },
+  {
+    "text": "Work out (48 + 16) ÷ 8 + 9. Enter a whole number.",
+    "marks": 2,
+    "answer": 17,
+    "working": "(48 + 16) ÷ 8 + 9 = 17"
+  },
+  {
+    "text": "Five eighths of 48 learners walked to school. How many walked? Enter a whole number.",
+    "marks": 2,
+    "answer": 30,
+    "working": "48 × 5 ÷ 8 = 30"
+  },
+  {
+    "text": "A farmer sold 3/10 of a crop on Monday and 4/10 on Tuesday. How many tenths of the crop remained? Enter a whole number.",
+    "marks": 2,
+    "answer": 3,
+    "working": "10 − 3 − 4 = 3"
+  },
+  {
+    "text": "How many hundredths are in 1.24? Enter a whole number.",
+    "marks": 2,
+    "answer": 124,
+    "working": "100 + 24 = 124"
+  },
+  {
+    "text": "A 1.8 m strip and a 0.65 m strip are placed end to end. What is their combined length in centimetres? Enter a whole number.",
+    "marks": 2,
+    "answer": 245,
+    "working": "180 + 65 = 245"
+  },
+  {
+    "text": "A bag holds 3 kg 200 g of rice. A cook uses 875 g. How many grams remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 2325,
+    "working": "3200 − 875 = 2325"
+  },
+  {
+    "text": "An empty 4 L container is filled using six 500 mL cups. How many millilitres of space remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 1000,
+    "working": "4000 − 6 × 500 = 1000"
+  },
+  {
+    "text": "A lesson starts at 10:38 and ends at 11:24. How many minutes does it last? Enter a whole number.",
+    "marks": 2,
+    "answer": 46,
+    "working": "(11 × 60 + 24) − (10 × 60 + 38) = 46"
+  },
+  {
+    "text": "A learner buys three pencils at P4 each and one notebook at P11. How many pula in change should the learner get from P50? Enter a whole number.",
+    "marks": 2,
+    "answer": 27,
+    "working": "50 − (3 × 4 + 11) = 27"
+  },
+  {
+    "text": "A rectangular yard is 13 m long and 8 m wide. What is its perimeter in metres? Enter a whole number.",
+    "marks": 2,
+    "answer": 42,
+    "working": "2 × (13 + 8) = 42"
+  },
+  {
+    "text": "A rectangular wall is 6 m wide and 3 m high. A door takes up 2 square metres. How many square metres of wall remain to be painted? Enter a whole number.",
+    "marks": 2,
+    "answer": 16,
+    "working": "6 × 3 − 2 = 16"
+  },
+  {
+    "text": "A pattern starts at 7 and increases by 6 each time. What is its tenth term? Enter a whole number.",
+    "marks": 2,
+    "answer": 61,
+    "working": "7 + 9 × 6 = 61"
+  },
+  {
+    "text": "A number machine doubles an input and adds 5. The output is 31. What was the input? Enter a whole number.",
+    "marks": 2,
+    "answer": 13,
+    "working": "(31 − 5) ÷ 2 = 13"
+  },
+  {
+    "text": "A class collected 18 cans on Monday, 26 on Tuesday and 23 on Wednesday. How many cans did it collect altogether? Enter a whole number.",
+    "marks": 2,
+    "answer": 67,
+    "working": "18 + 26 + 23 = 67"
+  },
+  {
+    "text": "A pictograph uses one full symbol for 8 seedlings. How many seedlings do four full symbols and half a symbol show? Enter a whole number.",
+    "marks": 2,
+    "answer": 36,
+    "working": "4 × 8 + 4 = 36"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
- const total = questions.reduce((sum, q) => sum + q.marks, 0);
+ const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
  const area = document.getElementById('readyTestRunner');
  const answers = [];
  let index = 0;
@@ -4969,7 +5318,7 @@ if ('serviceWorker' in navigator) {
      }
      if (index < questions.length - 1) { index++; render(); return; }
      const score = questions.reduce((sum, question, i) => sum + (correct(question, answers[i]) ? question.marks : 0), 0);
-     area.innerHTML = '<h3 tabindex="-1">Test complete</h3><p role="status">Score: ' + score + ' / ' + total + '</p>';
+     area.innerHTML = '<h3 tabindex="-1">Test complete</h3><p role="status">Score: ' + score + ' / ' + total(questions) + '</p>';
      area.querySelector('h3').focus();
    };
    heading.focus();
@@ -4984,16 +5333,16 @@ if ('serviceWorker' in navigator) {
      if (q.unit === 'pula') return 'P' + q.answer.toFixed(2);
      return q.answer.toLocaleString('en-US') + ' ' + q.unit;
    };
-   paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total + ' marks</p>' + (guide
+   paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? questions === test04
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06
+       : questions === test05 || questions === test06 || questions === test07
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
-     ['B · Short answers', 20, 30, 'Follow the instructions for each answer.']
+     ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, 28, 'Write your final answer.'],
@@ -5029,7 +5378,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06]]) {
+ for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07]]) {
    const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
