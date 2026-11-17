@@ -446,6 +446,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrintS701" class="btn outline">Print Test</button>
     <button type="button" id="readyGuideS701" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 7 Mathematics · Ready-Made Test 02</h3>
+    <p>Mixed revision · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswerS702" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrintS702" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuideS702" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -8058,6 +8065,348 @@ if ('serviceWorker' in navigator) {
     "working": "28 ÷ 80 × 100 = 35%"
   }
 ];
+ const standard7Test02 = [
+  {
+    "text": "Round 835,629 to the nearest thousand.",
+    "marks": 1,
+    "options": [
+      "835,000",
+      "836,000",
+      "835,600",
+      "840,000"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which number is divisible by both 6 and 8?",
+    "marks": 1,
+    "options": [
+      "72",
+      "36",
+      "64",
+      "84"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 125 − 5 × (14 − 6)?",
+    "marks": 1,
+    "options": [
+      "120",
+      "960",
+      "45",
+      "85"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is 7/10 + 3/8?",
+    "marks": 1,
+    "options": [
+      "10/18",
+      "31/40",
+      "43/40",
+      "37/40"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which fraction is greater than 5/6?",
+    "marks": 1,
+    "options": [
+      "4/5",
+      "7/9",
+      "9/10",
+      "11/15"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 2.45 ÷ 0.5?",
+    "marks": 1,
+    "options": [
+      "1.225",
+      "4.9",
+      "0.49",
+      "12.25"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which decimal is equivalent to 13/20?",
+    "marks": 1,
+    "options": [
+      "0.65",
+      "0.13",
+      "0.60",
+      "0.75"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 32% of 250?",
+    "marks": 1,
+    "options": [
+      "75",
+      "82",
+      "125",
+      "80"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A price falls from P200 to P170. What is the percentage decrease?",
+    "marks": 1,
+    "options": [
+      "17%",
+      "30%",
+      "85%",
+      "15%"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is the simplest form of 21 to 49?",
+    "marks": 1,
+    "options": [
+      "7 to 3",
+      "7 to 14",
+      "3 to 7",
+      "2 to 5"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many grams are in 4.075 kg?",
+    "marks": 1,
+    "options": [
+      "475",
+      "4,075",
+      "40,750",
+      "407.5"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 2 hours 18 minutes after 16:47?",
+    "marks": 1,
+    "options": [
+      "19:05",
+      "18:55",
+      "19:15",
+      "18:05"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Find the perimeter of a rectangle 14 m long and 9 m wide.",
+    "marks": 1,
+    "options": [
+      "46 m",
+      "23 m",
+      "126 m",
+      "42 m"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A triangle has an area of 48 cm² and a base of 12 cm. What is its perpendicular height?",
+    "marks": 1,
+    "options": [
+      "4 cm",
+      "12 cm",
+      "24 cm",
+      "8 cm"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which angle is supplementary to 73°?",
+    "marks": 1,
+    "options": [
+      "17°",
+      "117°",
+      "107°",
+      "287°"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many faces does a triangular prism have?",
+    "marks": 1,
+    "options": [
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the median of 3, 5, 10 and 16?",
+    "marks": 1,
+    "options": [
+      "5",
+      "7.5",
+      "8.5",
+      "10"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the range of 23, 17, 34, 28 and 20?",
+    "marks": 1,
+    "options": [
+      "17",
+      "14",
+      "11",
+      "34"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What comes next in 2, 6, 18, 54, … if each term is three times the preceding term?",
+    "marks": 1,
+    "options": [
+      "108",
+      "156",
+      "216",
+      "162"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "If 4n − 5 = 31, what is n?",
+    "marks": 1,
+    "options": [
+      "6",
+      "8",
+      "9",
+      "11"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A school buys 28 cartons of 162 pencils and distributes 3,275 pencils. How many remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 1261,
+    "working": "28 × 162 − 3275 = 1261"
+  },
+  {
+    "text": "How many full boxes of 36 can be filled with 2,575 exercise books? Enter a whole number.",
+    "marks": 2,
+    "answer": 71,
+    "working": "2,575 = 36 × 71 + 19, so 71 boxes are full."
+  },
+  {
+    "text": "Find the greatest common factor of 72 and 96. Enter a whole number.",
+    "marks": 2,
+    "answer": 24,
+    "working": "The greatest shared factor is 24."
+  },
+  {
+    "text": "Evaluate 360 ÷ (12 + 6) + 7 × 8. Enter a whole number.",
+    "marks": 2,
+    "answer": 76,
+    "working": "360 ÷ 18 + 56 = 76"
+  },
+  {
+    "text": "A group uses 5/12 of a roll on Monday and 1/6 on Tuesday. How many twelfths of the roll remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 5,
+    "working": "12 − 5 − 2 = 5"
+  },
+  {
+    "text": "How many hundredths are in 3.47? Enter a whole number.",
+    "marks": 2,
+    "answer": 347,
+    "working": "3 wholes are 300 hundredths. Add 47 hundredths to get 347."
+  },
+  {
+    "text": "A garden has 144 plants. Five eighths are beans. How many are beans? Enter a whole number.",
+    "marks": 2,
+    "answer": 90,
+    "working": "144 ÷ 8 × 5 = 90"
+  },
+  {
+    "text": "A bag costing P350 is reduced by 18%. What is the sale price in pula? Enter a whole number.",
+    "marks": 2,
+    "answer": 287,
+    "working": "350 − 350 × 18 ÷ 100 = 287"
+  },
+  {
+    "text": "A club has 125 members. Its membership rises by 24%. How many members does it now have? Enter a whole number.",
+    "marks": 2,
+    "answer": 155,
+    "working": "125 + 125 × 24 ÷ 100 = 155"
+  },
+  {
+    "text": "A punch mixes juice and water in the ratio 3 to 5. How many litres of water are in 64 L of punch? Enter a whole number.",
+    "marks": 2,
+    "answer": 40,
+    "working": "64 ÷ 8 × 5 = 40"
+  },
+  {
+    "text": "Five identical packs cost P85. How many pula do twelve cost? Enter a whole number.",
+    "marks": 2,
+    "answer": 204,
+    "working": "85 ÷ 5 × 12 = 204"
+  },
+  {
+    "text": "A pipe is 5.625 m long. A length of 1.875 m is cut off. How many millimetres remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 3750,
+    "working": "5625 − 1875 = 3750"
+  },
+  {
+    "text": "A tank contains 14 L of water. A learner fills 16 bottles of 625 mL each. How many millilitres remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 4000,
+    "working": "14000 − 16 × 625 = 4000"
+  },
+  {
+    "text": "A bus journey starts at 22:52 and ends at 02:18 the next day. How many minutes does it take? Enter a whole number.",
+    "marks": 2,
+    "answer": 206,
+    "working": "68 minutes to midnight plus 138 minutes after midnight equals 206 minutes."
+  },
+  {
+    "text": "A rectangular floor is 13 m by 9 m. A rug covers 28 m². How many square metres of floor remain uncovered? Enter a whole number.",
+    "marks": 2,
+    "answer": 89,
+    "working": "13 × 9 − 28 = 89"
+  },
+  {
+    "text": "A rectangular box has a volume of 1,260 cm³. Its base is 14 cm long and 9 cm wide. How many centimetres high is it? Enter a whole number.",
+    "marks": 2,
+    "answer": 10,
+    "working": "1260 ÷ (14 × 9) = 10"
+  },
+  {
+    "text": "Two angles of a triangle measure 57° and 48°. How many degrees is the third angle? Enter a whole number.",
+    "marks": 2,
+    "answer": 75,
+    "working": "180 − 57 − 48 = 75"
+  },
+  {
+    "text": "A sequence starts at 13 and increases by 11 each time. What is the twelfth term? Enter a whole number.",
+    "marks": 2,
+    "answer": 134,
+    "working": "13 + 11 × 11 = 134"
+  },
+  {
+    "text": "The mean of six scores is 19. Five scores are 15, 18, 21, 17 and 20. What is the sixth score? Enter a whole number.",
+    "marks": 2,
+    "answer": 23,
+    "working": "6 × 19 − (15 + 18 + 21 + 17 + 20) = 23"
+  },
+  {
+    "text": "In a survey of 120 learners, 42 chose netball. What percentage chose netball? Enter a whole number.",
+    "marks": 2,
+    "answer": 35,
+    "working": "42 × 100 ÷ 120 = 35"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -8148,11 +8497,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? (questions === test04 || questions === standard6Test04)
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05 || questions === standard6Test06 || questions === standard7Test01
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test04 || questions === standard6Test06 || questions === standard7Test01 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test04 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -8190,7 +8539,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6], ['S606', '06', standard6Test06, 6], ['S701', '01', standard7Test01, 7]]) {
+ for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6], ['S606', '06', standard6Test06, 6], ['S701', '01', standard7Test01, 7], ['S702', '02', standard7Test02, 7]]) {
    const testTitle = 'Standard ' + standard + ' Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
