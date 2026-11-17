@@ -369,6 +369,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint04" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide04" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 05</h3>
+    <p>Patterns and data handling · 30 questions · 40 marks</p>
+    <button type="button" id="readyAnswer05" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint05" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide05" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -4319,6 +4326,288 @@ if ('serviceWorker' in navigator) {
     "working": "1.25 + 0.80 = 2.05 km"
   }
 ];
+ const test05 = [
+  {
+    "text": "What comes next in 6, 12, 18, 24, …?",
+    "marks": 1,
+    "options": [
+      "25",
+      "30",
+      "32",
+      "36"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the rule for 40, 35, 30, 25, …?",
+    "marks": 1,
+    "options": [
+      "Add 5",
+      "Subtract 10",
+      "Subtract 5",
+      "Divide by 5"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which number is missing in 4, 8, __, 16, 20?",
+    "marks": 1,
+    "options": [
+      "12",
+      "10",
+      "14",
+      "18"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What comes next in 2, 4, 8, 16, …?",
+    "marks": 1,
+    "options": [
+      "18",
+      "24",
+      "30",
+      "32"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What comes next in circle, square, triangle, circle, square, …?",
+    "marks": 1,
+    "options": [
+      "Square",
+      "Triangle",
+      "Circle",
+      "Rectangle"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which is the fifth term of 9, 12, 15, 18, …?",
+    "marks": 1,
+    "options": [
+      "19",
+      "20",
+      "21",
+      "22"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which list increases by 7 each time?",
+    "marks": 1,
+    "options": [
+      "2, 7, 12, 17",
+      "3, 10, 17, 24",
+      "4, 11, 19, 26",
+      "7, 14, 20, 28"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A number machine adds 6 to each input. What is the output for 11?",
+    "marks": 1,
+    "options": [
+      "5",
+      "15",
+      "16",
+      "17"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A number machine doubles each input, then adds 1. What is the output for 5?",
+    "marks": 1,
+    "options": [
+      "11",
+      "10",
+      "12",
+      "6"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What comes next in 1, 4, 9, 16, …?",
+    "marks": 1,
+    "options": [
+      "20",
+      "24",
+      "25",
+      "32"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A tally shows 8 learners chose apples, 5 chose bananas and 11 chose oranges. Which fruit was chosen most often?",
+    "marks": 1,
+    "options": [
+      "Bananas",
+      "Apples",
+      "Oranges",
+      "All were equal"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A class borrowed 7 books on Monday and 9 on Tuesday. How many did it borrow in total?",
+    "marks": 1,
+    "options": [
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "In a pictograph, each star represents 2 learners. How many learners do 6 stars represent?",
+    "marks": 1,
+    "options": [
+      "8",
+      "12",
+      "14",
+      "16"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A bar chart has bars of heights 4, 10 and 7. Which height represents the smallest count?",
+    "marks": 1,
+    "options": [
+      "4",
+      "7",
+      "10",
+      "14"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A survey recorded bicycle 6, bus 12 and walking 9. How many more learners took the bus than rode a bicycle?",
+    "marks": 1,
+    "options": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "The shoe sizes recorded were 2, 3, 3, 4, 3, 5. Which size occurred most often?",
+    "marks": 1,
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which display uses bars to compare counts for different categories?",
+    "marks": 1,
+    "options": [
+      "Pictograph",
+      "Number line",
+      "Bar chart",
+      "Calendar"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A bar chart scale is labelled 0, 2, 4, 6 and 8 at equal steps. What is the value of one step?",
+    "marks": 1,
+    "options": [
+      "2",
+      "4",
+      "6",
+      "8"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A survey recorded red 4, blue 7, green 4 and yellow 6. Which colours had equal counts?",
+    "marks": 1,
+    "options": [
+      "Red and blue",
+      "Blue and yellow",
+      "Green and yellow",
+      "Red and green"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A class tracks books read by each learner. What does a frequency of 5 beside the value 2 mean?",
+    "marks": 1,
+    "options": [
+      "Two learners read five books each",
+      "Five learners read two books each",
+      "All learners read five books",
+      "The class read seven books in total"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A pattern starts at 14 and increases by 5 each time. What is the eighth term? Enter a whole number.",
+    "marks": 2,
+    "answer": 49,
+    "working": "14 + 7 × 5 = 49"
+  },
+  {
+    "text": "A pattern starts at 96 and decreases by 8 each time. What is the sixth term? Enter a whole number.",
+    "marks": 2,
+    "answer": 56,
+    "working": "96 − 5 × 8 = 56"
+  },
+  {
+    "text": "A number machine multiplies the input by 3 and then subtracts 2. What input gives an output of 25? Enter a whole number.",
+    "marks": 2,
+    "answer": 9,
+    "working": "(25 + 2) ÷ 3 = 9"
+  },
+  {
+    "text": "A row of one table seats 4 people. A row of two seats 6, and a row of three seats 8. If each extra table adds two seats, how many can sit at seven tables? Enter a whole number.",
+    "marks": 2,
+    "answer": 16,
+    "working": "4 + 6 × 2 = 16"
+  },
+  {
+    "text": "The pattern adds 2, then adds 5, and repeats those steps. What comes next in 3, 5, 10, 12, 17, …? Enter a whole number.",
+    "marks": 2,
+    "answer": 19,
+    "working": "17 + 2 = 19"
+  },
+  {
+    "text": "At a school garden, learners counted 13 bean seedlings, 8 tomato seedlings and 17 cabbage seedlings. How many seedlings did they count altogether? Enter a whole number.",
+    "marks": 2,
+    "answer": 38,
+    "working": "13 + 8 + 17 = 38"
+  },
+  {
+    "text": "On a pictograph, one full bag symbol represents 4 bags. A class collected 5 full symbols and half a symbol. How many bags did it collect? Enter a whole number.",
+    "marks": 2,
+    "answer": 22,
+    "working": "5 × 4 + 2 = 22"
+  },
+  {
+    "text": "There are 35 learners. Of these, 12 chose athletics and 9 chose football. All the others chose netball. How many chose netball? Enter a whole number.",
+    "marks": 2,
+    "answer": 14,
+    "working": "35 − 12 − 9 = 14"
+  },
+  {
+    "text": "A class recorded its books read as Monday 12, Tuesday 9, Wednesday 15 and Thursday 8. How many more books did the class read on its highest day than on its lowest day? Enter a whole number.",
+    "marks": 2,
+    "answer": 7,
+    "working": "15 − 8 = 7"
+  },
+  {
+    "text": "The number of siblings for seven learners was 0, 3, 2, 2, 4, 1, 3. How many learners had at least two siblings? Enter a whole number.",
+    "marks": 2,
+    "answer": 5,
+    "working": "Count the values 3, 2, 2, 4 and 3"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions.reduce((sum, q) => sum + q.marks, 0);
@@ -4409,9 +4698,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total + ' marks</p>' + (guide
      ? questions === test04
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
+       : questions === test05
+         ? '<p>Award full marks for each correct final answer.</p>'
+         : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, 30, 'Follow the instructions for each answer.']
    ] : [
@@ -4449,7 +4740,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04]]) {
+ for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05]]) {
    const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
