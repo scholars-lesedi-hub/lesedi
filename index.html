@@ -404,6 +404,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrintS601" class="btn outline">Print Test</button>
     <button type="button" id="readyGuideS601" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 6 Mathematics · Ready-Made Test 02</h3>
+    <p>Mixed revision · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswerS602" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrintS602" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuideS602" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -5944,6 +5951,348 @@ if ('serviceWorker' in navigator) {
     "working": "(24 + 31 + 19 + 28 + 33) ÷ 5 = 27"
   }
 ];
+ const standard6Test02 = [
+  {
+    "text": "What is the value of 7 in 472,306?",
+    "marks": 1,
+    "options": [
+      "7,000",
+      "70,000",
+      "700",
+      "700,000"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Round 94,650 to the nearest ten thousand.",
+    "marks": 1,
+    "options": [
+      "90,000",
+      "94,000",
+      "95,000",
+      "100,000"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which number is divisible by both 4 and 6?",
+    "marks": 1,
+    "options": [
+      "18",
+      "28",
+      "36",
+      "42"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 7 × (19 − 11) + 4?",
+    "marks": 1,
+    "options": [
+      "52",
+      "56",
+      "64",
+      "60"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which fraction is greater than 5/8?",
+    "marks": 1,
+    "options": [
+      "3/4",
+      "1/2",
+      "7/12",
+      "3/5"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 2/3 + 1/9?",
+    "marks": 1,
+    "options": [
+      "3/12",
+      "5/9",
+      "7/9",
+      "1/3"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which decimal equals 7/20?",
+    "marks": 1,
+    "options": [
+      "0.07",
+      "0.35",
+      "0.7",
+      "0.72"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 6.3 ÷ 100?",
+    "marks": 1,
+    "options": [
+      "0.63",
+      "0.0063",
+      "630",
+      "0.063"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What percentage is equivalent to 3/8?",
+    "marks": 1,
+    "options": [
+      "37.5%",
+      "30%",
+      "38%",
+      "62.5%"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A price of P250 increases by 10%. What is the new price?",
+    "marks": 1,
+    "options": [
+      "P225",
+      "P260",
+      "P275",
+      "P350"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "The ratio of boys to girls is 3 to 4. If there are 12 boys, how many girls are there?",
+    "marks": 1,
+    "options": [
+      "9",
+      "16",
+      "18",
+      "21"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which is equal to 0.85 L?",
+    "marks": 1,
+    "options": [
+      "85 mL",
+      "8,500 mL",
+      "805 mL",
+      "850 mL"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What time is 135 minutes after 09:50?",
+    "marks": 1,
+    "options": [
+      "12:05",
+      "11:55",
+      "12:15",
+      "11:05"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is the area of a square with sides of 11 cm?",
+    "marks": 1,
+    "options": [
+      "44 cm²",
+      "110 cm²",
+      "121 cm²",
+      "132 cm²"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "An angle measures 125°. What type of angle is it?",
+    "marks": 1,
+    "options": [
+      "Acute",
+      "Obtuse",
+      "Right",
+      "Straight"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A rectangular box is 5 cm long, 4 cm wide and 3 cm high. What is its volume?",
+    "marks": 1,
+    "options": [
+      "12 cm³",
+      "20 cm³",
+      "47 cm³",
+      "60 cm³"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is the median of 3, 5, 8, 10 and 12?",
+    "marks": 1,
+    "options": [
+      "8",
+      "5",
+      "10",
+      "12"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which option lists all the modes of 2, 4, 4, 7, 9 and 9?",
+    "marks": 1,
+    "options": [
+      "4 only",
+      "9 only",
+      "4 and 9",
+      "6 and 7"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A rule takes half the input and adds 7. Which input gives an output of 15?",
+    "marks": 1,
+    "options": [
+      "11",
+      "16",
+      "22",
+      "30"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the next term in 3, 6, 12, 24, …?",
+    "marks": 1,
+    "options": [
+      "27",
+      "36",
+      "42",
+      "48"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A warehouse had 8,425 bags and delivered 27 loads of 185 bags each. How many bags remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 3430,
+    "working": "8,425 − 27 × 185 = 3,430"
+  },
+  {
+    "text": "A school packs 1,357 books in cartons of 24. How many books are left after filling as many complete cartons as possible? Enter a whole number.",
+    "marks": 2,
+    "answer": 13,
+    "working": "1,357 = 24 × 56 + 13"
+  },
+  {
+    "text": "Find the greatest common factor of 48 and 60. Enter a whole number.",
+    "marks": 2,
+    "answer": 12,
+    "working": "The common factors are 1, 2, 3, 4, 6 and 12."
+  },
+  {
+    "text": "Work out 204 ÷ (9 + 8) + 19. Enter a whole number.",
+    "marks": 2,
+    "answer": 31,
+    "working": "204 ÷ 17 + 19 = 31"
+  },
+  {
+    "text": "A class spent 5/12 of its budget on books and 1/4 on stationery. How many twelfths of the budget remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 4,
+    "working": "12 − 5 − 3 = 4 twelfths"
+  },
+  {
+    "text": "Seven ninths of 108 bottles were recycled. How many bottles were recycled? Enter a whole number.",
+    "marks": 2,
+    "answer": 84,
+    "working": "108 ÷ 9 × 7 = 84"
+  },
+  {
+    "text": "What is 12.5% of 240? Enter a whole number.",
+    "marks": 2,
+    "answer": 30,
+    "working": "12.5% = 1/8 and 240 ÷ 8 = 30"
+  },
+  {
+    "text": "A school mixes orange juice and water in a ratio of 2 to 3. It makes 45 litres of the drink. How many litres of water does it use? Enter a whole number.",
+    "marks": 2,
+    "answer": 27,
+    "working": "45 ÷ 5 × 3 = 27"
+  },
+  {
+    "text": "Four identical notebooks cost P52. How many pula do seven cost? Enter a whole number.",
+    "marks": 2,
+    "answer": 91,
+    "working": "52 ÷ 4 × 7 = 91"
+  },
+  {
+    "text": "A sack holds 6.4 kg of grain. A cook uses 2.75 kg. How many grams remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 3650,
+    "working": "6,400 − 2,750 = 3,650 g"
+  },
+  {
+    "text": "A runner completes 2.75 km in the morning and 1,850 m in the afternoon. What is the total distance in metres? Enter a whole number.",
+    "marks": 2,
+    "answer": 4600,
+    "working": "2,750 + 1,850 = 4,600 m"
+  },
+  {
+    "text": "A tank contains 7.2 L of water. A learner pours the water into bottles of 600 mL each. How many bottles can be filled? Enter a whole number.",
+    "marks": 2,
+    "answer": 12,
+    "working": "7,200 ÷ 600 = 12"
+  },
+  {
+    "text": "A bus leaves at 22:40 and reaches its destination at 00:25 the next day. How many minutes does it travel? Enter a whole number.",
+    "marks": 2,
+    "answer": 105,
+    "working": "80 + 25 = 105 minutes"
+  },
+  {
+    "text": "A bag costing P180 is reduced by 20%. How many pula does a customer save? Enter a whole number.",
+    "marks": 2,
+    "answer": 36,
+    "working": "180 × 20 ÷ 100 = 36"
+  },
+  {
+    "text": "A rectangle has an area of 96 square metres and a length of 12 m. What is its perimeter in metres? Enter a whole number.",
+    "marks": 2,
+    "answer": 40,
+    "working": "96 ÷ 12 = 8 and 2 × (12 + 8) = 40"
+  },
+  {
+    "text": "A triangle has an area of 42 square centimetres and a base of 12 cm. What is its perpendicular height in centimetres? Enter a whole number.",
+    "marks": 2,
+    "answer": 7,
+    "working": "2 × 42 ÷ 12 = 7"
+  },
+  {
+    "text": "A rectangular storage box measures 9 cm by 5 cm by 4 cm inside. What is its volume in cubic centimetres? Enter a whole number.",
+    "marks": 2,
+    "answer": 180,
+    "working": "9 × 5 × 4 = 180"
+  },
+  {
+    "text": "A pattern starts at 82 and decreases by 7 each time. What is its eleventh term? Enter a whole number.",
+    "marks": 2,
+    "answer": 12,
+    "working": "82 − 10 × 7 = 12"
+  },
+  {
+    "text": "Five teams scored 12, 19, 14, 23 and 17 points. What was the mean score? Enter a whole number.",
+    "marks": 2,
+    "answer": 17,
+    "working": "(12 + 19 + 14 + 23 + 17) ÷ 5 = 17"
+  },
+  {
+    "text": "A survey recorded 16 votes for football, 14 for netball, 8 for athletics and 12 for tennis. What percentage of the votes went to netball? Enter a whole number.",
+    "marks": 2,
+    "answer": 28,
+    "working": "14 ÷ 50 × 100 = 28%"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -6034,11 +6383,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? questions === test04
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -6076,7 +6425,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6]]) {
+ for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6]]) {
    const testTitle = 'Standard ' + standard + ' Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
