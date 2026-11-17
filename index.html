@@ -432,6 +432,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrintS605" class="btn outline">Print Test</button>
     <button type="button" id="readyGuideS605" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 6 Mathematics · Ready-Made Test 06</h3>
+    <p>Measurement and time · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswerS606" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrintS606" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuideS606" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -7360,6 +7367,348 @@ if ('serviceWorker' in navigator) {
     "working": "600 ÷ 5 × 3 = 360, and 25% of 360 is 90."
   }
 ];
+ const standard6Test06 = [
+  {
+    "text": "How many metres are in 3.4 km?",
+    "marks": 1,
+    "options": [
+      "340",
+      "3400",
+      "34",
+      "34000"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "How many centimetres are in 0.75 m?",
+    "marks": 1,
+    "options": [
+      "75",
+      "7.5",
+      "750",
+      "0.075"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many millimetres are in 6.2 cm?",
+    "marks": 1,
+    "options": [
+      "620",
+      "6.2",
+      "0.62",
+      "62"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which is the longest distance?",
+    "marks": 1,
+    "options": [
+      "1750 m",
+      "1600 m",
+      "1.8 km",
+      "1.09 km"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which unit best measures the mass of a school bus?",
+    "marks": 1,
+    "options": [
+      "grams",
+      "millilitres",
+      "tonnes",
+      "centimetres"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "How many grams are in 2.65 kg?",
+    "marks": 1,
+    "options": [
+      "265",
+      "2650",
+      "26500",
+      "26.5"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which mass equals 4,500 g?",
+    "marks": 1,
+    "options": [
+      "4.5 kg",
+      "45 kg",
+      "0.45 kg",
+      "450 kg"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many millilitres are in a quarter of a litre?",
+    "marks": 1,
+    "options": [
+      "25",
+      "400",
+      "750",
+      "250"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which amount equals 1 L 60 mL?",
+    "marks": 1,
+    "options": [
+      "1600 mL",
+      "160 mL",
+      "1006 mL",
+      "1060 mL"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which instrument measures temperature?",
+    "marks": 1,
+    "options": [
+      "stopwatch",
+      "ruler",
+      "thermometer",
+      "balance"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 21:35 on a 12-hour clock?",
+    "marks": 1,
+    "options": [
+      "9:35 a.m.",
+      "9:35 p.m.",
+      "11:35 p.m.",
+      "11:35 a.m."
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 12:20 a.m. on a 24-hour clock?",
+    "marks": 1,
+    "options": [
+      "00:20",
+      "12:20",
+      "20:12",
+      "22:20"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many minutes are in 2 hours 45 minutes?",
+    "marks": 1,
+    "options": [
+      "165",
+      "145",
+      "125",
+      "175"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many seconds are in 3 minutes 10 seconds?",
+    "marks": 1,
+    "options": [
+      "180",
+      "310",
+      "210",
+      "190"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "How long is it from 09:45 to 10:10?",
+    "marks": 1,
+    "options": [
+      "15 min",
+      "35 min",
+      "25 min",
+      "45 min"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What time is 35 minutes after 16:50?",
+    "marks": 1,
+    "options": [
+      "17:15",
+      "17:25",
+      "17:35",
+      "16:15"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the perimeter of a rectangle 12 m long and 7 m wide?",
+    "marks": 1,
+    "options": [
+      "19 m",
+      "38 m",
+      "84 m",
+      "24 m"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the area of a square with sides 9 cm long?",
+    "marks": 1,
+    "options": [
+      "81 cm²",
+      "36 cm²",
+      "18 cm²",
+      "72 cm²"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is the volume of a box 6 cm long, 4 cm wide and 2 cm high?",
+    "marks": 1,
+    "options": [
+      "24 cm³",
+      "12 cm³",
+      "36 cm³",
+      "48 cm³"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which unit best measures the area of a classroom floor?",
+    "marks": 1,
+    "options": [
+      "cubic metres",
+      "metres",
+      "square metres",
+      "litres"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A route is 4.2 km long. A learner has walked 1,750 m. How many metres are left? Enter a whole number.",
+    "marks": 2,
+    "answer": 2450,
+    "working": "4200 − 1750 = 2450"
+  },
+  {
+    "text": "A cloth is 3 m long. Three pieces of 45 cm each are cut off. How many centimetres remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 165,
+    "working": "300 − 3 × 45 = 165"
+  },
+  {
+    "text": "Four lengths of wire each measure 1.35 m. What is their total length in centimetres? Enter a whole number.",
+    "marks": 2,
+    "answer": 540,
+    "working": "4 × 135 = 540"
+  },
+  {
+    "text": "A parcel contains 2 kg 350 g of books and 875 g of stationery. What is its total mass in grams? Enter a whole number.",
+    "marks": 2,
+    "answer": 3225,
+    "working": "2350 + 875 = 3225"
+  },
+  {
+    "text": "A shop divides 6.3 kg of sugar equally into 9 bags. How many grams are in each bag? Enter a whole number.",
+    "marks": 2,
+    "answer": 700,
+    "working": "6300 ÷ 9 = 700"
+  },
+  {
+    "text": "A sack contains 12 kg of flour. A baker uses 3.75 kg. How many grams remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 8250,
+    "working": "12000 − 3750 = 8250"
+  },
+  {
+    "text": "A jug contains 2.4 L of water. A learner pours 350 mL into each of five cups. How many millilitres remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 650,
+    "working": "2400 − 5 × 350 = 650"
+  },
+  {
+    "text": "A tank can hold 15 L and already contains 9.6 L. How many millilitres are needed to fill it? Enter a whole number.",
+    "marks": 2,
+    "answer": 5400,
+    "working": "15000 − 9600 = 5400"
+  },
+  {
+    "text": "How many full 250 mL bottles can be filled from 3.75 L of juice? Enter a whole number.",
+    "marks": 2,
+    "answer": 15,
+    "working": "3750 ÷ 250 = 15"
+  },
+  {
+    "text": "A film starts at 19:42 and ends at 21:18. How many minutes does it last? Enter a whole number.",
+    "marks": 2,
+    "answer": 96,
+    "working": "78 + 18 = 96"
+  },
+  {
+    "text": "A nurse starts a shift at 22:25 and finishes at 06:10 the next morning. How many minutes is the shift? Enter a whole number.",
+    "marks": 2,
+    "answer": 465,
+    "working": "95 + 370 = 465"
+  },
+  {
+    "text": "A runner finishes three laps in 125 seconds each. What is the total time in seconds? Enter a whole number.",
+    "marks": 2,
+    "answer": 375,
+    "working": "3 × 125 = 375"
+  },
+  {
+    "text": "A lesson lasts 55 minutes. A class has four lessons with a 10-minute break between each pair of consecutive lessons. How many minutes pass from the start of the first lesson to the end of the last? Enter a whole number.",
+    "marks": 2,
+    "answer": 250,
+    "working": "4 × 55 + 3 × 10 = 250"
+  },
+  {
+    "text": "How many hours are in 3 days and 7 hours? Enter a whole number.",
+    "marks": 2,
+    "answer": 79,
+    "working": "3 × 24 + 7 = 79"
+  },
+  {
+    "text": "A square pen has sides 14 m long. A 3 m gap is left for a gate. How many metres of fencing are needed? Enter a whole number.",
+    "marks": 2,
+    "answer": 53,
+    "working": "4 × 14 − 3 = 53"
+  },
+  {
+    "text": "A rectangle has an area of 126 square metres and a width of 9 m. What is its length in metres? Enter a whole number.",
+    "marks": 2,
+    "answer": 14,
+    "working": "126 ÷ 9 = 14"
+  },
+  {
+    "text": "A rectangular floor is 8 m long and 6 m wide. A mat covers 15 square metres. How many square metres of floor are uncovered? Enter a whole number.",
+    "marks": 2,
+    "answer": 33,
+    "working": "8 × 6 − 15 = 33"
+  },
+  {
+    "text": "A triangular sign has a base of 16 cm and a perpendicular height of 7 cm. What is its area in square centimetres? Enter a whole number.",
+    "marks": 2,
+    "answer": 56,
+    "working": "16 × 7 ÷ 2 = 56"
+  },
+  {
+    "text": "A rectangular carton has inside dimensions of 12 cm by 8 cm by 5 cm. How many cubic centimetres can it hold? Enter a whole number.",
+    "marks": 2,
+    "answer": 480,
+    "working": "12 × 8 × 5 = 480"
+  },
+  {
+    "text": "A rectangular tray has a volume of 360 cubic centimetres. Its base is 12 cm long and 6 cm wide. How many centimetres high is it? Enter a whole number.",
+    "marks": 2,
+    "answer": 5,
+    "working": "360 ÷ (12 × 6) = 5"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -7450,11 +7799,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? (questions === test04 || questions === standard6Test04)
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05 || questions === standard6Test06
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test05 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test04 || questions === standard6Test06 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -7492,7 +7841,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6]]) {
+ for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6], ['S606', '06', standard6Test06, 6]]) {
    const testTitle = 'Standard ' + standard + ' Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
