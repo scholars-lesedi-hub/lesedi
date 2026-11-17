@@ -3073,7 +3073,7 @@ $('renewalInterest').onchange=async event=>{
   function add(parent,tag,text){
    const item=doc.createElement(tag);item.textContent=text;parent.append(item);return item;
   }
-  add(doc.head,'style','@page{margin:18mm 18mm 25mm}body{font:12pt/1.45 Arial,sans-serif;color:#111;max-width:780px;margin:24px auto;padding:0 12px}h1{font-size:20pt}h2{font-size:13pt}article{break-inside:avoid;margin:18px 0}p,li{white-space:pre-wrap}.answer-line{border-bottom:1px solid #888;height:20px}@media print{button{display:none}body{margin:0;padding:0}.st-print-credit{display:block;position:fixed;bottom:-14mm;left:0;right:0;border-top:1px solid #777;padding-top:2mm;font-size:9pt;line-height:1.2;overflow-wrap:anywhere}}.st-print-credit{margin:0}');
+  add(doc.head,'style','@page{margin:18mm 18mm 25mm;@bottom-left{content:"Education Lesedi Scholars Hub | A platform by Lesedi Platforms";font:9pt Arial,sans-serif;color:#333}@bottom-right{content:"Page " counter(page);font:9pt Arial,sans-serif;color:#333}}body{font:12pt/1.45 Arial,sans-serif;color:#111;max-width:780px;margin:24px auto;padding:0 12px}h1{font-size:20pt}h2{font-size:13pt}article{break-inside:avoid;margin:18px 0}p,li{white-space:pre-wrap}.answer-line{border-bottom:1px solid #888;height:20px}@media print{button{display:none}body{margin:0;padding:0}.st-print-credit{display:block;position:fixed;bottom:-7mm;left:0;right:0;font-size:9pt;line-height:1.2;overflow-wrap:anywhere}}.st-print-credit{margin:0}');
   add(doc.body,'button','Print / Save as PDF').onclick=()=>win.print();
   const metadata=[paper.subject,paper.level,paper.year,paper.minutes+' minutes',paper.marks+' marks'].join(' · ');
   add(doc.body,'footer','Prepared by '+creator).className='st-print-credit';
@@ -3336,11 +3336,10 @@ if ('serviceWorker' in navigator) {
   body.ready-test-printing > :not(#readyTestPrint) { display: none !important; }
   body.ready-test-printing { background: white !important; color: black !important; }
   body.ready-test-printing > #readyTestPrint { display: block !important; color: black; }
-  @page ready-test { margin: 18mm 18mm 25mm; }
+  @page ready-test { margin: 18mm 18mm 25mm; @bottom-left{content:"Education Lesedi Scholars Hub | A platform by Lesedi Platforms";font:9pt Arial,sans-serif;color:#333}@bottom-right{content:"Page " counter(page);font:9pt Arial,sans-serif;color:#333} }
   #readyTestPrint { page: ready-test; }
   .ready-print-cover { break-after: page; min-height: 215mm; display: flex; flex-direction: column; }
   .ready-print-cover img { display: block; width: 30mm; height: auto; margin-top: auto; }
-  .ready-print-credit { position: fixed; bottom: -14mm; left: 0; right: 0; border-top: 1px solid #777; padding-top: 2mm; font-size: 9pt; line-height: 1.2; }
   #readyTestPrint li { break-inside: avoid; }
   #readyTestPrint h3 { break-after: avoid; }
 }
@@ -3450,10 +3449,7 @@ if ('serviceWorker' in navigator) {
    cover.prepend(credit);
    const logo = document.querySelector('.hero-art.lesedi-logo img');
    if (logo) cover.append(logo.cloneNode(false));
-   const footer = document.createElement('footer');
-   footer.className = 'ready-print-credit';
-   footer.textContent = credit.textContent;
-   paper.append(footer, cover);
+   paper.append(cover);
    const sections = testKey === "5-03" || testKey === "5-04" || testKey === "5-05" || testKey === "5-06" || testKey === "5-07" || testKey === "5-08" || testKey === "6-01" || testKey === "6-02" || testKey === "6-03" || testKey === "6-04" || testKey === "6-05" || testKey === "6-06" || testKey === "7-01" || testKey === "7-02" || testKey === "7-03" || testKey === "7-04" || testKey === "7-05" || testKey === "7-06" || testKey === "7-07" || testKey === "7-08" ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
