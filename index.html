@@ -376,6 +376,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrint05" class="btn outline">Print Test</button>
     <button type="button" id="readyGuide05" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 5 Mathematics · Ready-Made Test 06</h3>
+    <p>Mixed revision · 30 questions · 40 marks</p>
+    <button type="button" id="readyAnswer06" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrint06" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuide06" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -4608,6 +4615,288 @@ if ('serviceWorker' in navigator) {
     "working": "Count the values 3, 2, 2, 4 and 3"
   }
 ];
+ const test06 = [
+  {
+    "text": "What is the value of the digit 6 in 46,205?",
+    "marks": 1,
+    "options": [
+      "60",
+      "600",
+      "6,000",
+      "60,000"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Round 783 to the nearest 10.",
+    "marks": 1,
+    "options": [
+      "780",
+      "790",
+      "800",
+      "700"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which number is a factor of 28?",
+    "marks": 1,
+    "options": [
+      "3",
+      "6",
+      "8",
+      "7"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which of these is a prime number?",
+    "marks": 1,
+    "options": [
+      "15",
+      "17",
+      "21",
+      "27"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 24 × 6?",
+    "marks": 1,
+    "options": [
+      "124",
+      "144",
+      "134",
+      "164"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is 84 ÷ 7?",
+    "marks": 1,
+    "options": [
+      "11",
+      "13",
+      "12",
+      "14"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which fraction is equivalent to 2/3?",
+    "marks": 1,
+    "options": [
+      "3/4",
+      "2/6",
+      "5/6",
+      "4/6"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is 3/8 of 24?",
+    "marks": 1,
+    "options": [
+      "9",
+      "8",
+      "12",
+      "6"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which decimal is smallest?",
+    "marks": 1,
+    "options": [
+      "0.26",
+      "0.62",
+      "0.06",
+      "0.6"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 0.35 + 0.40?",
+    "marks": 1,
+    "options": [
+      "0.39",
+      "0.45",
+      "0.70",
+      "0.75"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "How many grams are in 3 kg?",
+    "marks": 1,
+    "options": [
+      "300",
+      "3,000",
+      "30,000",
+      "30"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "How many centimetres are in 4 m 8 cm?",
+    "marks": 1,
+    "options": [
+      "408",
+      "48",
+      "480",
+      "4,008"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "How many minutes pass from 10:45 to 11:15?",
+    "marks": 1,
+    "options": [
+      "15",
+      "20",
+      "45",
+      "30"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "You pay P20 for an item costing P13.75. What change should you get?",
+    "marks": 1,
+    "options": [
+      "P5.25",
+      "P6.25",
+      "P7.75",
+      "P6.75"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "How many sides does a hexagon have?",
+    "marks": 1,
+    "options": [
+      "5",
+      "8",
+      "6",
+      "7"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the area of a rectangle 7 cm long and 4 cm wide?",
+    "marks": 1,
+    "options": [
+      "28 cm²",
+      "22 cm²",
+      "11 cm²",
+      "24 cm²"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What comes next in 12, 19, 26, 33, …?",
+    "marks": 1,
+    "options": [
+      "36",
+      "38",
+      "39",
+      "40"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "A rule triples a number and then adds 2. What output does it give for 4?",
+    "marks": 1,
+    "options": [
+      "12",
+      "14",
+      "18",
+      "10"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "A pictograph uses one star for 5 books. How many books do 7 stars show?",
+    "marks": 1,
+    "options": [
+      "30",
+      "25",
+      "35",
+      "40"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "A survey shows 14 learners chose mangoes and 9 chose apples. How many more chose mangoes?",
+    "marks": 1,
+    "options": [
+      "5",
+      "4",
+      "6",
+      "23"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "A school ordered 8 boxes of 125 pencils. It handed out 365 pencils. How many pencils remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 635,
+    "working": "8 × 125 − 365 = 635"
+  },
+  {
+    "text": "Find the lowest common multiple of 6 and 8. Enter a whole number.",
+    "marks": 2,
+    "answer": 24,
+    "working": "The first shared positive multiple is 24"
+  },
+  {
+    "text": "A class has 36 learners. Two thirds joined the reading club. How many joined? Enter a whole number.",
+    "marks": 2,
+    "answer": 24,
+    "working": "36 ÷ 3 × 2 = 24"
+  },
+  {
+    "text": "How many hundredths are in 0.83? Enter a whole number.",
+    "marks": 2,
+    "answer": 83,
+    "working": "0.83 = 83/100"
+  },
+  {
+    "text": "A bucket holds 3 L. It contains 1,850 mL of water. How many more millilitres will fill it? Enter a whole number.",
+    "marks": 2,
+    "answer": 1150,
+    "working": "3,000 − 1,850 = 1,150 mL"
+  },
+  {
+    "text": "A bus leaves at 07:50 and arrives at 09:05. How many minutes does the journey take? Enter a whole number.",
+    "marks": 2,
+    "answer": 75,
+    "working": "10 + 60 + 5 = 75 minutes"
+  },
+  {
+    "text": "Three notebooks cost P6 each. How many pula in change do you get from P50? Enter a whole number.",
+    "marks": 2,
+    "answer": 32,
+    "working": "50 − 3 × 6 = P32"
+  },
+  {
+    "text": "A rectangular playground is 18 m long and 9 m wide. What is its perimeter in metres? Enter a whole number.",
+    "marks": 2,
+    "answer": 54,
+    "working": "2 × (18 + 9) = 54 m"
+  },
+  {
+    "text": "A pattern starts at 11 and increases by 4 each time. What is the ninth term? Enter a whole number.",
+    "marks": 2,
+    "answer": 43,
+    "working": "11 + 8 × 4 = 43"
+  },
+  {
+    "text": "A library lent 17 books on Monday, 24 on Tuesday and 19 on Wednesday. How many did it lend altogether? Enter a whole number.",
+    "marks": 2,
+    "answer": 60,
+    "working": "17 + 24 + 19 = 60"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions.reduce((sum, q) => sum + q.marks, 0);
@@ -4698,11 +4987,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total + ' marks</p>' + (guide
      ? questions === test04
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05
+       : questions === test05 || questions === test06
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, 30, 'Follow the instructions for each answer.']
    ] : [
@@ -4740,7 +5029,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05]]) {
+ for (const [suffix, number, test] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06]]) {
    const testTitle = 'Standard 5 Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
