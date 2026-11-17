@@ -474,6 +474,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrintS705" class="btn outline">Print Test</button>
     <button type="button" id="readyGuideS705" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 7 Mathematics · Ready-Made Test 06</h3>
+    <p>Measurement and time · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswerS706" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrintS706" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuideS706" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -9133,6 +9140,348 @@ if ('serviceWorker' in navigator) {
     "working": "60 × 38 ÷ 24 = 95"
   }
 ];
+ const standard7Test06 = [
+  {
+    "text": "Convert 4.085 km to metres.",
+    "options": [
+      "408.5",
+      "4085",
+      "40850",
+      "4058"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "Convert 0.325 m to millimetres.",
+    "options": [
+      "325",
+      "32.5",
+      "3250",
+      "0.325"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "Which is the shortest length?",
+    "options": [
+      "74 cm",
+      "735 mm",
+      "0.8 m",
+      "0.72 m"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "Convert 5 kg 45 g to grams.",
+    "options": [
+      "5450",
+      "545",
+      "5045",
+      "50045"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "Which amount equals 2.075 L?",
+    "options": [
+      "2750 mL",
+      "275 mL",
+      "2075 mL",
+      "20075 mL"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "How many litres are in 850 mL?",
+    "options": [
+      "8.5",
+      "0.85",
+      "0.085",
+      "85"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "What is 19:48 on a 12-hour clock?",
+    "options": [
+      "7:48 p.m.",
+      "9:48 p.m.",
+      "7:48 a.m.",
+      "9:48 a.m."
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "What is 12:35 a.m. on a 24-hour clock?",
+    "options": [
+      "12:35",
+      "23:35",
+      "13:35",
+      "00:35"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "How many seconds are in 4 minutes 25 seconds?",
+    "options": [
+      "245",
+      "425",
+      "285",
+      "265"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "How long is it from 23:38 to 00:14 the next day?",
+    "options": [
+      "24 min",
+      "46 min",
+      "36 min",
+      "76 min"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "A clinic opens at 07:45 and closes at 16:15. How long is it open?",
+    "options": [
+      "9 h 30 min",
+      "8 h 30 min",
+      "8 h 15 min",
+      "7 h 30 min"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "A bus departs at 09:52 and arrives at 11:17. How long does it travel?",
+    "options": [
+      "85 min",
+      "75 min",
+      "95 min",
+      "65 min"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "What is the perimeter of a rectangle measuring 18 m by 7 m?",
+    "options": [
+      "50 m",
+      "25 m",
+      "126 m",
+      "36 m"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "What is the area of a triangle with base 15 cm and perpendicular height 8 cm?",
+    "options": [
+      "120 cm²",
+      "46 cm²",
+      "23 cm²",
+      "60 cm²"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "What is the volume of a cuboid measuring 9 cm by 6 cm by 4 cm?",
+    "options": [
+      "108 cm³",
+      "54 cm³",
+      "216 cm³",
+      "152 cm³"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "Which unit best measures the volume of a small solid block?",
+    "options": [
+      "square centimetres",
+      "cubic centimetres",
+      "centimetres",
+      "grams"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "A square has perimeter 52 cm. What is its area?",
+    "options": [
+      "104 cm²",
+      "169 cm²",
+      "676 cm²",
+      "156 cm²"
+    ],
+    "answer": 1,
+    "marks": 1
+  },
+  {
+    "text": "A rectangular plot has area 156 m² and length 13 m. What is its width?",
+    "options": [
+      "12 m",
+      "14 m",
+      "78 m",
+      "143 m"
+    ],
+    "answer": 0,
+    "marks": 1
+  },
+  {
+    "text": "The temperature rises from −3°C to 8°C. By how many degrees does it rise?",
+    "options": [
+      "5°C",
+      "8°C",
+      "3°C",
+      "11°C"
+    ],
+    "answer": 3,
+    "marks": 1
+  },
+  {
+    "text": "What capacity equals 1,000 cm³?",
+    "options": [
+      "10 L",
+      "100 L",
+      "1 L",
+      "0.1 L"
+    ],
+    "answer": 2,
+    "marks": 1
+  },
+  {
+    "text": "A 6.25 km route includes 2,875 m of gravel road. How many metres of the route are not gravel? Enter a whole number.",
+    "answer": 3375,
+    "marks": 2,
+    "working": "6250 − 2875 = 3375"
+  },
+  {
+    "text": "A roll contains 12 m of ribbon. Eight pieces of 65 cm each are cut off. How many centimetres remain? Enter a whole number.",
+    "answer": 680,
+    "marks": 2,
+    "working": "1200 − 8 × 65 = 680"
+  },
+  {
+    "text": "A parcel holds three bags weighing 1.275 kg each. What is the total mass in grams? Enter a whole number.",
+    "answer": 3825,
+    "marks": 2,
+    "working": "3 × 1275 = 3825"
+  },
+  {
+    "text": "A shop divides 7.56 kg of rice into 12 equal bags. How many grams are in one bag? Enter a whole number.",
+    "answer": 630,
+    "marks": 2,
+    "working": "7560 ÷ 12 = 630"
+  },
+  {
+    "text": "A drum contains 18.4 L of water. Seven bottles of 850 mL each are filled from it. How many millilitres remain? Enter a whole number.",
+    "answer": 12450,
+    "marks": 2,
+    "working": "18400 − 7 × 850 = 12450"
+  },
+  {
+    "text": "How many full 375 mL bottles can be filled with 9 L of juice? Enter a whole number.",
+    "answer": 24,
+    "marks": 2,
+    "working": "9000 ÷ 375 = 24"
+  },
+  {
+    "text": "A temperature rises from −7°C to 12°C. By how many degrees does it rise? Enter a whole number.",
+    "answer": 19,
+    "marks": 2,
+    "working": "12 − ( − 7) = 19"
+  },
+  {
+    "text": "A bus timetable shows departure at 08:35, a stop at 10:12 and arrival at 11:06. How many minutes pass between departure and arrival, including the stop? Enter a whole number.",
+    "answer": 151,
+    "marks": 2,
+    "working": "11 × 60 + 6 − (8 × 60 + 35) = 151"
+  },
+  {
+    "text": "A train leaves at 21:47 and arrives at 01:23 the next day. How many minutes does the journey take? Enter a whole number.",
+    "answer": 216,
+    "marks": 2,
+    "working": "133 + 83 = 216"
+  },
+  {
+    "text": "A programme ends at 18:12 and ran for 95 minutes. Write the start time as four digits on a 24-hour clock, for example 1545 for 15:45. Enter a whole number.",
+    "answer": 1637,
+    "marks": 2,
+    "working": "18:12 minus 95 minutes is 16:37."
+  },
+  {
+    "text": "A timetable shows departure at 13:20. The bus leaves 17 minutes late and the trip takes 48 minutes. Write the arrival time as four digits, for example 1545 for 15:45. Enter a whole number.",
+    "answer": 1425,
+    "marks": 2,
+    "working": "13:20 + 17 minutes + 48 minutes = 14:25."
+  },
+  {
+    "text": "A school runs four 42-minute lessons with a seven-minute break between each pair. How many minutes pass from the first lesson's start to the last lesson's end? Enter a whole number.",
+    "answer": 189,
+    "marks": 2,
+    "working": "4 × 42 + 3 × 7 = 189"
+  },
+  {
+    "text": "How many minutes are in 2 days and 3 hours? Enter a whole number.",
+    "answer": 3060,
+    "marks": 2,
+    "working": "2 × 24 × 60 + 3 × 60 = 3060"
+  },
+  {
+    "text": "A rectangular yard is 24 m long and 17 m wide. A gate leaves a 4 m gap. How many metres of fencing are needed? Enter a whole number.",
+    "answer": 78,
+    "marks": 2,
+    "working": "2 × (24 + 17) − 4 = 78"
+  },
+  {
+    "text": "A floor is 15 m by 8 m. A mat covers 18 square metres. How many square metres remain uncovered? Enter a whole number.",
+    "answer": 102,
+    "marks": 2,
+    "working": "15 × 8 − 18 = 102"
+  },
+  {
+    "text": "A triangle has an area of 72 square centimetres and a base of 18 cm. What is its perpendicular height in centimetres? Enter a whole number.",
+    "answer": 8,
+    "marks": 2,
+    "working": "2 × 72 ÷ 18 = 8"
+  },
+  {
+    "text": "A wall consists of a 12 m by 3 m rectangle topped by a triangle with base 12 m and perpendicular height 2 m. What is the total area in square metres? Enter a whole number.",
+    "answer": 48,
+    "marks": 2,
+    "working": "12 × 3 + 12 × 2 ÷ 2 = 48"
+  },
+  {
+    "text": "A cuboid has an inside volume of 960 cubic centimetres. Its base is 16 cm long and 10 cm wide. How many centimetres deep is it? Enter a whole number.",
+    "answer": 6,
+    "marks": 2,
+    "working": "960 ÷ (16 × 10) = 6"
+  },
+  {
+    "text": "A container measures 30 cm by 20 cm by 15 cm inside. How many litres can it hold when full? Enter a whole number.",
+    "answer": 9,
+    "marks": 2,
+    "working": "30 × 20 × 15 ÷ 1000 = 9"
+  },
+  {
+    "text": "A square garden covers 225 square metres. How many metres of fencing are needed around all four sides? Enter a whole number.",
+    "answer": 60,
+    "marks": 2,
+    "working": "15 × 15 = 225, so the perimeter is 4 × 15 = 60 m."
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -9223,11 +9572,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? (questions === test04 || questions === standard6Test04 || questions === standard7Test04)
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03 || questions === standard7Test05
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test05 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03 || questions === standard7Test05 || questions === standard7Test06
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test04 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03 || questions === standard7Test04 || questions === standard7Test05 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 || questions === standard6Test04 || questions === standard6Test04 || questions === standard6Test06 || questions === standard7Test01 || questions === standard7Test02 || questions === standard7Test03 || questions === standard7Test04 || questions === standard7Test05 || questions === standard7Test06 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -9265,7 +9614,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6], ['S606', '06', standard6Test06, 6], ['S701', '01', standard7Test01, 7], ['S702', '02', standard7Test02, 7], ['S703', '03', standard7Test03, 7], ['S704', '04', standard7Test04, 7], ['S705', '05', standard7Test05, 7]]) {
+ for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6], ['S604', '04', standard6Test04, 6], ['S605', '05', standard6Test05, 6], ['S606', '06', standard6Test06, 6], ['S701', '01', standard7Test01, 7], ['S702', '02', standard7Test02, 7], ['S703', '03', standard7Test03, 7], ['S704', '04', standard7Test04, 7], ['S705', '05', standard7Test05, 7], ['S706', '06', standard7Test06, 7]]) {
    const testTitle = 'Standard ' + standard + ' Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
