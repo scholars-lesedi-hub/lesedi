@@ -411,6 +411,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button type="button" id="readyPrintS602" class="btn outline">Print Test</button>
     <button type="button" id="readyGuideS602" class="btn outline">Marking Guide</button>
   </article>
+  <article class="card">
+    <h3>Standard 6 Mathematics · Ready-Made Test 03</h3>
+    <p>Whole numbers and operations · 40 questions · 60 marks</p>
+    <button type="button" id="readyAnswerS603" class="btn primary">Answer Digitally</button>
+    <button type="button" id="readyPrintS603" class="btn outline">Print Test</button>
+    <button type="button" id="readyGuideS603" class="btn outline">Marking Guide</button>
+  </article>
   <div class="card" id="readyTestRunner"></div>
 </section>
 <section class="page" id="botswana-exams">
@@ -6293,6 +6300,348 @@ if ('serviceWorker' in navigator) {
     "working": "14 ÷ 50 × 100 = 28%"
   }
 ];
+ const standard6Test03 = [
+  {
+    "text": "What is the value of 7 in 674,308?",
+    "marks": 1,
+    "options": [
+      "7,000",
+      "70,000",
+      "700",
+      "700,000"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What number is 300,000 + 40,000 + 900 + 5?",
+    "marks": 1,
+    "options": [
+      "340,905",
+      "340,095",
+      "304,905",
+      "349,005"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Round 57,862 to the nearest thousand.",
+    "marks": 1,
+    "options": [
+      "57,000",
+      "57,900",
+      "60,000",
+      "58,000"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Round 143,672 to the nearest ten thousand.",
+    "marks": 1,
+    "options": [
+      "144,000",
+      "150,000",
+      "140,000",
+      "143,000"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Which number is greatest?",
+    "marks": 1,
+    "options": [
+      "406,071",
+      "400,761",
+      "406,701",
+      "406,107"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What number is 10,000 more than 281,650?",
+    "marks": 1,
+    "options": [
+      "281,750",
+      "291,650",
+      "282,650",
+      "381,650"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Which number is a multiple of 12?",
+    "marks": 1,
+    "options": [
+      "84",
+      "68",
+      "74",
+      "94"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Which number is a factor of 72?",
+    "marks": 1,
+    "options": [
+      "5",
+      "7",
+      "11",
+      "9"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which number is prime?",
+    "marks": 1,
+    "options": [
+      "27",
+      "33",
+      "39",
+      "29"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which number is divisible by both 5 and 9?",
+    "marks": 1,
+    "options": [
+      "125",
+      "108",
+      "135",
+      "145"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is the greatest common factor of 28 and 42?",
+    "marks": 1,
+    "options": [
+      "7",
+      "14",
+      "21",
+      "28"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the least common multiple of 6 and 14?",
+    "marks": 1,
+    "options": [
+      "42",
+      "14",
+      "28",
+      "84"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 4,706 + 2,895?",
+    "marks": 1,
+    "options": [
+      "7,601",
+      "7,501",
+      "7,591",
+      "7,701"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "What is 8,000 − 3,756?",
+    "marks": 1,
+    "options": [
+      "4,254",
+      "4,344",
+      "5,244",
+      "4,244"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "What is 34 × 25?",
+    "marks": 1,
+    "options": [
+      "750",
+      "825",
+      "850",
+      "875"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "What is 1,152 ÷ 16?",
+    "marks": 1,
+    "options": [
+      "62",
+      "72",
+      "70",
+      "74"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "What is the remainder when 127 is divided by 12?",
+    "marks": 1,
+    "options": [
+      "5",
+      "7",
+      "10",
+      "11"
+    ],
+    "answer": 1
+  },
+  {
+    "text": "Work out 48 − 6 × 5.",
+    "marks": 1,
+    "options": [
+      "18",
+      "30",
+      "42",
+      "210"
+    ],
+    "answer": 0
+  },
+  {
+    "text": "Work out (72 − 24) ÷ 8.",
+    "marks": 1,
+    "options": [
+      "8",
+      "9",
+      "12",
+      "6"
+    ],
+    "answer": 3
+  },
+  {
+    "text": "Which is closest to the product of 49 and 21?",
+    "marks": 1,
+    "options": [
+      "700",
+      "1,500",
+      "1,000",
+      "2,000"
+    ],
+    "answer": 2
+  },
+  {
+    "text": "Round 784,561 to the nearest hundred. Enter a whole number.",
+    "marks": 2,
+    "answer": 784600,
+    "working": "The tens digit is 6, so round up to 784,600."
+  },
+  {
+    "text": "How much greater is 512,840 than 498,265? Enter a whole number.",
+    "marks": 2,
+    "answer": 14575,
+    "working": "512,840 − 498,265 = 14,575"
+  },
+  {
+    "text": "A library has 12,680 books and receives 3,749 more. How many does it now have? Enter a whole number.",
+    "marks": 2,
+    "answer": 16429,
+    "working": "12,680 + 3,749 = 16,429"
+  },
+  {
+    "text": "A warehouse had 25,000 bags and shipped 17,865. How many remain? Enter a whole number.",
+    "marks": 2,
+    "answer": 7135,
+    "working": "25,000 − 17,865 = 7,135"
+  },
+  {
+    "text": "A printing shop produces 248 sheets each hour. How many sheets does it produce in 36 hours? Enter a whole number.",
+    "marks": 2,
+    "answer": 8928,
+    "working": "248 × 36 = 8,928"
+  },
+  {
+    "text": "Share 3,744 exercise books equally among 26 classes. How many does each class receive? Enter a whole number.",
+    "marks": 2,
+    "answer": 144,
+    "working": "3,744 ÷ 26 = 144"
+  },
+  {
+    "text": "Pack 587 oranges into boxes that hold 24 each. How many full boxes can be packed? Enter a whole number.",
+    "marks": 2,
+    "answer": 24,
+    "working": "587 = 24 × 24 + 11, so 24 full boxes."
+  },
+  {
+    "text": "A bus seats 45 passengers. What is the fewest number of buses needed for 386 passengers? Enter a whole number.",
+    "marks": 2,
+    "answer": 9,
+    "working": "386 = 8 × 45 + 26, so 9 buses are needed."
+  },
+  {
+    "text": "Find the greatest common factor of 36 and 54. Enter a whole number.",
+    "marks": 2,
+    "answer": 18,
+    "working": "The largest common factor is 18."
+  },
+  {
+    "text": "Find the least common multiple of 15 and 24. Enter a whole number.",
+    "marks": 2,
+    "answer": 120,
+    "working": "120 = 15 × 8 = 24 × 5, the first shared positive multiple."
+  },
+  {
+    "text": "What is the smallest multiple of 7 greater than 100? Enter a whole number.",
+    "marks": 2,
+    "answer": 105,
+    "working": "98 < 100 < 105, so the next multiple is 105."
+  },
+  {
+    "text": "Work out 84 ÷ 7 + 6 × 9. Enter a whole number.",
+    "marks": 2,
+    "answer": 66,
+    "working": "12 + 54 = 66"
+  },
+  {
+    "text": "Work out 144 ÷ (18 − 6) × 4. Enter a whole number.",
+    "marks": 2,
+    "answer": 48,
+    "working": "144 ÷ 12 × 4 = 48"
+  },
+  {
+    "text": "Work out 210 − (36 + 24) × 2. Enter a whole number.",
+    "marks": 2,
+    "answer": 90,
+    "working": "210 − 60 × 2 = 90"
+  },
+  {
+    "text": "Estimate 397 × 62 by rounding 397 to the nearest hundred and 62 to the nearest ten. Enter a whole number.",
+    "marks": 2,
+    "answer": 24000,
+    "working": "400 × 60 = 24,000"
+  },
+  {
+    "text": "A team planted 18 rows of 35 seedlings. Later, 47 seedlings failed to grow. How many survived? Enter a whole number.",
+    "marks": 2,
+    "answer": 583,
+    "working": "18 × 35 − 47 = 583"
+  },
+  {
+    "text": "One bell rings every 14 minutes and another every 21 minutes. They ring together now. How many minutes until they next ring together? Enter a whole number.",
+    "marks": 2,
+    "answer": 42,
+    "working": "The least common multiple of 14 and 21 is 42."
+  },
+  {
+    "text": "A shop sold 27 bags on each of 16 days and 32 bags on each of the next 5 days. How many bags did it sell altogether? Enter a whole number.",
+    "marks": 2,
+    "answer": 592,
+    "working": "432 + 160 = 592"
+  },
+  {
+    "text": "A school has 960 pencils. It keeps 120 and shares the rest equally among 14 classes. How many does each class receive? Enter a whole number.",
+    "marks": 2,
+    "answer": 60,
+    "working": "(960 − 120) ÷ 14 = 60"
+  },
+  {
+    "text": "What number must be multiplied by 28 to give 1,764? Enter a whole number.",
+    "marks": 2,
+    "answer": 63,
+    "working": "1,764 ÷ 28 = 63"
+  }
+];
  let questions = test01;
  let title = 'Standard 5 Mathematics · Ready-Made Test 01';
  const total = questions => questions.reduce((sum, q) => sum + q.marks, 0);
@@ -6383,11 +6732,11 @@ if ('serviceWorker' in navigator) {
    paper.innerHTML = '<h1>' + title + '</h1><h2>' + (guide ? 'Marking Guide' : 'Question Paper') + '</h2><p>Total: ' + total(questions) + ' marks</p>' + (guide
      ? questions === test04
        ? '<p>Award full marks for each correct answer. Accept equivalent fractions and decimals with trailing zeros.</p>'
-       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02
+       : questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03
          ? '<p>Award full marks for each correct final answer.</p>'
          : '<p>Award full marks for each correct final answer or complete list. Accept lists in any order and numbers with or without thousands separators.</p>'
      : '<p>Name: ____________________ Date: __________</p><p>Answer all questions.</p>');
-   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 ? [
+   const sections = questions === test03 || questions === test04 || questions === test05 || questions === test06 || questions === test07 || questions === test08 || questions === standard6Test01 || questions === standard6Test02 || questions === standard6Test03 ? [
      ['A · Multiple choice', 0, 20, 'Choose one answer per question.'],
      ['B · Short answers', 20, questions.length, 'Follow the instructions for each answer.']
    ] : [
@@ -6425,7 +6774,7 @@ if ('serviceWorker' in navigator) {
    document.body.classList.add('ready-test-printing');
    try { window.print(); } finally { document.body.classList.remove('ready-test-printing'); }
  }
- for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6]]) {
+ for (const [suffix, number, test, standard = 5] of [['', '01', test01], ['02', '02', test02], ['03', '03', test03], ['04', '04', test04], ['05', '05', test05], ['06', '06', test06], ['07', '07', test07], ['08', '08', test08], ['S601', '01', standard6Test01, 6], ['S602', '02', standard6Test02, 6], ['S603', '03', standard6Test03, 6]]) {
    const testTitle = 'Standard ' + standard + ' Mathematics · Ready-Made Test ' + number;
    document.getElementById('readyAnswer' + suffix).onclick = () => {
      questions = test;
