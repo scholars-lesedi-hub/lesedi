@@ -244,14 +244,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   </div>
 </section>
 
-<section class="page" id="lesson"><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><p><button type="button" class="btn primary" id="applySyllabus">Use topic and outcomes</button></p></div></details>
+<section class="page" id="lesson"><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><p><button type="button" class="btn primary" id="applySyllabus">Load syllabus objectives</button></p><label class="field" id="lpObjectiveField" hidden>Objective<select id="lpObjective"></select></label></div></details>
   <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable teaching plan using your topic or extracted document.</p></div></div>
   <div class="card">
     <div class="two-col">
-      <div class="field"><label>Duration</label><select id="lpDuration"><option>40 minutes</option><option>60 minutes</option><option>80 minutes</option><option>Double period</option><option>Other / flexible</option></select></div>
+      <div class="field"><label>Duration</label><select id="lpDuration"><option>30 minutes</option><option selected>40 minutes</option><option>60 minutes</option><option>80 minutes</option><option>Double period</option><option>Other / flexible</option></select></div>
       <div class="field"><label>Class size</label><input id="lpSize" type="number" min="1" placeholder="e.g. 35"></div>
     </div>
-    <p id="lpSyllabusSummary" class="notice" hidden></p>
+    <div id="lpSyllabusSummary" class="notice" style="white-space:pre-wrap" hidden></div><p><button id="lpCustom" type="button" class="btn outline" hidden>Switch to custom plan</button></p><label class="field">Classroom needs or materials (optional)<input id="lpContext" placeholder="e.g. Paper and pencils, no projector"></label>
     <details id="lpManualFields" open><summary>Lesson details and learning outcomes</summary>
     <div class="two-col"><div class="field"><label>Lesson topic</label><input id="lpTopic" placeholder="e.g. Photosynthesis"></div>
       <div class="field"><label>Education level</label><select id="lpLevel"><option>Pre-primary</option><option>Primary (Standards 1–7)</option><option>Junior secondary (Forms 1–3)</option><option>Senior secondary (Forms 4–5)</option><option>Adult education</option><option>Technical and vocational</option><option>Tertiary education</option><option>Teacher development</option><option>Special and inclusive education</option></select></div>
@@ -849,7 +849,7 @@ function renderNotesBank(){
      if(page==='lesson'){
       $('lpSubject').value=note.subject;$('lpClass').value=note.level;
       $('lpLevel').value=Number(first.standard)===8?'Junior secondary (Forms 1–3)':'Primary (Standards 1–7)';$('lpSource').value='';
-      $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
+      setLessonObjective(null);$('lpManualFields').open=true;
       generatePlan();
      }
      if(page==='resources')makeResource();
@@ -1084,15 +1084,40 @@ async function saveDocument(){
  if(!content){showToast('There is no extracted text to save.');return}
  if(await saveCloudResource('docs',{title,content}))showToast('Document saved to your cloud library.');
 }
-function generatePlan(){
+let lessonObjective=null;
+function setLessonObjective(reference){
+ lessonObjective=reference;
+ const summary=$('lpSyllabusSummary');
+ summary.textContent=reference ? reference.code+' — '+reference.wording : '';
+ summary.hidden=!reference;
+ $('lpCustom').hidden=!reference;
+ for(const id of ['lpTopic','lpSubject','lpClass']) $(id).readOnly=Boolean(reference);
+ $('lpLevel').disabled=Boolean(reference);
+}
+$('lpCustom').onclick=()=>{
+ setLessonObjective(null);
+ $('lpObjectiveField').hidden=true;
+ $('lpManualFields').open=true;
+};
+function applyLessonObjective(row){
+ $('lpTopic').value=row.topic;
+ $('lpSubject').value=row.subject;
+ $('lpClass').value=syllabusClassLabel(row.standard);
+ $('lpLevel').value=Number(row.standard)===8?'Junior secondary (Forms 1–3)':'Primary (Standards 1–7)';
+ $('lpOutcomes').value='';
+ setLessonObjective({code:row.code,wording:row.objective??row.outcome});
+ $('lpManualFields').open=false;
+}
+function generatePlan(savedSections){
  const topic=$('lpTopic').value.trim();if(!topic){showToast('Enter a lesson topic first.');return}
- const data={topic,level:$('lpLevel').value,subject:$('lpSubject').value,className:$('lpClass').value,duration:$('lpDuration').value,size:$('lpSize').value,outcomes:$('lpOutcomes').value,source:$('lpSource').value};
+ const data={topic,level:$('lpLevel').value,subject:$('lpSubject').value,className:$('lpClass').value,duration:$('lpDuration').value,size:$('lpSize').value,outcomes:$('lpOutcomes').value,source:$('lpSource').value,context:$('lpContext').value,reference:lessonObjective};
  const source=data.source.trim();
- const objectives=data.outcomes.trim()||'By the end of the lesson, learners should be able to:\n• Explain the main ideas of '+topic+'.\n• Apply the concept to an appropriate example.\n• Demonstrate understanding through a learning activity.';
+ const objectives=data.outcomes.trim()||(data.reference?'Use the syllabus objective above.':null)||'By the end of the lesson, learners should be able to:\n• Explain the main ideas of '+topic+'.\n• Apply the concept to an appropriate example.\n• Demonstrate understanding through a learning activity.';
  const html=`<div class="lesson-output" id="printLesson"><div style="text-align:center;border-bottom:2px solid #2457c5;padding-bottom:12px"><div class="eyebrow" style="color:#2457c5">Education Lesedi Scholars Hub</div><h2>LESSON PLAN: ${escapeHTML(topic.toUpperCase())}</h2><b>${escapeHTML(data.level)} • ${escapeHTML(data.subject||'Subject not specified')}</b><p class="small muted">${escapeHTML(data.className||'Class not specified')} | ${escapeHTML(data.duration)} | Class size: ${escapeHTML(data.size||'Not specified')} | ${new Date().toLocaleDateString()}</p></div>
+ ${data.reference?`<div class="lesson-block"><h4>Botswana syllabus reference</h4><p style="white-space:pre-wrap">${escapeHTML(data.reference.code)} — ${escapeHTML(data.reference.wording)}</p></div>`: ''}
  <div class="lesson-block"><h4>1. Learning outcomes</h4><div>${escapeHTML(objectives).replace(/\n/g,'<br>')}</div></div>
  <div class="lesson-block"><h4>2. Prior knowledge</h4><p>Identify what learners already know about ${escapeHTML(topic)}. Use short oral questions or a quick starter activity.</p></div>
- <div class="lesson-block"><h4>3. Teaching and learning resources</h4><p>Relevant textbook or syllabus, board or display, learner notebooks, examples and any source document supplied by the teacher.</p></div>
+ <div class="lesson-block"><h4>3. Teaching and learning resources</h4><p>Relevant textbook or syllabus, board or display, learner notebooks, examples and any source document supplied by the teacher.${data.context.trim()?' Classroom notes: '+escapeHTML(data.context):''}</p></div>
  <div class="lesson-block"><h4>4. Lesson development</h4><p><b>Introduction:</b> Introduce the topic and connect it to prior knowledge.</p><p><b>Teacher modelling:</b> Explain the key ideas using examples drawn from the approved teaching material.</p><p><b>Guided practice:</b> Work through an example with the class and check understanding.</p><p><b>Independent or group activity:</b> Learners complete a task related to ${escapeHTML(topic)}.</p><p><b>Conclusion:</b> Recap the main learning points and address misconceptions.</p></div>
  <div class="lesson-block"><h4>5. Assessment for learning</h4><p>Use oral questions, observation, learner explanations and a short written task. Record learners who need additional support.</p></div>
  <div class="lesson-block"><h4>6. Differentiation and inclusion</h4><p>Provide additional scaffolding and worked examples where needed. Extend learning with a more challenging application task. Adapt resources and response methods to learner needs.</p></div>
@@ -1100,10 +1125,26 @@ function generatePlan(){
  ${source?`<div class="lesson-block"><h4>8. Source material supplied</h4><p class="small">The following source text was provided. Check it and align the lesson with the official syllabus before teaching.</p><div class="preview">${escapeHTML(source.slice(0,5000))}</div></div>`:''}
  <p class="small muted">Draft for teacher review. Confirm curriculum alignment, accuracy, timings and suitability before use.</p>
  <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"><button class="btn primary" onclick="window.print()">Print / Save PDF</button><button class="btn outline" onclick="saveCurrentPlan()">Save plan</button></div></div>`;
- $('lessonResult').innerHTML=html;window.currentPlan={...data,html,date:new Date().toLocaleString()};}
+ $('lessonResult').innerHTML=html;
+ const editable=$('lessonResult').querySelectorAll('.lesson-block:nth-of-type(n) > h4');
+ const sections=[...editable].filter(heading=>/^[1-7]\./.test(heading.textContent));
+ sections.forEach((heading,index)=>{
+  const body=document.createElement('div');
+  const parts=[...heading.parentElement.children].slice(1);
+  body.textContent=savedSections?.[index]??parts.map(part=>part.innerText).join('\n');
+  body.style.whiteSpace='pre-wrap';
+  body.contentEditable='plaintext-only';
+  body.setAttribute('role','textbox');
+  body.setAttribute('aria-label',heading.textContent);
+  body.dataset.lessonSection='';
+  parts.forEach(part=>part.remove());
+  heading.after(body);
+ });
+ window.currentPlan={...data,html,date:new Date().toLocaleString()};}
 async function saveCurrentPlan(){
  if(!window.currentPlan){showToast('Create a plan first.');return}
  const {html,date,...plan}=window.currentPlan;
+ plan.sections=[...$('lessonResult').querySelectorAll('[data-lesson-section]')].map(section=>section.innerText);
  if(await saveCloudResource('plans',plan))showToast('Lesson plan saved to your cloud library.');
 }
 function renderPlans(){const a=store.get('plans');$('savedPlans').innerHTML=a.length?a.map((p,i)=>`<div class="list-item"><div><b>${escapeHTML(p.topic)}</b><div class="small muted">${escapeHTML(p.level)} • ${escapeHTML(p.date)}</div></div><button class="btn outline" onclick="openSavedPlan(${i})">View</button></div>`).join(''):'No plans saved on this device yet.'}
@@ -1111,9 +1152,10 @@ function openSavedPlan(i){
  $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
  const p=store.get('plans')[i];
  if(!p)return;
- const fields={lpTopic:'topic',lpLevel:'level',lpSubject:'subject',lpClass:'className',lpDuration:'duration',lpSize:'size',lpOutcomes:'outcomes',lpSource:'source'};
+ const fields={lpTopic:'topic',lpLevel:'level',lpSubject:'subject',lpClass:'className',lpDuration:'duration',lpSize:'size',lpOutcomes:'outcomes',lpSource:'source',lpContext:'context'};
  for(const [field,key] of Object.entries(fields))$(field).value=typeof p[key]==='string'?p[key]:'';
- generatePlan();go('lesson');
+ setLessonObjective(p.reference||null);
+ generatePlan(p.sections);go('lesson');
 }
 
 let schemeSyllabusRows=[],schemeSelectedRows=[],schemeSyllabusRequest=0;
@@ -1198,7 +1240,10 @@ function buildScheme(){
    $('lpTopic').value=selectedTopic;$('lpSubject').value=subject;$('lpClass').value=standard;
    $('lpOutcomes').value=tr.cells[2].innerText.trim();
    if(/^Standard [1-7]$/.test(standard))$('lpLevel').value='Primary (Standards 1–7)';
-   $('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true;
+   setLessonObjective(null);
+   offerLessonObjectives(matching.filter(row=>row.topic===selectedTopic));
+   if(!$('lpObjectiveField').hidden)$('syllabusPicker').open=true;
+   else $('lpManualFields').open=true;
    go('lesson');
   };
   actions.append(button);tr.append(actions);body.append(tr);
@@ -2558,6 +2603,13 @@ async function uploadDocumentToCloud(){
 })();
 </script>
 <script>
+function offerLessonObjectives(rows){
+ const select=$('lpObjective');
+ select.replaceChildren(...rows.map((row,index)=>new Option(row.code+' — '+(row.objective??row.outcome),String(index))));
+ $('lpObjectiveField').hidden=!rows.length;
+ select.onchange=()=>applyLessonObjective(rows[Number(select.value)]);
+ if(rows.length)applyLessonObjective(rows[0]);
+}
 (() => {
  const picker=$('syllabusPicker'),status=$('syllabusStatus'),fields=$('syllabusFields');
  const standard=$('syllabusStandard'),subject=$('syllabusSubject'),topic=$('syllabusTopic');
@@ -2607,20 +2659,11 @@ async function uploadDocumentToCloud(){
   const {data:chosen,error}=await lesediAuthClient.rpc('lesedi_syllabus_plan',{p_standard:Number(standard.value),p_subject:subject.value,p_topic:topic.value});
   if(call!==request||cloudUser?.id!==user.id)return;
   if(error||!chosen?.length){status.textContent='No lesson draft is available for this topic.';return}
-  const first=chosen[0];
-  $('lpTopic').value=first.topic;
-  $('lpSubject').value=first.subject;
-  $('lpClass').value=syllabusClassLabel(first.standard);
-  $('lpLevel').value='Primary (Standards 1–7)';
-  $('lpOutcomes').value=chosen.map(row=>row.code+' '+row.outcome).join('\n');
-  const summary=$('lpSyllabusSummary');
-  summary.textContent=syllabusClassLabel(first.standard)+' · '+first.subject+' · '+first.topic+' · '+chosen.length+' learning outcome(s) loaded';
-  summary.hidden=false;
-  $('lpManualFields').open=false;
-  status.textContent='Outcomes added. Set the duration and class size, then create the lesson plan.';
+  offerLessonObjectives(chosen);
+  status.textContent='Choose an objective, set the duration and class size, then create the lesson plan.';
   $('lpDuration').focus();
  };
- document.addEventListener('lesedi-syllabus-signout',()=>{clear();picker.open=false;$('lpSyllabusSummary').hidden=true;$('lpManualFields').open=true});
+ document.addEventListener('lesedi-syllabus-signout',()=>{clear();picker.open=false;offerLessonObjectives([]);setLessonObjective(null);$('lpManualFields').open=true});
 })();
 </script><script>
 let communityRole=null,communityRequest=0,forumThread=null;
