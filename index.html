@@ -88,7 +88,34 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 #bankResults{grid-column:1/-1;margin:0}
 @media(max-width:640px){.bank-options,.bank-filters{grid-template-columns:1fr}}
 </style>
-<style>#lesediBack[hidden]{display:none!important}</style></head>
+<style>#lesediBack[hidden]{display:none!important}</style><style>
+#home .hero{padding:clamp(18px,3vw,36px);border-radius:20px;gap:18px}
+#home .hero>div:first-child{width:100%;min-width:0}
+#home .hero h2{max-width:24ch;font-size:clamp(1.55rem,3vw,2.45rem);line-height:1.12;margin:10px 0}
+#home .hero p{max-width:62ch;margin-bottom:0}
+#home .hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+#home .hero-actions .btn{order:0;min-width:0;width:100%;min-height:54px;padding:10px 12px;font-size:.96rem;line-height:1.25;justify-content:center;text-align:center}
+#home .hero-actions .hero-writing small{font-size:.77rem}
+#home .hero-art.lesedi-logo{width:min(100%,140px)}
+#home .stats{gap:12px;margin:16px 0 24px}
+#home>.tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:18px}
+#home>.tiles .tile{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;min-height:0;height:100%;padding:16px}
+#home>.tiles .tile h3{font-size:1rem;line-height:1.25}
+#home>.tiles .tile p{font-size:.9rem;line-height:1.45;margin-bottom:0}
+#home .section-head h2{font-size:clamp(1.25rem,2vw,1.65rem)}
+#education-levels{margin:20px 0;border-radius:16px;padding:20px 14px!important}
+#education-levels .level-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,146px),1fr));gap:12px;max-width:1100px;margin:auto}
+#education-levels .level-grid>div{display:flex;flex-direction:column;align-items:center;padding:14px!important}
+#education-levels .level-grid h3{font-size:1rem;margin:0}
+#education-levels .level-grid p{font-size:.88rem;line-height:1.4}
+#education-levels .level-grid .btn{margin-top:auto}
+#home button:focus-visible{outline:3px solid #5578bd;outline-offset:3px}
+#home .hero-actions .btn:focus-visible{outline-color:white}
+@media(min-width:1180px){#home .hero-actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:540px){#home>.tiles{grid-template-columns:1fr}}
+@media(max-width:360px){#home .hero-actions{grid-template-columns:1fr}}
+</style>
+</head>
 <body>
 <header>
 <button type="button" class="btn light no-print" id="lesediBack" hidden>← Back</button>
@@ -138,7 +165,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <div class="stat"><div class="number">8</div><small>Education pathways</small></div>
     <div class="stat"><div class="number">24/7</div><small>Access to your workspace</small></div>
   </div>
-  <div class="section-head"><div><h2>What would you like to create?</h2><p>Choose a tool to get started.</p></div></div>
+  <div class="section-head"><div><h2>What would you like to create?</h2></div></div>
   <div class="tiles">
     <button type="button" class="tile" onclick="go('convert')"><div class="tile-icon">📄</div><h3>Softcopy Converter</h3><p>Extract text from PDFs, Word files, text files, and clear photos. Check the extracted text against the original.</p></button>
     <button type="button" class="tile" onclick="go('exam')"><div class="tile-icon">🧠</div><h3>Create examinations</h3><p>Create multiple-choice, short-answer, and list questions. Set accepted answers and marks, then share an exam that scores automatically.</p></button>
@@ -150,7 +177,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <h3>Choose Your Education Level</h3>
 <p>Learn, practise and take digital examinations.</p>
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1100px;margin:auto;">
+<div class="level-grid">
 
 <div style="background:white;padding:25px;border-radius:12px;">
 <h3>Pre-Primary Education</h3>
