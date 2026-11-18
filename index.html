@@ -2645,7 +2645,16 @@ async function refreshCommunity(page){
   if(request!==communityRequest||cloudUser?.id!==user.id)return;
   if(access.error)throw access.error;
   communityRole=access.data?.role??null;
-  if(!isFeedback&&!communityRole){panel.hidden=true;status.textContent='This forum is for approved professionals.';return}
+  let forumAccess;
+  if(!isFeedback){
+   panel.hidden=true;
+   const membership=await lesediAuthClient.rpc('lesedi_forum_membership');
+   if(request!==communityRequest||cloudUser?.id!==user.id)return;
+   if(membership.error)throw membership.error;
+   forumAccess=membership.data;
+   if(forumAccess==='none'){status.textContent='An active trial or subscription is needed to read the forum.';return}
+   $('forumNew').hidden=forumAccess!=='member';
+  }
   panel.hidden=false;
   if(isFeedback){
    const admin=communityRole==='admin',select=$('feedbackCustomer');
@@ -2678,7 +2687,9 @@ async function refreshCommunity(page){
     button.onclick=()=>{if(forumThread!==row.id)$('forumDiscussion').replaceChildren();forumThread=row.id;refreshCommunity(page)};
     if(communityRole==='admin')addForumDelete(card,'lesedi_forum_threads',row.id);
    }
-   status.textContent=data.length?'Choose a discussion or start a new one.':'No discussions yet.';
+   status.textContent=forumAccess==='member'
+    ? 'Your active subscription automatically lets you start discussions and reply.'
+    : 'Trial access: you can read discussions. 🔒 Members - Subscribe to unlock posting and replies.';
    const discussion=$('forumDiscussion');
    const selected=data.find(row=>row.id===forumThread);
    if(!selected){discussion.replaceChildren();return}
@@ -2692,6 +2703,7 @@ async function refreshCommunity(page){
     communityText(discussion,'p',row.body);
     if(communityRole==='admin')addForumDelete(discussion,'lesedi_forum_replies',row.id);
    }
+   if(forumAccess!=='member')return;
    const form=document.createElement('form');
    const label=communityText(form,'label','Reply');
    const input=document.createElement('textarea');input.required=true;input.maxLength=2000;input.value=existing;label.append(input);
@@ -2715,7 +2727,9 @@ async function communityInsert(table,record,page,inputs,button){
  if(!user||!record.body)return;
  button.disabled=true;
  try{
-  const {error}=await lesediAuthClient.from(table).insert(record);
+  const {error}=page==='professional-forum'
+   ? await lesediAuthClient.rpc('lesedi_post_forum_message',{p_title:record.title??null,p_thread_id:record.thread_id==null?null:String(record.thread_id),p_body:record.body})
+   : await lesediAuthClient.from(table).insert(record);
   if(cloudUser?.id!==user.id)return;
   if(error)throw error;
   inputs.forEach(input=>input.value='');
