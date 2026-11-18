@@ -4196,7 +4196,7 @@ function printGardenExam(key){
  add('footer','© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com');
  gardenExamQuestions.forEach((q,i)=>{
   if(i===0||i===20)add('h2',i===0?'Section A · 40 marks':'Section B · STEAM · 20 marks');
-  const block=add('div','');add('h4',(i+1)+'. '+q.text+' [2]',block);
+  const block=add('div','');block.style.breakInside='avoid';add('h4',(i+1)+'. '+q.text+' [2]',block);
   if(key)add('p','Answer '+('ABCD'[q.answer])+': '+q.options[q.answer]+' · Reference '+q.ref,block);
   else q.options.forEach((option,j)=>add('p','ABCD'[j]+'. '+option,block));
  });
@@ -4253,7 +4253,7 @@ function printLightingExam(key){
  add('footer','© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com');
  lightingExamQuestions.forEach((q,i)=>{
   if(i===0||i===20)add('h2',i===0?'Section A · 40 marks':'Section B · STEAM · 20 marks');
-  const block=add('div','');add('h4',(i+1)+'. '+q.text+' [2]',block);
+  const block=add('div','');block.style.breakInside='avoid';add('h4',(i+1)+'. '+q.text+' [2]',block);
   if(key)add('p','Answer '+('ABCD'[q.answer])+': '+q.options[q.answer]+' · Reference '+q.ref,block);
   else q.options.forEach((option,j)=>add('p','ABCD'[j]+'. '+option,block));
  });
@@ -4310,7 +4310,7 @@ function printGardenMaths(key){
  add('footer','© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com');
  gardenMathsQuestions.forEach((q,i)=>{
   if(i===0||i===20)add('h2',i===0?'Section A · 40 marks':'Section B · STEAM · 20 marks');
-  const block=add('div','');add('h4',(i+1)+'. '+q.text+' [2]',block);
+  const block=add('div','');block.style.breakInside='avoid';add('h4',(i+1)+'. '+q.text+' [2]',block);
   if(key)add('p','Answer '+('ABCD'[q.answer])+': '+q.options[q.answer]+' · Reference '+q.ref,block);
   else q.options.forEach((option,j)=>add('p','ABCD'[j]+'. '+option,block));
  });
@@ -4370,7 +4370,7 @@ function printLevelSteam(key){
  add('footer','© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com');
  levelSteamQuestions.forEach((q,i)=>{
   if(i===0||i===5)add('h2',i===0?'Section A · 10 marks':'Section B · STEAM · 10 marks');
-  const block=add('div','');add('h4',(i+1)+'. '+q.text+' [2]',block);
+  const block=add('div','');block.style.breakInside='avoid';add('h4',(i+1)+'. '+q.text+' [2]',block);
   if(key)add('p','Answer '+('ABCD'[q.answer])+': '+q.options[q.answer],block);
   else q.options.forEach((option,j)=>add('p','ABCD'[j]+'. '+option,block));
  });
@@ -4430,7 +4430,7 @@ function printScienceSteam(key){
  add('footer','© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com');
  scienceSteamQuestions.forEach((q,i)=>{
   if(i===0||i===3)add('h2',i===0?'Section A · 6 marks':'Section B · STEAM · 14 marks');
-  const block=add('div','');add('h4',(i+1)+'. '+q.text+' [2]',block);
+  const block=add('div','');block.style.breakInside='avoid';add('h4',(i+1)+'. '+q.text+' [2]',block);
   if(key)add('p','Answer '+('ABCD'[q.answer])+': '+q.options[q.answer],block);
   else q.options.forEach((option,j)=>add('p','ABCD'[j]+'. '+option,block));
  });
@@ -4438,5 +4438,40 @@ function printScienceSteam(key){
  win.print();
 }
 document.addEventListener('lesedi-syllabus-signout',()=>{scienceSteamAnswers=[];for(const id of ['scienceSteamRunner','scienceSteamRunnerBank'])document.getElementById(id)?.replaceChildren()});
+</script><script>
+(function(){
+ const footerCSS="@media print{\nfooter,.lesedi-print-footer-suppressed{display:none!important}\nh1,h2,h3,h4{break-after:avoid}\n}\n@page {margin-bottom:25mm;\n@bottom-left{content:none}\n@bottom-center{content:\"\u00a9 2026 Lesedi Platforms (Pty) Ltd. \u00b7 Education Lesedi Scholars Hub \u00b7 educationlesedihub.com\";font:8pt Arial,sans-serif;color:#333}\n@bottom-right{content:\"Page \" counter(page);font:8pt Arial,sans-serif;color:#333}\n}\n@page lesedi-resource{margin-bottom:25mm;\n@bottom-left{content:none}\n@bottom-center{content:\"\u00a9 2026 Lesedi Platforms (Pty) Ltd. \u00b7 Education Lesedi Scholars Hub \u00b7 educationlesedihub.com\";font:8pt Arial,sans-serif;color:#333}\n@bottom-right{content:\"Page \" counter(page);font:8pt Arial,sans-serif;color:#333}\n}\n@page ready-test{margin-bottom:25mm;\n@bottom-left{content:none}\n@bottom-center{content:\"\u00a9 2026 Lesedi Platforms (Pty) Ltd. \u00b7 Education Lesedi Scholars Hub \u00b7 educationlesedihub.com\";font:8pt Arial,sans-serif;color:#333}\n@bottom-right{content:\"Page \" counter(page);font:8pt Arial,sans-serif;color:#333}\n}\n";
+ function preparePrint(target){
+  try{
+   const doc=target.document;
+   doc.getElementById('lesedi-shared-print-footer')?.remove();
+   const style=doc.createElement('style');
+   style.id='lesedi-shared-print-footer';
+   style.textContent=footerCSS;
+   doc.head.append(style);
+   for(const el of doc.querySelectorAll('body *')){
+    if(el.children.length||!el.textContent.includes('©'))continue;
+    const position=target.getComputedStyle(el).position;
+    if(position==='fixed'||position==='absolute')el.classList.add('lesedi-print-footer-suppressed');
+   }
+  }catch(error){console.warn('Print layout could not be prepared.',error)}
+ }
+ function install(target){
+  const nativePrint=target.print.bind(target);
+  target.print=function(){preparePrint(target);return nativePrint()};
+  target.addEventListener('beforeprint',()=>preparePrint(target));
+ }
+ install(window);
+ const nativeOpen=window.open.bind(window);
+ window.open=function(...args){
+  const child=nativeOpen(...args);
+  if(child){
+   try{
+    if(child.location.href==='about:blank'||child.location.origin===location.origin)install(child);
+   }catch(error){/* Cross-origin windows retain their own print handling. */}
+  }
+  return child;
+ };
+})();
 </script></body>
 </html>
