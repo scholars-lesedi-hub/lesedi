@@ -260,6 +260,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <div class="field"><label>Learning outcomes / curriculum requirements (optional)</label><textarea id="lpOutcomes" placeholder="Paste the relevant syllabus outcomes or learning objectives."></textarea></div>
     <div class="field"><label>Source content (optional — from your converted document)</label><textarea id="lpSource" placeholder="Paste notes or extracted source content here."></textarea></div>
     </details>
+    <button type="button" class="btn outline" onclick="openQuickExercises(true)">Find a class exercise</button>
     <button class="btn primary" onclick="generatePlan()">Create editable lesson plan</button>
   </div>
   <div id="lessonResult" style="margin-top:16px"></div>
@@ -271,6 +272,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <div class="card">
     <div class="scheme-controls">
       <div class="actions no-print" style="margin-bottom:12px">
+        <button type="button" class="btn outline" onclick="openQuickExercises()">Quick Class Exercises</button>
         <button type="button" class="btn outline" onclick="go('lesson')">Create a Lesson Plan</button>
       </div>
     <details id="schemeSyllabus"><summary><strong>Create from syllabus</strong></summary>
@@ -379,6 +381,21 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </div>
 </section>
 
+<section class="page" id="quick-exercises">
+ <div class="section-head"><div><h2>Quick Class Exercises</h2><p>Original, ready-to-print activities for a short class lesson or revision.</p></div></div>
+ <div class="card">
+  <label class="field">Class <select><option>Standard 2</option></select></label>
+  <label class="field">Subject <select><option>Mathematics</option></select></label>
+  <label class="field">Topic <select><option>Fractions</option></select></label>
+  <p>Skill: Identify and work with halves and quarters.</p>
+  <p id="quickObjective" hidden></p>
+  <label class="field">Exercise <select id="quickVersion" onchange="showQuickExercise()"><option value="0">A · Class practice</option><option value="1">B · Revision</option></select></label>
+  <div id="quickPreview"></div>
+  <button type="button" class="btn primary" onclick="printQuickExercise(false)">Print learner copy</button>
+  <button type="button" class="btn outline" onclick="printQuickExercise(true)">Print answer key</button>
+  <button type="button" class="btn outline" id="requestQuickExercise">Request a class exercise</button>
+ </div>
+</section>
 <section class="page" id="resources">
   <div class="section-head"><div><h2>Teaching Resources Studio</h2><p>Prepare classroom materials from your topic and source notes.</p></div></div>
   <div class="card"><div class="resource-controls">
@@ -1084,6 +1101,62 @@ async function saveDocument(){
  if(!content){showToast('There is no extracted text to save.');return}
  if(await saveCloudResource('docs',{title,content}))showToast('Document saved to your cloud library.');
 }
+const quickExercises=[
+ [
+  ['Draw a rectangle. Divide it into two equal parts and shade one half.','One of two equal parts is shaded.'],
+  ['Draw a square. Divide it into four equal parts and shade one quarter.','One of four equal parts is shaded.'],
+  ['Share 8 counters equally between 2 learners. How many does each learner get?','4 counters.'],
+  ['Share 8 counters equally among 4 learners. How many does each learner get?','2 counters.'],
+  ['A cake is cut into four equal pieces. What fraction of the cake is one piece?','One quarter (¼).']
+ ],
+ [
+  ['Draw a square. Divide it into two equal parts and shade one half.','One of two equal parts is shaded.'],
+  ['Draw a rectangle. Divide it into four equal parts and shade one quarter.','One of four equal parts is shaded.'],
+  ['Sipho shares 6 oranges equally between 2 baskets. How many oranges go in each basket?','3 oranges.'],
+  ['Tebogo shares 12 beads equally among 4 cups. How many beads go in each cup?','3 beads.'],
+  ['A sandwich is cut into two equal pieces. What fraction of the sandwich is one piece?','One half (½).']
+ ]
+];
+let quickLesson=null;
+function openQuickExercises(fromLesson=false){
+ quickLesson=fromLesson?{grade:$('lpClass').value,subject:$('lpSubject').value,topic:$('lpTopic').value,reference:lessonObjective}:null;
+ const note=$('quickObjective');
+ const matches=quickLesson&&/^standard\s*2$/i.test(quickLesson.grade)&&/^math(?:ematics|s)?$/i.test(quickLesson.subject)&&/fraction|halves|quarters/i.test(quickLesson.topic);
+ note.hidden=!quickLesson;
+ note.textContent=quickLesson?(matches?'Suggested for your lesson: ':'Current bank has Standard 2 fractions. Request an exercise for your lesson: ')+[quickLesson.grade,quickLesson.subject,quickLesson.topic,quickLesson.reference?.code,quickLesson.reference?.wording].filter(Boolean).join(' · '):'';
+ go('quick-exercises');
+}
+function quickRequestText(){
+ return ['Grade: '+(quickLesson?.grade||''),'Subject: '+(quickLesson?.subject||''),'Topic: '+(quickLesson?.topic||''),'Objective: '+[quickLesson?.reference?.code,quickLesson?.reference?.wording].filter(Boolean).join(' — ')].join('\n');
+}
+function quickExerciseHTML(key,preview=false){
+ const version=Number($('quickVersion').value);
+ const items=quickExercises[version];
+ return '<h2>Fractions · '+(version?'B · Revision':'A · Class practice')+'</h2><p>Standard 2 Mathematics · 10 minutes · '+items.length+' marks</p>'+
+ (key?'<h3>Teacher answer key</h3>':preview?'':'<p>Name: __________________________ &nbsp; Date: ____________</p>')+
+ '<ol>'+items.map(([question,answer])=>'<li><p>'+escapeHTML(question)+' [1]</p>'+
+ (key?'<p><strong>'+escapeHTML(answer)+'</strong></p>':preview?'<details><summary>Show answer</summary><p>'+escapeHTML(answer)+'</p></details>':'<div class="answer-space"></div>')+'</li>').join('')+'</ol>';
+}
+function showQuickExercise(){
+ $('quickPreview').innerHTML=quickExerciseHTML(false,true);
+}
+function printQuickExercise(key){
+ const sheet=window.open('','_blank');
+ if(!sheet){showToast('Allow pop-ups to open the printable exercise.');return}
+ sheet.opener=null;
+ sheet.document.title='Lesedi Quick Class Exercise';
+ const css=sheet.document.createElement('style');
+ css.textContent='@page{margin:16mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd.";font:9pt Arial}}body{font:12pt Arial,sans-serif;margin:0}li{break-inside:avoid}.answer-space{height:24mm;border-bottom:1px solid #aaa}footer{margin-top:20px;font-size:10pt}';
+ sheet.document.head.append(css);
+ sheet.document.body.innerHTML='<header>Education Lesedi Scholars Hub · By Lesedi Platforms</header>'+quickExerciseHTML(key)+'<footer>© 2026 Lesedi Platforms (Pty) Ltd. · educationlesedihub.com</footer>';
+ sheet.print();
+}
+showQuickExercise();
+document.addEventListener('lesedi-syllabus-signout',()=>{
+ quickLesson=null;
+ $('quickObjective').hidden=true;
+ $('quickObjective').textContent='';
+});
 let lessonObjective=null;
 function setLessonObjective(reference){
  lessonObjective=reference;
@@ -3790,6 +3863,7 @@ if ('serviceWorker' in navigator) {
    button.onclick = () => requestPackage(button.dataset.packageRequest);
  }
  document.getElementById('requestPaymentDetails').onclick = event => requestPackage(paymentPlan, event.currentTarget.dataset.offer);
+ document.getElementById('requestQuickExercise').onclick = () => openRequest('Quick Class Exercise', quickRequestText());
  document.getElementById('requestCustomDigitalTest').onclick = () => openRequest('Custom Digital Test', 'Grade: \nSubject: \nTopic: \nTotal marks: ');
  function render(target, rows, admin) {
    target.replaceChildren();
