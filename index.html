@@ -866,13 +866,42 @@ const store={get(kind){return cloudItems[kind]}};
 
 function openPrintableTest(){
  const panel=$('schemeTest');
- go('scheme');
+ go('scheme','printable');
  panel.open=true;
  const heading=panel.querySelector('summary');
  heading.focus({preventScroll:true});
  requestAnimationFrame(()=>heading.scrollIntoView({block:'start'}));
 }
-function go(id){if(id==='writing-marker')window.dispatchEvent(new Event('lesedi-writing-open'));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===(id==='ready-made-tests'?'test-bank':id)));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id);window.scrollTo({top:0,behavior:'smooth'})}
+function showLesediSection(id){if(id==='writing-marker')window.dispatchEvent(new Event('lesedi-writing-open'));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===(id==='ready-made-tests'?'test-bank':id)));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id)}
+const lesediNavigation = window.history;
+function saveLesediLocation(section, depth, pane = '') {
+ return {...lesediNavigation.state, lesediLocation: {section, depth, pane, scroll: window.scrollY}};
+}
+if (!lesediNavigation.state?.lesediLocation) {
+ lesediNavigation.replaceState(saveLesediLocation(document.querySelector('.page.active').id, 0), '');
+}
+lesediNavigation.scrollRestoration = 'manual';
+function go(id, pane = '') {
+ if (!document.getElementById(id)?.classList.contains('page')) return;
+ const currentSection = document.querySelector('.page.active').id;
+ const current = lesediNavigation.state?.lesediLocation;
+ if (currentSection !== id || (current?.pane || '') !== pane) {
+  const depth = current?.depth || 0;
+  lesediNavigation.replaceState(saveLesediLocation(currentSection, depth, current?.pane), '');
+  lesediNavigation.pushState({...lesediNavigation.state, lesediLocation: {section:id, depth:depth+1, pane, scroll:0}}, '');
+ }
+ showLesediSection(id);
+ window.scrollTo(0, 0);
+}
+window.addEventListener('popstate', event => {
+ const entry = event.state?.lesediLocation;
+ const section = entry?.section || 'home';
+ if (!document.getElementById(section)?.classList.contains('page')) return;
+ showLesediSection(section);
+ if (section === 'scheme') document.getElementById('schemeTest').open = entry?.pane === 'printable';
+ requestAnimationFrame(() => window.scrollTo(0, entry?.scroll || 0));
+});
+
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
 function showToast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>t.style.display='none',3200)}
 
@@ -1965,7 +1994,7 @@ $('recoveryForm').onsubmit=async event=>{
   if(error){status.textContent=error.message;return}
   form.reset();form.hidden=true;recoveryAccount=null;
   const url=new URL(location.href);url.searchParams.delete('reset');url.hash='';
-  history.replaceState(null,'',url);
+  history.replaceState(history.state,'',url);
   const result=await lesediAuthClient.auth.signOut({scope:'local'});
   status.textContent=result.error?'Password updated. Sign out before signing in again.':'Password updated. Sign in with your new password.';
   if(!result.error){go('account');showLoginForm();authMessage('Password updated. Sign in with your new password.')}
@@ -3773,6 +3802,14 @@ if ('serviceWorker' in navigator) {
  for(const field of [curriculum,level,subject,topic]) field.addEventListener('input',filterTests);
  document.getElementById('bankCustomRequest').onclick = () => document.getElementById('requestCustomDigitalTest').click();
  filterTests();
+})();
+</script>
+<script>
+(() => {
+ const entry = history.state?.lesediLocation;
+ if (!entry || entry.section === 'home' || !document.getElementById(entry.section)?.classList.contains('page')) return;
+ showLesediSection(entry.section);
+ if (entry.section === 'scheme' && entry.pane === 'printable') document.getElementById('schemeTest').open = true;
 })();
 </script>
 </body>
