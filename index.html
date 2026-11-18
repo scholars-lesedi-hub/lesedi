@@ -88,9 +88,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 #bankResults{grid-column:1/-1;margin:0}
 @media(max-width:640px){.bank-options,.bank-filters{grid-template-columns:1fr}}
 </style>
-</head>
+<style>#lesediBack[hidden]{display:none!important}</style></head>
 <body>
 <header>
+<button type="button" class="btn light no-print" id="lesediBack" hidden>← Back</button>
   <div class="brand"><div class="brand-mark">✦</div><div><h1>Education Lesedi Scholars Hub</h1><small>tobetsa-digital-answer · tsaya teko ka maranyane</small></div></div>
   <div class="header-actions"><span class="user-pill">Botswana • Learning & Teaching Platform</span><button class="btn outline" onclick="go('account');showLoginForm()">Sign in</button><button class="btn gold" onclick="go('account');showRegisterForm()">Create account</button></div>
 </header>
@@ -874,11 +875,20 @@ function openPrintableTest(){
 }
 function showLesediSection(id){if(id==='writing-marker')window.dispatchEvent(new Event('lesedi-writing-open'));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===(id==='ready-made-tests'?'test-bank':id)));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id)}
 const lesediNavigation = window.history;
+const lesediBack = document.getElementById('lesediBack');
+function lesediSectionFromUrl() {
+ const route = new URLSearchParams(location.search).get('section');
+ return document.getElementById(route)?.classList.contains('page') ? route : 'home';
+}
+function updateLesediBack() {
+ lesediBack.hidden = !(lesediNavigation.state?.lesediLocation?.depth > 0);
+}
+lesediBack.onclick = () => lesediNavigation.back();
 function saveLesediLocation(section, depth, pane = '') {
  return {...lesediNavigation.state, lesediLocation: {section, depth, pane, scroll: window.scrollY}};
 }
 if (!lesediNavigation.state?.lesediLocation) {
- lesediNavigation.replaceState(saveLesediLocation(document.querySelector('.page.active').id, 0), '');
+ lesediNavigation.replaceState(saveLesediLocation(lesediSectionFromUrl(), 0), '');
 }
 lesediNavigation.scrollRestoration = 'manual';
 function go(id, pane = '') {
@@ -888,16 +898,23 @@ function go(id, pane = '') {
  if (currentSection !== id || (current?.pane || '') !== pane) {
   const depth = current?.depth || 0;
   lesediNavigation.replaceState(saveLesediLocation(currentSection, depth, current?.pane), '');
-  lesediNavigation.pushState({...lesediNavigation.state, lesediLocation: {section:id, depth:depth+1, pane, scroll:0}}, '');
+  const url = new URL(location.href);
+  if (id === 'home') url.searchParams.delete('section');
+  else url.searchParams.set('section', id);
+  if (pane) url.searchParams.set('view', pane);
+  else url.searchParams.delete('view');
+  lesediNavigation.pushState({...lesediNavigation.state, lesediLocation: {section:id, depth:depth+1, pane, scroll:0}}, '', url);
  }
  showLesediSection(id);
+ updateLesediBack();
  window.scrollTo(0, 0);
 }
 window.addEventListener('popstate', event => {
  const entry = event.state?.lesediLocation;
- const section = entry?.section || 'home';
+ const section = entry?.section || lesediSectionFromUrl();
  if (!document.getElementById(section)?.classList.contains('page')) return;
  showLesediSection(section);
+ updateLesediBack();
  if (section === 'scheme') document.getElementById('schemeTest').open = entry?.pane === 'printable';
  requestAnimationFrame(() => window.scrollTo(0, entry?.scroll || 0));
 });
@@ -3807,6 +3824,7 @@ if ('serviceWorker' in navigator) {
 <script>
 (() => {
  const entry = history.state?.lesediLocation;
+ updateLesediBack();
  if (!entry || entry.section === 'home' || !document.getElementById(entry.section)?.classList.contains('page')) return;
  showLesediSection(entry.section);
  if (entry.section === 'scheme' && entry.pane === 'printable') document.getElementById('schemeTest').open = true;
