@@ -384,10 +384,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <section class="page" id="quick-exercises">
  <div class="section-head"><div><h2>Quick Class Exercises</h2><p>Original, ready-to-print activities for a short class lesson or revision.</p></div></div>
  <div class="card">
-  <label class="field">Class <select><option>Standard 2</option></select></label>
+  <label class="field">Class <select id="quickGrade" onchange="showQuickTopics()"><option value="1">Standard 1</option><option value="2">Standard 2</option><option value="3">Standard 3</option><option value="4">Standard 4</option><option value="5">Standard 5</option><option value="6">Standard 6</option><option value="7">Standard 7</option></select></label>
   <label class="field">Subject <select><option>Mathematics</option></select></label>
-  <label class="field">Topic <select><option>Fractions</option></select></label>
-  <p>Skill: Identify and work with halves and quarters.</p>
+  <label class="field">Topic <select id="quickTopic" onchange="showQuickExercise()"></select></label>
+  
   <p id="quickObjective" hidden></p>
   <label class="field">Exercise <select id="quickVersion" onchange="showQuickExercise()"><option value="0">A · Class practice</option><option value="1">B · Revision</option></select></label>
   <div id="quickPreview"></div>
@@ -1101,7 +1101,7 @@ async function saveDocument(){
  if(!content){showToast('There is no extracted text to save.');return}
  if(await saveCloudResource('docs',{title,content}))showToast('Document saved to your cloud library.');
 }
-const quickExercises=[
+const halvesAndQuarters=[
  [
   ['Draw a rectangle. Divide it into two equal parts and shade one half.','One of two equal parts is shaded.'],
   ['Draw a square. Divide it into four equal parts and shade one quarter.','One of four equal parts is shaded.'],
@@ -1117,30 +1117,117 @@ const quickExercises=[
   ['A sandwich is cut into two equal pieces. What fraction of the sandwich is one piece?','One half (½).']
  ]
 ];
+function arithmeticVersions(operator, examples, calculate){
+ return examples.map(version=>version.map(([a,b])=>[
+  'Work out '+a+' '+operator+' '+b+'.',String(calculate(a,b))
+ ]));
+}
+const quickBank={
+ 1:{
+  'Addition within 20':arithmeticVersions('+',[
+   [[2,3],[4,5],[6,2],[8,3],[9,5]],[[1,7],[3,6],[7,5],[6,8],[9,8]]
+  ],(a,b)=>a+b),
+  'Subtraction within 20':arithmeticVersions('−',[
+   [[5,2],[8,3],[10,4],[12,3],[16,5]],[[6,4],[9,5],[11,2],[15,6],[18,7]]
+  ],(a,b)=>a-b)
+ },
+ 2:{
+  'Fractions':halvesAndQuarters,
+  'Two-digit addition':arithmeticVersions('+',[
+   [[12,15],[23,14],[35,12],[24,28],[46,17]],[[13,24],[32,15],[43,16],[27,18],[35,26]]
+  ],(a,b)=>a+b)
+ },
+ 3:{
+  'Multiplication':arithmeticVersions('×',[
+   [[2,9],[3,6],[4,7],[5,8],[10,6]],[[2,8],[3,7],[4,9],[5,6],[10,8]]
+  ],(a,b)=>a*b),
+  'Equal sharing':arithmeticVersions('÷',[
+   [[12,2],[18,3],[24,4],[35,5],[60,10]],[[16,2],[21,3],[32,4],[45,5],[80,10]]
+  ],(a,b)=>a/b)
+ },
+ 4:{
+  'Multiplying by 10 and 100':arithmeticVersions('×',[
+   [[7,10],[13,10],[24,10],[6,100],[15,100]],[[8,10],[16,10],[32,10],[9,100],[21,100]]
+  ],(a,b)=>a*b),
+  'Rounding to the nearest 10 and 100':[
+   [[43,10],[77,10],[126,10],[249,100],[578,100]],
+   [[36,10],[84,10],[167,10],[321,100],[683,100]]
+  ].map(version=>version.map(([value,unit])=>[
+   'Round '+value+' to the nearest '+unit+'.',String(Math.round(value/unit)*unit)
+  ]))
+ }
+};
+Object.assign(quickBank,{"5": {"Factors of whole numbers": [[["List all positive factors of 8.", "1, 2, 4, 8"], ["List all positive factors of 10.", "1, 2, 5, 10"], ["List all positive factors of 12.", "1, 2, 3, 4, 6, 12"], ["List all positive factors of 15.", "1, 3, 5, 15"], ["List all positive factors of 18.", "1, 2, 3, 6, 9, 18"]]], "Order of operations": [[["Work out 4 + 2 × 3.", "10"], ["Work out 5 + 3 × 4.", "17"], ["Work out 8 + 2 × 5.", "18"], ["Work out 6 + 4 × 3.", "18"], ["Work out 9 + 5 × 2.", "19"]]]}, "6": {"Fractions of quantities": [[["Find 1/2 of 18.", "9"], ["Find 1/4 of 24.", "6"], ["Find 2/3 of 15.", "10"], ["Find 3/5 of 20.", "12"], ["Find 5/6 of 36.", "30"]]], "Decimal addition": [[["Work out 1.45 + 2.20.", "3.65"], ["Work out 0.72 + 1.79.", "2.51"], ["Work out 3.05 + 2.45.", "5.50"], ["Work out 6.80 + 1.65.", "8.45"], ["Work out 4.14 + 2.97.", "7.11"]]]}, "7": {"Percentages of quantities": [[["Find 10% of 90.", "9"], ["Find 25% of 80.", "20"], ["Find 50% of 134.", "67"], ["Find 20% of 135.", "27"], ["Find 75% of 120.", "90"]]], "Ratio and sharing": [[["Share 18 counters in the ratio 1:2. Give both amounts in order.", "6 and 12"], ["Share 25 counters in the ratio 2:3. Give both amounts in order.", "10 and 15"], ["Share 28 counters in the ratio 3:4. Give both amounts in order.", "12 and 16"], ["Share 42 counters in the ratio 1:5. Give both amounts in order.", "7 and 35"], ["Share 63 counters in the ratio 4:5. Give both amounts in order.", "28 and 35"]]]}});
+let quickProtected=null,quickRequest=0;
+function showQuickTopics(topic){
+ const topics=Object.keys(quickBank[$('quickGrade').value]);
+ const picker=$('quickTopic');
+ picker.replaceChildren(...topics.map(name=>new Option(name,name)));
+ if(topics.includes(topic))picker.value=topic;
+ showQuickExercise();
+}
 let quickLesson=null;
 function openQuickExercises(fromLesson=false){
  quickLesson=fromLesson?{grade:$('lpClass').value,subject:$('lpSubject').value,topic:$('lpTopic').value,reference:lessonObjective}:null;
  const note=$('quickObjective');
- const matches=quickLesson&&/^standard\s*2$/i.test(quickLesson.grade)&&/^math(?:ematics|s)?$/i.test(quickLesson.subject)&&/fraction|halves|quarters/i.test(quickLesson.topic);
+ const grade=quickLesson?.grade.trim().match(/^standard\s*([1-7])$/i)?.[1];
+ const lessonTopic=quickLesson?.topic.trim().toLowerCase();
+ const topic=grade&&Object.keys(quickBank[grade]).find(name=>name.toLowerCase()===lessonTopic);
+ const matches=topic&&/^math(?:ematics|s)?$/i.test(quickLesson.subject.trim());
+ if(matches){
+  $('quickGrade').value=grade;
+  showQuickTopics(topic);
+ }
  note.hidden=!quickLesson;
- note.textContent=quickLesson?(matches?'Suggested for your lesson: ':'Current bank has Standard 2 fractions. Request an exercise for your lesson: ')+[quickLesson.grade,quickLesson.subject,quickLesson.topic,quickLesson.reference?.code,quickLesson.reference?.wording].filter(Boolean).join(' · '):'';
+ note.textContent=quickLesson?(matches?'Suggested by topic: ':'Browse the bank or request an exercise for: ')+[quickLesson.grade,quickLesson.subject,quickLesson.topic,quickLesson.reference?.code,quickLesson.reference?.wording].filter(Boolean).join(' · '):'';
  go('quick-exercises');
 }
 function quickRequestText(){
- return ['Grade: '+(quickLesson?.grade||''),'Subject: '+(quickLesson?.subject||''),'Topic: '+(quickLesson?.topic||''),'Objective: '+[quickLesson?.reference?.code,quickLesson?.reference?.wording].filter(Boolean).join(' — ')].join('\n');
+ return ['Grade: '+(quickLesson?.grade||'Standard '+$('quickGrade').value),'Subject: '+(quickLesson?.subject||'Mathematics'),'Topic: '+(quickLesson?.topic||$('quickTopic').value),'Objective: '+[quickLesson?.reference?.code,quickLesson?.reference?.wording].filter(Boolean).join(' — ')].join('\n');
 }
 function quickExerciseHTML(key,preview=false){
  const version=Number($('quickVersion').value);
- const items=quickExercises[version];
- return '<h2>Fractions · '+(version?'B · Revision':'A · Class practice')+'</h2><p>Standard 2 Mathematics · 10 minutes · '+items.length+' marks</p>'+
+ const grade=$('quickGrade').value,topic=$('quickTopic').value;
+ const items=quickBank[grade][topic][version]??quickProtected;
+ if(!items)return "";
+ return '<h2>'+escapeHTML(topic)+' · '+(version?'B · Revision':'A · Class practice')+'</h2><p>Standard '+grade+' Mathematics · 10 minutes · '+items.length+' marks</p>'+
  (key?'<h3>Teacher answer key</h3>':preview?'':'<p>Name: __________________________ &nbsp; Date: ____________</p>')+
  '<ol>'+items.map(([question,answer])=>'<li><p>'+escapeHTML(question)+' [1]</p>'+
  (key?'<p><strong>'+escapeHTML(answer)+'</strong></p>':preview?'<details><summary>Show answer</summary><p>'+escapeHTML(answer)+'</p></details>':'<div class="answer-space"></div>')+'</li>').join('')+'</ol>';
 }
-function showQuickExercise(){
- $('quickPreview').innerHTML=quickExerciseHTML(false,true);
+async function showQuickExercise(){
+ const request=++quickRequest;
+ quickProtected=null;
+ const grade=$('quickGrade').value,topic=$('quickTopic').value;
+ const restricted=Number(grade)>=5&&$('quickVersion').value==='1';
+ $('quickVersion').options[1].textContent=Number(grade)>=5?'🔒 B · Revision · Members - Subscribe to unlock':'B · Revision';
+ const preview=$('quickPreview');
+ const printButtons=document.querySelectorAll('#quick-exercises button[onclick^="printQuickExercise"]');
+ printButtons.forEach(button=>button.disabled=restricted);
+ if(restricted){
+  preview.textContent='Checking subscription…';
+  const user=cloudUser;
+  if(user){
+   const {data,error}=await lesediAuthClient.rpc('lesedi_quick_revision',{p_key:grade+':'+topic});
+   if(request!==quickRequest||cloudUser?.id!==user.id)return;
+   if(error&&error.code!=='42501'){
+    preview.textContent='Could not load member revision. Contact Lesedi support if this continues.';
+    return;
+   }
+   quickProtected=data;
+  }
+  if(!quickProtected){
+   preview.textContent='🔒 Members - Subscribe to unlock';
+   return;
+  }
+  $('quickVersion').options[1].textContent='B · Revision';
+ }
+ printButtons.forEach(button=>button.disabled=false);
+ preview.innerHTML=quickExerciseHTML(false,true);
 }
 function printQuickExercise(key){
+ const content=quickExerciseHTML(key);
+ if(!content)return;
  const sheet=window.open('','_blank');
  if(!sheet){showToast('Allow pop-ups to open the printable exercise.');return}
  sheet.opener=null;
@@ -1148,12 +1235,14 @@ function printQuickExercise(key){
  const css=sheet.document.createElement('style');
  css.textContent='@page{margin:16mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd.";font:9pt Arial}}body{font:12pt Arial,sans-serif;margin:0}li{break-inside:avoid}.answer-space{height:24mm;border-bottom:1px solid #aaa}footer{margin-top:20px;font-size:10pt}';
  sheet.document.head.append(css);
- sheet.document.body.innerHTML='<header>Education Lesedi Scholars Hub · By Lesedi Platforms</header>'+quickExerciseHTML(key)+'<footer>© 2026 Lesedi Platforms (Pty) Ltd. · educationlesedihub.com</footer>';
+ sheet.document.body.innerHTML='<header>Education Lesedi Scholars Hub · By Lesedi Platforms</header>'+content+'<footer>© 2026 Lesedi Platforms (Pty) Ltd. · educationlesedihub.com</footer>';
  sheet.print();
 }
-showQuickExercise();
+showQuickTopics();
 document.addEventListener('lesedi-syllabus-signout',()=>{
  quickLesson=null;
+ $('quickVersion').value='0';
+ showQuickExercise();
  $('quickObjective').hidden=true;
  $('quickObjective').textContent='';
 });
