@@ -155,7 +155,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <button data-page="account" id="customerAccountNav"><span class="ico">👤</span>Customer Login</button>
     <button data-page="settings"><span class="ico">⚙</span>Platform Setup</button>
   </nav>
-  <div class="aside-foot"><b>Education Lesedi Scholars Hub</b><br>tobetsa-digital-answer · tsaya teko ka maranyane<br><br>Helpdesk<br>educationlesedihelpdesk@gmail.com<br><a href="https://wa.me/26777980825" target="_blank" rel="noopener noreferrer" style="color:inherit">WhatsApp +267 77980825</a><br>WhatsApp Business coming soon: +267 71823638</div>
+  <div class="aside-foot"><b>Education Lesedi Scholars Hub</b><br>tobetsa-digital-answer · tsaya teko ka maranyane<br><br>Helpdesk<br>educationlesedihelpdesk@gmail.com<br><a href="https://wa.me/26777980825" target="_blank" rel="noopener noreferrer" style="color:inherit">WhatsApp +267 77980825</a></div>
 </aside>
 <main>
 <section class="page active" id="home">
@@ -706,8 +706,15 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <p>Use Request Payment Details to confirm the recipient and amount with Lesedi before sending money. Access is activated after the payment is verified.</p>
 <ul><li><strong>Orange Money</strong> · +267 77980825</li><li><strong>Pay to Cell or MyZaka</strong> · +267 71823638</li><li><strong>Visa</strong> · Hosted card checkout is coming soon.</li></ul>
 <p><button type="button" class="btn outline" id="requestPaymentDetails">Request Payment Details</button></p>
-<p>WhatsApp Business coming soon · +267 71823638</p>
-<div id="paymentAccount" hidden><label><input type="checkbox" id="renewalInterest" style="width:auto"> Notify me when automatic Visa renewal is available</label><p id="paymentHistoryStatus" role="status"></p><h4>Verified payments</h4><ul id="paymentHistory"></ul></div></div></section>
+<div class="card" id="bankTransferRequest">
+ <h4>Bank transfer — request details</h4>
+ <p>Prefer to pay by bank transfer? Choose Access Bank Botswana or FNB Botswana and request instructions. Our team will reply through your website inbox. Access is activated after payment is confirmed.</p>
+ <label class="field" for="bankTransferBank">Choose a bank<select id="bankTransferBank"><option value="">Select a bank</option><option value="Access Bank Botswana">Access Bank Botswana</option><option value="FNB Botswana">FNB Botswana</option></select></label>
+ <button type="button" class="btn primary" id="requestBankTransfer">Request bank transfer details</button>
+ <p id="bankTransferStatus" class="small" role="status"></p>
+</div>
+
+<div id="paymentAccount" hidden><p id="paymentHistoryStatus" role="status"></p><h4>Your payment history</h4><ul id="paymentHistory"></ul></div></div></section>
 <section class="page" id="requests">
   <h2>Request help or a resource</h2>
   <p>Request a package, teaching materials, account help, or a digital test on a specific topic. For a custom test, include the grade, subject, topic and total marks.</p>
@@ -3096,12 +3103,13 @@ function updatePaymentLink(){
 function showPackagePayment(plan){
  if(!Object.hasOwn(paymentPlans,plan))return;
  paymentPlan=plan;
+ $('bankTransferStatus').textContent='';
  $('paymentMonths').value='1';
  $('paymentMonths').disabled=plan==='bec-practice';
  updatePaymentLink();go('payments');$('paymentMethods').focus({preventScroll:true});$('paymentMethods').scrollIntoView({block:'start'});
 }
 function clearPaymentHistory(){
- paymentRead++;$('paymentAccount').hidden=true;$('paymentHistory').replaceChildren();$('renewalInterest').checked=false;$('paymentHistoryStatus').textContent='';
+ paymentRead++;$('paymentAccount').hidden=true;$('paymentHistory').replaceChildren();$('paymentHistoryStatus').textContent='';
 }
 async function loadPaymentHistory(){
  const user=cloudUser;
@@ -3111,11 +3119,11 @@ async function loadPaymentHistory(){
  if(read!==paymentRead||cloudUser?.id!==user.id)return;
  const status=$('paymentHistoryStatus'),list=$('paymentHistory');
  $('paymentAccount').hidden=false;
- $('renewalInterest').disabled=!!error;
+
  list.replaceChildren();
  if(error){status.textContent='Payment history is unavailable.';return}
- $('renewalInterest').checked=data.interested;
- status.textContent=data.payments.length?'':'No verified payments yet.';
+
+ status.textContent=data.payments.length?'':'You have no confirmed payments yet. Choose a package and request payment details to get started.';
  for(const row of data.payments){
   const item=document.createElement('li');
   item.textContent=(paymentPlans[row.package]?.[0]||row.package)+' · P'+row.amount_bwp+' · '+row.method+' · '+row.reference+' · Access until '+new Date(row.access_until).toLocaleDateString('en-BW',{timeZone:'Africa/Gaborone'});
@@ -3123,18 +3131,7 @@ async function loadPaymentHistory(){
  }
 }
 $('paymentMonths').onchange=updatePaymentLink;
-$('renewalInterest').onchange=async event=>{
- const user=cloudUser,box=event.currentTarget;
- if(!user)return;
- const chosen=box.checked;
- box.disabled=true;
- try{
-  const {error}=await lesediAuthClient.rpc('lesedi_set_renewal_interest',{p_interested:chosen});
-  if(cloudUser?.id!==user.id)return;
-  if(error){box.checked=!chosen;showToast('Could not save your preference.');return}
-  showToast('Preference saved. No automatic charge has been set up.');
- }finally{box.disabled=false}
-};
+
 </script><style>
 #lesediSampleTest{box-sizing:border-box;width:min(560px,calc(100% - 24px));max-height:calc(100% - 24px);padding:clamp(16px,4vw,32px);border:1px solid #d8e2ef;border-radius:18px;color:#102b5c;background:white}
 #lesediSampleTest::backdrop{background:#0b1930aa}
@@ -4005,6 +4002,25 @@ if ('serviceWorker' in navigator) {
    button.onclick = () => requestPackage(button.dataset.packageRequest);
  }
  document.getElementById('requestPaymentDetails').onclick = event => requestPackage(paymentPlan, event.currentTarget.dataset.offer);
+ document.getElementById('requestBankTransfer').onclick = () => {
+   const status = document.getElementById('bankTransferStatus');
+   const bank = document.getElementById('bankTransferBank').value;
+   const entry = paymentPlans[paymentPlan];
+   if (!entry) {
+     status.textContent = 'Choose Payment options on a package first, then select a bank.';
+     return;
+   }
+   if (!['Access Bank Botswana', 'FNB Botswana'].includes(bank)) {
+     status.textContent = 'Select Access Bank Botswana or FNB Botswana.';
+     document.getElementById('bankTransferBank').focus();
+     return;
+   }
+   updatePaymentLink();
+   const offer = document.getElementById('requestPaymentDetails').dataset.offer;
+   status.textContent = '';
+   openRequest('Package request · ' + entry[0] + ' · Bank transfer · ' + bank,
+     'I would like to pay for ' + entry[0] + ' (' + offer + ') by bank transfer through ' + bank + '. Please send the account holder name, bank details, amount, payment reference and payment confirmation instructions through my website inbox.');
+ };
  document.getElementById('requestQuickExercise').onclick = () => openRequest('Quick Class Exercise', quickRequestText());
  document.getElementById('requestCustomDigitalTest').onclick = () => openRequest('Custom Digital Test', 'Grade: \nSubject: \nTopic: \nTotal marks: ');
  function render(target, rows, admin) {
@@ -4560,4 +4576,5 @@ async function loadScienceSteamAccess(){
 })();
 </script></body>
 </html>
+
 
