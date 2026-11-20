@@ -2283,7 +2283,7 @@ function showSignedInCustomer(user,profile,openDashboard=false){
   button.onclick=()=>go(page);
   actions.append(button);
  });
- $('customerDashboardPending').textContent=pending+' will appear here when the shared database features are connected.';
+ $('customerDashboardPending').textContent='Manage your learning, teaching and assessments here. Use the tools above to access your available activities, saved work and results.';
  $('signInForExam').hidden=true;
  if(pendingExamCode&&!examParams.has('reset')){
   const code=pendingExamCode;
@@ -4729,6 +4729,7 @@ $('manualSearch').addEventListener('input',event=>{
 @media(max-width:720px){#lesediHeaderAccount{width:100%;gap:8px}#lesediHeaderAccount .header-auth-actions{gap:8px}#headerSessionStatus{flex-basis:100%}}
 </style></body>
 </html>
+
 
 
 
