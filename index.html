@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#102b5c">
 <title>Education Lesedi Scholars Hub | tobetsa-digital-answer · tsaya teko ka maranyane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/tesseract.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
@@ -4604,8 +4608,60 @@ $('manualSearch').addEventListener('input',event=>{
  $('manualSearchStatus').textContent=query?(found?found+' guide section(s) found.':'No matching guide sections. Try a different word.'):'';
 });
 </script>
+<style id="lesedi-readable-typography">
+/* Screen typography only: preserve existing printed assessment layout. */
+@media screen {
+ :root{--lesedi-ui-font:'Nunito Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+ body{font-family:var(--lesedi-ui-font);font-size:1.0625rem;line-height:1.65}
+ button,input,select,textarea{font-family:var(--lesedi-ui-font);line-height:1.5}
+ input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),select,textarea{font-size:1.0625rem;min-height:44px}
+ button,.btn{font-size:1rem;line-height:1.45;white-space:normal;overflow-wrap:anywhere}
+ .btn{min-height:44px;padding:11px 17px;font-weight:800}
+ h1,h2,h3,h4,summary{font-family:var(--lesedi-ui-font);line-height:1.3}
+ h1,h2,h3,h4{font-weight:800;overflow-wrap:break-word}
+ .brand h1{font-size:clamp(1.0625rem,1.5vw,1.3125rem);line-height:1.3}
+ .brand small{font-size:.875rem;line-height:1.5;letter-spacing:.02em}
+ .parent-byline{font-size:.875rem;line-height:1.4}
+ .hero h2{font-size:clamp(1.75rem,3.2vw,2.375rem);line-height:1.2}
+ .hero p{font-size:1.0625rem;line-height:1.65}
+ .section-head h2,.page>h2{font-size:clamp(1.5rem,2.3vw,1.875rem)}
+ .card h3,.tile h3,.price-card h3{font-size:1.1875rem;line-height:1.4}
+ h4{font-size:1.0625rem}
+ .section-head p,.tile p{font-size:1rem;line-height:1.6}
+ .field label,label.field,legend{font-size:1rem;font-weight:700;line-height:1.55}
+ .small,.notice,.success,.user-pill,.aside-foot,footer,small{font-size:.875rem;line-height:1.6}
+ .notice,.success{font-size:.9375rem}
+ .pill,.eyebrow{font-size:.8125rem;line-height:1.45}
+ .nav-label{font-size:.8125rem;letter-spacing:.075em}
+ nav button{font-size:1rem;line-height:1.45;padding:12px 13px}
+ .aside-foot{font-size:.875rem}
+ table{font-family:var(--lesedi-ui-font);font-size:1rem;line-height:1.55}
+ th,td{overflow-wrap:break-word}
+ pre{font-size:.9375rem;line-height:1.6}
+ .price{font-size:1.875rem;line-height:1.35}
+ .stat .number{font-size:1.9375rem;line-height:1.3}
+ .hero-actions .btn{font-size:1.125rem;line-height:1.4}
+ .hero-writing small{font-size:.875rem;line-height:1.45}
+ header,.header-actions,.section-head,.actions{flex-wrap:wrap}
+ .brand{min-width:0}.brand>div{min-width:0}
+ .tile,.card,.price-card,.stat{min-width:0}
+ #manualGuides summary{font-size:1.0625rem;line-height:1.5}
+ @media(max-width:720px){
+  body{font-size:1.0625rem}
+  nav button{font-size:.9375rem;line-height:1.45;white-space:nowrap;min-height:44px;padding:10px 12px}
+  .brand h1{font-size:1.0625rem}
+  .header-actions{gap:8px}
+  .header-actions .btn{font-size:.9375rem;padding:9px 12px}
+  .section-head h2,.page>h2{font-size:1.5rem}
+  .hero h2{font-size:1.875rem}
+  .hero-actions .btn{font-size:1.0625rem}
+  .price{font-size:1.75rem}
+ }
+}
+</style>
 </body>
 </html>
+
 
 
 
