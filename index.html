@@ -128,7 +128,11 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <header>
 <button type="button" class="btn light no-print" id="lesediBack" hidden>← Back</button>
   <div class="brand"><div class="brand-mark">✦</div><div><h1>Education Lesedi Scholars Hub <span class="parent-byline">by Lesedi Platforms</span></h1><small>tobetsa-digital-answer · tsaya teko ka maranyane</small></div></div>
-  <div class="header-actions"><span class="user-pill">Botswana • Learning & Teaching Platform</span><button class="btn outline" onclick="go('account');showLoginForm()">Sign in</button><button class="btn gold" onclick="go('account');showRegisterForm()">Create account</button></div>
+  <div class="header-actions" id="lesediHeaderAccount">
+ <span id="headerSessionStatus" class="small" role="status">Checking account…</span>
+ <div id="headerGuestActions" class="header-auth-actions" hidden><button type="button" class="btn outline" onclick="go('account');showLoginForm()">Sign in</button><button type="button" class="btn gold" onclick="go('account');showRegisterForm()">Create account</button></div>
+ <div id="headerMemberActions" class="header-auth-actions" hidden><button type="button" class="btn gold" onclick="go('account')">My Dashboard</button><button type="button" class="btn outline" onclick="signOutCustomer()">Sign out</button></div>
+</div>
 </header>
 <div class="shell">
 <aside>
@@ -653,8 +657,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
  </div>
 </section>
 <section class="page" id="account">
-  <div class="section-head"><div><h2>Customer Account</h2><p>Register or sign in securely using your email address.</p></div><span class="pill">SUPABASE AUTH</span></div>
-  <div class="notice">All customer categories are intended to receive a 30-day free trial. The trial countdown and package access must still be enforced by secure server-side rules; this page does not activate or extend a trial by itself.</div>
+  <div class="section-head"><div><h2 id="accountPageHeading">Customer Account</h2><p id="accountPageDescription">Create an account or sign in to access your workspace.</p></div><span class="pill" id="accountStatePill">Your account</span></div>
+  <div class="notice">Your available tools depend on your account and package. Check My Usage below for your current access, expiry date and remaining allowances.</div>
   <div class="card" id="authPanel">
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><button class="btn primary" type="button" onclick="showLoginForm()">Customer Login</button><button class="btn gold" type="button" onclick="showRegisterForm()">Create Account</button></div>
     <form id="authLoginForm">
@@ -826,6 +830,18 @@ const $=id=>document.getElementById(id);
 const resourceTable='lesedi_private_resources';
 const fileBucket='lesedi-private-files';
 let cloudUser=null;
+
+function updateLesediAccountHeader(user){
+ const signedIn=!!user;
+ $('headerGuestActions').hidden=signedIn;
+ $('headerMemberActions').hidden=!signedIn;
+ $('headerSessionStatus').textContent=signedIn?'Signed in':'Not signed in';
+ $('accountPageHeading').textContent=signedIn?'My Dashboard':'Customer Account';
+ $('accountPageDescription').textContent=signedIn?'Manage your tools, saved work and package access.':'Create an account or sign in to access your workspace.';
+ $('accountStatePill').textContent=signedIn?'Signed in':'Your account';
+ $('customerAccountNav').textContent=signedIn?'My Dashboard':'Customer Login';
+}
+
 
 let bankNotes=[];
 let notesRequest=0;
@@ -2221,6 +2237,7 @@ async function saveLesediCustomerProfile(user){
 }
 function showSignedInCustomer(user,profile,openDashboard=false){
  cloudUser=user;
+ updateLesediAccountHeader(user);
  loadMyUsage();
  publishedPractice=[];practiceOpenRequest++;renderBotswanaExams();
  if($('botswana-exams').classList.contains('active'))loadPublishedPractice();
@@ -2285,7 +2302,7 @@ async function sendPasswordReset(){
  const {error}=await lesediAuthClient.auth.resetPasswordForEmail(email,{redirectTo:'https://educationlesedihub.com/?reset=1'});
  authMessage(error?'Password reset error: '+error.message:'If this email is registered, Supabase will send a password reset link.');
 }
-async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;window.dispatchEvent(new Event('lesedi-writing-open'));clearPaymentHistory();clearMyUsage();practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
+async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await lesediAuthClient.auth.signOut();if(error){authMessage('Sign-out error: '+error.message,true);return;}document.getElementById('authSignedIn').style.display='none';cloudUser=null;updateLesediAccountHeader(null);window.dispatchEvent(new Event('lesedi-writing-open'));clearPaymentHistory();clearMyUsage();practiceRequest++;practiceOpenRequest++;publishedPractice=[];renderBotswanaExams();clearOwnerBanks();$('resTopic').value='';$('resSource').value='';$('resourceOutput').replaceChildren();resetCommunity();document.dispatchEvent(new Event('lesedi-syllabus-signout'));resetLiveExam();clearNotesBank();$('digitalQuestions').replaceChildren();previewQuestions=[];previewAnswers=[];$('learnerExamArea').innerHTML='<button type="button" class="btn primary" onclick="startDigitalExam()">Start Examination</button>';cloudRead++;cloudItems={docs:[],plans:[],exams:[]};window.currentPlan=null;
  ['docTitle','extractedText','examTitle','examClass','examQuestions','examKey','lpTopic','lpSubject','lpClass','lpOutcomes','lpSource'].forEach(id=>{$(id).value=''});
  $('lessonResult').replaceChildren();$('examStatus').replaceChildren();$('fileInput').value='';
  $('cloudLibraryStatus').textContent='Sign in to see your private cloud library.';$('cloudFiles').textContent='Sign in to see your files.';
@@ -2294,6 +2311,7 @@ async function signOutCustomer(){if(!lesediAuthClient)return;const {error}=await
 if(recoveryRequested)go('reset-password');
 if(lesediAuthClient){
  lesediAuthClient.auth.onAuthStateChange((event,session)=>{
+  updateLesediAccountHeader(session?.user||null);
   if(event==='PASSWORD_RECOVERY'&&session?.user){
    recoveryAccount=session.user.id;
    $('recoveryForm').hidden=false;
@@ -2328,10 +2346,21 @@ $('recoveryForm').onsubmit=async event=>{
 };
 (async()=>{
  if(!lesediAuthClient){
+  updateLesediAccountHeader(null);
   if(recoveryRequested)$('recoveryStatus').textContent='The sign-in service did not load. Refresh this page and try again.';
   return;
  }
- const {data}=await lesediAuthClient.auth.getSession();
+ let data;
+ try {
+  const result=await lesediAuthClient.auth.getSession();
+  if(result.error)throw result.error;
+  data=result.data;
+  updateLesediAccountHeader(data.session?.user||null);
+ } catch {
+  updateLesediAccountHeader(null);
+  $('headerSessionStatus').textContent='Account check unavailable — try signing in.';
+  return;
+ }
  if(recoveryRequested||recoveryAccount){
   if(!recoveryAccount)$('recoveryStatus').textContent='This link could not be verified. Request a fresh password reset link.';
   return;
@@ -4659,8 +4688,15 @@ $('manualSearch').addEventListener('input',event=>{
  }
 }
 </style>
-</body>
+<style id="lesedi-header-account-style">
+#lesediHeaderAccount{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#lesediHeaderAccount .header-auth-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#lesediHeaderAccount [hidden]{display:none!important}
+#headerSessionStatus{font-weight:700;color:var(--navy);font-size:.875rem}
+@media(max-width:720px){#lesediHeaderAccount{width:100%;gap:8px}#lesediHeaderAccount .header-auth-actions{gap:8px}#headerSessionStatus{flex-basis:100%}}
+</style></body>
 </html>
+
 
 
 
