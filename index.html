@@ -130,7 +130,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <div class="brand"><div class="brand-mark">✦</div><div><h1>Education Lesedi Scholars Hub <span class="parent-byline">by Lesedi Platforms</span></h1><small>tobetsa-digital-answer · tsaya teko ka maranyane</small></div></div>
   <div class="header-actions" id="lesediHeaderAccount">
  <span id="headerSessionStatus" class="small" role="status">Checking account…</span>
- <div id="headerGuestActions" class="header-auth-actions" hidden><button type="button" class="btn outline" onclick="go('account');showLoginForm()">Sign in</button><button type="button" class="btn gold" onclick="go('account');showRegisterForm()">Create account</button></div>
+ <div id="headerGuestActions" class="header-auth-actions" hidden><button type="button" class="btn outline" onclick="openLesediSignIn()">Sign in</button><button type="button" class="btn gold" onclick="go('account');showRegisterForm()">Create account</button></div>
  <div id="headerMemberActions" class="header-auth-actions" hidden><button type="button" class="btn gold" onclick="go('account')">My Dashboard</button><button type="button" class="btn outline" onclick="signOutCustomer()">Sign out</button></div>
 </div>
 </header>
@@ -770,7 +770,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <section class="page" id="owner-banks"><h2>Owner Banks</h2><div class="card"><p>Read the private source entries. Edit them in Supabase Table Editor.</p><label class="field">Source bank<select id="ownerBankKind"><option value="notes">Notes Bank</option><option value="syllabus">Syllabus Bank</option></select></label><p id="ownerBankStatus" role="status"></p><div id="ownerBankRows"></div><button type="button" class="btn outline" id="ownerBankPrev">Previous</button> <button type="button" class="btn outline" id="ownerBankNext">Next</button></div></section>
 <section class="page" id="notes-bank">
  <div class="section-head"><div><h2>Create from a Topic</h2><p>Choose a topic to start a lesson, resource or assessment draft.</p></div></div>
- <div class="card" id="notesSignIn"><p>Sign in to create from a topic.</p><button class="btn primary" type="button" onclick="go('account');showLoginForm()">Sign in</button></div>
+ <div class="card" id="notesSignIn"><p>Sign in to create from a topic.</p><button class="btn primary" type="button" onclick="openLesediSignIn()">Sign in</button></div>
  <div id="notesWorkspace" hidden>
   <div class="card two-col">
    <label class="field">Subject<select id="notesSubject"><option value="">All subjects</option></select></label>
@@ -2085,8 +2085,29 @@ const LESedi_SUPABASE_KEY='sb_publishable_i9mPavGeRvUhgt2oTlh1-g_2JslOkNp';
 let lesediAuthClient=null;
 try{if(window.supabase?.createClient)lesediAuthClient=window.supabase.createClient(LESedi_SUPABASE_URL,LESedi_SUPABASE_KEY)}catch(e){console.error('Supabase setup:',e)}
 function authMessage(msg,isError=false){const box=document.getElementById('authStatus');if(box){box.textContent=msg;box.className=isError?'notice':'success'}}
-function showLoginForm(){document.getElementById('authLoginForm').style.display='block';document.getElementById('authRegisterForm').style.display='none';authMessage('Enter your registered email and password.')}
-function showRegisterForm(){document.getElementById('authLoginForm').style.display='none';document.getElementById('authRegisterForm').style.display='block';authMessage('Complete the form to create your account.')}
+let lesediSignInPending=false;
+function showLoginForm(){
+ document.getElementById('authPanel').style.display='block';
+ document.getElementById('authLoginForm').style.display='block';
+ document.getElementById('authRegisterForm').style.display='none';
+ authMessage('Enter your registered email and password.');
+}
+function openLesediSignIn(){
+ if(cloudUser){go('account');return;}
+ const wasLoginOpen=$('account').classList.contains('active')&&$('authPanel').style.display!=='none'&&$('authLoginForm').style.display!=='none';
+ go('account');
+ if(lesediSignInPending)return;
+ showLoginForm();
+ const form=$('authLoginForm'),email=$('authLoginEmail'),password=$('authLoginPassword');
+ if(wasLoginOpen&&email.value.trim()&&password.value){
+  form.requestSubmit();
+  return;
+ }
+ const target=email.value.trim()?password:email;
+ target.scrollIntoView({block:'center'});target.focus({preventScroll:true});
+}
+
+function showRegisterForm(){document.getElementById('authPanel').style.display='block';document.getElementById('authLoginForm').style.display='none';document.getElementById('authRegisterForm').style.display='block';authMessage('Complete the form to create your account.')}
 const customerDashboards = {
   "individual": [
     "Learner dashboard",
@@ -2286,15 +2307,27 @@ document.getElementById('authRegisterForm').addEventListener('submit',async e=>{
  else authMessage('Registration received. Please open the confirmation email sent to you, confirm your address, then return here and sign in.');
 });
 document.getElementById('authLoginForm').addEventListener('submit',async e=>{
- e.preventDefault();if(!lesediAuthClient){authMessage('The secure login service did not load. Refresh the page and try again.',true);return;}
- authMessage('Signing you in…');
- const email=document.getElementById('authLoginEmail').value.trim();
- const password=document.getElementById('authLoginPassword').value;
- const {data,error}=await lesediAuthClient.auth.signInWithPassword({email,password});
- if(error){authMessage('Login error: '+error.message,true);return;}
- try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile,true);authMessage('You are successfully signed in.');}
- catch(err){authMessage('Login succeeded, but your customer profile could not be saved: '+err.message,true);}
+ e.preventDefault();
+ if(lesediSignInPending)return;
+ if(!lesediAuthClient){authMessage('The secure login service did not load. Refresh the page and try again.',true);return;}
+ const form=e.currentTarget,submit=form.querySelector('button[type="submit"]');
+ const originalLabel=submit.textContent;
+ lesediSignInPending=true;submit.disabled=true;submit.textContent='Signing in…';
+ form.setAttribute('aria-busy','true');
+ try{
+  authMessage('Signing you in…');
+  const email=$('authLoginEmail').value.trim(),password=$('authLoginPassword').value;
+  const {data,error}=await lesediAuthClient.auth.signInWithPassword({email,password});
+  if(error){authMessage('Login error: '+error.message,true);return;}
+  try{const profile=await saveLesediCustomerProfile(data.user);showSignedInCustomer(data.user,profile,true);authMessage('You are successfully signed in.');}
+  catch(err){authMessage('Login succeeded, but your customer profile could not be saved: '+err.message,true);}
+ }catch{
+  authMessage('Could not connect to the sign-in service. Check your connection and try again.',true);
+ }finally{
+  lesediSignInPending=false;submit.disabled=false;submit.textContent=originalLabel;form.removeAttribute('aria-busy');
+ }
 });
+
 async function sendPasswordReset(){
  if(!lesediAuthClient){authMessage('The secure login service did not load.',true);return;}
  const email=document.getElementById('authLoginEmail').value.trim();
@@ -4696,6 +4729,7 @@ $('manualSearch').addEventListener('input',event=>{
 @media(max-width:720px){#lesediHeaderAccount{width:100%;gap:8px}#lesediHeaderAccount .header-auth-actions{gap:8px}#headerSessionStatus{flex-basis:100%}}
 </style></body>
 </html>
+
 
 
 
