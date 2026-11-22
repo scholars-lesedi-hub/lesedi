@@ -123,6 +123,36 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <style>#ready-made-tests .members-access{font-weight:600;color:#293e62}</style>
 <style>.plan-popular{display:inline-block;background:#fff1ba;color:#352900;font-weight:750;border-radius:999px;padding:.25em .75em;margin:0 0 .4rem}</style>
 <style>.teacher-tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px}.teacher-tools-grid .tile{text-align:left;width:100%}</style>
+
+<style id="lesediMobileLoginLayout">
+/* A single set of authentication actions on the account screen. */
+body.lesedi-account-page:not(.lesedi-signed-in) #headerGuestActions,
+body.lesedi-account-page:not(.lesedi-signed-in) #headerSessionStatus,
+body:not(.lesedi-signed-in) #accountUsageHint{display:none!important}
+body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:none!important}
+#authPanel{width:100%;max-width:640px;margin:20px auto;padding:clamp(18px,4vw,28px)}
+#authModeSwitch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
+#authModeSwitch button{white-space:normal;min-height:48px;padding:10px 12px}
+#authPanel h3{margin:0 0 22px;font-size:1.4rem;line-height:1.3}
+#authPanel input,#authPanel select{width:100%;min-width:0;min-height:52px;font-size:1rem;scroll-margin-top:85px}
+#authPanel .field{margin-bottom:18px}
+#authPanel button:focus-visible{outline:3px solid #2457c5;outline-offset:3px}
+@media(max-width:720px){
+ body>header{position:static;min-height:0;padding:12px 14px;gap:12px}
+ body>.shell>aside{position:sticky;top:0;z-index:15}
+ header .brand{flex:1 1 250px;min-width:0;gap:10px}
+ header .brand>div:last-child{min-width:0}
+ header .brand-mark{flex:0 0 40px;width:40px;height:40px;border-radius:12px;font-size:22px}
+ header .brand h1{font-size:1rem;line-height:1.3;overflow-wrap:anywhere}
+ header .brand small{font-size:.8rem;line-height:1.35;letter-spacing:0}
+ body.lesedi-account-page header .brand small{display:none}
+ body.lesedi-account-page #lesediBack{min-height:40px;padding:8px 12px;font-size:.95rem;flex:0 0 auto}
+ #authPanel{margin:16px auto;padding:18px}
+ #authPanel .btn{min-height:48px}
+ #authModeSwitch{margin-bottom:20px}
+ #authPanel h3{font-size:1.25rem}
+}
+</style>
 </head>
 <body>
 <header>
@@ -653,21 +683,21 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </section>
 <section class="page" id="account">
   <div class="section-head"><div><h2 id="accountPageHeading">Customer Account</h2><p id="accountPageDescription">Create an account or sign in to access your workspace.</p></div><span class="pill" id="accountStatePill">Your account</span></div>
-  <div class="notice">Your available tools depend on your account and package. Check My Usage below for your current access, expiry date and remaining allowances.</div>
+  <div class="notice" id="accountUsageHint">Your available tools depend on your account and package. Check My Usage below for your current access, expiry date and remaining allowances.</div>
   <div class="card" id="authPanel">
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><button class="btn primary" type="button" onclick="showLoginForm()">Customer Login</button><button class="btn gold" type="button" onclick="showRegisterForm()">Create Account</button></div>
+    <div id="authModeSwitch" role="group" aria-label="Choose sign in or create account"><button id="authLoginTab" class="btn primary" type="button" aria-pressed="true" aria-controls="authLoginForm" onclick="showLoginForm()">Sign in</button><button id="authRegisterTab" class="btn outline" type="button" aria-pressed="false" aria-controls="authRegisterForm" onclick="showRegisterForm()">Create account</button></div>
     <form id="authLoginForm">
-      <h3>Customer Login</h3>
-      <div class="field"><label>Email address</label><input id="authLoginEmail" type="email" autocomplete="email" required></div>
-      <div class="field"><label>Password</label><input id="authLoginPassword" type="password" autocomplete="current-password" required></div>
+      <h3>Sign in to your account</h3>
+      <div class="field"><label for="authLoginEmail">Email address</label><input id="authLoginEmail" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="authLoginPassword">Password</label><input id="authLoginPassword" type="password" autocomplete="current-password" required></div>
       <button class="btn primary" type="submit">Sign in</button>
       <button class="btn outline" type="button" onclick="sendPasswordReset()">Forgot password?</button>
     </form>
     <form id="authRegisterForm" style="display:none">
       <h3>Create your Education Lesedi account</h3>
-      <div class="field"><label>Full name</label><input id="authFullName" type="text" autocomplete="name" required></div>
-      <div class="field"><label>Email address</label><input id="authRegisterEmail" type="email" autocomplete="email" required></div>
-      <div class="field"><label>Phone number (optional)</label><input id="authPhone" type="tel" autocomplete="tel"></div>
+      <div class="field"><label for="authFullName">Full name</label><input id="authFullName" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="authRegisterEmail">Email address</label><input id="authRegisterEmail" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="authPhone">Phone number (optional)</label><input id="authPhone" type="tel" autocomplete="tel"></div>
       <div class="field">
   <label>Account type</label>
   <select id="authAccountType" required>
@@ -680,10 +710,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <option value="institution">Education Institution</option>
   </select>
 </div>
-      <div class="field"><label>Create password (at least 6 characters)</label><input id="authRegisterPassword" type="password" minlength="6" autocomplete="new-password" required></div>
+      <div class="field"><label for="authRegisterPassword">Create password (at least 6 characters)</label><input id="authRegisterPassword" type="password" minlength="6" autocomplete="new-password" required></div>
       <button class="btn gold" type="submit">Register</button>
     </form>
-    <div id="authStatus" class="notice" role="status" aria-live="polite">Choose Customer Login or Create Account.</div>
+    <div id="authStatus" class="notice" role="status" aria-live="polite">Choose Sign in or Create account.</div>
   </div>
   <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3 id="customerDashboardTitle">My Dashboard</h3><p id="authWelcome"></p><p id="authType"></p><div id="customerDashboardLinks" style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0"></div><p class="notice" id="customerDashboardPending"></p><section class="card" id="teachingPreferencesPanel" aria-labelledby="teachingPreferencesTitle">
 <h3 id="teachingPreferencesTitle">Teaching Preferences</h3>
@@ -850,6 +880,7 @@ let cloudUser=null;
 
 function updateLesediAccountHeader(user){
  const signedIn=!!user;
+ document.body.classList.toggle('lesedi-signed-in',signedIn);
  $('headerGuestActions').hidden=signedIn;
  $('headerMemberActions').hidden=!signedIn;
  $('headerSessionStatus').textContent=signedIn?'Signed in':'Not signed in';
@@ -981,7 +1012,7 @@ function openPrintableTest(){
  requestAnimationFrame(()=>heading.scrollIntoView({block:'start'}));
 }
 function lesediNavGroup(id){const groups={"teaching-hub": ["lesson", "scheme", "quick-exercises", "notes-bank", "resources", "international-resources", "international-place-value"], "test-bank": ["exam", "ready-made-tests", "botswana-exams", "take-exam", "analytics"], "learning-hub": ["learning-notes", "subject-notes"], "messages-hub": ["requests", "feedback"]};return Object.keys(groups).find(key=>groups[key].includes(id))||id;}
-function showLesediSection(id){if(id==='writing-marker')window.dispatchEvent(new Event('lesedi-writing-open'));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===lesediNavGroup(id)));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id)}
+function showLesediSection(id){document.body.classList.toggle('lesedi-account-page',id==='account');if(id==='writing-marker')window.dispatchEvent(new Event('lesedi-writing-open'));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===lesediNavGroup(id)));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id)}
 const lesediNavigation = window.history;
 const lesediBack = document.getElementById('lesediBack');
 function lesediSectionFromUrl() {
@@ -1951,7 +1982,7 @@ function printBECPractice(set,guide=false){
  const esc=escapeHTML,mark=q=>Number.isInteger(q.marks)&&q.marks>0?q.marks:1;
  const total=set.questions.reduce((sum,q)=>sum+mark(q),0);
  const body=guide?set.questions.map((q,i)=>`<article><h3>${i+1}. ${esc(q.q)} [${mark(q)} ${mark(q)===1?'mark':'marks'}]</h3><p><strong>Answer: ${String.fromCharCode(65+q.a)}. ${esc(q.o[q.a])}</strong></p><p>${esc(q.feedback||'')}</p></article>`).join(''):set.questions.map((q,i)=>`<article><h3>${i+1}. ${esc(q.q)} [${mark(q)} ${mark(q)===1?'mark':'marks'}]</h3>${q.o.map((o,j)=>`<p>${String.fromCharCode(65+j)}. ${esc(o)}</p>`).join('')}<p class="working">Working / answer: __________________________________________________</p></article>`).join('');
- win.document.open();win.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(set.title)}${guide?' - Answer guide':''}</title><style>body{font:12pt/1.5 Arial,sans-serif;color:#111;max-width:190mm;margin:20px auto;padding:12px}h1{font-size:24pt}h2{font-size:17pt}h3{font-size:12pt}article{break-inside:avoid;margin:0 0 24px}article p{margin:7px 0}.cover{min-height:${paper==='Letter'?'205mm':'220mm'};break-after:page}.working{margin-top:20px!important}.toolbar{padding:12px;background:#eee} @media print{body{margin:0;padding:0;max-width:none}.toolbar{display:none}}@page{size:${paper};margin:18mm 15mm 25mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com";font:8pt Arial}@bottom-right{content:"Page " counter(page);font:8pt Arial}}</style></head><body><div class="toolbar"><button id="printNow" type="button">Print / Save PDF</button></div><section class="cover"><p>Education Lesedi Scholars Hub<br>By Lesedi Platforms</p><h1>${esc(set.title)}</h1><h2>${guide?'ANSWER GUIDE':'PRACTICE TEST'}</h2><p>${esc(set.level)} · ${esc(set.subject)} · ${esc(set.className||'')}</p><p><strong>Total: ${total} marks</strong>${set.minutes?' · Suggested time: '+Number(set.minutes)+' minutes':''}</p><h2>Topics covered</h2><p>${esc(set.topics||'Mixed practice')}</p>${guide?'<p>Keep this guide separate from the learner question paper.</p>':'<p>Name: _______________________________________</p><p>School / class: _________________________________</p><p>Date: ________________________________________</p><h2>Instructions</h2><p>Answer all questions. Choose one answer for each question. Use the working space where needed. Each correct answer earns the marks shown; no partial marks are awarded for these multiple-choice questions.</p>'}<p>Independent practice material—not an official BEC examination paper.</p></section>${body}<p>End of ${guide?'answer guide':'practice test'}.</p></body></html>`);win.document.close();
+ win.document.open();win.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(set.title)}${guide?' - Answer guide':''}</title><style>body{font:12pt/1.5 Arial,sans-serif;color:#111;max-width:190mm;margin:20px auto;padding:12px}h1{font-size:24pt}h2{font-size:17pt}h3{font-size:12pt}article{break-inside:avoid;margin:0 0 24px}article p{margin:7px 0}.cover{min-height:${paper==='Letter'?'205mm':'220mm'};break-after:page}.working{margin-top:20px!important}.toolbar{padding:12px;background:#eee} @media print{body{margin:0;padding:0;max-width:none}.toolbar{display:none}}@page{size:${paper};margin:18mm 15mm 25mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com";font:8pt Arial}@bottom-right{content:"Page " counter(page);font:8pt Arial}}</style></head><body><div class="toolbar"><button id="printNow" type="button">Print / Save PDF</button></div><section class="cover"><p>Education Lesedi Scholars Hub<br>By Lesedi Platforms</p><h1>${esc(set.title)}</h1><h2>${guide?'ANSWER GUIDE':'PRACTICE TEST'}</h2><p>${esc(set.level)} · ${esc(set.subject)} · ${esc(set.className||'')}</p><p><strong>Total: ${total} marks</strong>${set.minutes?' · Suggested time: '+Number(set.minutes)+' minutes':''}</p><h2>Topics covered</h2><p>${esc(set.topics||'Mixed practice')}</p>${guide?'<p>Keep this guide separate from the learner question paper.</p>':'<p>Name: _______________________________________</p><p>School / class: _________________________________</p><p>Date: ________________________________________</p><h2>Instructions</h2><p>Answer all questions. Choose one answer for each question. Use the working space where needed. Each correct answer earns the marks shown; no partial marks are awarded for these multiple-choice questions.</p>'}<p>Independent practice material—not an official BEC examination paper.</p></section>${body}<p>End of ${guide?'answer guide':'practice test'}.</p><\/body></html>`);win.document.close();
  setupLesediPaperControls(win,paper);
  win.document.getElementById('printNow').onclick=()=>win.print();
 }
@@ -2110,7 +2141,12 @@ let lesediAuthClient=null;
 try{if(window.supabase?.createClient)lesediAuthClient=window.supabase.createClient(LESedi_SUPABASE_URL,LESedi_SUPABASE_KEY)}catch(e){console.error('Supabase setup:',e)}
 function authMessage(msg,isError=false){const box=document.getElementById('authStatus');if(box){box.textContent=msg;box.className=isError?'notice':'success'}}
 let lesediSignInPending=false;
+function setLesediAuthMode(mode){
+ const login=mode==='login';
+ for(const [id,active]of [['authLoginTab',login],['authRegisterTab',!login]]){const button=document.getElementById(id);if(!button)continue;button.setAttribute('aria-pressed',String(active));button.classList.toggle('primary',active);button.classList.toggle('outline',!active);}
+}
 function showLoginForm(){
+ setLesediAuthMode('login');
  document.getElementById('authPanel').style.display='block';
  document.getElementById('authLoginForm').style.display='block';
  document.getElementById('authRegisterForm').style.display='none';
@@ -2131,7 +2167,7 @@ function openLesediSignIn(){
  target.scrollIntoView({block:'center'});target.focus({preventScroll:true});
 }
 
-function showRegisterForm(){document.getElementById('authPanel').style.display='block';document.getElementById('authLoginForm').style.display='none';document.getElementById('authRegisterForm').style.display='block';authMessage('Complete the form to create your account.')}
+function showRegisterForm(){setLesediAuthMode('register');document.getElementById('authPanel').style.display='block';document.getElementById('authLoginForm').style.display='none';document.getElementById('authRegisterForm').style.display='block';authMessage('Complete the form to create your account.')}
 const customerDashboards = {
   "individual": [
     "Learner dashboard",
@@ -4694,7 +4730,7 @@ function printLesediManual(){
  const clone=$('settings').cloneNode(true);
  clone.querySelectorAll('.no-print').forEach(el=>el.remove());
  clone.querySelectorAll('details').forEach(el=>{el.hidden=false;el.open=true;});
- win.document.open();win.document.write('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Education Lesedi Scholars Hub — User Manual</title><style>body{font:11pt/1.5 Arial,sans-serif;color:#111;max-width:190mm;margin:20px auto;padding:10px}h2{font-size:21pt}summary{font-size:14pt;font-weight:bold;margin:18px 0 8px}li{margin:6px 0}table{width:100%;border-collapse:collapse}td,th{border:1px solid #aaa;padding:6px;text-align:left;vertical-align:top}summary{break-after:avoid}.no-print{display:none}@page{size:A4;margin:18mm 15mm 25mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com";font:8pt Arial}@bottom-right{content:"Page " counter(page);font:8pt Arial}}@media print{body{margin:0;padding:0}.toolbar{display:none}}</style></head><body><p class="toolbar"><button type="button" id="manualPrintNow">Print / Save PDF</button></p></body></html>');win.document.close();
+ win.document.open();win.document.write('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Education Lesedi Scholars Hub — User Manual</title><style>body{font:11pt/1.5 Arial,sans-serif;color:#111;max-width:190mm;margin:20px auto;padding:10px}h2{font-size:21pt}summary{font-size:14pt;font-weight:bold;margin:18px 0 8px}li{margin:6px 0}table{width:100%;border-collapse:collapse}td,th{border:1px solid #aaa;padding:6px;text-align:left;vertical-align:top}summary{break-after:avoid}.no-print{display:none}@page{size:A4;margin:18mm 15mm 25mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com";font:8pt Arial}@bottom-right{content:"Page " counter(page);font:8pt Arial}}@media print{body{margin:0;padding:0}.toolbar{display:none}}</style></head><body><p class="toolbar"><button type="button" id="manualPrintNow">Print / Save PDF</button></p><\/body></html>');win.document.close();
  win.document.body.append(clone);
  setupLesediPaperControls(win,'A4');
  win.document.getElementById('manualPrintNow').onclick=()=>win.print();
@@ -4953,6 +4989,7 @@ refreshInternationalRequestFields();
 </script>
 </body>
 </html>
+
 
 
 
