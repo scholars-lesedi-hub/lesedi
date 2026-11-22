@@ -263,7 +263,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 
 <section class="page" id="lesson"><details class="card" id="lpTeachingContext"><summary><strong>Country and curriculum for this custom draft</strong></summary>
 <p>Enter your own curriculum details, or use your saved preferences. This does not relabel ready-made Botswana tests or change official syllabus objectives.</p>
-<div class="two-col"><label class="field">Country<input id="lpTeachingCountry" maxlength="80"></label><label class="field">Curriculum<input id="lpTeachingCurriculum" maxlength="120" placeholder="Use my own curriculum"></label><label class="field">Class label<select id="lpTeachingLabel"><option>Standard</option><option>Grade</option><option>Year</option><option>Form</option><option>Level</option></select></label><label class="field">Teaching language<input id="lpTeachingLanguage" maxlength="80"></label></div>
+<div class="two-col"><label class="field">Country<input id="lpTeachingCountry" maxlength="80"></label><label class="field">Curriculum<input id="lpTeachingCurriculum" maxlength="120" placeholder="Use my own curriculum"></label><label class="field">Preferred class label<select id="lpTeachingLabel"><option>Standard</option><option>Grade</option><option>Year</option><option>Form</option><option>Level</option></select></label><label class="field">Teaching language<input id="lpTeachingLanguage" maxlength="80"></label></div>
 <button type="button" class="btn outline no-print" onclick="applyTeachingPreferences('lp')">Use my teaching preferences</button><p class="small" id="lpTeachingStatus" role="status"></p></details><details class="card" id="syllabusPicker"><summary><strong>Create from syllabus</strong></summary><p id="syllabusStatus" role="status">Sign in with an approved teacher account to select syllabus objectives.</p><div id="syllabusFields" hidden><div class="three-col"><label class="field">Standard<select id="syllabusStandard"></select></label><label class="field">Subject<select id="syllabusSubject"></select></label><label class="field">Topic<select id="syllabusTopic"></select></label></div><p><button type="button" class="btn primary" id="applySyllabus">Load syllabus objectives</button></p><label class="field" id="lpObjectiveField" hidden>Objective<select id="lpObjective"></select></label></div></details>
   <div class="section-head"><div><h2>Lesson Plan Studio</h2><p>Create an editable teaching plan using your topic or extracted document.</p></div></div>
   <div class="card">
@@ -276,7 +276,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <div class="two-col"><div class="field"><label>Lesson topic</label><input id="lpTopic" placeholder="e.g. Photosynthesis"></div>
       <div class="field"><label>Education level</label><select id="lpLevel"><option>Pre-primary</option><option>Primary / elementary</option><option hidden>Primary (Standards 1–7)</option><option>Lower / junior secondary</option><option hidden>Junior secondary (Forms 1–3)</option><option>Upper / senior secondary</option><option hidden>Senior secondary (Forms 4–5)</option><option>Adult education</option><option>Technical and vocational</option><option>Tertiary education</option><option>Teacher development</option><option>Special and inclusive education</option></select></div>
       <div class="field"><label>Subject</label><input id="lpSubject" placeholder="e.g. Integrated Science"></div>
-      <div class="field"><label>Class / Form</label><input id="lpClass" placeholder="e.g. Standard 7"></div></div>
+      <div class="field"><label>Grade / Year / Form / Standard</label><input id="lpClass" placeholder="e.g. Grade 6, Year 8 or Form 2"></div></div>
     <div class="field"><label>Learning outcomes / curriculum requirements (optional)</label><textarea id="lpOutcomes" placeholder="Paste the relevant syllabus outcomes or learning objectives."></textarea></div>
     <div class="field"><label>Source content (optional — from your converted document)</label><textarea id="lpSource" placeholder="Paste notes or extracted source content here."></textarea></div>
     </details>
@@ -289,7 +289,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 
 <section class="page" id="scheme"><details class="card" id="swTeachingContext"><summary><strong>Country and curriculum for this custom draft</strong></summary>
 <p>Enter your own curriculum details, or use your saved preferences. This does not relabel ready-made Botswana tests or change official syllabus objectives.</p>
-<div class="two-col"><label class="field">Country<input id="swTeachingCountry" maxlength="80"></label><label class="field">Curriculum<input id="swTeachingCurriculum" maxlength="120" placeholder="Use my own curriculum"></label><label class="field">Class label<select id="swTeachingLabel"><option>Standard</option><option>Grade</option><option>Year</option><option>Form</option><option>Level</option></select></label><label class="field">Teaching language<input id="swTeachingLanguage" maxlength="80"></label></div>
+<div class="two-col"><label class="field">Country<input id="swTeachingCountry" maxlength="80"></label><label class="field">Curriculum<input id="swTeachingCurriculum" maxlength="120" placeholder="Use my own curriculum"></label><label class="field">Preferred class label<select id="swTeachingLabel"><option>Standard</option><option>Grade</option><option>Year</option><option>Form</option><option>Level</option></select></label><label class="field">Teaching language<input id="swTeachingLanguage" maxlength="80"></label></div>
 <button type="button" class="btn outline no-print" onclick="applyTeachingPreferences('sw')">Use my teaching preferences</button><p class="small" id="swTeachingStatus" role="status"></p></details>
   <div class="section-head"><div><h2>Scheme of Work Planner</h2><p>Organise a subject into a sequence of teachable units.</p></div></div>
   <div class="card">
@@ -305,7 +305,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
         <label class="field">Subject<select id="schemeSubject"></select></label>
       </div><button type="button" class="btn outline" id="loadSchemeTopics">Load topics and outcomes</button></div>
     </details>
-    <div class="two-col"><div class="field"><label>Subject</label><input id="swSubject" placeholder="e.g. Mathematics"></div><div class="field"><label>Class / level</label><input id="swClass" placeholder="e.g. Form 2"></div><div class="field"><label>Term</label><select id="swTerm"><option>Term 1</option><option>Term 2</option><option>Term 3</option><option>Annual plan</option></select></div><div class="field"><label>Number of weeks</label><input id="swWeeks" type="number" min="1" max="20" value="10"></div></div>
+    <div class="two-col"><div class="field"><label>Subject</label><input id="swSubject" placeholder="e.g. Mathematics"></div><div class="field"><label>Grade / Year / Form / Standard</label><input id="swClass" placeholder="e.g. Grade 6, Year 8 or Form 2"></div><div class="field"><label>Term</label><select id="swTerm"><option>Term 1</option><option>Term 2</option><option>Term 3</option><option>Annual plan</option></select></div><div class="field"><label>Number of weeks</label><input id="swWeeks" type="number" min="1" max="20" value="10"></div></div>
     <details id="schemeDocumentReference" hidden><summary>Reviewed source text</summary><pre id="schemeDocumentText" style="white-space:pre-wrap;font:inherit"></pre></details><div class="field"><label>Topics (one topic per line)</label><textarea id="swTopics" placeholder="Whole numbers&#10;Fractions&#10;Decimals&#10;Percentages"></textarea></div>
     <label class="field">Your own objectives (optional: one per line as Topic | Code | Objective)<textarea id="swCustomObjectives" placeholder="Fractions | M-01 | Compare fractions with the same denominator"></textarea></label><p class="small">Use the same topic names as above. Copy official codes exactly. These objectives are used for custom planning; the Botswana syllabus bank is unchanged.</p><button class="btn primary" onclick="buildScheme()">Build scheme table</button></div>
     <div id="schemeOutput"></div>
@@ -382,11 +382,11 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </section>
 <section class="page" id="exam"><details class="card" id="examTeachingContext"><summary><strong>Country and curriculum for this custom draft</strong></summary>
 <p>Enter your own curriculum details, or use your saved preferences. This does not relabel ready-made Botswana tests or change official syllabus objectives.</p>
-<div class="two-col"><label class="field">Country<input id="examTeachingCountry" maxlength="80"></label><label class="field">Curriculum<input id="examTeachingCurriculum" maxlength="120" placeholder="Use my own curriculum"></label><label class="field">Class label<select id="examTeachingLabel"><option>Standard</option><option>Grade</option><option>Year</option><option>Form</option><option>Level</option></select></label><label class="field">Teaching language<input id="examTeachingLanguage" maxlength="80"></label></div>
+<div class="two-col"><label class="field">Country<input id="examTeachingCountry" maxlength="80"></label><label class="field">Curriculum<input id="examTeachingCurriculum" maxlength="120" placeholder="Use my own curriculum"></label><label class="field">Preferred class label<select id="examTeachingLabel"><option>Standard</option><option>Grade</option><option>Year</option><option>Form</option><option>Level</option></select></label><label class="field">Teaching language<input id="examTeachingLanguage" maxlength="80"></label></div>
 <button type="button" class="btn outline no-print" onclick="applyTeachingPreferences('exam')">Use my teaching preferences</button><p class="small" id="examTeachingStatus" role="status"></p></details>
   <div class="section-head"><div><h2>Examination Studio</h2><p>Prepare a digital assessment draft from reviewed questions.</p></div></div>
   <div class="card">
-    <div class="two-col"><div class="field"><label>Assessment title</label><input id="examTitle" placeholder="e.g. End of Term Science Test"></div><div class="field"><label>Subject / class</label><input id="examClass" placeholder="e.g. Standard 7 Science"></div></div>
+    <div class="two-col"><div class="field"><label>Assessment title</label><input id="examTitle" placeholder="e.g. End of Term Science Test"></div><div class="field"><label>Subject and Grade / Year / Form / Standard</label><input id="examClass" placeholder="e.g. Mathematics — Grade 6"></div></div>
     <details id="examReferencePanel" hidden><summary>Notes for this assessment</summary><pre id="examReferenceNotes" style="white-space:pre-wrap;font:inherit"></pre></details>
     <div class="field"><label>Question text</label><textarea id="examQuestions" placeholder="Paste or type questions here."></textarea></div>
     <div class="field"><label>Teacher-verified answer key (optional)</label><textarea id="examKey" placeholder="Enter verified answers separately. Leave blank if not yet checked."></textarea></div>
@@ -640,8 +640,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
   <article class="price-card"><h3>BEC Practice</h3><div class="price">BWP 100 <small>/ 30 days</small></div><p>For parents and students. PSLE, JC (JCE) and BGCSE practice only.</p><button type="button" class="btn outline" onclick="showExams('PSLE')">Explore PSLE</button> <button type="button" class="btn outline" onclick="showExams('JCE')">Explore JC</button> <button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore BGCSE</button><p><button type="button" class="btn primary" data-package-request="bec-practice">Request This Package</button></p></article>
   <div class="card">
     <div class="two-col">
-      <div class="field"><label>Examination level</label><select id="becLevel" onchange="renderBotswanaExams()"><option value="all">All levels</option><option value="Pre-Primary">Pre-Primary</option><option value="Tertiary">Tertiary</option><option value="PSLE">PSLE — Standards 1–7</option><option value="JCE">JCE — Forms 1–3</option><option value="BGCSE">BGCSE — Forms 4–5</option></select></div>
-      <div class="field"><label>Search subject or topic</label><input id="becSearch" oninput="renderBotswanaExams()" placeholder="e.g. Mathematics, fractions, biology"></div>
+      <div class="field"><label>Examination level</label><select id="becLevel" onchange="renderBotswanaExams()"><option value="all">All levels</option><option value="Pre-Primary">Pre-Primary</option><option value="Tertiary">Tertiary</option><option value="PSLE">PSLE — Botswana primary</option><option value="JCE">JC (JCE) — Botswana lower secondary</option><option value="BGCSE">BGCSE — Botswana upper secondary</option></select></div>
+      <div class="field"><label>Search subject or topic</label><input id="becSearch" oninput="renderBotswanaExams()" placeholder="e.g. Mathematics, fractions, biology"></div><label class="field">Print paper size<select id="becPaperSize"><option value="A4">A4 (210 × 297 mm)</option><option value="Letter">Letter (8.5 × 11 in)</option></select></label>
     </div>
     <p id="becBankStatus" role="status"></p><div id="becCards" class="tiles"></div>
     <div id="becPreview" style="margin-top:16px"></div>
@@ -735,7 +735,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <label class="field">Months to pay in advance<select id="paymentMonths"><option value="1">1 month</option><option value="3">3 months</option><option value="6">6 months</option><option value="12">12 months</option></select></label>
 <p>Use Request Payment Details to confirm the recipient and amount with Lesedi before sending money. Access is activated after the payment is verified.</p>
 <ul><li><strong>Orange Money</strong> · +267 77980825</li><li><strong>Pay to Cell or MyZaka</strong> · +267 71823638</li><li><strong>Visa</strong> · Hosted card checkout is coming soon.</li></ul>
-<p><button type="button" class="btn outline" id="requestPaymentDetails">Request Payment Details</button></p>
+<p><button type="button" class="btn outline" id="requestPaymentDetails">Request Payment Details</button></p><p><button type="button" class="btn outline" id="requestInternationalPayment">International payment enquiry</button></p><p class="small">Outside Botswana? Choose a package, then request instructions with your country and preferred payment method. Availability will be confirmed in the reply.</p>
 <div class="card" id="bankTransferRequest">
  <h4>Bank transfer — request details</h4>
  <p>Prefer to pay by bank transfer? Choose Access Bank Botswana or FNB Botswana and request instructions. Our team will reply through your website inbox. Access is activated after payment is confirmed.</p>
@@ -756,6 +756,14 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
     <div id="adminRequestList" aria-live="polite"></div>
   </div>
   <form class="card" id="requestForm">
+<label class="field">Request type<select id="requestDetailsKind"><option value="general">General help</option><option value="resource">Teaching resource / test</option><option value="payment">Payment instructions</option></select></label>
+<fieldset id="internationalRequestDetails" hidden><legend>Details for your request</legend>
+<div class="two-col"><label class="field">Country<input id="rqCountry" maxlength="80" placeholder="Your country"></label><label class="field">Curriculum / syllabus<input id="rqCurriculum" maxlength="120" placeholder="Your school or national curriculum"></label></div>
+<div id="resourceRequestDetails"><div class="two-col"><label class="field"><span id="rqClassLabel">Grade / Year / Form / Standard</span><input id="rqClass" maxlength="80" placeholder="For example, Grade 6, Year 8 or Form 2"></label><label class="field">Subject<input id="rqSubject" maxlength="100"></label><label class="field">Topic<input id="rqTopic" maxlength="160"></label><label class="field">Total marks (optional)<input id="rqMarks" type="number" min="1" max="10000" step="1"></label><label class="field">Format<select id="rqFormat"><option>Digital and printable</option><option>Digital</option><option>Printable</option></select></label><label class="field">Teaching language<input id="rqLanguage" maxlength="80" placeholder="For example, English"></label></div><label class="field">Objectives and codes (optional)<textarea id="rqObjectives" maxlength="1000" placeholder="Copy the exact objectives and reference codes you need."></textarea></label></div>
+<div id="paymentRequestDetails" hidden><label class="field">Preferred payment method<input id="rqPaymentMethod" maxlength="160" placeholder="For example, bank transfer — subject to availability"></label><p class="small">Prices are quoted in BWP (Botswana pula). We will confirm supported methods, recipient details and any payment instructions in our reply. Sending this request does not make a payment.</p></div>
+<button type="button" class="btn outline" onclick="fillInternationalRequestPreferences()">Use my teaching preferences</button>
+</fieldset>
+
     <label class="field">Subject<input name="subject" maxlength="120" required></label>
     <label class="field">Message<textarea name="message" rows="6" maxlength="3000" required></textarea></label>
     <button class="btn primary">Send Request</button>
@@ -823,7 +831,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 <section class="page" id="settings">
  <div class="section-head"><div><h2>User Guide &amp; Manual</h2><p>Learn how to use Education Lesedi Scholars Hub, step by step.</p></div></div>
  <div class="card"><p><strong>Education Lesedi Scholars Hub by Lesedi Platforms</strong></p><p>Start with the guide for what you want to do. Tool availability depends on your account, current package and the resources available for your selection.</p><label class="field no-print" for="manualSearch">Find help<input type="search" id="manualSearch" placeholder="Search: PDF, photo, lesson plan, payment, print…"></label><p class="no-print"><button type="button" class="btn outline" onclick="printLesediManual()">Print / Save manual as PDF</button></p><p id="manualSearchStatus" role="status" class="no-print"></p></div>
- <div id="manualGuides">
+ <div id="manualGuides"><details class="card"><summary><strong>International requests, class names and paper sizes</strong></summary><p>Grade, Year, Form and Standard are class-naming systems used in different places. Enter the exact class name used by your school; this does not claim that the levels are equivalent across countries.</p><ol><li>For resources, open Requests, choose Teaching resource / test and enter country, curriculum, class, subject, topic, objectives, marks and preferred format.</li><li>For payment help, choose a package in Packages &amp; Payments, then International payment enquiry. Enter your country and preferred payment method. Review the request and select Send Request.</li><li>For BEC printing, choose A4 or Letter in the Botswana Exam Library before opening a paper or guide. You can also change the size in the print document toolbar. The printable manual has the same toolbar choice.</li><li>Check the browser’s paper setting and preview before printing. Other print tools retain their existing controls; paper-size choice is not yet added to every print screen.</li></ol></details>
 <details class="card"><summary><strong>International users: set your country and use your own curriculum</strong></summary><ol><li>Sign in, open My Dashboard and find Teaching Preferences.</li><li>Select your country, or Other and enter its name. Choose Other / Use my own curriculum for curricula outside the Botswana option.</li><li>Enter the curriculum name, preferred class label and teaching language, then save.</li><li>Open a custom lesson plan, scheme or test draft. Use My teaching preferences to fill its country/curriculum fields, then enter the actual class level and objectives.</li><li>Paste lesson objectives in the existing outcomes field. In schemes, enter Topic | Code | Objective lines, keeping codes unchanged. Review the resulting weekly outcomes.</li><li>Saved custom lesson plans and test drafts retain their curriculum context. Existing ready-made BEC and STEAM collections keep their original labels.</li></ol><p>The interface remains English. Language preferences do not translate content. Prices are in BWP (Botswana pula); request payment instructions for supported methods. If you need a resource for another curriculum, send a website request with its country, curriculum, level, subject and topic.</p></details>
  <details class="card" open><summary><strong>Get started: register, sign in and find your tools</strong></summary><ol><li>Select <b>Create account</b>. Enter your details, choose the account type that describes you and complete registration.</li><li>If email confirmation is requested, open the confirmation email and follow its instructions. Check your spam folder if it has not arrived.</li><li>Use <b>Sign in</b> with your registered email and password. Use the password reset option if needed.</li><li>Open the left menu to choose a tool. On a small screen, open the menu first. Your dashboard shows the package and usage information available for your account.</li><li>A lock or <b>Members - Subscribe to unlock</b> means that item needs an eligible active package. Trial access does not unlock every resource.</li></ol><button type="button" class="btn outline no-print" onclick="go('account')">Open Customer Login</button></details>
  <details class="card"><summary><strong>Choose the correct route: pasted text, PDF, Word or photo</strong></summary><table style="width:100%;border-collapse:collapse"><thead><tr><th>What you have</th><th>Where to start</th><th>What to do</th></tr></thead><tbody><tr><td>Questions already copied as text</td><td>Examination Studio</td><td>Paste the complete numbered paper into Question text, then select Import numbered questions.</td></tr><tr><td>A PDF document</td><td>Softcopy Converter</td><td>Choose the PDF, then Read and extract document. Use Run OCR on every PDF page if scanned pages are not being read properly.</td></tr><tr><td>A Word document</td><td>Softcopy Converter</td><td>Choose a DOCX file, extract the text and review it.</td></tr><tr><td>A photo or scanned image</td><td>Softcopy Converter</td><td>Choose a clear JPG, PNG or WebP image. Extract and review the OCR text.</td></tr><tr><td>Notes for a lesson or scheme</td><td>Softcopy Converter or the relevant planning tool</td><td>Paste reviewed source text or extract a document, choose your purpose and continue with the selected tool.</td></tr><tr><td>No questions prepared</td><td>Test &amp; Examination Bank, Botswana Exam Library or Quick Class Exercises</td><td>Search the available ready-made resources for your level, subject and topic.</td></tr></tbody></table><p><strong>You do not need to paste a whole paper one question at a time.</strong> Number each main question clearly, keep answer options with their question, and review the results after importing.</p></details>
@@ -1950,12 +1958,14 @@ async function openPracticeSet(id,action='digital'){
 
 
 function printBECPractice(set,guide=false){
+ const paper=$('becPaperSize')?.value==='Letter'?'Letter':'A4';
  const win=window.open('','_blank');
  if(!win){$('becPreview').textContent='Allow pop-ups for this website, then select Print again.';return;}
  const esc=escapeHTML,mark=q=>Number.isInteger(q.marks)&&q.marks>0?q.marks:1;
  const total=set.questions.reduce((sum,q)=>sum+mark(q),0);
  const body=guide?set.questions.map((q,i)=>`<article><h3>${i+1}. ${esc(q.q)} [${mark(q)} ${mark(q)===1?'mark':'marks'}]</h3><p><strong>Answer: ${String.fromCharCode(65+q.a)}. ${esc(q.o[q.a])}</strong></p><p>${esc(q.feedback||'')}</p></article>`).join(''):set.questions.map((q,i)=>`<article><h3>${i+1}. ${esc(q.q)} [${mark(q)} ${mark(q)===1?'mark':'marks'}]</h3>${q.o.map((o,j)=>`<p>${String.fromCharCode(65+j)}. ${esc(o)}</p>`).join('')}<p class="working">Working / answer: __________________________________________________</p></article>`).join('');
- win.document.open();win.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(set.title)}${guide?' - Answer guide':''}</title><style>body{font:12pt/1.5 Arial,sans-serif;color:#111;max-width:190mm;margin:20px auto;padding:12px}h1{font-size:24pt}h2{font-size:17pt}h3{font-size:12pt}article{break-inside:avoid;margin:0 0 24px}article p{margin:7px 0}.cover{min-height:220mm;break-after:page}.working{margin-top:20px!important}.toolbar{padding:12px;background:#eee} @media print{body{margin:0;padding:0;max-width:none}.toolbar{display:none}}@page{size:A4;margin:18mm 15mm 25mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com";font:8pt Arial}@bottom-right{content:"Page " counter(page);font:8pt Arial}}</style></head><body><div class="toolbar"><button id="printNow" type="button">Print / Save PDF</button></div><section class="cover"><p>Education Lesedi Scholars Hub<br>By Lesedi Platforms</p><h1>${esc(set.title)}</h1><h2>${guide?'ANSWER GUIDE':'PRACTICE TEST'}</h2><p>${esc(set.level)} · ${esc(set.subject)} · ${esc(set.className||'')}</p><p><strong>Total: ${total} marks</strong>${set.minutes?' · Suggested time: '+Number(set.minutes)+' minutes':''}</p><h2>Topics covered</h2><p>${esc(set.topics||'Mixed practice')}</p>${guide?'<p>Keep this guide separate from the learner question paper.</p>':'<p>Name: _______________________________________</p><p>School / class: _________________________________</p><p>Date: ________________________________________</p><h2>Instructions</h2><p>Answer all questions. Choose one answer for each question. Use the working space where needed. Each correct answer earns the marks shown; no partial marks are awarded for these multiple-choice questions.</p>'}<p>Independent practice material—not an official BEC examination paper.</p></section>${body}<p>End of ${guide?'answer guide':'practice test'}.</p></body></html>`);win.document.close();
+ win.document.open();win.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(set.title)}${guide?' - Answer guide':''}</title><style>body{font:12pt/1.5 Arial,sans-serif;color:#111;max-width:190mm;margin:20px auto;padding:12px}h1{font-size:24pt}h2{font-size:17pt}h3{font-size:12pt}article{break-inside:avoid;margin:0 0 24px}article p{margin:7px 0}.cover{min-height:${paper==='Letter'?'205mm':'220mm'};break-after:page}.working{margin-top:20px!important}.toolbar{padding:12px;background:#eee} @media print{body{margin:0;padding:0;max-width:none}.toolbar{display:none}}@page{size:${paper};margin:18mm 15mm 25mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com";font:8pt Arial}@bottom-right{content:"Page " counter(page);font:8pt Arial}}</style></head><body><div class="toolbar"><button id="printNow" type="button">Print / Save PDF</button></div><section class="cover"><p>Education Lesedi Scholars Hub<br>By Lesedi Platforms</p><h1>${esc(set.title)}</h1><h2>${guide?'ANSWER GUIDE':'PRACTICE TEST'}</h2><p>${esc(set.level)} · ${esc(set.subject)} · ${esc(set.className||'')}</p><p><strong>Total: ${total} marks</strong>${set.minutes?' · Suggested time: '+Number(set.minutes)+' minutes':''}</p><h2>Topics covered</h2><p>${esc(set.topics||'Mixed practice')}</p>${guide?'<p>Keep this guide separate from the learner question paper.</p>':'<p>Name: _______________________________________</p><p>School / class: _________________________________</p><p>Date: ________________________________________</p><h2>Instructions</h2><p>Answer all questions. Choose one answer for each question. Use the working space where needed. Each correct answer earns the marks shown; no partial marks are awarded for these multiple-choice questions.</p>'}<p>Independent practice material—not an official BEC examination paper.</p></section>${body}<p>End of ${guide?'answer guide':'practice test'}.</p></body></html>`);win.document.close();
+ setupLesediPaperControls(win,paper);
  win.document.getElementById('printNow').onclick=()=>win.print();
 }
 
@@ -4083,6 +4093,7 @@ if ('serviceWorker' in navigator) {
    if (!form.elements.subject.value && !form.elements.message.value) {
      form.elements.subject.value = subject;
      form.elements.message.value = message;
+     prepareInternationalRequest(subject);
    } else if (form.elements.subject.value !== subject) {
      status.textContent = 'Your existing draft is open. Edit it or clear both fields before starting a new request.';
    }
@@ -4103,6 +4114,14 @@ if ('serviceWorker' in navigator) {
    button.onclick = () => requestPackage(button.dataset.packageRequest);
  }
  document.getElementById('requestPaymentDetails').onclick = event => requestPackage(paymentPlan, event.currentTarget.dataset.offer);
+ document.getElementById('requestInternationalPayment').onclick = () => {
+  const entry=paymentPlans[paymentPlan];
+  if(!entry){$('paymentSelected').textContent='Choose Payment options on a package first.';return;}
+  updatePaymentLink();
+  openRequest('Package request · '+entry[0]+' · International payment enquiry',
+   'Please send supported payment instructions for '+entry[0]+' ('+$('requestPaymentDetails').dataset.offer+'). My country and preferred method are included in the request details.');
+ };
+
  document.getElementById('requestBankTransfer').onclick = () => {
    const status = document.getElementById('bankTransferStatus');
    const bank = document.getElementById('bankTransferBank').value;
@@ -4123,7 +4142,7 @@ if ('serviceWorker' in navigator) {
      'I would like to pay for ' + entry[0] + ' (' + offer + ') by bank transfer through ' + bank + '. Please send the account holder name, bank details, amount, payment reference and payment confirmation instructions through my website inbox.');
  };
  document.getElementById('requestQuickExercise').onclick = () => openRequest('Quick Class Exercise', quickRequestText());
- document.getElementById('requestCustomDigitalTest').onclick = () => openRequest('Custom Digital Test', 'Grade: \nSubject: \nTopic: \nTotal marks: ');
+ document.getElementById('requestCustomDigitalTest').onclick = () => openRequest('Custom Digital Test', 'Please prepare a test using the country, curriculum, class and topic details entered below.');
  function render(target, rows, admin) {
    target.replaceChildren();
    if (!rows.length) target.textContent = 'No requests yet.';
@@ -4178,11 +4197,12 @@ if ('serviceWorker' in navigator) {
      return;
    }
    const subject = form.elements.subject.value.trim();
-   const message = form.elements.message.value.trim();
+   const message = buildInternationalRequestMessage(form.elements.message.value.trim());
    if (!subject || !message) {
      status.textContent = 'Enter a subject and message.';
      return;
    }
+   if(message.length>3000){status.textContent='Your message and request details exceed 3,000 characters. Please shorten them before sending.';return;}
    send.disabled = true;
    status.textContent = 'Sending request…';
    try {
@@ -4190,6 +4210,7 @@ if ('serviceWorker' in navigator) {
      if (cloudUser?.id !== userId) return;
      if (error) throw error;
      form.reset();
+     refreshInternationalRequestFields();
      status.textContent = 'Request sent to the Lesedi admin.';
      await load(false);
    } catch {
@@ -4686,6 +4707,7 @@ function printLesediManual(){
  clone.querySelectorAll('details').forEach(el=>{el.hidden=false;el.open=true;});
  win.document.open();win.document.write('<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Education Lesedi Scholars Hub — User Manual</title><style>body{font:11pt/1.5 Arial,sans-serif;color:#111;max-width:190mm;margin:20px auto;padding:10px}h2{font-size:21pt}summary{font-size:14pt;font-weight:bold;margin:18px 0 8px}li{margin:6px 0}table{width:100%;border-collapse:collapse}td,th{border:1px solid #aaa;padding:6px;text-align:left;vertical-align:top}summary{break-after:avoid}.no-print{display:none}@page{size:A4;margin:18mm 15mm 25mm;@bottom-center{content:"© 2026 Lesedi Platforms (Pty) Ltd. · Education Lesedi Scholars Hub · educationlesedihub.com";font:8pt Arial}@bottom-right{content:"Page " counter(page);font:8pt Arial}}@media print{body{margin:0;padding:0}.toolbar{display:none}}</style></head><body><p class="toolbar"><button type="button" id="manualPrintNow">Print / Save PDF</button></p></body></html>');win.document.close();
  win.document.body.append(clone);
+ setupLesediPaperControls(win,'A4');
  win.document.getElementById('manualPrintNow').onclick=()=>win.print();
 }
 $('manualSearch').addEventListener('input',event=>{
@@ -4830,8 +4852,62 @@ window.addEventListener('lesedi-preferences-session',loadTeachingPreferences);
 loadTeachingPreferences();
 </script>
 <style>#tpOtherCountryField[hidden],#tpCustomCurriculumField[hidden]{display:none!important}#teachingPreferencesPanel{margin:18px 0}#teachingPreferencesPanel h3{margin-top:0}</style>
+<script id="lesedi-international-requests-print">
+function refreshInternationalRequestFields(){
+ const kind=$('requestDetailsKind').value;
+ $('internationalRequestDetails').hidden=kind==='general';
+ $('resourceRequestDetails').hidden=kind!=='resource';
+ $('paymentRequestDetails').hidden=kind!=='payment';
+}
+function fillInternationalRequestPreferences(){
+ if(!cloudUser){$('requestStatus').textContent='Sign in to load your teaching preferences, or enter the details manually.';return;}
+ const p=teachingPreferences;
+ for(const [id,value] of [['rqCountry',p.country],['rqCurriculum',p.curriculum],['rqLanguage',p.teaching_language]])if(!$(id).value.trim())$(id).value=value;
+ $('rqClassLabel').textContent=p.class_label+' / class level';
+ $('rqClass').placeholder='For example, '+p.class_label+' 6';
+}
+function prepareInternationalRequest(subject){
+ const payment=subject.startsWith('Package request · ');
+ $('requestDetailsKind').value=payment?'payment':'resource';refreshInternationalRequestFields();
+ if(cloudUser)fillInternationalRequestPreferences();
+ if(payment&&!$('rqPaymentMethod').value.trim()){
+  const bank=['Access Bank Botswana','FNB Botswana'].find(name=>subject.includes(name));
+  if(bank)$('rqPaymentMethod').value='Bank transfer — '+bank;
+ }
+}
+function buildInternationalRequestMessage(message){
+ const kind=$('requestDetailsKind').value;if(kind==='general')return message;
+ const lines=[];const add=(label,id)=>{const v=$(id).value.trim();if(v)lines.push(label+': '+v);};
+ add('Country','rqCountry');add('Curriculum / syllabus','rqCurriculum');
+ if(kind==='payment'){add('Preferred payment method','rqPaymentMethod');lines.push('Quoted currency: BWP (Botswana pula)');}
+ else{
+  add('Grade / Year / Form / Standard','rqClass');add('Subject','rqSubject');add('Topic','rqTopic');add('Total marks','rqMarks');add('Format','rqFormat');add('Teaching language','rqLanguage');add('Objectives and codes','rqObjectives');
+ }
+ return lines.length?message+'\n\nRequest details\n'+lines.join('\n'):message;
+}
+function setupLesediPaperControls(win,initial){
+ const doc=win.document,toolbar=doc.querySelector('.toolbar');if(!toolbar)return;
+ const style=doc.createElement('style');style.id='lesedi-paper-size';doc.head.append(style);
+ const label=doc.createElement('label');label.textContent=' Paper size ';label.style.marginLeft='12px';
+ const select=doc.createElement('select');select.setAttribute('aria-label','Paper size');
+ for(const [value,text] of [['A4','A4 (210 × 297 mm)'],['Letter','Letter (8.5 × 11 in)']]){const opt=doc.createElement('option');opt.value=value;opt.textContent=text;select.append(opt);}
+ const update=()=>{const paper=select.value==='Letter'?'Letter':'A4';style.textContent='@page{size:'+paper+';} .cover{min-height:'+(paper==='Letter'?'205mm':'220mm')+';}';};
+ select.value=initial==='Letter'?'Letter':'A4';select.onchange=update;update();label.append(select);toolbar.append(label);
+ const note=doc.createElement('small');note.textContent=' Check the same paper size in your browser print preview.';toolbar.append(note);
+}
+$('requestDetailsKind').onchange=refreshInternationalRequestFields;
+refreshInternationalRequestFields();
+</script>
+<style id="lesedi-larger-search-fields">
+#internationalRequestDetails[hidden],#resourceRequestDetails[hidden],#paymentRequestDetails[hidden]{display:none!important}
+@media screen{
+ input[type="search"],input[id*="Search"],input[id*="search"],input[placeholder*="Search"],input[placeholder*="search"]{font-family:inherit;font-size:1.0625rem!important;min-height:50px!important;padding:13px 16px!important;border-radius:12px!important;width:100%;line-height:1.5;box-sizing:border-box}
+ input[type="search"]:focus-visible,input[id*="Search"]:focus-visible,input[id*="search"]:focus-visible{outline:3px solid #a4bafa;outline-offset:2px}
+}
+</style>
 </body>
 </html>
+
 
 
 
