@@ -743,16 +743,28 @@ body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:non
 <div id="paymentAccount" hidden><p id="paymentHistoryStatus" role="status"></p><h4>Your payment history</h4><ul id="paymentHistory"></ul></div></div><div class="card" id="explorerPackageTerms"><h3>Explorer collections: what your package includes</h3><ul><li><strong>Active trial:</strong> 3 STEAM, 3 English and 3 Maths samples, one per Grade 1–3 in each collection.</li><li><strong>Lesedi Starter:</strong> 5 new subscriber activity packs per monthly access period.</li><li><strong>Lesedi Pro:</strong> 15 new subscriber activity packs per monthly access period.</li><li><strong>Lesedi School:</strong> an agreed monthly allowance, confirmed and configured by Lesedi.</li></ul><p>One activity pack includes its learner sheet and teacher guide. Unlocking a new subscriber pack uses one allowance. Reopening or reprinting an unlocked pack uses no additional allowance while your paid subscription is active. The nine sample activities do not use a paid allowance.</p><p>Allowances renew with your account's monthly access period and unused slots do not carry over. Access pauses when your package expires; downloaded copies remain yours for the permitted teaching use. Previously unlocked packs become accessible again when a paid subscription is active.</p><p>Printouts carry Lesedi branding, copyright and a permitted-use notice. Please use them with your own classes, tutoring learners or household; school use follows the agreed school package. No resale or public redistribution.</p><p>Look out for new activity releases. Complete downloadable collections may be offered separately; a separate purchase does not activate a website subscription.</p><p class="small">These are shared allowances across Little Explorers, English Explorers and Maths Explorers activities. Other tools and exam libraries retain their existing package rules. The BEC Practice pass does not include subscriber access to the Explorer collections.</p></div></section>
 <section class="page" id="requests">
   <h2>Request help or a resource</h2>
-  <p>Request a package, teaching materials, account help, or a digital test on a specific topic. For a custom test, include the grade, subject, topic and total marks.</p>
+  <p>Send an agent application or support message, request a package, teaching materials, account help, or a digital test on a specific topic. For a custom test, include the grade, subject, topic and total marks.</p>
   <div class="card" id="adminRequestPanel" hidden>
-    <h3>Admin Inbox</h3>
-    <button type="button" class="btn outline" id="loadAdminRequests">Refresh Inbox</button>
-    <label class="field">Show requests<select id="adminRequestFilter"><option value="all">All requests</option><option value="packages">Package requests</option><option value="other">Other requests</option></select></label>
-    <p id="adminRequestCount" role="status"></p>
-    <div id="adminRequestList" aria-live="polite"></div>
-  </div>
+<h3>Admin Inbox</h3><p>Open a request to reply in its conversation. Replies appear in the customer’s My Requests; this does not send an email or WhatsApp message.</p>
+<div class="request-controls"><label class="field">Search messages or sender email<input type="search" id="adminRequestSearch" maxlength="120" placeholder="Search agent applications, names, messages…"></label>
+<label class="field">Request category<select id="adminRequestFilter"><option value="all">All requests</option><option value="agents">Agent registrations &amp; support</option><option value="packages">Package requests</option><option value="other">Other requests</option></select></label>
+<label class="field">Status<select id="adminRequestState"><option value="all">All statuses</option><option value="unread">Unread</option><option value="open">Awaiting support</option><option value="answered">Support replied</option><option value="closed">Closed</option></select></label></div>
+<button type="button" class="btn outline" id="loadAdminRequests">Refresh Inbox</button><p id="adminRequestCount" role="status"></p><div id="adminRequestList"></div>
+<div class="request-actions"><button type="button" class="btn outline" id="adminRequestPrev" disabled>Previous requests</button><button type="button" class="btn outline" id="adminRequestNext" disabled>More requests</button></div></div>
+<section class="card request-conversation" id="requestConversation" aria-labelledby="requestConversationTitle" hidden>
+<div class="request-actions"><button type="button" class="btn primary" id="requestFocusReply">Write a reply</button><button type="button" class="btn outline" id="requestRefreshConversation">Refresh conversation</button><button type="button" class="btn outline" id="requestHideConversation">Back to request lists</button></div>
+<h3 id="requestConversationTitle"></h3><p id="requestConversationMeta" class="small"></p><p id="requestThreadStatus" role="status"></p>
+<button type="button" class="btn outline" id="requestOlderReplies" hidden>Load earlier replies</button><div id="requestConversationMessages" class="request-messages" aria-label="Conversation history"></div>
+<p id="requestClosedNote" hidden>This request is closed. Sending a follow-up reopens it for support.</p>
+<div id="requestAdminTools" hidden><label class="field">Request status<select id="requestConversationState"><option value="open">Awaiting support</option><option value="answered">Support replied</option><option value="closed">Closed</option></select></label><button type="button" class="btn outline" id="requestSaveState">Save status</button></div>
+<form id="requestReplyForm"><label class="field" id="requestReplyTemplateLabel" hidden>Start from a reply template<select id="requestReplyTemplate"><option value="">Write your own reply</option><option value="received">Agent application received</option><option value="details">Ask for agent details</option><option value="support">Ask for support details</option></select></label>
+<label class="field">Your reply<textarea id="requestReplyBody" rows="6" maxlength="3000" required placeholder="Write a reply to this conversation…"></textarea></label><button type="submit" class="btn primary" id="requestReplySend">Send reply</button><p id="requestReplyStatus" role="status" aria-live="polite"></p>
+<p class="small">Drafts stay while you switch conversations on this page. They clear when you sign out or reload. Never send passwords or PINs.</p></form></section>
+<p><button type="button" class="btn outline" id="requestAgentShortcut">Agent registration / Agent support</button></p>
   <form class="card" id="requestForm">
-<label class="field">Request type<select id="requestDetailsKind"><option value="general">General help</option><option value="resource">Teaching resource / test</option><option value="payment">Payment instructions</option></select></label>
+<label class="field">Request type<select id="requestDetailsKind"><option value="general">General help</option><option value="agent">Agent registration / Agent support</option><option value="resource">Teaching resource / test</option><option value="payment">Payment instructions</option></select></label>
+<fieldset id="agentRequestDetails" hidden><legend>Agent message details</legend><p>Applicants and existing agents can use this option. Registration is subject to admin approval. This form does not activate an agent account or commission payment.</p>
+<div class="two-col"><label class="field">Agent enquiry<select id="rqAgentPurpose"><option value="registration">New agent registration</option><option value="support">Agent support</option><option value="referral">Customer referral enquiry</option><option value="commission">Commission / payout enquiry</option></select></label><label class="field">Full name<input id="rqAgentName" maxlength="120" autocomplete="name"></label><label class="field">Phone number<input id="rqAgentPhone" type="tel" maxlength="40" autocomplete="tel"></label><label class="field">Town / area<input id="rqAgentTown" maxlength="100" autocomplete="address-level2"></label><label class="field">Agent or referral reference (if issued)<input id="rqAgentReference" maxlength="100" placeholder="Leave blank if you do not have one"></label></div></fieldset>
 <fieldset id="internationalRequestDetails" hidden><legend>Details for your request</legend>
 <div class="two-col"><label class="field">Country<input id="rqCountry" maxlength="80" placeholder="Your country"></label><label class="field">Curriculum / syllabus<input id="rqCurriculum" maxlength="120" placeholder="Your school or national curriculum"></label></div>
 <div id="resourceRequestDetails"><div class="two-col"><label class="field"><span id="rqClassLabel">Grade / Year / Form / Standard</span><input id="rqClass" maxlength="80" placeholder="For example, Grade 6, Year 8 or Form 2"></label><label class="field">Subject<input id="rqSubject" maxlength="100"></label><label class="field">Topic<input id="rqTopic" maxlength="160"></label><label class="field">Total marks (optional)<input id="rqMarks" type="number" min="1" max="10000" step="1"></label><label class="field">Format<select id="rqFormat"><option>Digital and printable</option><option>Digital</option><option>Printable</option></select></label><label class="field">Teaching language<input id="rqLanguage" maxlength="80" placeholder="For example, English"></label></div><label class="field">Objectives and codes (optional)<textarea id="rqObjectives" maxlength="1000" placeholder="Copy the exact objectives and reference codes you need."></textarea></label></div>
@@ -762,13 +774,13 @@ body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:non
 
     <label class="field">Subject<input name="subject" maxlength="120" required></label>
     <label class="field">Message<textarea name="message" rows="6" maxlength="3000" required></textarea></label>
-    <button class="btn primary">Send Request</button>
+    <button type="submit" class="btn primary" id="requestSendButton">Send Request</button>
     <p id="requestStatus" role="status"></p>
   </form>
   <div class="card">
-    <h3>My Requests</h3>
+    <h3>My Requests &amp; Replies</h3><p>Open a request to read replies or send a follow-up. Agent applications and support enquiries use the same private conversation.</p><label class="field">Show<select id="myRequestState"><option value="all">All requests</option><option value="unread">Unread replies</option><option value="open">Awaiting support</option><option value="answered">Support replied</option><option value="closed">Closed</option></select></label><p id="myRequestCount" role="status"></p>
     <button type="button" class="btn outline" id="loadMyRequests">View My Requests</button>
-    <div id="myRequestList" aria-live="polite"></div>
+    <div id="myRequestList"></div><div class="request-actions"><button type="button" class="btn outline" id="myRequestPrev" disabled>Previous requests</button><button type="button" class="btn outline" id="myRequestNext" disabled>More requests</button></div>
   </div>
 
 </section>
@@ -827,7 +839,7 @@ body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:non
 <section class="page" id="settings">
  <div class="section-head"><div><h2>User Guide &amp; Manual</h2><p>Learn how to use Education Lesedi Scholars Hub, step by step.</p></div></div>
  <div class="card"><p><strong>Education Lesedi Scholars Hub by Lesedi Platforms</strong></p><p>Start with the guide for what you want to do. Tool availability depends on your account, current package and the resources available for your selection.</p><label class="field no-print" for="manualSearch">Find help<input type="search" id="manualSearch" placeholder="Search: PDF, photo, lesson plan, payment, print…"></label><p class="no-print"><button type="button" class="btn outline" onclick="printLesediManual()">Print / Save manual as PDF</button></p><p id="manualSearchStatus" role="status" class="no-print"></p></div>
- <div id="manualGuides"><details class="card"><summary><strong>Maths Explorers</strong></summary><p>Open Kids Zone, choose Maths Explorers and select Grade 1, 2 or 3. Each grade has eight packs, including one trial sample. An adult reads prompts and helps with large counters, drawings and practical work. Open a pack, then use its learner sheet, four-question digital self-check or teacher guidance.</p><p>Print learner sheet and teacher guide separately, or download the activity and adult guide for offline use. Offline practice includes answer guidance and is not a secure exam. No separate child account or learner code is needed.</p><p>Three Maths samples are included with an active trial or subscription. Other packs share the same monthly Explorer allowance as English and STEAM. Practice scores are not saved; open-ended work is discussed with an adult. Materials are original enrichment without verified official curriculum codes.</p></details><details class="card"><summary><strong>English Explorers</strong></summary><p>Open Learn &amp; Practise or Teaching Studio, then English Explorers. Choose a class. Read or listen with a teacher, complete picture talk and writing tasks, or answer the four objective digital questions. Print learner sheets and teacher guides separately.</p><p>Three samples are included during an active trial. Subscriber packs share the monthly Explorer allowance with Little Explorers. Speaking and writing are not automatically graded. Printouts show Lesedi copyright and permitted-use terms, without a customer-name licence line.</p></details><details class="card"><summary><strong>Shared Explorer monthly activity allowance</strong></summary><p>Starter includes 5 new subscriber packs per monthly access period; Pro includes 15. School allowances are agreed and configured by Lesedi. Each collection has three trial samples outside the shared paid allowance. Open Little Explorers to see remaining unlocks.</p><p>Confirm Unlock activity to use one slot. Learner and teacher pages share the same unlock. Reopening and reprinting use no extra slots while a paid subscription is active. Unused slots do not carry over. Printouts show Lesedi copyright and a teaching-use notice.</p></details><details class="card"><summary><strong>Little Explorers: picture-based STEAM for Classes 1-3</strong></summary><ol><li>Open STEAM Education, then Little Explorers.</li><li>Choose a class and open an available activity.</li><li>Read the teacher guidance and safety notes before preparing the practical task.</li><li>Print the learner sheet and teacher guide separately.</li></ol><p>Active trials include A Bridge for a Toy Animal, A Shelter for a Toy and A Gentle Watering Tool. Active paid subscribers unlock new packs within their monthly allowance; reopening unlocked packs uses no extra allowance. Practical work is discussed and observed; it is not automatically marked.</p><button type="button" class="btn outline no-print" onclick="go('little-explorers')">Open Little Explorers</button></details><details class="card"><summary><strong>Estimated package prices in another currency</strong></summary><p>Use <b>View estimated price in</b> above the package cards. Choose USD, ZAR, EUR or GBP to see a dated conversion beneath the BWP price, or select BWP only. The same choice is used on package screens and the selected payment total.</p><p>These are reference estimates, not live quotes or new payment methods. Your provider may apply a different rate and fees. Rates older than seven days stop producing estimates until the reference data is updated. Request payment details to confirm how to pay.</p></details><details class="card"><summary><strong>International Resources: South Africa Grade 4 Mathematics</strong></summary><ol><li>Open <b>Teaching Studio → International Resources</b>.</li><li>Choose the <b>South Africa CAPS Grade 4 Mathematics</b> starter lesson.</li><li>Read the lesson plan or answer the digital practice. You may change answers before submitting.</li><li>For paper use, select Printable exercise or Marking guide and use its print button. You can also save a PDF in the print dialog.</li></ol><p>The first resource is a free sample. It covers selected skills, not a complete course. Digital practice scores are shown on the device and are not stored in Results &amp; Analytics.</p><button type="button" class="btn outline no-print" onclick="go('international-resources')">Open International Resources</button></details><details class="card"><summary><strong>International requests, class names and paper sizes</strong></summary><p>Grade, Year, Form and Standard are class-naming systems used in different places. Enter the exact class name used by your school; this does not claim that the levels are equivalent across countries.</p><ol><li>For resources, open Requests, choose Teaching resource / test and enter country, curriculum, class, subject, topic, objectives, marks and preferred format.</li><li>For payment help, choose a package in Packages &amp; Payments, then International payment enquiry. Enter your country and preferred payment method. Review the request and select Send Request.</li><li>For BEC printing, choose A4 or Letter in the Botswana Exam Library before opening a paper or guide. You can also change the size in the print document toolbar. The printable manual has the same toolbar choice.</li><li>Check the browser’s paper setting and preview before printing. Other print tools retain their existing controls; paper-size choice is not yet added to every print screen.</li></ol></details>
+ <div id="manualGuides"><details class="card"><summary><strong>Requests, replies and agent messages</strong></summary><p>Open Requests &amp; Admin Inbox. To apply as an agent or ask about referrals or commission, choose Agent registration / Agent support, add your details and send a subject and message. Then open My Requests &amp; Replies to read the administrator’s answer and send follow-ups in the same conversation. Creating an account or sending this form does not approve an agent.</p><p>Administrators open Admin Inbox, filter Agent registrations &amp; support, open a request, write a reply and choose Send reply. Reply templates fill a draft only. They never send automatically or approve an agent. Use status controls to mark a request awaiting support, replied or closed. A follow-up reopens a closed request.</p><p>Replies appear inside the website, not by email or WhatsApp. Open conversations refresh about every 30 seconds while this page is visible; Refresh conversation checks immediately. Drafts survive switching conversations on the page but clear on sign-out or reload.</p></details><details class="card"><summary><strong>Maths Explorers</strong></summary><p>Open Kids Zone, choose Maths Explorers and select Grade 1, 2 or 3. Each grade has eight packs, including one trial sample. An adult reads prompts and helps with large counters, drawings and practical work. Open a pack, then use its learner sheet, four-question digital self-check or teacher guidance.</p><p>Print learner sheet and teacher guide separately, or download the activity and adult guide for offline use. Offline practice includes answer guidance and is not a secure exam. No separate child account or learner code is needed.</p><p>Three Maths samples are included with an active trial or subscription. Other packs share the same monthly Explorer allowance as English and STEAM. Practice scores are not saved; open-ended work is discussed with an adult. Materials are original enrichment without verified official curriculum codes.</p></details><details class="card"><summary><strong>English Explorers</strong></summary><p>Open Learn &amp; Practise or Teaching Studio, then English Explorers. Choose a class. Read or listen with a teacher, complete picture talk and writing tasks, or answer the four objective digital questions. Print learner sheets and teacher guides separately.</p><p>Three samples are included during an active trial. Subscriber packs share the monthly Explorer allowance with Little Explorers. Speaking and writing are not automatically graded. Printouts show Lesedi copyright and permitted-use terms, without a customer-name licence line.</p></details><details class="card"><summary><strong>Shared Explorer monthly activity allowance</strong></summary><p>Starter includes 5 new subscriber packs per monthly access period; Pro includes 15. School allowances are agreed and configured by Lesedi. Each collection has three trial samples outside the shared paid allowance. Open Little Explorers to see remaining unlocks.</p><p>Confirm Unlock activity to use one slot. Learner and teacher pages share the same unlock. Reopening and reprinting use no extra slots while a paid subscription is active. Unused slots do not carry over. Printouts show Lesedi copyright and a teaching-use notice.</p></details><details class="card"><summary><strong>Little Explorers: picture-based STEAM for Classes 1-3</strong></summary><ol><li>Open STEAM Education, then Little Explorers.</li><li>Choose a class and open an available activity.</li><li>Read the teacher guidance and safety notes before preparing the practical task.</li><li>Print the learner sheet and teacher guide separately.</li></ol><p>Active trials include A Bridge for a Toy Animal, A Shelter for a Toy and A Gentle Watering Tool. Active paid subscribers unlock new packs within their monthly allowance; reopening unlocked packs uses no extra allowance. Practical work is discussed and observed; it is not automatically marked.</p><button type="button" class="btn outline no-print" onclick="go('little-explorers')">Open Little Explorers</button></details><details class="card"><summary><strong>Estimated package prices in another currency</strong></summary><p>Use <b>View estimated price in</b> above the package cards. Choose USD, ZAR, EUR or GBP to see a dated conversion beneath the BWP price, or select BWP only. The same choice is used on package screens and the selected payment total.</p><p>These are reference estimates, not live quotes or new payment methods. Your provider may apply a different rate and fees. Rates older than seven days stop producing estimates until the reference data is updated. Request payment details to confirm how to pay.</p></details><details class="card"><summary><strong>International Resources: South Africa Grade 4 Mathematics</strong></summary><ol><li>Open <b>Teaching Studio → International Resources</b>.</li><li>Choose the <b>South Africa CAPS Grade 4 Mathematics</b> starter lesson.</li><li>Read the lesson plan or answer the digital practice. You may change answers before submitting.</li><li>For paper use, select Printable exercise or Marking guide and use its print button. You can also save a PDF in the print dialog.</li></ol><p>The first resource is a free sample. It covers selected skills, not a complete course. Digital practice scores are shown on the device and are not stored in Results &amp; Analytics.</p><button type="button" class="btn outline no-print" onclick="go('international-resources')">Open International Resources</button></details><details class="card"><summary><strong>International requests, class names and paper sizes</strong></summary><p>Grade, Year, Form and Standard are class-naming systems used in different places. Enter the exact class name used by your school; this does not claim that the levels are equivalent across countries.</p><ol><li>For resources, open Requests, choose Teaching resource / test and enter country, curriculum, class, subject, topic, objectives, marks and preferred format.</li><li>For payment help, choose a package in Packages &amp; Payments, then International payment enquiry. Enter your country and preferred payment method. Review the request and select Send Request.</li><li>For BEC printing, choose A4 or Letter in the Botswana Exam Library before opening a paper or guide. You can also change the size in the print document toolbar. The printable manual has the same toolbar choice.</li><li>Check the browser’s paper setting and preview before printing. Other print tools retain their existing controls; paper-size choice is not yet added to every print screen.</li></ol></details>
 <details class="card"><summary><strong>International users: set your country and use your own curriculum</strong></summary><ol><li>Sign in, open My Dashboard and find Teaching Preferences.</li><li>Select your country, or Other and enter its name. Choose Other / Use my own curriculum for curricula outside the Botswana option.</li><li>Enter the curriculum name, preferred class label and teaching language, then save.</li><li>Open a custom lesson plan, scheme or test draft. Use My teaching preferences to fill its country/curriculum fields, then enter the actual class level and objectives.</li><li>Paste lesson objectives in the existing outcomes field. In schemes, enter Topic | Code | Objective lines, keeping codes unchanged. Review the resulting weekly outcomes.</li><li>Saved custom lesson plans and test drafts retain their curriculum context. Existing ready-made BEC and STEAM collections keep their original labels.</li></ol><p>The interface remains English. Language preferences do not translate content. Prices are in BWP (Botswana pula); request payment instructions for supported methods. If you need a resource for another curriculum, send a website request with its country, curriculum, level, subject and topic.</p></details>
  <details class="card" open><summary><strong>Get started: register, sign in and find your tools</strong></summary><ol><li>Select <b>Create account</b>. Enter your details, choose the account type that describes you and complete registration.</li><li>If email confirmation is requested, open the confirmation email and follow its instructions. Check your spam folder if it has not arrived.</li><li>Use <b>Sign in</b> with your registered email and password. Use the password reset option if needed.</li><li>Open the left menu to choose a tool. On a small screen, open the menu first. Your dashboard shows the package and usage information available for your account.</li><li>A lock or <b>Members - Subscribe to unlock</b> means that item needs an eligible active package. Trial access does not unlock every resource.</li></ol><button type="button" class="btn outline no-print" onclick="go('account')">Open Customer Login</button></details>
  <details class="card"><summary><strong>Choose the correct route: pasted text, PDF, Word or photo</strong></summary><table style="width:100%;border-collapse:collapse"><thead><tr><th>What you have</th><th>Where to start</th><th>What to do</th></tr></thead><tbody><tr><td>Questions already copied as text</td><td>Examination Studio</td><td>Paste the complete numbered paper into Question text, then select Import numbered questions.</td></tr><tr><td>A PDF document</td><td>Softcopy Converter</td><td>Choose the PDF, then Read and extract document. Use Run OCR on every PDF page if scanned pages are not being read properly.</td></tr><tr><td>A Word document</td><td>Softcopy Converter</td><td>Choose a DOCX file, extract the text and review it.</td></tr><tr><td>A photo or scanned image</td><td>Softcopy Converter</td><td>Choose a clear JPG, PNG or WebP image. Extract and review the OCR text.</td></tr><tr><td>Notes for a lesson or scheme</td><td>Softcopy Converter or the relevant planning tool</td><td>Paste reviewed source text or extract a document, choose your purpose and continue with the selected tool.</td></tr><tr><td>No questions prepared</td><td>Test &amp; Examination Bank, Botswana Exam Library or Quick Class Exercises</td><td>Search the available ready-made resources for your level, subject and topic.</td></tr></tbody></table><p><strong>You do not need to paste a whole paper one question at a time.</strong> Number each main question clearly, keep answer options with their question, and review the results after importing.</p></details>
@@ -992,7 +1004,7 @@ function openPrintableTest(){
  requestAnimationFrame(()=>heading.scrollIntoView({block:'start'}));
 }
 function lesediNavGroup(id){if(id==='english-explorers'||id==='little-explorers'||id==='maths-explorers')return 'kids-zone';const groups={"teaching-hub": ["lesson-packs", "lesson", "scheme", "quick-exercises", "notes-bank", "resources", "international-resources", "international-place-value"], "test-bank": ["offline-centre", "exam", "ready-made-tests", "botswana-exams", "take-exam", "analytics"], "learning-hub": ["learning-notes", "subject-notes"], "messages-hub": ["requests", "feedback"]};return Object.keys(groups).find(key=>groups[key].includes(id))||id;}
-function showLesediSection(id){if(id==='maths-explorers')window.loadMathsExplorers?.();if(id==='learner-access')window.loadLesediLearnerAccess?.();if(id==='offline-centre')window.loadLesediOfflineCentre?.();if(id==='lesson-packs')window.loadLesediLessonPacks?.();if(id==='english-explorers')window.loadEnglishExplorers?.();if(id==='little-explorers')window.loadLesediExplorers?.();document.body.classList.toggle('lesedi-account-page',id==='account');if(id==='writing-marker')window.dispatchEvent(new Event('lesedi-writing-open'));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===lesediNavGroup(id)));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id)}
+function showLesediSection(id){if(id==='requests')window.loadLesediRequests?.();if(id==='maths-explorers')window.loadMathsExplorers?.();if(id==='learner-access')window.loadLesediLearnerAccess?.();if(id==='offline-centre')window.loadLesediOfflineCentre?.();if(id==='lesson-packs')window.loadLesediLessonPacks?.();if(id==='english-explorers')window.loadEnglishExplorers?.();if(id==='little-explorers')window.loadLesediExplorers?.();document.body.classList.toggle('lesedi-account-page',id==='account');if(id==='writing-marker')window.dispatchEvent(new Event('lesedi-writing-open'));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===lesediNavGroup(id)));if(id==='library'){renderLibrary();loadCloudResources();loadCloudFiles();}if(id==='lesson')renderPlans();if(id==='notes-bank')loadNotesBank();if(id==='home')refreshStats();if(id==='payments')loadPaymentHistory();if(id==='botswana-exams')loadPublishedPractice();if(id==='owner-banks')readOwnerBank(0);if(id==='feedback'||id==='professional-forum')refreshCommunity(id)}
 const lesediNavigation = window.history;
 const lesediBack = document.getElementById('lesediBack');
 function lesediSectionFromUrl() {
@@ -4087,24 +4099,97 @@ if ('serviceWorker' in navigator) {
 </script>
 <script>
 (() => {
- const form = document.getElementById('requestForm');
- const status = document.getElementById('requestStatus');
- const mine = document.getElementById('myRequestList');
- const inbox = document.getElementById('adminRequestList');
- const panel = document.getElementById('adminRequestPanel');
- const send = form.querySelector('button');
- const filter = document.getElementById('adminRequestFilter');
- const count = document.getElementById('adminRequestCount');
- let adminRows = [];
- const isPackage = row => row.subject.startsWith('Package request · ');
- function renderInbox() {
-   const choice = filter.value;
-   const rows = choice === 'all' ? adminRows : adminRows.filter(row => isPackage(row) === (choice === 'packages'));
-   count.textContent = rows.length + ' shown · ' + adminRows.filter(isPackage).length + ' package requests among the latest ' + adminRows.length + ' requests';
-   render(inbox, rows, true);
+ 'use strict';
+ const get=id=>document.getElementById(id);
+ const form=get('requestForm'),status=get('requestStatus'),mine=get('myRequestList'),inbox=get('adminRequestList'),panel=get('adminRequestPanel');
+ const send=get('requestSendButton'),filter=get('adminRequestFilter'),count=get('adminRequestCount');
+ const drafts=new Map(),pending=new Map();let account=null,epoch=0,view=0,isAdmin=false,active=null,messages=new Map(),oldest=null,hasOlder=false;
+ const offsets={mine:0,admin:0},tickets={mine:0,admin:0};let searchTimer;
+ const uid=()=>typeof cloudUser!=='undefined'?cloudUser?.id:null;
+ const key=(user,id)=>user+':'+id;
+ const text=(tag,value,cls)=>{const el=document.createElement(tag);el.textContent=value;if(cls)el.className=cls;return el;};
+ const date=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?'':d.toLocaleString('en-BW',{timeZone:'Africa/Gaborone'});};
+ const failure=e=>e?.code==='PGRST202'?'The conversation update is not installed yet. Please ask Lesedi support to finish the inbox update.':(e?.message||'Could not connect. Please try again.');
+ const stateLabel=s=>({open:'Awaiting support',answered:'Support replied',closed:'Closed'}[s]||s);
+ function stash(){if(active&&account)drafts.set(key(account,active.id),get('requestReplyBody').value);}
+ function reset(){stash();epoch++;view++;account=uid();isAdmin=false;active=null;messages.clear();drafts.clear();pending.clear();panel.hidden=true;get('requestConversation').hidden=true;get('requestConversationMessages').replaceChildren();get('requestConversationTitle').textContent='';get('requestConversationMeta').textContent='';get('requestThreadStatus').textContent='';get('requestAdminTools').hidden=true;get('requestReplyTemplateLabel').hidden=true;get('requestReplyTemplate').value='';get('requestReplyBody').value='';get('requestReplyStatus').textContent='';mine.replaceChildren();inbox.replaceChildren();count.textContent='';get('myRequestCount').textContent='';offsets.mine=offsets.admin=0;}
+ function sync(){if(account!==uid())reset();return account;}
+ async function rpc(name,args={}){if(!lesediAuthClient)throw Error('Account connection is unavailable. Reload and sign in.');const r=await lesediAuthClient.rpc(name,args);if(r.error)throw r.error;return r.data;}
+ function render(target,rows,staff){target.replaceChildren();if(!rows.length){target.append(text('p','No requests match this view.'));return;}
+  for(const row of rows){const card=text('article','','request-list-card');const open=text('button',row.subject,'request-open');open.type='button';open.onclick=()=>openConversation(String(row.id));
+   card.append(open,text('p',(staff?(row.sender_email||row.sender_id)+' · ':'')+date(row.updated_at||row.created_at),'small'));
+   card.append(text('p',stateLabel(row.status)+' · '+Number(row.reply_count||0)+' replies'+(Number(row.unread_count)>0?' · '+row.unread_count+' unread':''),'request-meta'));
+   if(Number(row.unread_count)>0)card.classList.add('request-unread');target.append(card);
+  }
  }
- filter.onchange = renderInbox;
- function openRequest(subject, message) {
+ async function loadList(staff=false,quiet=false){const user=sync(),which=staff?'admin':'mine',target=staff?inbox:mine,token=++tickets[which],generation=epoch;
+  if(!user){if(!staff)target.textContent='Sign in to view your requests and replies.';return;}
+  if(staff&&!isAdmin)return;
+  const args={p_admin:staff,p_query:staff?get('adminRequestSearch').value.trim():'',p_kind:staff?filter.value:'all',p_status:staff?get('adminRequestState').value:get('myRequestState').value,p_offset:offsets[which],p_limit:30};
+  if(!quiet)target.textContent='Loading conversations…';
+  try{const data=await rpc('lesedi_request_inbox',args);if(user!==uid()||generation!==epoch||token!==tickets[which])return;
+   if(!data||!Array.isArray(data.requests))throw Error('Could not read the inbox. Please refresh.');
+   if(!staff){isAdmin=!!data.is_admin;panel.hidden=!isAdmin;}
+   if(data.requests.length===0&&offsets[which]>0){offsets[which]=Math.max(0,offsets[which]-30);return loadList(staff,quiet);}
+   render(target,data.requests,staff);
+   const label=get(staff?'adminRequestCount':'myRequestCount');label.textContent=(data.total?offsets[which]+1:0)+'–'+(offsets[which]+data.requests.length)+' of '+data.total+' conversations'+(Number(data.unread_threads)>0?' · '+data.unread_threads+' with unread messages':'');
+   get(staff?'adminRequestPrev':'myRequestPrev').disabled=offsets[which]===0;get(staff?'adminRequestNext':'myRequestNext').disabled=!data.has_more;
+   if(!staff&&isAdmin)await loadList(true,quiet);
+  }catch(e){if(user!==uid()||generation!==epoch||token!==tickets[which])return;target.textContent=failure(e);}
+ }
+ async function refreshAll(quiet=false){return loadList(false,quiet);}
+ function sortedMessages(){return [...messages.values()].sort((a,b)=>BigInt(a.id)<BigInt(b.id)?-1:BigInt(a.id)>BigInt(b.id)?1:0);}
+ function renderConversation(data,older=false){const r=data.request;isAdmin=!!data.is_admin;get('requestConversationTitle').textContent=r.subject;
+  get('requestConversationMeta').textContent=(isAdmin?(r.sender_email||r.sender_id)+' · ':'')+date(r.created_at)+' · '+stateLabel(r.status);
+  const area=get('requestConversationMessages'),oldHeight=area.scrollHeight,oldScroll=area.scrollTop,nearEnd=oldHeight-oldScroll-area.clientHeight<80;
+  for(const item of data.messages)messages.set(String(item.id),item);
+  const ordered=sortedMessages();area.replaceChildren();
+  const original=text('article','','request-bubble request-customer');original.append(text('strong',r.sender_id===uid()?'Your original request':'Customer request'),text('p',r.message),text('small',date(r.created_at)));area.append(original);
+  for(const item of ordered){const bubble=text('article','',item.author_role==='admin'?'request-bubble request-support':'request-bubble request-customer');bubble.append(text('strong',item.author_role==='admin'?'Lesedi support':item.sender_id===uid()?'You':'Customer'),text('p',item.body),text('small',date(item.created_at)));area.append(bubble);}
+  if(older){area.scrollTop=oldScroll+(area.scrollHeight-oldHeight);hasOlder=!!data.has_older;oldest=data.oldest_id;}
+  else {if(nearEnd||active?.first){area.scrollTop=area.scrollHeight;}if(!oldest){oldest=data.oldest_id;hasOlder=!!data.has_older;}}
+  get('requestOlderReplies').hidden=!hasOlder;get('requestAdminTools').hidden=!isAdmin;get('requestReplyTemplateLabel').hidden=!isAdmin;get('requestConversationState').value=r.status;
+  get('requestClosedNote').hidden=r.status!=='closed';if(active)active.first=false;
+ }
+ async function fetchConversation(older=false,quiet=false){const user=sync();if(!user||!active)return;const id=active.id,token=view,generation=epoch;
+  if(!quiet)get('requestThreadStatus').textContent=older?'Loading earlier replies…':'Loading conversation…';
+  try{const data=await rpc('lesedi_request_conversation',{p_request:id,p_before:older?oldest:null,p_limit:50});if(user!==uid()||generation!==epoch||token!==view||id!==active?.id)return;
+   if(!data?.request||!Array.isArray(data.messages))throw Error('Could not read this conversation.');
+   renderConversation(data,older);get('requestThreadStatus').textContent='';
+   if(!older&&!document.hidden){const list=data.messages;const seen=list.length?String(list[list.length-1].id):'0';try{await rpc('lesedi_mark_request_read',{p_request:id,p_seen_reply:seen});}catch{if(id===active?.id)get('requestThreadStatus').textContent='Messages loaded. Read status could not be updated.';}}
+  }catch(e){if(user===uid()&&generation===epoch&&token===view)get('requestThreadStatus').textContent=failure(e);}
+ }
+ async function openConversation(id){const user=sync();if(!user){status.textContent='Sign in to view messages.';return;}stash();view++;active={id:String(id),first:true};messages=new Map();oldest=null;hasOlder=false;get('requestConversation').hidden=false;get('requestConversationMessages').replaceChildren();get('requestReplyBody').value=drafts.get(key(user,id))||'';get('requestReplyTemplate').value='';get('requestReplyStatus').textContent='';get('requestReplySend').disabled=false;get('requestReplySend').textContent='Send reply';get('requestConversation').scrollIntoView({block:'start'});await fetchConversation();await refreshAll(true);}
+ get('requestReplyBody').oninput=stash;
+ get('requestReplyForm').onsubmit=async event=>{event.preventDefault();const user=sync();if(!user||!active){get('requestReplyStatus').textContent='Open a request after signing in.';return;}
+  const id=active.id,draftKey=key(user,id),body=get('requestReplyBody').value.trim();if(!body||body.length>3000){get('requestReplyStatus').textContent='Enter a reply of 1 to 3000 characters.';return;}
+  let attempt=pending.get(draftKey);if(attempt?.sending)return;if(!attempt||attempt.body!==body){attempt={body,client:crypto.randomUUID(),sending:false};pending.set(draftKey,attempt);}attempt.sending=true;
+  get('requestReplySend').disabled=true;get('requestReplyStatus').textContent='Sending reply…';
+  try{const result=await rpc('lesedi_reply_site_request',{p_request:id,p_body:body,p_client_key:attempt.client});if(user!==uid())return;if(!result?.sent)throw Error('The reply was not confirmed. Retry with the same draft.');pending.delete(draftKey);
+   if(active?.id===id){if(get('requestReplyBody').value.trim()===body){get('requestReplyBody').value='';drafts.delete(draftKey);}else stash();get('requestReplyStatus').textContent='Reply sent. It is available in this conversation.';await fetchConversation(false,true);}
+   else if(drafts.get(draftKey)?.trim()===body)drafts.delete(draftKey);
+   await refreshAll(true);
+  }catch(e){if(user===uid()&&active?.id===id)get('requestReplyStatus').textContent=failure(e)+' Your draft is still here; you can retry.';}
+  finally{attempt.sending=false;if(user===uid()&&active?.id===id)get('requestReplySend').disabled=false;}
+ };
+ get('requestFocusReply').onclick=()=>{get('requestReplyForm').scrollIntoView({block:'start'});get('requestReplyBody').focus({preventScroll:true});};
+ get('requestRefreshConversation').onclick=async()=>{await fetchConversation();await refreshAll(true);};
+ get('requestOlderReplies').onclick=()=>fetchConversation(true);
+ get('requestHideConversation').onclick=()=>{stash();view++;active=null;get('requestConversation').hidden=true;};
+ get('requestSaveState').onclick=async()=>{const user=sync();if(!user||!active||!isAdmin)return;const id=active.id;get('requestSaveState').disabled=true;
+  try{await rpc('lesedi_set_request_status',{p_request:id,p_status:get('requestConversationState').value});if(user!==uid()||active?.id!==id)return;get('requestReplyStatus').textContent='Request status updated.';await fetchConversation(false,true);await refreshAll(true);}
+  catch(e){if(user===uid()&&active?.id===id)get('requestReplyStatus').textContent=failure(e);}
+  finally{get('requestSaveState').disabled=false;}
+ };
+ const templates={received:'Thank you for your agent application. We have received it and will review it. Please confirm your full name, phone number and town if you have not already provided them. Registration is subject to admin approval.',details:'Thank you for contacting Lesedi. Please send your full name, phone number, town and the details of your agent enquiry so we can assist you.',support:'Thank you for your message. Please describe the issue and include the relevant reference, without sending passwords or private banking credentials.'};
+ get('requestReplyTemplate').onchange=()=>{const value=templates[get('requestReplyTemplate').value];if(!value)return;if(get('requestReplyBody').value.trim()&&!confirm('Replace your current reply draft with this template?')){get('requestReplyTemplate').value='';return;}get('requestReplyBody').value=value;stash();get('requestReplyBody').focus();get('requestReplyTemplate').value='';};
+ const reloadAdmin=()=>{offsets.admin=0;loadList(true);};filter.onchange=reloadAdmin;get('adminRequestState').onchange=reloadAdmin;
+ get('adminRequestSearch').oninput=()=>{clearTimeout(searchTimer);searchTimer=setTimeout(reloadAdmin,300);};
+ get('myRequestState').onchange=()=>{offsets.mine=0;loadList(false);};
+ get('loadMyRequests').onclick=()=>refreshAll();get('loadAdminRequests').onclick=()=>loadList(true);
+ for(const staff of [false,true])for(const direction of [-1,1]){const id=(staff?'adminRequest':'myRequest')+(direction<0?'Prev':'Next');get(id).onclick=()=>{const which=staff?'admin':'mine';offsets[which]=Math.max(0,offsets[which]+direction*30);loadList(staff);};}
+ // Existing package/resource shortcuts are installed below.
+  function openRequest(subject, message) {
    document.querySelector('[data-page="requests"]').click();
    if (!form.elements.subject.value && !form.elements.message.value) {
      form.elements.subject.value = subject;
@@ -4159,97 +4244,26 @@ if ('serviceWorker' in navigator) {
  };
  document.getElementById('requestQuickExercise').onclick = () => openRequest('Quick Class Exercise', quickRequestText());
  document.getElementById('requestCustomDigitalTest').onclick = () => openRequest('Custom Digital Test', 'Please prepare a test using the country, curriculum, class and topic details entered below.');
- function render(target, rows, admin) {
-   target.replaceChildren();
-   if (!rows.length) target.textContent = 'No requests yet.';
-   for (const row of rows) {
-     const article = document.createElement('article');
-     article.className = 'card';
-     const title = document.createElement('h4');
-     title.textContent = row.subject;
-     const date = document.createElement('p');
-     date.textContent = new Date(row.created_at).toLocaleString('en-BW', {timeZone:'Africa/Gaborone'}) + (admin ? ' · ' + (row.sender_email || row.sender_id) : '');
-     const message = document.createElement('p');
-     message.style.whiteSpace = 'pre-wrap';
-     message.style.overflowWrap = 'anywhere';
-     message.textContent = row.message;
-     article.append(title, date, message);
-     target.append(article);
-   }
- }
- async function load(admin) {
-   const target = admin ? inbox : mine;
-   const userId = cloudUser?.id;
-   if (!userId) {
-     if (!admin) target.textContent = 'Sign in to view your requests.';
-     return;
-   }
-   if (!admin || !panel.hidden) target.textContent = 'Loading requests…';
-   try {
-     const {data,error} = await lesediAuthClient.rpc('lesedi_list_site_requests', {p_admin:admin});
-     if (cloudUser?.id !== userId) return;
-     if (error || data === null) {
-       if (admin) panel.hidden = true;
-       else target.textContent = 'Could not load requests. Please try again.';
-       return;
-     }
-     if (admin) {
-       adminRows = data;
-       panel.hidden = false;
-       renderInbox();
-     } else {
-       render(target,data,false);
-     }
-   } catch {
-     if (cloudUser?.id === userId && (!admin || !panel.hidden)) target.textContent = 'Could not load requests. Please try again.';
-   }
- }
- form.onsubmit = async event => {
-   event.preventDefault();
-   if (send.disabled) return;
-   const userId = cloudUser?.id;
-   if (!userId) {
-     status.textContent = 'Sign in to send a request.';
-     return;
-   }
-   const subject = form.elements.subject.value.trim();
-   const message = buildInternationalRequestMessage(form.elements.message.value.trim());
-   if (!subject || !message) {
-     status.textContent = 'Enter a subject and message.';
-     return;
-   }
-   if(message.length>3000){status.textContent='Your message and request details exceed 3,000 characters. Please shorten them before sending.';return;}
-   send.disabled = true;
-   status.textContent = 'Sending request…';
-   try {
-     const {error} = await lesediAuthClient.rpc('lesedi_send_site_request', {p_subject:subject,p_message:message});
-     if (cloudUser?.id !== userId) return;
-     if (error) throw error;
-     form.reset();
-     refreshInternationalRequestFields();
-     status.textContent = 'Request sent to the Lesedi admin.';
-     await load(false);
-   } catch {
-     if (cloudUser?.id === userId) status.textContent = 'Could not send the request. Please try again.';
-   } finally {
-     send.disabled = false;
-   }
+
+ form.onsubmit=async event=>{event.preventDefault();const user=sync();if(send.disabled)return;if(!user){status.textContent='Sign in to send a request.';return;}
+  let subject=form.elements.subject.value.trim();const raw=form.elements.message.value.trim();const message=buildInternationalRequestMessage(raw);
+  if(get('requestDetailsKind').value==='agent'&&!subject.toLowerCase().includes('agent'))subject='Agent support · '+subject;
+  if(!subject||!raw){status.textContent='Enter a subject and message.';return;}
+  if(subject.length>120||message.length>3000){status.textContent='Keep the subject within 120 characters and the message plus details within 3,000.';return;}
+  send.disabled=true;status.textContent='Sending request…';
+  try{const id=await rpc('lesedi_send_site_request',{p_subject:subject,p_message:message});if(user!==uid())return;
+   if(form.elements.message.value.trim()===raw){form.reset();refreshInternationalRequestFields();}
+   status.textContent='Request sent. Open My Requests below to read replies and follow up.';offsets.mine=0;await refreshAll(true);if(id!=null)await openConversation(String(id));
+  }catch(e){if(user===uid())status.textContent=failure(e)+' Your message has not been cleared.';}
+  finally{send.disabled=false;}
  };
- document.getElementById('loadMyRequests').onclick = () => load(false);
- document.getElementById('loadAdminRequests').onclick = () => load(true);
- document.querySelector('[data-page="requests"]').addEventListener('click', () => { load(false); load(true); });
- lesediAuthClient?.auth.onAuthStateChange(event => {
-   if (event === 'SIGNED_OUT') {
-     form.reset();
-     status.textContent = '';
-     mine.replaceChildren();
-     inbox.replaceChildren();
-     count.textContent = '';
-     adminRows = [];
-     panel.hidden = true;
-   }
- });
+ get('requestAgentShortcut').onclick=()=>{get('requestDetailsKind').value='agent';refreshInternationalRequestFields();if(!form.elements.subject.value.trim())form.elements.subject.value='Agent registration';if(!form.elements.message.value.trim())form.elements.message.value='I would like to register as a Lesedi agent. Please review my application and explain the next steps.';form.scrollIntoView({block:'start'});form.elements.message.focus();};
+ window.loadLesediRequests=()=>refreshAll();
+ lesediAuthClient?.auth.onAuthStateChange((event,session)=>{const next=session?.user?.id||null;if(event==='SIGNED_OUT'||(account&&next!==account)){reset();form.reset();refreshInternationalRequestFields();status.textContent='';}if(event!=='SIGNED_OUT'&&get('requests').classList.contains('active'))setTimeout(()=>refreshAll(),0);});
+ setInterval(()=>{if(!document.hidden&&uid()&&get('requests').classList.contains('active')){refreshAll(true);if(active)fetchConversation(false,true);}},30000);
+ if(get('requests').classList.contains('active'))refreshAll();
 })();
+
 </script>
 <script>
 (() => {
@@ -4871,7 +4885,9 @@ loadTeachingPreferences();
 <script id="lesedi-international-requests-print">
 function refreshInternationalRequestFields(){
  const kind=$('requestDetailsKind').value;
- $('internationalRequestDetails').hidden=kind==='general';
+ $('internationalRequestDetails').hidden=kind==='general'||kind==='agent';
+ $('agentRequestDetails').hidden=kind!=='agent';
+ if(kind==='agent'&&!document.getElementById('requestForm').elements.subject.value.trim())document.getElementById('requestForm').elements.subject.value='Agent registration / support';
  $('resourceRequestDetails').hidden=kind!=='resource';
  $('paymentRequestDetails').hidden=kind!=='payment';
 }
@@ -4883,6 +4899,7 @@ function fillInternationalRequestPreferences(){
  $('rqClass').placeholder='For example, '+p.class_label+' 6';
 }
 function prepareInternationalRequest(subject){
+ if(subject.toLowerCase().includes('agent')){$('requestDetailsKind').value='agent';refreshInternationalRequestFields();return;}
  const payment=subject.startsWith('Package request · ');
  $('requestDetailsKind').value=payment?'payment':'resource';refreshInternationalRequestFields();
  if(cloudUser)fillInternationalRequestPreferences();
@@ -4893,6 +4910,7 @@ function prepareInternationalRequest(subject){
 }
 function buildInternationalRequestMessage(message){
  const kind=$('requestDetailsKind').value;if(kind==='general')return message;
+ if(kind==='agent'){const labels={registration:'New agent registration',support:'Agent support',referral:'Customer referral enquiry',commission:'Commission / payout enquiry'};const lines=['Agent enquiry: '+labels[$('rqAgentPurpose').value]];for(const [label,id] of [['Full name','rqAgentName'],['Phone','rqAgentPhone'],['Town / area','rqAgentTown'],['Agent / referral reference','rqAgentReference']]){const v=$(id).value.trim();if(v)lines.push(label+': '+v);}return message+'\n\nAgent details\n'+lines.join('\n');}
  const lines=[];const add=(label,id)=>{const v=$(id).value.trim();if(v)lines.push(label+': '+v);};
  add('Country','rqCountry');add('Curriculum / syllabus','rqCurriculum');
  if(kind==='payment'){add('Preferred payment method','rqPaymentMethod');lines.push('Quoted currency: BWP (Botswana pula)');}
@@ -5184,5 +5202,7 @@ window.downloadOfflineLibraryFromWebsite=async()=>{const s=document.getElementBy
  cards();if(get('maths-explorers').classList.contains('active'))catalogue();
 })();
 </script>
-</body>
+<style id="lesedi-request-replies-style">
+#requests [hidden]{display:none!important}#requests .request-controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}#requests input,#requests select,#requests textarea{font-family:inherit;font-size:1.05rem;min-height:48px;width:100%;max-width:100%}#requests textarea{line-height:1.6;resize:vertical}#requests .request-actions{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.request-list-card{padding:16px;margin:12px 0;border:1px solid #cbd7e9;border-radius:14px;background:#fff}.request-unread{border-left:6px solid #d7a500;background:#fffbed}.request-open{display:block;text-align:left;border:0;background:transparent;color:#153c7e;font:inherit;font-weight:750;cursor:pointer;overflow-wrap:anywhere;padding:4px 0}.request-meta{font-weight:650}.request-messages{max-height:65vh;min-height:150px;overflow:auto;padding:12px;border:1px solid #cbd7e9;border-radius:16px;background:#f2f6fc}.request-bubble{padding:16px;margin:10px 0;border-radius:14px;max-width:95%;overflow-wrap:anywhere}.request-bubble p{white-space:pre-wrap}.request-customer{background:#fff;border:1px solid #cad7e9}.request-support{background:#e1edff;border:1px solid #a7c2eb;margin-left:auto}.request-bubble small{color:#43566d}.request-open:focus-visible{outline:3px solid #d7a500;outline-offset:4px}#requestReplyForm{margin-top:20px}#requestAdminTools{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin-top:16px}@media(max-width:700px){#requests .request-controls{grid-template-columns:1fr}.request-bubble{max-width:100%}#requests .request-actions button{flex:1 1 160px}}
+</style></body>
 </html>
