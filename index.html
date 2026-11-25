@@ -182,7 +182,25 @@ body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:non
 <div class="card"><h3>My Customers</h3><p>Customers appear after confirming your code. Names appear only with customer permission. Contact details and passwords stay private.</p><label class="field">Find a customer<input id="agentCustomerSearch" type="search" placeholder="Search name, member reference, package or payment progress"></label><p id="agentCustomerCount" class="small"></p><div id="agentReferrals"></div><p class="small">Last package purchased and payment progress describe verified payments credited to you, not the customer's current subscription access. Commission is the total earned for this customer after refund adjustments, before payouts. Historical commissions remain in the ledger if a referral changes.</p></div>
 <div class="card"><h3>Verified payment commissions</h3><p class="small">Latest 100 entries. Balance totals include all entries.</p><div id="agentCommissions"></div></div><div class="card"><h3>Commission and payout ledger</h3><p class="small">Latest 100 entries. Refunds and payouts are shown as negative amounts.</p><div id="agentLedger"></div></div></div>
 <p><button type="button" class="btn outline" id="agentRefresh">Refresh Agent Centre</button><button type="button" class="btn outline" onclick="go('requests')">Agent messages &amp; support</button></p>
-<div class="card" id="agentAdmin" hidden><h3>Admin: Agent applications and earnings</h3><div class="agent-controls"><label class="field">Search name, email, town or code<input id="agentAdminSearch" type="search" maxlength="120"></label><label class="field">Application status<select id="agentAdminFilter"><option value="all">All</option><option value="pending">Pending</option><option value="needs_info">Needs information</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="suspended">Suspended</option></select></label></div><button type="button" class="btn outline" id="agentImportInbox">Import new inbox applications</button><p id="agentAdminCount"></p><div id="agentAdminList"></div><div class="agent-actions"><button type="button" class="btn outline" id="agentAdminPrev">Previous agents</button><button type="button" class="btn outline" id="agentAdminNext">More agents</button></div>
+<div class="card" id="agentAdmin" hidden><h3>Admin: Agent applications and earnings</h3>
+<details id="agentAddPanel" hidden>
+  <summary><strong>Add agent</strong></summary>
+  <form id="agentAddForm">
+    <div class="two-col">
+      <label class="field">Full name<input name="full_name" required minlength="2" maxlength="120"></label>
+      <label class="field">Lesedi account email<input name="email" type="email" required maxlength="254"></label>
+      <label class="field">Phone number<input name="phone" type="tel" required minlength="3" maxlength="40"></label>
+      <label class="field">Town / area<input name="town" required minlength="2" maxlength="100"></label>
+      <label class="field">Decision<select name="decision"><option value="pending">Save as pending</option><option value="approve">Approve now</option></select></label>
+    </div>
+    <p class="small">If the email has no verified Lesedi account yet, ask the agent to sign up with this email, verify it and open Agent Centre to link their registration.</p>
+    <button type="submit" class="btn primary">Save agent</button>
+  </form>
+  <p id="agentAddStatus" role="status"></p>
+  <h4>Waiting for an account</h4>
+  <div id="agentWaitingList"></div>
+</details>
+<div class="agent-controls"><label class="field">Search name, email, town or code<input id="agentAdminSearch" type="search" maxlength="120"></label><label class="field">Application status<select id="agentAdminFilter"><option value="all">All</option><option value="pending">Pending</option><option value="needs_info">Needs information</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="suspended">Suspended</option></select></label></div><button type="button" class="btn outline" id="agentImportInbox">Import new inbox applications</button><p id="agentAdminCount"></p><div id="agentAdminList"></div><div class="agent-actions"><button type="button" class="btn outline" id="agentAdminPrev">Previous agents</button><button type="button" class="btn outline" id="agentAdminNext">More agents</button></div>
 <form id="agentReviewForm" hidden><h4>Review selected application</h4><p id="agentReviewIdentity"></p><p id="agentReviewApplicationNote" class="agent-prewrap"></p><div id="agentReviewSource"></div><div class="two-col"><label class="field">Full name<input id="agentReviewName" maxlength="120"></label><label class="field">Phone<input id="agentReviewPhone" maxlength="40"></label><label class="field">Town<input id="agentReviewTown" maxlength="100"></label><label class="field">Decision<select id="agentReviewDecision"><option value="approved">Approve / Reactivate</option><option value="needs_info">Request more information</option><option value="rejected">Decline application</option><option value="suspended">Suspend future activity</option></select></label></div><label class="field">Decision note<textarea id="agentDecisionNote" required maxlength="1000" rows="3"></textarea></label><button type="submit" class="btn primary">Save agent decision</button><p class="small">This changes agent status; it does not send an inbox message. Use the original conversation to explain your decision.</p></form>
 <hr><h3>Customer-confirmed referral / dispute resolution</h3><form id="agentAssignForm"><div class="two-col"><label class="field">Customer account email<input id="agentAssignEmail" type="email" required></label><label class="field">Confirmed agent code<input id="agentAssignCode" required maxlength="13"></label></div><label class="field">Customer confirmation and correction reason<textarea id="agentAssignReason" required minlength="12" maxlength="1000" rows="3" placeholder="Record where and when the customer confirmed the referring agent."></textarea></label><label class="agent-check"><input id="agentAssignConfirmed" type="checkbox" required> I obtained the customer’s confirmation.</label><button type="submit" class="btn outline">Record confirmed referral</button><p class="small">Changes apply to future verified payments. Existing commission remains with its original payment record; no second agent is paid for that same payment.</p></form>
 <hr><h3>Open payout requests</h3><div id="agentAdminPayouts"></div><form id="agentPayForm" hidden><h4 id="agentPayTitle"></h4><label class="field">Completed transfer reference<input id="agentPayReference" maxlength="120"></label><label class="field">Admin note / reason<textarea id="agentPayNote" maxlength="1000" rows="3"></textarea></label><label class="agent-check"><input id="agentPayConfirmed" type="checkbox"> I have already transferred this exact amount and checked the recipient.</label><div class="agent-actions"><button type="submit" class="btn primary">Record completed payout</button><button type="button" class="btn outline" id="agentDeclinePayout">Decline request with reason</button></div><p class="small">These controls record your action. The website does not transfer funds.</p></form>
@@ -5227,6 +5245,7 @@ window.downloadOfflineLibraryFromWebsite=async()=>{const s=document.getElementBy
 (()=>{'use strict';const $=id=>document.getElementById(id),user=()=>typeof cloudUser!=='undefined'?cloudUser?.id:null;
 let account=null,version=0,profile=null,adminData=null,reviewId=null,payId=null,offset=0,dirty=false,searchTimer,customerRows=[],consentDirty=false;const attempts=new Map();
 const money=n=>'P'+Number(n||0).toLocaleString('en-BW',{minimumFractionDigits:2,maximumFractionDigits:2});const date=s=>s?new Date(s).toLocaleString('en-BW',{timeZone:'Africa/Gaborone'}):'—';const label=s=>({pending:'Pending review',needs_info:'More information requested',approved:'Approved',rejected:'Application declined',suspended:'Suspended',needs_review:'Needs review',requested:'Requested',paid:'Paid',cancelled:'Cancelled',declined:'Declined'}[s]||s);
+const referralLink=code=>'https://educationlesedihub.com/?section=agent-centre&ref='+encodeURIComponent(code);
 const say=(s,bad=false)=>{$('agentCentreStatus').textContent=s;$('agentCentreStatus').className=bad?'notice error':'notice';};
 const el=(tag,value)=>{const n=document.createElement(tag);n.textContent=value;return n;};const button=(title,fn)=>{const b=el('button',title);b.type='button';b.className='btn outline';b.onclick=fn;return b;};
 function table(parent,headers,rows){parent.replaceChildren();if(!rows.length){parent.append(el('p','No records yet.'));return;}const wrap=document.createElement('div');wrap.className='agent-table-wrap';const t=document.createElement('table');t.className='agent-table';const head=document.createElement('thead'),hr=document.createElement('tr');headers.forEach(x=>hr.append(el('th',x)));head.append(hr);t.append(head);const body=document.createElement('tbody');for(const row of rows){const tr=document.createElement('tr');row.forEach(x=>tr.append(el('td',String(x??''))));body.append(tr);}t.append(body);wrap.append(t);parent.append(wrap);}
@@ -5234,26 +5253,122 @@ const fail=e=>e?.code==='PGRST202'?'The Agent Centre update is not installed yet
 async function rpc(name,args={}){const r=await lesediAuthClient.rpc(name,args);if(r.error)throw r.error;return r.data;}
 async function action(name,payload,form,success){const uid=user();if(!uid){go('account');return;}const buttons=form?.tagName==='BUTTON'?[form]:[...(form?.querySelectorAll('button')||[])];buttons.forEach(b=>b.disabled=true);say('Saving…');try{const result=await rpc('lesedi_agent_command',{p_action:name,p_payload:payload});if(uid!==user())return;if(!result?.ok)throw Error('The action was not confirmed. Please refresh.');if(success)success(result);await load();say(name==='import'?result.imported+' existing inbox application(s) imported.':'Saved.');}catch(e){if(uid===user())say(fail(e),true);}finally{buttons.forEach(b=>b.disabled=false);}}
 function sourceButton(target,id){target.replaceChildren();if(!id)return;target.append(button('Open original inbox application',()=>{if(window.openLesediRequestConversation)window.openLesediRequestConversation(id);else{go('requests');}}));}
-function clear(){version++;account=user();profile=null;adminData=null;reviewId=null;payId=null;offset=0;dirty=false;attempts.clear();customerRows=[];consentDirty=false;$('agentCustomerSearch').value='';$('agentNamePreference').reset();$('agentNamePreference').hidden=true;$('agentShareName').checked=false;$('agentCustomerDisplayName').value='';$('agentConsentShare').checked=false;$('agentConsentName').value='';$('agentSignedIn').hidden=true;$('agentSignedOut').hidden=!!user();$('agentAdmin').hidden=true;$('agentDashboard').hidden=true;for(const id of ['agentAdminList','agentAdminPayouts','agentAudit','agentAdminCommissions','agentPayouts','agentCommissions','agentLedger','agentReferrals','agentBalances','agentOriginalLink','agentReviewSource'])$(id).replaceChildren();$('agentReviewForm').hidden=true;$('agentPayForm').hidden=true;for(const id of ['agentApplicationForm','agentPayoutForm','agentAssignForm','agentRefundForm','agentReviewForm','agentPayForm','agentConfirmReferral'])$(id).reset();$('agentShareLink').value='';$('agentCodeText').textContent='';$('agentMyReferrer').textContent='';$('agentPayTitle').textContent='';$('agentBalanceNote').textContent='';$('agentApplicationState').textContent='';$('agentReviewNote').textContent='';$('agentReviewApplicationNote').textContent='';$('agentReviewIdentity').textContent='';}
+function clear(){version++;account=user();$('agentAddPanel').hidden=true;$('agentAddPanel').open=false;$('agentAddForm').reset();$('agentAddStatus').textContent='';$('agentWaitingList').replaceChildren();profile=null;adminData=null;reviewId=null;payId=null;offset=0;dirty=false;attempts.clear();customerRows=[];consentDirty=false;$('agentCustomerSearch').value='';$('agentNamePreference').reset();$('agentNamePreference').hidden=true;$('agentShareName').checked=false;$('agentCustomerDisplayName').value='';$('agentConsentShare').checked=false;$('agentConsentName').value='';$('agentSignedIn').hidden=true;$('agentSignedOut').hidden=!!user();$('agentAdmin').hidden=true;$('agentDashboard').hidden=true;for(const id of ['agentAdminList','agentAdminPayouts','agentAudit','agentAdminCommissions','agentPayouts','agentCommissions','agentLedger','agentReferrals','agentBalances','agentOriginalLink','agentReviewSource'])$(id).replaceChildren();$('agentReviewForm').hidden=true;$('agentPayForm').hidden=true;for(const id of ['agentApplicationForm','agentPayoutForm','agentAssignForm','agentRefundForm','agentReviewForm','agentPayForm','agentConfirmReferral'])$(id).reset();$('agentShareLink').value='';$('agentCodeText').textContent='';$('agentMyReferrer').textContent='';$('agentPayTitle').textContent='';$('agentBalanceNote').textContent='';$('agentApplicationState').textContent='';$('agentReviewNote').textContent='';$('agentReviewApplicationNote').textContent='';$('agentReviewIdentity').textContent='';}
 function renderSelf(data){profile=data.application;const a=profile,b=data.balance;$('agentSignedIn').hidden=false;$('agentSignedOut').hidden=true;$('agentAdmin').hidden=!data.is_admin;
 $('agentMyReferrer').textContent=data.referrer_code?'Your recorded referring agent: '+data.referrer_code:'If an approved agent introduced you, confirm their code here.';$('agentConfirmReferral').hidden=!!data.referrer_code;
 $('agentApplicationHeading').textContent=a?'Your agent application / account':'Become an Agent';$('agentApplicationState').textContent=a?'Status: '+label(a.status):'You have not submitted an agent application yet.';$('agentReviewNote').textContent=a?.review_note?'Admin note: '+a.review_note:'';sourceButton($('agentOriginalLink'),a?.source_request_id);
 if(!dirty){$('agentFullName').value=a?.full_name||'';$('agentPhone').value=a?.phone||'';$('agentTown').value=a?.town||'';$('agentApplicationNote').value=a?.application_note||'';$('agentPolicyAcknowledged').checked=!!a?.policy_ack_at;}$('agentApplicationDetails').open=!a||a.status==='needs_info';
 $('agentDashboard').hidden=!a?.agent_code;if(!a?.agent_code)return;
-$('agentCodeText').textContent='Your agent code: '+a.agent_code+' · '+label(a.status);$('agentShareLink').value='https://educationlesedihub.com/?section=agent-centre&ref='+encodeURIComponent(a.agent_code);
+$('agentCodeText').textContent='Your agent code: '+a.agent_code+' · '+label(a.status);$('agentShareLink').value=referralLink(a.agent_code);
 const area=$('agentBalances');area.replaceChildren();for(const [title,value]of [['Net commission earned',b.net_earned],['Paid out',b.paid],['Payout requested',b.reserved],['Available to request',b.available]]){const card=document.createElement('div');card.className='card';card.append(el('strong',title),el('p',money(value)));area.append(card);}
 $('agentBalanceNote').textContent=Number(b.refund_offset)>0?'Refund adjustment to offset against future earnings: '+money(b.refund_offset):Number(b.request_shortfall)>0?'A refund reduced the balance behind your open request. Contact support or cancel it and request the corrected amount.':'Commission appears only after an eligible customer payment has been verified.';
 $('agentPayoutAmount').max=String(b.available);$('agentPayoutAmount').placeholder=money(b.available);$('agentPayoutForm').hidden=a.status!=='approved';const payouts=$('agentPayouts');payouts.replaceChildren();for(const p of data.payouts){const card=document.createElement('article');card.className='card';card.append(el('h4',money(p.amount_bwp)+' · '+label(p.status)),el('p',p.method+' · '+date(p.created_at)),el('p',p.payment_reference?'Transfer reference: '+p.payment_reference:p.review_note||p.note||''));if(['requested','needs_review'].includes(p.status))card.append(button('Cancel this payout request',()=>{if(confirm('Cancel this unpaid request and release its reservation?'))action('cancel',{payout_id:p.id},card);}));payouts.append(card);}
  table($('agentCommissions'),['Payment ID','Package','Paid','Refunded','Net commission','Recorded'],data.commissions.map(c=>[c.payment_id,c.package,money(c.gross_bwp),money(c.refunded_bwp),money(c.net_commission_bwp),date(c.created_at)]));table($('agentLedger'),['Entry','Amount','Note','Date'],data.ledger.map(l=>[l.kind,money(l.amount_bwp),l.note,date(l.created_at)]));}
 function selectAgent(a){reviewId=a.user_id;$('agentReviewForm').hidden=false;$('agentReviewIdentity').textContent=a.full_name+' · '+a.email+' · '+label(a.status);$('agentReviewApplicationNote').textContent=a.application_note;$('agentReviewName').value=a.full_name;$('agentReviewPhone').value=a.phone;$('agentReviewTown').value=a.town;$('agentReviewDecision').value=a.status==='approved'?'suspended':'approved';$('agentDecisionNote').value='';sourceButton($('agentReviewSource'),a.source_request_id);$('agentReviewForm').scrollIntoView({block:'start'});}
-function renderAdmin(data){adminData=data;$('agentAdminCount').textContent=(data.total?offset+1:0)+'–'+(offset+data.agents.length)+' of '+data.total+' applications';$('agentAdminPrev').disabled=offset===0;$('agentAdminNext').disabled=!data.has_more;const list=$('agentAdminList');list.replaceChildren();for(const a of data.agents){const card=document.createElement('article');card.className='card';card.append(el('h4',a.full_name||'Imported application — details needed'),el('p',a.email+' · '+a.town+' · '+label(a.status)),el('p',(a.agent_code||'No agent code yet')+' · Available '+money(a.balance.available)),button('Review application / account',()=>selectAgent(a)));list.append(card);}if(!data.agents.length)list.append(el('p','No applications match these filters.'));
+function renderAdmin(data){adminData=data;$('agentAdminCount').textContent=(data.total?offset+1:0)+'–'+(offset+data.agents.length)+' of '+data.total+' applications';$('agentAdminPrev').disabled=offset===0;$('agentAdminNext').disabled=!data.has_more;const list=$('agentAdminList');list.replaceChildren();for(const a of data.agents){const card=document.createElement('article');card.className='card';card.append(el('h4',a.full_name||'Imported application — details needed'),el('p',a.email+' · '+a.town+' · '+label(a.status)),el('p',(a.agent_code||'No agent code yet')+' · Available '+money(a.balance.available)),button('Review application / account',()=>selectAgent(a)));
+ if(a.status==='approved'&&a.agent_code){
+  const link=referralLink(a.agent_code);
+  const copyField=document.createElement('input');
+  copyField.type='url';
+  copyField.readOnly=true;
+  copyField.value=link;
+  copyField.setAttribute('aria-label','Referral link for '+a.full_name);
+  card.append(copyField,button('Copy referral link',async()=>{
+   try{await navigator.clipboard.writeText(link);say('Referral link copied.');}
+   catch{copyField.select();say('Copy the selected referral link.');}
+  }));
+ }
+ list.append(card);}if(!data.agents.length)list.append(el('p','No applications match these filters.'));
 const payoutList=$('agentAdminPayouts');payoutList.replaceChildren();for(const p of data.payouts){const card=document.createElement('article');card.className='card';card.append(el('h4',(p.full_name||p.agent_code)+' · '+money(p.amount_bwp)),el('p',label(p.status)+' · '+p.method+' · '+date(p.created_at)),el('p',p.note||p.review_note||''),button('Review payout request',()=>{payId=p.id;$('agentPayForm').hidden=false;$('agentPayTitle').textContent='Record '+money(p.amount_bwp)+' to '+p.full_name+' · '+p.method;$('agentPayReference').value='';$('agentPayNote').value='';$('agentPayConfirmed').checked=false;$('agentPayForm').scrollIntoView({block:'start'});}));payoutList.append(card);}if(!data.payouts.length)payoutList.append(el('p','No open payout requests.'));
 table($('agentAdminCommissions'),['Payment ID','Customer email','Agent','Package','Payment','Refunded','Net commission'],data.recent_commissions.map(c=>[c.payment_id,c.customer_email,c.agent_code,c.package,money(c.gross_bwp),money(c.refunded_bwp),money(c.net_commission_bwp)]));table($('agentAudit'),['Action','Agent reference','Details','Date'],data.audit.map(a=>[a.action,a.agent_id||'—',JSON.stringify(a.details),date(a.created_at)]));}
 const packageName=s=>({'individual':'Lesedi Starter','professional':'Lesedi Pro','school':'Lesedi School','bec-practice':'BEC Practice'}[s]||s||'—');
 function renderCustomers(){const q=$('agentCustomerSearch').value.trim().toLowerCase();const rows=customerRows.filter(r=>[r.name,r.member,packageName(r.last_package),r.status].join(' ').toLowerCase().includes(q));$('agentCustomerCount').textContent=customerRows.length+' confirmed customer(s) · '+rows.length+' shown';table($('agentReferrals'),['Customer','Member reference','Confirmed','Last package purchased','Payment progress','Last verified payment','Payment date','Net commission earned'],rows.map(r=>[r.name||'Name not shared',r.member,date(r.confirmed_at),packageName(r.last_package),r.status,r.last_payment==null?'—':money(r.last_payment),date(r.last_payment_at),money(r.commission)]));}
 function renderCustomerData(data){customerRows=data.customers||[];renderCustomers();const p=data.preference;$('agentNamePreference').hidden=!p;if(p&&!consentDirty){$('agentConsentShare').checked=!!p.share_name;$('agentConsentName').value=p.display_name||'';}$('agentConsentAgent').textContent=p?'Your preference for agent '+p.agent_code:'';}
 async function saveConsent(code,share,name,form){const uid=user();if(!uid){go('account');return;}if(code&&!$('agentReferralConfirmed').checked){say('Confirm that this agent introduced you.',true);return;}const buttons=[...form.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);try{const r=await rpc('lesedi_agent_customer_consent',{p_code:code,p_share:share,p_display_name:name});if(uid!==user())return;if(!r?.ok)throw Error('Could not confirm the update.');consentDirty=false;await load();say('Agent and name preference saved.');try{sessionStorage.removeItem('lesedi_agent_ref')}catch{}}catch(e){if(uid===user())say(fail(e),true);}finally{buttons.forEach(b=>b.disabled=false);}}
-async function load(){const uid=user();if(account!==uid)clear();if(!uid){say('Create an account or sign in to continue.');return;}const token=++version;try{const data=await rpc('lesedi_agent_portal');if(uid!==user()||token!==version)return;renderSelf(data);const customers=await rpc('lesedi_agent_customers');if(uid!==user()||token!==version)return;renderCustomerData(customers);if(data.is_admin){const admin=await rpc('lesedi_agent_admin',{p_query:$('agentAdminSearch').value.trim(),p_status:$('agentAdminFilter').value,p_offset:offset});if(uid!==user()||token!==version)return;renderAdmin(admin);}say('Agent Centre loaded.');}catch(e){if(uid===user()&&token===version)say(fail(e),true);}}
+async function load(){
+ const uid=user();
+ if(account!==uid)clear();
+ if(!uid){say('Create an account or sign in to continue.');return;}
+ const token=++version;
+ const current=()=>uid===user()&&token===version;
+ try{
+  let registrationError;
+  try{await rpc('lesedi_agent_registration',{p_action:'link'});}
+  catch(e){if(e.code!=='PGRST202')registrationError=e;}
+  if(!current())return;
+  const data=await rpc('lesedi_agent_portal');
+  if(!current())return;
+  renderSelf(data);
+  const customers=await rpc('lesedi_agent_customers');
+  if(!current())return;
+  renderCustomerData(customers);
+  if(data.is_admin){
+   const admin=await rpc('lesedi_agent_admin',{p_query:$('agentAdminSearch').value.trim(),p_status:$('agentAdminFilter').value,p_offset:offset});
+   if(!current())return;
+   renderAdmin(admin);
+   try{
+    const waiting=await rpc('lesedi_agent_registration',{p_action:'list'});
+    if(!current())return;
+    renderWaitingAgents(waiting);
+    $('agentAddPanel').hidden=false;
+   }catch(e){
+    if(!current())return;
+    $('agentAddPanel').hidden=true;
+    if(e.code!=='PGRST202')registrationError=e;
+   }
+  }
+  say(registrationError?fail(registrationError):'Agent Centre loaded.',!!registrationError);
+ }catch(e){if(current())say(fail(e),true);}
+}
+
+function renderWaitingAgents(rows){
+ const list=$('agentWaitingList');
+ list.replaceChildren();
+ if(!rows.length)list.append(el('p','No registrations waiting for an account.'));
+ for(const row of rows){
+  const card=el('article','');
+  card.className='card';
+  card.append(el('h5',row.full_name),el('p',row.email+' · '+row.phone+' · '+row.town),
+   el('p',row.approve_on_link?'Approval recorded. Waiting for a verified account.':'Pending review after the account is linked.'));
+  const remove=button('Remove registration',()=>{
+   if(confirm('Remove this waiting registration?'))saveAgentRegistration('remove',{email:row.email},remove,
+    ()=> 'Waiting registration removed.');
+  });
+  card.append(remove);
+  list.append(card);
+ }
+}
+
+async function saveAgentRegistration(actionName,details,control,success){
+ const uid=user();
+ const status=$('agentAddStatus');
+ control.disabled=true;
+ status.textContent='Saving…';
+ try{
+  const result=await rpc('lesedi_agent_registration',{p_action:actionName,p_details:details});
+  if(uid!==user())return;
+  status.textContent=success(result);
+  await load();
+ }catch(e){if(uid===user())status.textContent=fail(e);}
+ finally{control.disabled=false;}
+}
+
+$('agentAddForm').onsubmit=event=>{
+ event.preventDefault();
+ const form=event.currentTarget;
+ const fields=Object.fromEntries(new FormData(form));
+ saveAgentRegistration('save',{
+  full_name:fields.full_name,email:fields.email,phone:fields.phone,town:fields.town,
+  approve:fields.decision==='approve'
+ },form.querySelector('button'),result=>{
+  form.reset();
+  if(result.status==='waiting')return 'Saved. Waiting for the agent to verify this email and open Agent Centre.';
+  $('agentAdminSearch').value=fields.email.trim();
+  $('agentAdminFilter').value='all';
+  offset=0;
+  return result.status==='approved'?'Agent approved. Their referral code and link are available below.':'Agent saved as pending.';
+ });
+};
 $('agentApplicationForm').oninput=()=>dirty=true;$('agentApplicationForm').onsubmit=e=>{e.preventDefault();action('apply',{full_name:$('agentFullName').value.trim(),phone:$('agentPhone').value.trim(),town:$('agentTown').value.trim(),note:$('agentApplicationNote').value.trim(),acknowledged:$('agentPolicyAcknowledged').checked},e.currentTarget,()=>dirty=false);};
 $('agentConfirmReferral').onsubmit=e=>{e.preventDefault();saveConsent($('agentReferralCode').value.trim(),$('agentShareName').checked,$('agentCustomerDisplayName').value.trim(),e.currentTarget);};
 $('agentNamePreference').oninput=()=>consentDirty=true;
