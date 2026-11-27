@@ -1,5 +1,5 @@
 "use strict";
-const cacheName="lesedi-school-results-shell-v1";
+const cacheName="lesedi-school-results-shell-v2";
 const shell=new URL("./index.html",self.location).href;
 const script=new URL("./pilot.js",self.location).href;
 self.addEventListener("install",event=>{

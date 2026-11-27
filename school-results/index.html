@@ -40,7 +40,7 @@
 <div class="scroll"><table id="marks"></table></div><p role="status" id="status"></p>
 </section>
 <section><h2>Results analysis</h2><div class="fields"><label>View<select id="scope"><option value="class">Current class</option><option value="gender">Boys and girls</option><option value="streams">Compare streams in this level</option><option value="subject">Subject across the school</option><option value="school">Whole school</option></select></label><label id="subjectControl" hidden>Subject<select id="analysisSubject"></select></label><button id="printAnalysis">Print analysis</button></div><p class="note" id="analysisNote"></p><div class="scroll"><table id="summary"></table></div></section>
-<section><h2>Learner report cards</h2><p>Print completed report cards or choose Save as PDF in the print dialog.</p><div class="actions"><select id="learner" aria-label="Learner report to print"></select><button id="print">Print report cards</button></div></section>
+<section aria-labelledby="meetingTitle"><h2 id="meetingTitle">Analysis meeting presentation</h2><p>Prepare the currently open class for a meeting. The presentation includes class totals, subject results and the boys and girls breakdown.</p><label>Discussion points and next steps (optional)<textarea id="meetingNotes" rows="4" maxlength="1200" placeholder="What went well? Which subjects need follow-up?"></textarea></label><div class="actions"><button type="button" id="meetingPdf">Print or save as PDF</button><button type="button" class="secondary" id="meetingDeck">Download offline slideshow</button></div><p class="note">The presentation contains summary figures. Open the downloaded slideshow in a browser. Use the arrow keys to move through slides.</p><p id="meetingStatus" role="status"></p></section><section><h2>Learner report cards</h2><p>Print completed report cards or choose Save as PDF in the print dialog.</p><div class="actions"><select id="learner" aria-label="Learner report to print"></select><button id="print">Print report cards</button></div></section>
 <div hidden class="actions"><button id="backup">Download backup</button><label>Restore backup<input id="restore" type="file" accept=".json,application/json"></label></div>
 <footer>Education Lesedi Scholars Hub · Lesedi Platforms Proprietary Limited · educationlesedihub.com</footer>
 </div></main><div id="reports"></div>
@@ -319,6 +319,50 @@ $("print").onclick=()=>{
 };
 const PILOT_URL='https://ajcsojkyhivjjmomtufs.supabase.co';
 const PILOT_KEY='sb_publishable_i9mPavGeRvUhgt2oTlh1-g_2JslOkNp';
+
+function meetingContent() {
+ if(!data.school.trim() || !current?.rows.length) throw Error("Enter your school name and add pupils before preparing a presentation.");
+ const results = (name,subject=null,sex) => [name,...getSummary(resultSeries([current],subject,sex),cutoffs())];
+ const classResult=results("Overall class");
+ const subjectResults=subjects(current.standard).map(name=>results(name,name));
+ const groupResults=["Boy","Girl",""].map(group=>results(group==="Boy"?"Boys":group==="Girl"?"Girls":"Unrecorded",null,group));
+ const table=(headers,rows)=>"<table><thead><tr>"+headers.map(value=>"<th>"+esc(value)+"</th>").join("")+"</tr></thead><tbody>"+rows.map(row=>"<tr>"+row.map((value,i)=>(i===0?"<th scope=row>":"<td>")+esc(value)+(i===0?"</th>":"</td>")).join("")+"</tr>").join("")+"</tbody></table>";
+ const shortRow=row=>[row[0],row[2],row[9],row[11],row[13],row[1],row[14],row[15]];
+ const shortHeaders=["Result","Assessed","AB %","ABC %","DE %","Absent","Pending","Invalid"];
+ const notes=$("meetingNotes").value.trim();
+ const context=esc(data.school)+" · "+esc(levelName(data.standard))+" · Stream "+esc(current.name)+" · Term "+esc(data.term)+" · "+esc(data.year);
+ const slide=(title,body)=>'<article class="meeting-page"><p class="meeting-context">'+context+'</p><h1>'+esc(title)+'</h1>'+body+printBrand()+'</article>';
+ const slides=[slide("Class results overview",'<p>Pupils on the class list: <strong>'+current.rows.length+'</strong></p>'+table(shortHeaders,[shortRow(classResult)])+
+   '<h2>Overall grade counts</h2>'+table(["A","B","C","D","E","AB","ABC","DE"],[[...classResult.slice(3,8),classResult[8],classResult[10],classResult[12]]])+
+   '<p>Percentages use assessed results only. An overall grade requires a numeric mark in every subject.</p>')];
+ for(let i=0;i<subjectResults.length;i+=8) slides.push(slide(i?"Subject results (continued)":"Subject results",table(shortHeaders,subjectResults.slice(i,i+8))));
+ slides.push(slide("Boys and girls · overall results",table(shortHeaders,groupResults)+'<p>Unrecorded includes pupils without a recorded boy or girl category.</p>'));
+ if(notes) slides.push(slide("Discussion points and next steps",'<p class="meeting-notes">'+esc(notes)+'</p>'));
+ return slides.join("");
+}
+const meetingCss = ".meeting-page{font:16px system-ui;color:#102b5c;background:white;padding:24px}.meeting-page h1{font-size:2rem;margin:10px 0 18px}.meeting-context{border-bottom:3px solid #ffbd00;padding-bottom:8px}.meeting-page table{width:100%;border-collapse:collapse}.meeting-page th,.meeting-page td{padding:8px;border-bottom:1px solid #cad4e4;text-align:left}.meeting-page thead th{background:#102b5c;color:white}.meeting-page tbody th{white-space:normal}.meeting-notes{white-space:pre-wrap;overflow-wrap:anywhere}.print-brand{display:flex;align-items:center;gap:12px;margin-top:20px;padding-top:8px;border-top:1px solid #102b5c;font-size:10px}.print-brand img{width:25mm;height:auto}@media print{.meeting-page{break-after:page;padding:10px}.meeting-page:last-child{break-after:auto}.meeting-page tr{break-inside:avoid}.meeting-page thead{display:table-header-group}.meeting-controls{display:none}.meeting-page[hidden]{display:block!important}}";
+function prepareMeeting(action){
+ return ()=>{
+  try{
+   action(meetingContent());
+   $("meetingStatus").textContent="";
+  }catch(error){$("meetingStatus").textContent=error.message;}
+ };
+}
+$("meetingPdf").onclick=prepareMeeting(body=>{
+ const style=document.createElement("style");
+ style.textContent=meetingCss;
+ $("reports").innerHTML=body;
+ $("reports").prepend(style);
+ window.print();
+});
+$("meetingDeck").onclick=prepareMeeting(body=>{
+ const controls='<nav class="meeting-controls" aria-label="Slides"><button id="previous">Previous</button> <span id="slideNumber" aria-live="polite"></span> <button id="next">Next</button></nav>';
+ const script=`const slides=Array.from(document.querySelectorAll('article'));let page=0;const prev=document.getElementById('previous'),next=document.getElementById('next');function show(){slides.forEach((s,i)=>s.hidden=i!==page);prev.disabled=page===0;next.disabled=page===slides.length-1;document.getElementById('slideNumber').textContent=(page+1)+' / '+slides.length;}prev.onclick=()=>{if(page>0)page--;show();};next.onclick=()=>{if(page<slides.length-1)page++;show();};window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')prev.click();if(e.key==='ArrowRight')next.click();});show();`;
+ const deck='<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Education Lesedi Class Results Presentation</title><style>'+meetingCss+'body{font:16px system-ui;background:#eef2f9;margin:0}.meeting-controls{padding:12px;text-align:center}.meeting-page{max-width:1100px;margin:12px auto;overflow-x:auto}.meeting-controls button{font:inherit;padding:6px 12px}</style>'+controls+body+'<scr'+'ipt>'+script+'</scr'+'ipt></html>';
+ download("lesedi-class-results-presentation.html",deck,"text/html");
+});
+
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./pilot.js"></script>
