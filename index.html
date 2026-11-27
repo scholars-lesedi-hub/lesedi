@@ -270,7 +270,7 @@ body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:non
  <p><strong>One month free when subscriptions open.</strong> Try 5 lesson plans, 20 new questions per subject, 2 published assessments and 1 scheme of work. No automatic charge. Trial activation and limits are pending.</p><div class="three-col">
  <article class="price-card"><h3>Lesedi Starter</h3><p>Ready-made lesson packs: the complete sample pack only. Upgrade to Pro for future subscriber packs.</p><div class="price" data-fx-bwp="50" data-fx-from="false" data-fx-period="/ month">BWP 50 <small>/ month</small></div><p>For one individual. Limited practice options.</p><p><strong>Explorer collections:</strong> unlock 5 new subscriber activity packs shared across Little Explorers, English Explorers and Maths Explorers per monthly access period, plus the sample activities.</p><button type="button" class="btn outline" onclick="showPackagePayment('individual')">Payment options</button><p><button type="button" class="btn primary" data-package-request="individual">Request This Package</button></p></article>
  <article class="price-card"><p class="plan-popular">Most Popular</p><h3>Lesedi Pro</h3><p><strong>Offline School Results:</strong> download the Excel workbook to enter class marks and print learner reports without internet.</p><p>Ready-made lesson packs: 5 new topic packs per monthly access period, separate from Explorer allowances. One sample is available now; more packs are being prepared.</p><div class="price" data-fx-bwp="150" data-fx-from="false" data-fx-period="/ month">BWP 150 <small>/ month</small></div><p>For one tutor, teacher or other individual. Create tests and exams, mark work and use assessment tools.</p><p><strong>Explorer collections:</strong> unlock 15 new subscriber activity packs shared across Little Explorers, English Explorers and Maths Explorers per monthly access period, plus the sample activities.</p><button type="button" class="btn outline" onclick="showPackagePayment('professional')">Payment options</button><p><button type="button" class="btn primary" data-package-request="professional">Request This Package</button></p></article>
- <article class="price-card"><h3>Lesedi School</h3><p><strong>Offline School Results:</strong> download the Excel workbook to enter class marks and print learner reports without internet.</p><p>Ready-made lesson packs: agreed school allowance. Contact Lesedi before unlocking future subscriber packs.</p><div class="price" data-fx-bwp="800" data-fx-from="true" data-fx-period="/ month">From BWP 800 <small>/ month</small></div><p>For the whole school. Contact Lesedi for a tailored quote.</p><p><strong>Explorer collections:</strong> shared monthly activity allowance agreed with Lesedi and set for the school account.</p><button type="button" class="btn outline" onclick="showPackagePayment('school')">Payment options</button><p><button type="button" class="btn primary" data-package-request="school">Request This Package</button></p></article>
+ <article class="price-card"><h3>Lesedi School</h3><p><strong>School Results Analysis:</strong> combine class totals, compare results across three terms and print a whole-school report offline. Active School subscribers can download it from My Dashboard.</p><p><strong>Offline School Results:</strong> download the Excel workbook to enter class marks and print learner reports without internet.</p><p>Ready-made lesson packs: agreed school allowance. Contact Lesedi before unlocking future subscriber packs.</p><div class="price" data-fx-bwp="800" data-fx-from="true" data-fx-period="/ month">From BWP 800 <small>/ month</small></div><p>For the whole school. Contact Lesedi for a tailored quote.</p><p><strong>Explorer collections:</strong> shared monthly activity allowance agreed with Lesedi and set for the school account.</p><button type="button" class="btn outline" onclick="showPackagePayment('school')">Payment options</button><p><button type="button" class="btn primary" data-package-request="school">Request This Package</button></p></article>
  </div><article class="price-card"><h3>BEC Practice</h3><div class="price" data-fx-bwp="100" data-fx-from="false" data-fx-period="/ 30 days">BWP 100 <small>/ 30 days</small></div><p>For parents and students. PSLE, JC (JCE) and BGCSE practice only.</p><button type="button" class="btn outline" onclick="showExams('PSLE')">Explore PSLE</button> <button type="button" class="btn outline" onclick="showExams('JCE')">Explore JC</button> <button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore BGCSE</button><button type="button" class="btn outline" onclick="showPackagePayment('bec-practice')">Payment options</button><p><button type="button" class="btn primary" data-package-request="bec-practice">Request This Package</button></p></article>
  <p>Online checkout is pending.</p><button type="button" class="btn outline" onclick="go('payments')">View payment options</button></section>
 <details class="card overview-activity" id="overviewActivity"><summary><strong>My Activity</strong><span>View this device’s saved work</span></summary><p>These counts cover work stored in this browser on this device. They do not represent all work saved to your account.</p><div class="stats"><div class="stat"><div class="number" id="statDocs">0</div><small>Documents processed on this device</small></div><div class="stat"><div class="number" id="statPlans">0</div><small>Saved lesson plans on this device</small></div></div><button class="btn outline" type="button" onclick="go('library')">Open My Library</button></details></section>
@@ -732,7 +732,7 @@ body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:non
     </form>
     <div id="authStatus" class="notice" role="status" aria-live="polite">Choose Sign in or Create account.</div>
   </div>
-  <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3 id="customerDashboardTitle">My Dashboard</h3><p id="authWelcome"></p><p id="authType"></p><div id="customerDashboardLinks" style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0"></div><p class="notice" id="customerDashboardPending"></p><div id="teacherClassResults" hidden></div><section class="card" id="offlineResultsCard" aria-labelledby="offlineResultsTitle" hidden><h3 id="offlineResultsTitle">Offline School Results</h3><p>Download the Excel workbook to enter class marks, calculate results and print learner reports without internet. Save one copy per class and term.</p><button class="btn primary" type="button" id="offlineResultsDownload">Download Excel workbook</button><p id="offlineResultsStatus" role="status"></p></section><section class="card" id="teachingPreferencesPanel" aria-labelledby="teachingPreferencesTitle">
+  <div class="card" id="authSignedIn" style="display:none;margin-top:16px"><h3 id="customerDashboardTitle">My Dashboard</h3><p id="authWelcome"></p><p id="authType"></p><div id="customerDashboardLinks" style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0"></div><p class="notice" id="customerDashboardPending"></p><div id="teacherClassResults" hidden></div><section class="card" id="offlineResultsCard" aria-labelledby="offlineResultsTitle" hidden><h3 id="offlineResultsTitle">Offline School Results</h3><p>Download the Excel workbook to enter class marks, calculate results and print learner reports without internet. Save one copy per class and term.</p><button class="btn primary" type="button" id="offlineResultsDownload">Download Excel workbook</button><p id="offlineResultsStatus" role="status"></p></section><section class="card" id="schoolAnalysisCard" aria-labelledby="schoolAnalysisTitle" hidden><h3 id="schoolAnalysisTitle">School Results Analysis</h3><p>Combine class totals, compare terms and print the headteacher’s report in Excel without internet.</p><button class="btn primary" type="button" id="schoolAnalysisDownload">Download school analysis workbook</button><p id="schoolAnalysisStatus" role="status"></p></section><section class="card" id="teachingPreferencesPanel" aria-labelledby="teachingPreferencesTitle">
 <h3 id="teachingPreferencesTitle">Teaching Preferences</h3>
 <p>Personalise new custom lesson plans, schemes and test drafts. Your settings are saved to your account and can be changed on another device.</p>
 <form id="teachingPreferencesForm">
@@ -762,7 +762,7 @@ body.lesedi-account-page:not(.lesedi-signed-in) #lesediHeaderAccount{display:non
 <section class="page" id="payments"><div class="section-head"><div><h2>Packages &amp; Payments</h2><p>Online checkout is pending.</p></div></div><p><strong>One month free when subscriptions open.</strong> Try 5 lesson plans, 20 new questions per subject, 2 published assessments and 1 scheme of work. No automatic charge. Trial activation and limits are pending.</p><div class="three-col">
  <article class="price-card"><h3>Lesedi Starter</h3><p>Ready-made lesson packs: the complete sample pack only. Upgrade to Pro for future subscriber packs.</p><div class="price" data-fx-bwp="50" data-fx-from="false" data-fx-period="/ month">BWP 50 <small>/ month</small></div><p>For one individual. Limited practice options.</p><p><strong>Explorer collections:</strong> unlock 5 new subscriber activity packs shared across Little Explorers, English Explorers and Maths Explorers per monthly access period, plus the sample activities.</p><button type="button" class="btn outline" onclick="showPackagePayment('individual')">Payment options</button><p><button type="button" class="btn primary" data-package-request="individual">Request This Package</button></p></article>
  <article class="price-card"><p class="plan-popular">Most Popular</p><h3>Lesedi Pro</h3><p><strong>Offline School Results:</strong> download the Excel workbook to enter class marks and print learner reports without internet.</p><p>Ready-made lesson packs: 5 new topic packs per monthly access period, separate from Explorer allowances. One sample is available now; more packs are being prepared.</p><div class="price" data-fx-bwp="150" data-fx-from="false" data-fx-period="/ month">BWP 150 <small>/ month</small></div><p>For one tutor, teacher or other individual. Create tests and exams, mark work and use assessment tools.</p><p><strong>Explorer collections:</strong> unlock 15 new subscriber activity packs shared across Little Explorers, English Explorers and Maths Explorers per monthly access period, plus the sample activities.</p><button type="button" class="btn outline" onclick="showPackagePayment('professional')">Payment options</button><p><button type="button" class="btn primary" data-package-request="professional">Request This Package</button></p></article>
- <article class="price-card"><h3>Lesedi School</h3><p><strong>Offline School Results:</strong> download the Excel workbook to enter class marks and print learner reports without internet.</p><p>Ready-made lesson packs: agreed school allowance. Contact Lesedi before unlocking future subscriber packs.</p><div class="price" data-fx-bwp="800" data-fx-from="true" data-fx-period="/ month">From BWP 800 <small>/ month</small></div><p>For the whole school. Contact Lesedi for a tailored quote.</p><p><strong>Explorer collections:</strong> shared monthly activity allowance agreed with Lesedi and set for the school account.</p><button type="button" class="btn outline" onclick="showPackagePayment('school')">Payment options</button><p><button type="button" class="btn primary" data-package-request="school">Request This Package</button></p></article>
+ <article class="price-card"><h3>Lesedi School</h3><p><strong>School Results Analysis:</strong> combine class totals, compare results across three terms and print a whole-school report offline. Active School subscribers can download it from My Dashboard.</p><p><strong>Offline School Results:</strong> download the Excel workbook to enter class marks and print learner reports without internet.</p><p>Ready-made lesson packs: agreed school allowance. Contact Lesedi before unlocking future subscriber packs.</p><div class="price" data-fx-bwp="800" data-fx-from="true" data-fx-period="/ month">From BWP 800 <small>/ month</small></div><p>For the whole school. Contact Lesedi for a tailored quote.</p><p><strong>Explorer collections:</strong> shared monthly activity allowance agreed with Lesedi and set for the school account.</p><button type="button" class="btn outline" onclick="showPackagePayment('school')">Payment options</button><p><button type="button" class="btn primary" data-package-request="school">Request This Package</button></p></article>
  </div><article class="price-card"><h3>BEC Practice</h3><div class="price" data-fx-bwp="100" data-fx-from="false" data-fx-period="/ 30 days">BWP 100 <small>/ 30 days</small></div><p>For parents and students. PSLE, JC (JCE) and BGCSE practice only.</p><button type="button" class="btn outline" onclick="showExams('PSLE')">Explore PSLE</button> <button type="button" class="btn outline" onclick="showExams('JCE')">Explore JC</button> <button type="button" class="btn outline" onclick="showExams('BGCSE')">Explore BGCSE</button><button type="button" class="btn outline" onclick="showPackagePayment('bec-practice')">Payment options</button><p><button type="button" class="btn primary" data-package-request="bec-practice">Request This Package</button></p></article><div class="card" id="paymentMethods" tabindex="-1"><h3>Payment methods</h3>
 <p id="paymentSelected" role="status">Choose a package above to see payment instructions.</p><p id="lesediPaymentEstimate" class="fx-estimate" role="status" hidden></p>
 <label class="field">Months to pay in advance<select id="paymentMonths"><option value="1">1 month</option><option value="3">3 months</option><option value="6">6 months</option><option value="12">12 months</option></select></label>
@@ -3253,20 +3253,20 @@ async function readOwnerBank(offset){
 $('ownerBankKind').onchange=()=>readOwnerBank(0);
 </script><script>
 
-async function downloadOfflineSchoolResults(){
- const user=cloudUser, button=$('offlineResultsDownload'), status=$('offlineResultsStatus');
+async function downloadResultsWorkbook(button,status,rpc,filename){
+ const user=cloudUser;
  if(!user||button.disabled)return;
  button.disabled=true;
  status.textContent='Preparing your workbook…';
  try{
-  const {data,error}=await lesediAuthClient.rpc('lesedi_download_offline_results');
+  const {data,error}=await lesediAuthClient.rpc(rpc);
   if(cloudUser?.id!==user.id)return;
   if(error||typeof data!=='string'||!data)throw Error('Workbook unavailable');
   const bytes=Uint8Array.from(atob(data),character=>character.charCodeAt(0));
   const url=URL.createObjectURL(new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
   const link=document.createElement('a');
   link.href=url;
-  link.download='Education_Lesedi_Offline_School_Results.xlsx';
+  link.download=filename;
   document.body.append(link);
   link.click();
   link.remove();
@@ -3278,12 +3278,19 @@ async function downloadOfflineSchoolResults(){
   button.disabled=false;
  }
 }
-$('offlineResultsDownload').addEventListener('click',downloadOfflineSchoolResults);
+$('offlineResultsDownload').addEventListener('click',()=>downloadResultsWorkbook(
+ $('offlineResultsDownload'),$('offlineResultsStatus'),'lesedi_download_offline_results','Education_Lesedi_Offline_School_Results.xlsx'
+));
+$('schoolAnalysisDownload').addEventListener('click',()=>downloadResultsWorkbook(
+ $('schoolAnalysisDownload'),$('schoolAnalysisStatus'),'lesedi_download_school_results_analysis','Education_Lesedi_School_Results_Analysis.xlsx'
+));
 
 let usageRequest=0;
 function clearMyUsage(){
  $('offlineResultsCard').hidden=true;
  $('offlineResultsStatus').textContent='';
+ $('schoolAnalysisCard').hidden=true;
+ $('schoolAnalysisStatus').textContent='';
  usageRequest++;
  $('usageStatus').textContent='';
  $('usageItems').replaceChildren();
@@ -3294,6 +3301,8 @@ async function loadMyUsage(){
  const request=++usageRequest,status=$('usageStatus'),list=$('usageItems');
  $('offlineResultsCard').hidden=true;
  $('offlineResultsStatus').textContent='';
+ $('schoolAnalysisCard').hidden=true;
+ $('schoolAnalysisStatus').textContent='';
  status.textContent='Loading package usage…';
  list.replaceChildren();
  const {data,error}=await lesediAuthClient.rpc('lesedi_start_my_trial');
@@ -3301,6 +3310,7 @@ async function loadMyUsage(){
  if(error||!data){status.textContent='Package usage is unavailable. Try again later.';return}
  if(!data.enrolled){status.textContent='No package is active. Contact Lesedi support if you need help.';return}
  $('offlineResultsCard').hidden=!(data.active===true&&['professional','school'].includes(data.plan));
+ $('schoolAnalysisCard').hidden=!(data.active===true&&data.plan==='school');
  const plans={trial:['One-month trial',5,2,20],individual:['Lesedi Starter',10,4,40],professional:['Lesedi Pro',40,15,150],school:['Lesedi School',null,null,null]};
  const [label,lessonLimit,examLimit,questionLimit]=plans[data.plan];
  const date=value=>new Intl.DateTimeFormat('en-BW',{dateStyle:'medium',timeZone:'Africa/Gaborone'}).format(new Date(value));
