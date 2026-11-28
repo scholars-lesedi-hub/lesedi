@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesedi IGCSE Practice | Education Lesedi Scholars Hub</title>
+<style>
+:root { font: 16px/1.6 system-ui, sans-serif; color: #102b5c; background: #f4f7fc; }
+body { margin: 0; }
+main { max-width: 46rem; margin: auto; padding: 1.5rem 1rem 3rem; }
+a { color: #174a99; }
+h1, h2, h3 { line-height: 1.2; }
+section { background: white; border: 1px solid #dce5f1; border-radius: 1rem; padding: clamp(1rem, 4vw, 2rem); margin-top: 1.25rem; }
+label { display: block; font-weight: 650; }
+input { box-sizing: border-box; width: 100%; max-width: 22rem; padding: .65rem; border: 1px solid #637693; border-radius: .35rem; font: inherit; }
+button { border: 1px solid #174a99; border-radius: .4rem; background: #174a99; color: white; padding: .55rem 1rem; font: inherit; cursor: pointer; }
+button.secondary { background: white; color: #174a99; }
+button:disabled { opacity: .5; cursor: default; }
+.actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+:focus-visible { outline: 3px solid #227559; outline-offset: 3px; }
+#message { color: #8d310f; }
+#progress { margin-bottom: .35rem; font-weight: 650; }
+#question-title { margin-top: 0; }
+#subject-sample { font: inherit; max-width: 100%; padding: .4rem; }
+#question-options { white-space: pre-line; }
+#solutions strong { white-space: pre-line; }
+li { margin-bottom: .8rem; }
+
+.print-actions { margin: .75rem 0 1rem; }
+#print-sheet { display: none; }
+@page { size: A4; margin: 16mm; }
+@media print {
+  body { background: white; color: black; font: 11pt/1.4 system-ui, sans-serif; }
+  body > main { display: none; }
+  #print-sheet { display: block; }
+  #print-sheet h1 { margin: .25em 0; font-size: 18pt; }
+  #print-sheet h2 { font-size: 13pt; }
+  #print-sheet header { border-bottom: 1px solid #222; padding-bottom: .5em; }
+  #print-sheet li { margin: 0 0 1em; break-inside: avoid; }
+  #print-sheet .response { margin: .6em 0 0; }
+}
+</style>
+</head>
+<body>
+<main>
+<a href="./?section=test-bank">← Tests &amp; Exams</a>
+<h1>Lesedi IGCSE Practice</h1>
+<p>Original practice for Cambridge IGCSE Mathematics, Biology, Chemistry, Physics and First Language English. For learners following the Cambridge syllabus at school or with a tutor.</p>
+<p><strong>P70 for 30 days when paid access opens.</strong> Choose a free subject sample below.</p>
+<section aria-labelledby="sample-title">
+<h2 id="sample-title">Free subject samples</h2>
+<label for="subject-sample">Choose a subject</label>
+<select id="subject-sample">
+  <option>Mathematics (0580)</option>
+  <option>Biology (0610)</option>
+  <option>Chemistry (0620)</option>
+  <option>Physics (0625)</option>
+  <option>First Language English (0500)</option>
+</select>
+<div class="actions print-actions">
+  <button type="button" class="secondary" id="print-paper">Print question paper / Save PDF</button>
+  <button type="button" class="secondary" id="print-guide">Print answer guide / Save PDF</button>
+</div>
+<p id="sample-description">Five Core non-calculator questions. You can change answers before submitting. Worked solutions appear after submission.</p>
+<div id="english-passage" hidden>
+  <h3>Waiting for the bus</h3>
+  <p>Amantle packed her bag the night before. She arrived while the bus station was still quiet. The timetable had faded in the sun, and she did not want to miss the only morning bus. When the engine finally started, its roar swallowed the chatter on the platform.</p>
+  <details><summary>Optional writing practice and self-check</summary>
+    <p>In 80–120 words, continue the scene from Amantle’s point of view. Use a sound or sight to show how she feels as the bus leaves.</p>
+    <p>Check that you kept the point of view consistent, used a specific sensory detail, and showed her feelings through what she notices or does.</p>
+  </details>
+</div>
+<button type="button" id="start">Start free sample</button>
+<form id="quiz" hidden novalidate>
+<p id="progress"></p>
+<h3 id="question-title" tabindex="-1"></h3>
+<p id="question-options" hidden></p>
+<label for="answer">Your answer</label>
+<input id="answer" type="text" autocomplete="off" spellcheck="false" aria-describedby="question-options hint message">
+<p id="hint"></p>
+<p id="message" role="status"></p>
+<div class="actions">
+<button type="button" class="secondary" id="previous">Previous</button>
+<button type="submit" id="next">Next</button>
+</div>
+</form>
+<div id="results" hidden>
+<h3 id="score" tabindex="-1"></h3>
+<ol id="solutions"></ol>
+<button type="button" class="secondary" id="retry">Try again</button>
+</div>
+<noscript><p>Enable JavaScript to take the sample.</p></noscript>
+</section>
+<p>Independent practice by Education Lesedi Scholars Hub.</p>
+</main>
+<div id="print-sheet"></div>
+<script>
+const mathematics = [
+  { prompt: 'Write 0.375 as a fraction in its simplest form.', hint: 'Enter a simplified fraction, for example 1/2.', key: '3/8', solution: '0.375 = 375/1000. Divide the numerator and denominator by 125 to get 3/8.' },
+  { prompt: 'A school bag costs P240. Its price is reduced by 15%. Find the sale price in pula.', hint: 'Enter the amount in pula.', key: 204, currency: true, solution: '10% of 240 is 24 and 5% is 12. Subtract 36 from 240 to get P204.' },
+  { prompt: 'Solve 4x − 7 = 2x + 11.', hint: 'Enter the value of x.', key: 9, solution: 'Subtract 2x and add 7 to get 2x = 18. Divide by 2 to get x = 9.' },
+  { prompt: 'A straight line passes through (−2, 1) and (4, 10). Find its gradient.', hint: 'Enter a decimal or fraction.', key: 1.5, solution: 'Gradient = change in y ÷ change in x = (10 − 1) ÷ (4 − (−2)) = 9/6 = 3/2.' },
+  { prompt: 'A bag holds 4 blue beads, 3 green beads and 5 yellow beads. One bead is chosen at random. Find the probability that it is not green.', hint: 'Enter a decimal or fraction.', key: 0.75, solution: 'There are 12 beads in total and 9 are not green. The probability is 9/12 = 3/4.' }
+];
+
+const subjectSamples = {
+  'Mathematics (0580)': mathematics,
+  'Biology (0610)': [
+    {"prompt":"Which cell structure controls what enters and leaves the cell?","options":["Cell wall","Cell membrane","Nucleus","Vacuole"],"key":"B","solution":"The cell membrane controls movement into and out of the cell.","hint":"Enter A, B, C or D."},
+    {"prompt":"Which gas is used in photosynthesis?","options":["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],"key":"C","solution":"Plants use carbon dioxide and water to make sugars during photosynthesis.","hint":"Enter A, B, C or D."},
+    {"prompt":"Which tissue carries water from the roots to the leaves?","options":["Xylem","Phloem","Epidermis","Palisade tissue"],"key":"A","solution":"Xylem transports water and mineral ions.","hint":"Enter A, B, C or D."}
+  ],
+  'Chemistry (0620)': [
+    {"prompt":"Which particle determines the atomic number of an element?","options":["Neutron","Electron","Proton","Molecule"],"key":"C","solution":"The atomic number equals the number of protons.","hint":"Enter A, B, C or D."},
+    {"prompt":"Which method separates insoluble sand from water?","options":["Crystallisation","Filtration","Distillation","Chromatography"],"key":"B","solution":"Water passes through the filter paper and the sand stays behind.","hint":"Enter A, B, C or D."},
+    {"prompt":"Which pH indicates an acidic solution?","options":["7","9","12","3"],"key":"D","solution":"A solution with pH below 7 is acidic.","hint":"Enter A, B, C or D."}
+  ],
+  'Physics (0625)': [
+    {"prompt":"A cyclist travels 90 m in 15 s. What is the average speed?","options":["6 m/s","15 m/s","75 m/s","105 m/s"],"key":"A","solution":"Average speed = distance ÷ time = 90 ÷ 15 = 6 m/s.","hint":"Enter A, B, C or D."},
+    {"prompt":"Which process transfers energy from the Sun to Earth?","options":["Conduction","Convection","Evaporation","Radiation"],"key":"D","solution":"Radiation can travel through a vacuum.","hint":"Enter A, B, C or D."},
+    {"prompt":"What is the SI unit of electric current?","options":["Volt","Ampere","Ohm","Watt"],"key":"B","solution":"Current is measured in amperes (A).","hint":"Enter A, B, C or D."}
+  ],
+  'First Language English (0500)': [
+    {"prompt":"Why does Amantle arrive early?","options":["To meet the driver","To avoid missing the bus","To buy a timetable","To practise reading"],"key":"B","solution":"The timetable has faded and she wants to make sure she catches the bus.","hint":"Enter A, B, C or D."},
+    {"prompt":"What does “swallowed” suggest about the engine noise?","options":["It became musical","It moved farther away","It drowned out the chatter","It made the chatter louder"],"key":"C","solution":"The verb makes the engine noise seem powerful enough to overwhelm the other sounds.","hint":"Enter A, B, C or D."},
+    {"prompt":"Which detail most clearly shows Amantle is prepared?","options":["She packed her bag the night before","The station is quiet","The engine starts","The timetable has faded"],"key":"A","solution":"Packing in advance shows that she planned for the journey.","hint":"Enter A, B, C or D."}
+  ]
+};
+let questions = mathematics;
+
+function matchesAnswer(raw, question) {
+  if (question.options) return raw.trim().toUpperCase() === question.key;
+  let value = raw.trim().replaceAll('−', '-').replace(/\s*\/\s*/g, '/');
+  if (question.currency) value = value.replace(/^(?:BWP|P)\s*/i, '');
+  if (typeof question.key === 'string') return value === question.key;
+  if (/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(value)) return Number(value) === question.key;
+  if (!/^[+-]?\d+\/\d+$/.test(value)) return false;
+  const [numerator, denominator] = value.split('/').map(Number);
+  return denominator > 0 && numerator / denominator === question.key;
+}
+
+const get = id => document.getElementById(id);
+const form = get('quiz');
+const answer = get('answer');
+const message = get('message');
+let position = 0;
+let answers = [];
+
+function showQuestion() {
+  get('progress').textContent = `Question ${position + 1} of ${questions.length} · 1 mark`;
+  get('question-title').textContent = questions[position].prompt;
+  const options = questions[position].options;
+  get('question-options').hidden = !options;
+  get('question-options').textContent = options ? options.map((option, index) => 'ABCD'[index] + '. ' + option).join('\n') : '';
+  get('hint').textContent = questions[position].hint;
+  answer.value = answers[position];
+  message.textContent = '';
+  get('previous').disabled = position === 0;
+  get('next').textContent = position === questions.length - 1 ? 'Submit answers' : 'Next';
+  get('question-title').focus();
+}
+
+function start() {
+  answers = questions.map(() => '');
+  position = 0;
+  get('start').hidden = true;
+  get('results').hidden = true;
+  form.hidden = false;
+  showQuestion();
+}
+
+function showResults() {
+  let score = 0;
+  const solutions = get('solutions');
+  solutions.replaceChildren();
+  questions.forEach((question, index) => {
+    const correct = matchesAnswer(answers[index], question);
+    score += Number(correct);
+    const item = document.createElement('li');
+    const prompt = document.createElement('strong');
+    prompt.textContent = question.prompt;
+    const feedback = document.createElement('div');
+    const correctOption = question.options ? ' Correct option: ' + question.key + '. ' + question.options['ABCD'.indexOf(question.key)] + '.' : '';
+    feedback.textContent = `Your answer: ${answers[index]}. ${correct ? 'Correct' : 'Incorrect'}. ${correctOption} ${question.solution}`;
+    item.append(prompt, feedback);
+    solutions.append(item);
+  });
+  form.hidden = true;
+  get('results').hidden = false;
+  get('score').textContent = `Score: ${score} / ${questions.length}`;
+  get('score').focus();
+}
+
+const picker = get('subject-sample');
+const description = get('sample-description');
+const mathsDescription = description.textContent;
+function selectSubject() {
+  questions = subjectSamples[picker.value] || mathematics;
+  description.textContent = questions === mathematics ? mathsDescription :
+    'Three starter questions. You can change answers before submitting. Explanations appear after submission.';
+  get('english-passage').hidden = picker.value !== 'First Language English (0500)';
+  form.hidden = true;
+  get('results').hidden = true;
+  get('start').hidden = false;
+}
+picker.addEventListener('change', selectSubject);
+selectSubject();
+
+get('start').addEventListener('click', start);
+get('retry').addEventListener('click', start);
+get('previous').addEventListener('click', () => {
+  answers[position] = answer.value.trim();
+  position -= 1;
+  showQuestion();
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  answers[position] = answer.value.trim();
+  if (!answers[position]) {
+    message.textContent = 'Enter an answer to continue.';
+    answer.focus();
+    return;
+  }
+  if (position < questions.length - 1) {
+    position += 1;
+    showQuestion();
+    return;
+  }
+  const unanswered = answers.indexOf('');
+  if (unanswered !== -1) {
+    position = unanswered;
+    showQuestion();
+    message.textContent = 'Answer this question before submitting.';
+    return;
+  }
+  showResults();
+});
+
+const printSheet = get('print-sheet');
+function appendPrintText(parent, tag, value) {
+  const element = document.createElement(tag);
+  element.textContent = value;
+  parent.append(element);
+  return element;
+}
+
+function printSample(guide) {
+  const subject = picker.value;
+  const english = subject === 'First Language English (0500)';
+  printSheet.replaceChildren();
+  const header = document.createElement('header');
+  printSheet.append(header);
+  appendPrintText(header, 'div', 'Education Lesedi Scholars Hub');
+  appendPrintText(header, 'h1', guide ? 'IGCSE Practice · Answer Guide' : 'IGCSE Practice · Question Paper');
+  appendPrintText(header, 'div', subject + ' · Free sample · ' + questions.length + ' marks');
+
+  if (!guide) {
+    appendPrintText(printSheet, 'p', 'Name: __________________________   Class: __________   Date: __________');
+    appendPrintText(printSheet, 'p', questions === mathematics
+      ? 'Answer all questions without a calculator. Each question is worth one mark.'
+      : 'Answer all questions. Write A, B, C or D. Each question is worth one mark.');
+    if (english) {
+      const passage = get('english-passage');
+      appendPrintText(printSheet, 'h2', passage.querySelector('h3').textContent);
+      appendPrintText(printSheet, 'p', passage.querySelector('p').textContent);
+    }
+  }
+
+  const list = document.createElement('ol');
+  printSheet.append(list);
+  for (const question of questions) {
+    const item = document.createElement('li');
+    list.append(item);
+    appendPrintText(item, 'strong', question.prompt + ' [1 mark]');
+    if (guide) {
+      const option = question.options ? '. ' + question.options['ABCD'.indexOf(question.key)] : '';
+      appendPrintText(item, 'div', 'Answer: ' + question.key + option);
+      appendPrintText(item, 'div', question.solution);
+    } else {
+      question.options?.forEach((option, index) =>
+        appendPrintText(item, 'div', 'ABCD'[index] + '. ' + option));
+      appendPrintText(item, 'p', 'Answer: __________________________________').className = 'response';
+    }
+  }
+
+  if (english) {
+    appendPrintText(printSheet, 'h2', guide ? 'Optional writing · Self-check' : 'Optional writing · Use a separate sheet');
+    const writing = get('english-passage').querySelectorAll('details p');
+    appendPrintText(printSheet, 'p', writing[guide ? 1 : 0].textContent);
+  }
+  window.print();
+}
+
+get('print-paper').addEventListener('click', () => printSample(false));
+get('print-guide').addEventListener('click', () => printSample(true));
+</script>
+</body>
+</html>
