@@ -61,7 +61,7 @@ li { margin-bottom: .8rem; }
   <button type="button" class="secondary" id="print-paper">Print question paper / Save PDF</button>
   <button type="button" class="secondary" id="print-guide">Print answer guide / Save PDF</button>
 </div>
-<p id="sample-description">Five Core non-calculator questions. You can change answers before submitting. Worked solutions appear after submission.</p>
+<p id="sample-description">Six Core non-calculator questions. You can change answers before submitting. Worked solutions appear after submission.</p>
 <div id="english-passage" hidden>
   <h3>Waiting for the bus</h3>
   <p>Amantle packed her bag the night before. She arrived while the bus station was still quiet. The timetable had faded in the sun, and she did not want to miss the only morning bus. When the engine finally started, its roar swallowed the chatter on the platform.</p>
@@ -126,6 +126,29 @@ const subjectSamples = {
     {"prompt":"Which detail most clearly shows Amantle is prepared?","options":["She packed her bag the night before","The station is quiet","The engine starts","The timetable has faded"],"key":"A","solution":"Packing in advance shows that she planned for the journey.","hint":"Enter A, B, C or D."}
   ]
 };
+subjectSamples["Mathematics (0580)"].push(
+  {"prompt":"A circle has a radius of 7 cm. Find its circumference in centimetres. Use 22/7 for π.","hint":"Enter the number of centimetres.","key":44,"solution":"Circumference = 2πr = 2 × (22/7) × 7 = 44 cm."}
+);
+subjectSamples["Biology (0610)"].push(
+  {"prompt":"A person inhales. Which structure is the main site of gas exchange in the lungs?","options":["Trachea","Bronchi","Alveoli","Diaphragm"],"key":"C","solution":"Alveoli have thin walls and a large surface area for diffusion.","hint":"Enter A, B, C or D."},
+  {"prompt":"Which enzyme begins the digestion of starch in the mouth?","options":["Amylase","Lipase","Protease","Maltase"],"key":"A","solution":"Salivary amylase breaks starch down into smaller sugars.","hint":"Enter A, B, C or D."},
+  {"prompt":"A plant cell is placed in distilled water. Why does water enter the cell?","options":["Active transport of water","Osmosis across a partially permeable membrane","Movement of starch out of the cell","Evaporation through the cell wall"],"key":"B","solution":"Water moves by osmosis from higher water potential outside the cell to lower water potential inside.","hint":"Enter A, B, C or D."}
+);
+subjectSamples["Chemistry (0620)"].push(
+  {"prompt":"An atom has 11 protons and 12 neutrons. What is its mass number?","options":["1","11","12","23"],"key":"D","solution":"Mass number = protons + neutrons = 11 + 12 = 23.","hint":"Enter A, B, C or D."},
+  {"prompt":"Which gas turns limewater cloudy?","options":["Carbon dioxide","Hydrogen","Oxygen","Nitrogen"],"key":"A","solution":"Carbon dioxide reacts with limewater to form a cloudy calcium carbonate precipitate.","hint":"Enter A, B, C or D."},
+  {"prompt":"What type of bonding forms when sodium transfers an electron to chlorine?","options":["Metallic","Covalent","Ionic","Hydrogen"],"key":"C","solution":"Electron transfer forms oppositely charged ions that attract each other.","hint":"Enter A, B, C or D."}
+);
+subjectSamples["Physics (0625)"].push(
+  {"prompt":"A 6 Ω resistor carries a current of 2 A. What is the potential difference across it?","options":["3 V","8 V","12 V","24 V"],"key":"C","solution":"Potential difference = current × resistance = 2 × 6 = 12 V.","hint":"Enter A, B, C or D."},
+  {"prompt":"A block has a mass of 120 g and a volume of 40 cm³. What is its density?","options":["0.33 g/cm³","3 g/cm³","80 g/cm³","4800 g/cm³"],"key":"B","solution":"Density = mass ÷ volume = 120 ÷ 40 = 3 g/cm³.","hint":"Enter A, B, C or D."},
+  {"prompt":"A 3 N force moves an object 4 m in the direction of the force. How much work is done?","options":["0.75 J","1 J","7 J","12 J"],"key":"D","solution":"Work done = force × distance moved in the direction of the force = 3 × 4 = 12 J.","hint":"Enter A, B, C or D."}
+);
+subjectSamples["First Language English (0500)"].push(
+  {"prompt":"In the passage, what does “faded” tell us about the timetable?","options":["Its writing had become less clear","It had been taken off the wall","It listed a new bus route","It was printed that morning"],"key":"A","solution":"“Faded” shows that the writing had lost colour or clarity over time.","hint":"Enter A, B, C or D."},
+  {"prompt":"Which pair of details best shows the change in the station’s atmosphere?","options":["The packed bag and the timetable","The timetable and the platform","The station was quiet, then the engine roared","The sun and the only morning bus"],"key":"C","solution":"The contrast between the quiet station and the roar makes the change in sound clear.","hint":"Enter A, B, C or D."},
+  {"prompt":"What does “the only morning bus” add to the passage?","options":["It explains why the engine is loud","It raises the stakes if Amantle misses it","It suggests Amantle drives the bus","It shows the trip is cancelled"],"key":"B","solution":"“Only” tells us that missing this bus would leave her without another morning departure.","hint":"Enter A, B, C or D."}
+);
 let questions = mathematics;
 
 function matchesAnswer(raw, question) {
@@ -197,7 +220,7 @@ const mathsDescription = description.textContent;
 function selectSubject() {
   questions = subjectSamples[picker.value] || mathematics;
   description.textContent = questions === mathematics ? mathsDescription :
-    'Three starter questions. You can change answers before submitting. Explanations appear after submission.';
+    'Six starter questions. You can change answers before submitting. Explanations appear after submission.';
   get('english-passage').hidden = picker.value !== 'First Language English (0500)';
   form.hidden = true;
   get('results').hidden = true;
