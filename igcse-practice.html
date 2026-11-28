@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesedi IGCSE Practice | Education Lesedi Scholars Hub</title>
+<style>
+:root { font: 16px/1.6 system-ui, sans-serif; color: #102b5c; background: #f4f7fc; }
+body { margin: 0; }
+main { max-width: 46rem; margin: auto; padding: 1.5rem 1rem 3rem; }
+a { color: #174a99; }
+h1, h2, h3 { line-height: 1.2; }
+section { background: white; border: 1px solid #dce5f1; border-radius: 1rem; padding: clamp(1rem, 4vw, 2rem); margin-top: 1.25rem; }
+label { display: block; font-weight: 650; }
+input { box-sizing: border-box; width: 100%; max-width: 22rem; padding: .65rem; border: 1px solid #637693; border-radius: .35rem; font: inherit; }
+button { border: 1px solid #174a99; border-radius: .4rem; background: #174a99; color: white; padding: .55rem 1rem; font: inherit; cursor: pointer; }
+button.secondary { background: white; color: #174a99; }
+button:disabled { opacity: .5; cursor: default; }
+.actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+:focus-visible { outline: 3px solid #227559; outline-offset: 3px; }
+#message { color: #8d310f; }
+#progress { margin-bottom: .35rem; font-weight: 650; }
+#question-title { margin-top: 0; }
+li { margin-bottom: .8rem; }
+</style>
+</head>
+<body>
+<main>
+<a href="./?section=test-bank">← Tests &amp; Exams</a>
+<h1>Lesedi IGCSE Practice</h1>
+<p>Original practice for Cambridge IGCSE Mathematics (0580). For learners following the Cambridge syllabus at school or with a tutor.</p>
+<p><strong>P70 for 30 days when paid access opens.</strong> Try the free sample below.</p>
+<section aria-labelledby="sample-title">
+<h2 id="sample-title">Free Mathematics sample</h2>
+<p>Five Core non-calculator questions. Answer one at a time and go back to change any answer before submitting. Each correct answer earns one mark. Worked solutions appear after submission.</p>
+<button type="button" id="start">Start free sample</button>
+<form id="quiz" hidden novalidate>
+<p id="progress"></p>
+<h3 id="question-title" tabindex="-1"></h3>
+<label for="answer">Your answer</label>
+<input id="answer" type="text" autocomplete="off" spellcheck="false" aria-describedby="hint message">
+<p id="hint"></p>
+<p id="message" role="status"></p>
+<div class="actions">
+<button type="button" class="secondary" id="previous">Previous</button>
+<button type="submit" id="next">Next</button>
+</div>
+</form>
+<div id="results" hidden>
+<h3 id="score" tabindex="-1"></h3>
+<ol id="solutions"></ol>
+<button type="button" class="secondary" id="retry">Try again</button>
+</div>
+<noscript><p>Enable JavaScript to take the sample.</p></noscript>
+</section>
+<p>Independent practice by Education Lesedi Scholars Hub.</p>
+</main>
+<script>
+const questions = [
+  { prompt: 'Write 0.375 as a fraction in its simplest form.', hint: 'Enter a simplified fraction, for example 1/2.', key: '3/8', solution: '0.375 = 375/1000. Divide the numerator and denominator by 125 to get 3/8.' },
+  { prompt: 'A school bag costs P240. Its price is reduced by 15%. Find the sale price in pula.', hint: 'Enter the amount in pula.', key: 204, currency: true, solution: '10% of 240 is 24 and 5% is 12. Subtract 36 from 240 to get P204.' },
+  { prompt: 'Solve 4x − 7 = 2x + 11.', hint: 'Enter the value of x.', key: 9, solution: 'Subtract 2x and add 7 to get 2x = 18. Divide by 2 to get x = 9.' },
+  { prompt: 'A straight line passes through (−2, 1) and (4, 10). Find its gradient.', hint: 'Enter a decimal or fraction.', key: 1.5, solution: 'Gradient = change in y ÷ change in x = (10 − 1) ÷ (4 − (−2)) = 9/6 = 3/2.' },
+  { prompt: 'A bag holds 4 blue beads, 3 green beads and 5 yellow beads. One bead is chosen at random. Find the probability that it is not green.', hint: 'Enter a decimal or fraction.', key: 0.75, solution: 'There are 12 beads in total and 9 are not green. The probability is 9/12 = 3/4.' }
+];
+
+function matchesAnswer(raw, question) {
+  let value = raw.trim().replaceAll('−', '-').replace(/\s*\/\s*/g, '/');
+  if (question.currency) value = value.replace(/^(?:BWP|P)\s*/i, '');
+  if (typeof question.key === 'string') return value === question.key;
+  if (/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(value)) return Number(value) === question.key;
+  if (!/^[+-]?\d+\/\d+$/.test(value)) return false;
+  const [numerator, denominator] = value.split('/').map(Number);
+  return denominator > 0 && numerator / denominator === question.key;
+}
+
+const get = id => document.getElementById(id);
+const form = get('quiz');
+const answer = get('answer');
+const message = get('message');
+let position = 0;
+let answers = [];
+
+function showQuestion() {
+  get('progress').textContent = `Question ${position + 1} of ${questions.length} · 1 mark`;
+  get('question-title').textContent = questions[position].prompt;
+  get('hint').textContent = questions[position].hint;
+  answer.value = answers[position];
+  message.textContent = '';
+  get('previous').disabled = position === 0;
+  get('next').textContent = position === questions.length - 1 ? 'Submit answers' : 'Next';
+  get('question-title').focus();
+}
+
+function start() {
+  answers = questions.map(() => '');
+  position = 0;
+  get('start').hidden = true;
+  get('results').hidden = true;
+  form.hidden = false;
+  showQuestion();
+}
+
+function showResults() {
+  let score = 0;
+  const solutions = get('solutions');
+  solutions.replaceChildren();
+  questions.forEach((question, index) => {
+    const correct = matchesAnswer(answers[index], question);
+    score += Number(correct);
+    const item = document.createElement('li');
+    const prompt = document.createElement('strong');
+    prompt.textContent = question.prompt;
+    const feedback = document.createElement('div');
+    feedback.textContent = `Your answer: ${answers[index]}. ${correct ? 'Correct' : 'Incorrect'}. ${question.solution}`;
+    item.append(prompt, feedback);
+    solutions.append(item);
+  });
+  form.hidden = true;
+  get('results').hidden = false;
+  get('score').textContent = `Score: ${score} / ${questions.length}`;
+  get('score').focus();
+}
+
+get('start').addEventListener('click', start);
+get('retry').addEventListener('click', start);
+get('previous').addEventListener('click', () => {
+  answers[position] = answer.value.trim();
+  position -= 1;
+  showQuestion();
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  answers[position] = answer.value.trim();
+  if (!answers[position]) {
+    message.textContent = 'Enter an answer to continue.';
+    answer.focus();
+    return;
+  }
+  if (position < questions.length - 1) {
+    position += 1;
+    showQuestion();
+    return;
+  }
+  const unanswered = answers.indexOf('');
+  if (unanswered !== -1) {
+    position = unanswered;
+    showQuestion();
+    message.textContent = 'Answer this question before submitting.';
+    return;
+  }
+  showResults();
+});
+</script>
+</body>
+</html>
