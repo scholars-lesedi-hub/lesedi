@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesedi IGCSE Practice Pack | Education Lesedi Scholars Hub</title>
+<style>
+:root { font: 16px/1.6 system-ui, sans-serif; color: #102b5c; background: #f4f7fc; }
+body { margin: 0; }
+main { max-width: 46rem; margin: auto; padding: 1.5rem 1rem 3rem; }
+a { color: #174a99; }
+h1, h2, h3 { line-height: 1.2; }
+section { background: white; border: 1px solid #dce5f1; border-radius: 1rem; padding: clamp(1rem, 4vw, 2rem); margin-top: 1.25rem; }
+label { display: block; font-weight: 650; }
+input { box-sizing: border-box; width: 100%; max-width: 22rem; padding: .65rem; border: 1px solid #637693; border-radius: .35rem; font: inherit; }
+button { border: 1px solid #174a99; border-radius: .4rem; background: #174a99; color: white; padding: .55rem 1rem; font: inherit; cursor: pointer; }
+button.secondary { background: white; color: #174a99; }
+button:disabled { opacity: .5; cursor: default; }
+.actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+:focus-visible { outline: 3px solid #227559; outline-offset: 3px; }
+#message { color: #8d310f; }
+#progress { margin-bottom: .35rem; font-weight: 650; }
+#question-title { margin-top: 0; }
+#subject-sample, #practice-set { font: inherit; max-width: 100%; padding: .4rem; }
+#question-options { white-space: pre-line; }
+#solutions strong { white-space: pre-line; }
+li { margin-bottom: .8rem; }
+
+.print-actions { margin: .75rem 0 1rem; }
+#print-sheet { display: none; }
+@page { size: A4; margin: 16mm; }
+@media print {
+  body { background: white; color: black; font: 11pt/1.4 system-ui, sans-serif; }
+  body > main { display: none; }
+  #print-sheet { display: block; }
+  #print-sheet h1 { margin: .25em 0; font-size: 18pt; }
+  #print-sheet h2 { font-size: 13pt; }
+  #print-sheet header { border-bottom: 1px solid #222; padding-bottom: .5em; }
+  #print-sheet li { margin: 0 0 1em; break-inside: avoid; }
+  #print-sheet .response { margin: .6em 0 0; }
+}
+</style>
+</head>
+<body>
+<main>
+<a href="https://educationlesedihub.com/igcse-practice.html">Open the public IGCSE samples</a>
+<h1>Lesedi IGCSE Practice Pack</h1>
+<p>Original practice for Cambridge IGCSE Mathematics, Biology, Chemistry, Physics and First Language English. For learners following the Cambridge syllabus at school or with a tutor.</p>
+<p>Choose a subject, then take the mixed-topic test or practise one topic. For a timed attempt, use the suggested time shown for your set.</p>
+<section aria-labelledby="sample-title">
+<h2 id="sample-title">Choose your practice</h2>
+<label for="subject-sample">Choose a subject</label>
+<select id="subject-sample">
+  <option>Mathematics (0580)</option>
+  <option>Biology (0610)</option>
+  <option>Chemistry (0620)</option>
+  <option>Physics (0625)</option>
+  <option>First Language English (0500)</option>
+</select>
+<label for="practice-set">Practice set</label>
+<select id="practice-set"></select>
+<div class="actions print-actions">
+  <button type="button" class="secondary" id="print-paper">Print question paper / Save PDF</button>
+  <button type="button" class="secondary" id="print-guide">Print answer guide / Save PDF</button>
+</div>
+<p id="sample-description"></p>
+<div id="english-passage" hidden>
+  <h3>Books in the rain</h3>
+  <p>Naledi proposed keeping the market gates open until noon so shoppers would have time to browse the free book stall. By eight, the wind was pulling at the banner like a sail with nowhere to go. Then rain threaded between the stalls. The volunteers set empty produce crates under the boxes of books to lift them clear of the water.</p>
+  <p>When the rain eased, a boy picked up an atlas. He traced a river with one finger, put the book back and walked towards the gate. A moment later he returned. “Can I really keep it?” he asked. Naledi nodded. The boy opened the cover again. To him, the map was a promise. By noon, most of the books were still on the stall. Naledi watched him carry the atlas home and decided the morning had been worth it.</p>
+  <details id="writing-task" hidden><summary>Optional writing task and 8-mark guide</summary>
+    <p>In 120–160 words, write a short report for the school newsletter about the book stall. Explain the challenge the volunteers faced, how they responded, and why the event mattered. Use your own words.</p>
+    <p>Content and organisation (4 marks): award 1 mark each for explaining the weather problem, describing the volunteers’ response, supporting why the stall mattered with a detail, and organising the report logically. Language (4 marks): award 1 mark each for a tone suited to a school newsletter, precise vocabulary in your own words, clear sentence construction, and mostly accurate spelling and punctuation. Mark this separately from the digital reading score.</p>
+  </details>
+</div>
+<button type="button" id="start">Start digital practice</button>
+<form id="quiz" hidden novalidate>
+<p id="progress"></p>
+<h3 id="question-title" tabindex="-1"></h3>
+<p id="question-options" hidden></p>
+<label for="answer">Your answer</label>
+<input id="answer" type="text" autocomplete="off" spellcheck="false" aria-describedby="question-options hint message">
+<p id="hint"></p>
+<p id="message" role="status"></p>
+<div class="actions">
+<button type="button" class="secondary" id="previous">Previous</button>
+<button type="submit" id="next">Next</button>
+</div>
+</form>
+<div id="results" hidden>
+<h3 id="score" tabindex="-1"></h3>
+<ol id="solutions"></ol>
+<button type="button" class="secondary" id="retry">Try again</button>
+</div>
+<noscript><p>Enable JavaScript to take the sample.</p></noscript>
+</section>
+<p>Independent practice by Education Lesedi Scholars Hub.</p>
+</main>
+<div id="print-sheet"></div>
+<script>
+const subjectBanks = {
+  "Mathematics (0580)": [
+    {
+      "topic": "Number and algebra",
+      "prompt": "Evaluate 3/4 + 5/8. Give your answer as a decimal or fraction.",
+      "key": 1.375,
+      "solution": "3/4 = 6/8, so 6/8 + 5/8 = 11/8 = 1.375.",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate."
+    },
+    {
+      "topic": "Number and algebra",
+      "prompt": "Solve 5(x − 2) = 3x + 8. Enter the value of x.",
+      "key": 9,
+      "solution": "Expand to 5x − 10 = 3x + 8. Then 2x = 18, so x = 9.",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate."
+    },
+    {
+      "topic": "Number and algebra",
+      "prompt": "A jacket costs P320 before a 12.5% discount. Give the sale price as a number in pula.",
+      "key": 280,
+      "solution": "12.5% is one eighth. The discount is P40, so the sale price is P280.",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate.",
+      "currency": true
+    },
+    {
+      "topic": "Number and algebra",
+      "prompt": "The sequence begins 7, 12, 17, 22. Find the 15th term.",
+      "key": 77,
+      "solution": "The common difference is 5. Term 15 is 7 + 14 × 5 = 77.",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate."
+    },
+    {
+      "topic": "Geometry and data",
+      "prompt": "A right-angled triangle has perpendicular sides of 9 cm and 12 cm. Give the hypotenuse length in centimetres.",
+      "key": 15,
+      "solution": "By Pythagoras, the square of the hypotenuse is 81 + 144 = 225. Its length is 15 cm.",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate."
+    },
+    {
+      "topic": "Geometry and data",
+      "prompt": "A trapezium has parallel sides of 8 cm and 14 cm and a perpendicular height of 5 cm. Give its area in square centimetres.",
+      "key": 55,
+      "solution": "Area = (8 + 14) × 5 ÷ 2 = 55 cm².",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate."
+    },
+    {
+      "topic": "Geometry and data",
+      "prompt": "The mean of 6, 11, 13 and x is 10. Find x.",
+      "key": 10,
+      "solution": "The total is 4 × 10 = 40. The three known values add to 30, so x = 10.",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate."
+    },
+    {
+      "topic": "Geometry and data",
+      "prompt": "A spinner has 8 equal sectors. Three are red and two are blue. Find the probability of landing on neither red nor blue.",
+      "key": 0.375,
+      "solution": "There are 8 − 3 − 2 = 3 other sectors. The probability is 3/8 = 0.375.",
+      "hint": "Enter a number. Use a fraction or decimal where appropriate."
+    }
+  ],
+  "Biology (0610)": [
+    {
+      "topic": "Cells and body systems",
+      "prompt": "Which feature helps a root hair cell absorb mineral ions from the soil?",
+      "options": [
+        "A thick waxy coating",
+        "A chloroplast in the cell wall",
+        "A permanent air space",
+        "A long extension giving a large surface area"
+      ],
+      "key": "D",
+      "solution": "The extension increases the area of contact with the soil.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Cells and body systems",
+      "prompt": "Which component of blood transports most oxygen?",
+      "options": [
+        "Plasma proteins",
+        "Platelets",
+        "Red blood cells",
+        "White blood cells"
+      ],
+      "key": "C",
+      "solution": "Red blood cells contain haemoglobin, which binds oxygen.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Cells and body systems",
+      "prompt": "What is the main function of villi in the small intestine?",
+      "options": [
+        "To produce bile",
+        "To store undigested food",
+        "To increase the surface area for absorption",
+        "To push food into the stomach"
+      ],
+      "key": "C",
+      "solution": "Villi provide a large surface area for the uptake of digested nutrients.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Cells and body systems",
+      "prompt": "Which statement about aerobic respiration in human cells is correct?",
+      "options": [
+        "It occurs only during exercise",
+        "It releases oxygen",
+        "It produces glucose",
+        "It uses oxygen to release energy from glucose"
+      ],
+      "key": "D",
+      "solution": "Aerobic respiration uses oxygen and releases energy from glucose.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Plants and ecosystems",
+      "prompt": "A leaf is tested for starch with iodine solution. What colour indicates starch is present?",
+      "options": [
+        "Colourless",
+        "Blue-black",
+        "Brick red",
+        "Lilac"
+      ],
+      "key": "B",
+      "solution": "Iodine solution turns blue-black in the presence of starch.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Plants and ecosystems",
+      "prompt": "In the food chain grass → grasshopper → lizard, which organism is the primary consumer?",
+      "options": [
+        "Grasshopper",
+        "Lizard",
+        "All three",
+        "Grass"
+      ],
+      "key": "A",
+      "solution": "The primary consumer eats the producer. The grasshopper eats the grass.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Plants and ecosystems",
+      "prompt": "What normally happens to transpiration when air around a plant becomes more humid, with other conditions unchanged?",
+      "options": [
+        "It stops in all plants",
+        "It slows because the water vapour gradient decreases",
+        "It speeds up because roots stop absorbing water",
+        "It speeds up because the air is cooler"
+      ],
+      "key": "B",
+      "solution": "Humid air reduces the water vapour concentration difference between the leaf and the air.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Plants and ecosystems",
+      "prompt": "Which process returns carbon dioxide to the atmosphere when organisms break down glucose aerobically?",
+      "options": [
+        "Respiration",
+        "Photosynthesis",
+        "Transpiration",
+        "Pollination"
+      ],
+      "key": "A",
+      "solution": "Respiration transfers carbon from organic molecules to carbon dioxide.",
+      "hint": "Enter A, B, C or D."
+    }
+  ],
+  "Chemistry (0620)": [
+    {
+      "topic": "Particles and bonding",
+      "prompt": "What distinguishes two isotopes of the same element?",
+      "options": [
+        "They have different numbers of protons",
+        "They belong to different groups",
+        "They always carry different charges",
+        "They have different numbers of neutrons"
+      ],
+      "key": "D",
+      "solution": "Isotopes have the same proton number and different neutron numbers.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Particles and bonding",
+      "prompt": "Which change occurs when liquid water evaporates?",
+      "options": [
+        "It becomes a new substance",
+        "Its molecules become smaller",
+        "Its molecules move farther apart",
+        "Its oxygen atoms split off"
+      ],
+      "key": "C",
+      "solution": "Evaporation is a physical change. The molecules remain water molecules and spread farther apart.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Particles and bonding",
+      "prompt": "Why does solid sodium chloride fail to conduct electricity?",
+      "options": [
+        "It contains no charged particles",
+        "Its ions are neutralised",
+        "Its ions are fixed in a lattice",
+        "Its ions evaporate"
+      ],
+      "key": "C",
+      "solution": "The ions are charged but cannot move freely through the solid.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Particles and bonding",
+      "prompt": "What holds the atoms together in a chlorine molecule, Cl₂?",
+      "options": [
+        "A pair of transferred protons",
+        "Attraction between two positive ions",
+        "A metallic bond",
+        "A shared pair of electrons"
+      ],
+      "key": "D",
+      "solution": "A single covalent bond consists of one shared pair of electrons.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Reactions and laboratory skills",
+      "prompt": "Which pair of products forms when hydrochloric acid reacts completely with sodium hydroxide?",
+      "options": [
+        "Sodium metal and water",
+        "Sodium chloride and water",
+        "Sodium chloride and hydrogen",
+        "Chlorine and oxygen"
+      ],
+      "key": "B",
+      "solution": "Acid + alkali produces a salt and water. Here the salt is sodium chloride.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Reactions and laboratory skills",
+      "prompt": "Which measurement could be used to compare the initial rates of two reactions that both produce a gas?",
+      "options": [
+        "The gas volume collected in the same short interval after mixing",
+        "The colour of the labels on the flasks",
+        "The final temperature of the room",
+        "The mass of the empty gas syringe"
+      ],
+      "key": "A",
+      "solution": "Measuring gas volume over the same short interval compares how quickly the product forms.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Reactions and laboratory skills",
+      "prompt": "Which set of coefficients balances __H₂ + __O₂ → __H₂O?",
+      "options": [
+        "1, 2, 1",
+        "2, 1, 2",
+        "2, 2, 1",
+        "1, 1, 1"
+      ],
+      "key": "B",
+      "solution": "Two H₂ molecules and one O₂ molecule form two H₂O molecules, conserving four H atoms and two O atoms.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Reactions and laboratory skills",
+      "prompt": "Which method separates dissolved dyes in a sample of ink so their spots can be compared?",
+      "options": [
+        "Paper chromatography",
+        "Filtration",
+        "Crystallisation",
+        "Decanting"
+      ],
+      "key": "A",
+      "solution": "Dyes travel different distances along the paper with the solvent.",
+      "hint": "Enter A, B, C or D."
+    }
+  ],
+  "Physics (0625)": [
+    {
+      "topic": "Motion, forces and energy",
+      "prompt": "A bus increases its speed from 4 m/s to 16 m/s in 6 s. What is its average acceleration?",
+      "options": [
+        "3 m/s²",
+        "12 m/s²",
+        "20 m/s²",
+        "2 m/s²"
+      ],
+      "key": "D",
+      "solution": "Average acceleration = change in speed ÷ time = (16 − 4) ÷ 6 = 2 m/s².",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Motion, forces and energy",
+      "prompt": "A resultant force of 18 N acts on a 6 kg trolley. What is its acceleration?",
+      "options": [
+        "108 m/s²",
+        "0.33 m/s²",
+        "3 m/s²",
+        "24 m/s²"
+      ],
+      "key": "C",
+      "solution": "Using F = ma, acceleration = 18 ÷ 6 = 3 m/s².",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Motion, forces and energy",
+      "prompt": "A machine transfers 600 J in 20 s. What is its average power?",
+      "options": [
+        "12 W",
+        "20 W",
+        "30 W",
+        "12 000 W"
+      ],
+      "key": "C",
+      "solution": "Power = energy transferred ÷ time = 600 ÷ 20 = 30 W.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Motion, forces and energy",
+      "prompt": "Which object has gravitational potential energy relative to the floor because of its position?",
+      "options": [
+        "A book lying on the floor",
+        "A battery lying on the floor",
+        "A stretched spring lying on the floor",
+        "A book resting on a high shelf"
+      ],
+      "key": "D",
+      "solution": "The book on the shelf has energy associated with its height above the floor.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Electricity and waves",
+      "prompt": "Two identical lamps are connected in series. What happens to the second lamp if the first lamp is removed and the gap is left open?",
+      "options": [
+        "It stays equally bright",
+        "It goes out",
+        "It becomes brighter",
+        "It flashes continuously"
+      ],
+      "key": "B",
+      "solution": "Removing a lamp opens the single circuit path, so current stops in both lamps.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Electricity and waves",
+      "prompt": "A wave has a frequency of 5 Hz and a wavelength of 3 m. What is its speed?",
+      "options": [
+        "15 m/s",
+        "8 m/s",
+        "2 m/s",
+        "1.7 m/s"
+      ],
+      "key": "A",
+      "solution": "Wave speed = frequency × wavelength = 5 × 3 = 15 m/s.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Electricity and waves",
+      "prompt": "A sound is made louder while its pitch stays the same. Which property of the sound wave increases?",
+      "options": [
+        "Frequency",
+        "Amplitude",
+        "Wavelength",
+        "Speed in the same air"
+      ],
+      "key": "B",
+      "solution": "Louder sound corresponds to greater amplitude. The unchanged pitch indicates unchanged frequency.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Electricity and waves",
+      "prompt": "A ray hits a plane mirror at 35° to the normal. What is the angle of reflection measured from the normal?",
+      "options": [
+        "35°",
+        "0°",
+        "55°",
+        "70°"
+      ],
+      "key": "A",
+      "solution": "The angle of reflection equals the angle of incidence when both are measured from the normal.",
+      "hint": "Enter A, B, C or D."
+    }
+  ],
+  "First Language English (0500)": [
+    {
+      "topic": "Reading for meaning",
+      "prompt": "Why did Naledi propose keeping the gates open until noon?",
+      "options": [
+        "She thought the book stall needed to move indoors.",
+        "She wanted shoppers to have time to visit the book stall.",
+        "She expected the rain to begin at noon.",
+        "She wanted fewer visitors at the library."
+      ],
+      "key": "B",
+      "solution": "The passage says she wanted market shoppers to have time to browse.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Reading for meaning",
+      "prompt": "What did the volunteers use the empty crates for?",
+      "options": [
+        "To replace the missing banner",
+        "To lift books above the water",
+        "To close the gate",
+        "To carry market produce"
+      ],
+      "key": "B",
+      "solution": "They used the crates to lift the boxes of books clear of the moving water.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Reading for meaning",
+      "prompt": "What shows that the boy has changed his mind about taking a book?",
+      "options": [
+        "He walks to the gate.",
+        "He hides behind his sister.",
+        "He asks about the rain.",
+        "He returns to the table and asks whether he can keep the atlas."
+      ],
+      "key": "D",
+      "solution": "He first puts the atlas back, then returns to ask to keep it.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Reading for meaning",
+      "prompt": "Which sentence best summarises Naledi’s view at the end?",
+      "options": [
+        "The stall failed because most books remained.",
+        "Giving away a few meaningful books made the day worthwhile.",
+        "Visitors came only because the weather improved.",
+        "The volunteers should have sold the remaining books."
+      ],
+      "key": "B",
+      "solution": "She notices that most books remain, yet takes satisfaction in the books that found readers.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Language and structure",
+      "prompt": "What does the verb “threaded” suggest about how water moved between the stalls?",
+      "options": [
+        "It rose straight up.",
+        "It flooded the market in one sudden wave.",
+        "It disappeared into the crates.",
+        "It flowed in narrow paths through the gaps."
+      ],
+      "key": "D",
+      "solution": "“Threaded” suggests thin, winding lines of water moving between obstacles.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Language and structure",
+      "prompt": "What is the effect of comparing the banner to “a sail with nowhere to go”?",
+      "options": [
+        "It makes the wind seem still.",
+        "It suggests the market was held on a boat.",
+        "It conveys how strongly the wind pulled at the fixed banner.",
+        "It suggests the banner was useless as a sign from the start."
+      ],
+      "key": "C",
+      "solution": "A sail catches the wind. The comparison shows the banner tugging while it remains tied in place.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Language and structure",
+      "prompt": "What does “the map was a promise” imply about the boy’s experience?",
+      "options": [
+        "The atlas guaranteed he would win a prize.",
+        "Naledi promised him a new book the next day.",
+        "The market map showed a route to the library.",
+        "The atlas made unfamiliar places feel possible to explore."
+      ],
+      "key": "D",
+      "solution": "The metaphor suggests the book opens up possibilities for him.",
+      "hint": "Enter A, B, C or D."
+    },
+    {
+      "topic": "Language and structure",
+      "prompt": "Why does the writer place the boy’s return after the description of the rain easing?",
+      "options": [
+        "To introduce a second, unrelated market.",
+        "To show that the rain kept falling all day.",
+        "To shift from the volunteers’ problem to an example of what their work achieved.",
+        "To explain why the librarians closed early."
+      ],
+      "key": "C",
+      "solution": "The sequence moves from a threat to the stall to a personal moment that shows its value.",
+      "hint": "Enter A, B, C or D."
+    }
+  ]
+};
+let questions = [];
+
+function matchesAnswer(raw, question) {
+  if (question.options) return raw.trim().toUpperCase() === question.key;
+  let value = raw.trim().replaceAll('−', '-').replace(/\s*\/\s*/g, '/');
+  if (question.currency) value = value.replace(/^(?:BWP|P)\s*/i, '');
+  if (typeof question.key === 'string') return value === question.key;
+  if (/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(value)) return Number(value) === question.key;
+  if (!/^[+-]?\d+\/\d+$/.test(value)) return false;
+  const [numerator, denominator] = value.split('/').map(Number);
+  return denominator > 0 && numerator / denominator === question.key;
+}
+
+const get = id => document.getElementById(id);
+const form = get('quiz');
+const answer = get('answer');
+const message = get('message');
+let position = 0;
+let answers = [];
+
+function showQuestion() {
+  get('progress').textContent = `Question ${position + 1} of ${questions.length} · 1 mark`;
+  get('question-title').textContent = questions[position].prompt;
+  const options = questions[position].options;
+  get('question-options').hidden = !options;
+  get('question-options').textContent = options ? options.map((option, index) => 'ABCD'[index] + '. ' + option).join('\n') : '';
+  get('hint').textContent = questions[position].hint;
+  answer.value = answers[position];
+  message.textContent = '';
+  get('previous').disabled = position === 0;
+  get('next').textContent = position === questions.length - 1 ? 'Submit answers' : 'Next';
+  get('question-title').focus();
+}
+
+function start() {
+  answers = questions.map(() => '');
+  position = 0;
+  get('start').hidden = true;
+  get('results').hidden = true;
+  form.hidden = false;
+  showQuestion();
+}
+
+function showResults() {
+  let score = 0;
+  const solutions = get('solutions');
+  solutions.replaceChildren();
+  questions.forEach((question, index) => {
+    const correct = matchesAnswer(answers[index], question);
+    score += Number(correct);
+    const item = document.createElement('li');
+    const prompt = document.createElement('strong');
+    prompt.textContent = question.prompt;
+    const feedback = document.createElement('div');
+    const correctOption = question.options ? ' Correct option: ' + question.key + '. ' + question.options['ABCD'.indexOf(question.key)] + '.' : '';
+    feedback.textContent = `Your answer: ${answers[index]}. ${correct ? 'Correct' : 'Incorrect'}. ${correctOption} ${question.solution}`;
+    item.append(prompt, feedback);
+    solutions.append(item);
+  });
+  form.hidden = true;
+  get('results').hidden = false;
+  get('score').textContent = `Score: ${score} / ${questions.length}`;
+  get('score').focus();
+}
+
+const picker = get('subject-sample');
+const description = get('sample-description');
+const setPicker = get('practice-set');
+const mixed = 'Mixed-topic test';
+const englishSubject = 'First Language English (0500)';
+
+function selectSet() {
+  const bank = subjectBanks[picker.value];
+  const isMixed = setPicker.value === mixed;
+  questions = isMixed ? bank : bank.filter(question => question.topic === setPicker.value);
+  const time = isMixed ? 20 : 10;
+  description.textContent = questions.length + ' questions · ' + questions.length +
+    ' marks · Suggested time: ' + time + ' minutes. You can change answers before submitting.';
+  get('english-passage').hidden = picker.value !== englishSubject;
+  get('writing-task').hidden = !isMixed;
+  form.hidden = true;
+  get('results').hidden = true;
+  get('start').hidden = false;
+}
+
+function selectSubject() {
+  const topics = new Set(subjectBanks[picker.value].map(question => question.topic));
+  setPicker.replaceChildren();
+  for (const title of [mixed, ...topics]) {
+    const option = document.createElement('option');
+    option.value = title;
+    option.textContent = title;
+    setPicker.append(option);
+  }
+  setPicker.value = mixed;
+  selectSet();
+}
+picker.addEventListener('change', selectSubject);
+setPicker.addEventListener('change', selectSet);
+selectSubject();
+
+get('start').addEventListener('click', start);
+get('retry').addEventListener('click', start);
+get('previous').addEventListener('click', () => {
+  answers[position] = answer.value.trim();
+  position -= 1;
+  showQuestion();
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  answers[position] = answer.value.trim();
+  if (!answers[position]) {
+    message.textContent = 'Enter an answer to continue.';
+    answer.focus();
+    return;
+  }
+  if (position < questions.length - 1) {
+    position += 1;
+    showQuestion();
+    return;
+  }
+  const unanswered = answers.indexOf('');
+  if (unanswered !== -1) {
+    position = unanswered;
+    showQuestion();
+    message.textContent = 'Answer this question before submitting.';
+    return;
+  }
+  showResults();
+});
+
+const printSheet = get('print-sheet');
+function appendPrintText(parent, tag, value) {
+  const element = document.createElement(tag);
+  element.textContent = value;
+  parent.append(element);
+  return element;
+}
+
+function printSample(guide) {
+  const subject = picker.value;
+  const english = subject === englishSubject;
+  const includeWriting = english && setPicker.value === mixed;
+  printSheet.replaceChildren();
+  const header = document.createElement('header');
+  printSheet.append(header);
+  appendPrintText(header, 'div', 'Education Lesedi Scholars Hub');
+  appendPrintText(header, 'h1', guide ? 'IGCSE Practice · Answer Guide' : 'IGCSE Practice · Question Paper');
+  appendPrintText(header, 'div', subject + ' · ' + setPicker.value + ' · ' + questions.length + ' marks');
+
+  if (!guide) {
+    appendPrintText(printSheet, 'p', 'Name: __________________________   Class: __________   Date: __________');
+    appendPrintText(printSheet, 'p', 'Suggested time: ' + (setPicker.value === mixed ? 20 : 10) + ' minutes.');
+    appendPrintText(printSheet, 'p', picker.value === 'Mathematics (0580)'
+      ? 'Answer all questions without a calculator. Each question is worth one mark.'
+      : 'Answer all questions. Write A, B, C or D. Each question is worth one mark.');
+    if (english) {
+      const passage = get('english-passage');
+      appendPrintText(printSheet, 'h2', passage.querySelector('h3').textContent);
+      for (const paragraph of passage.querySelectorAll(':scope > p')) {
+        appendPrintText(printSheet, 'p', paragraph.textContent);
+      }
+    }
+  }
+
+  const list = document.createElement('ol');
+  printSheet.append(list);
+  for (const question of questions) {
+    const item = document.createElement('li');
+    list.append(item);
+    appendPrintText(item, 'strong', question.prompt + ' [1 mark]');
+    if (guide) {
+      const option = question.options ? '. ' + question.options['ABCD'.indexOf(question.key)] : '';
+      appendPrintText(item, 'div', 'Answer: ' + question.key + option);
+      appendPrintText(item, 'div', question.solution);
+    } else {
+      question.options?.forEach((option, index) =>
+        appendPrintText(item, 'div', 'ABCD'[index] + '. ' + option));
+      appendPrintText(item, 'p', 'Answer: __________________________________').className = 'response';
+    }
+  }
+
+  if (includeWriting) {
+    appendPrintText(printSheet, 'h2', guide ? 'Optional writing · 8-mark guide' : 'Optional writing · 8 marks, separately scored');
+    const writing = get('writing-task').querySelectorAll('p');
+    appendPrintText(printSheet, 'p', writing[guide ? 1 : 0].textContent);
+  }
+  window.print();
+}
+
+get('print-paper').addEventListener('click', () => printSample(false));
+get('print-guide').addEventListener('click', () => printSample(true));
+</script>
+</body>
+</html>
