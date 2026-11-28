@@ -25,6 +25,20 @@ button:disabled { opacity: .5; cursor: default; }
 #question-options { white-space: pre-line; }
 #solutions strong { white-space: pre-line; }
 li { margin-bottom: .8rem; }
+
+.print-actions { margin: .75rem 0 1rem; }
+#print-sheet { display: none; }
+@page { size: A4; margin: 16mm; }
+@media print {
+  body { background: white; color: black; font: 11pt/1.4 system-ui, sans-serif; }
+  body > main { display: none; }
+  #print-sheet { display: block; }
+  #print-sheet h1 { margin: .25em 0; font-size: 18pt; }
+  #print-sheet h2 { font-size: 13pt; }
+  #print-sheet header { border-bottom: 1px solid #222; padding-bottom: .5em; }
+  #print-sheet li { margin: 0 0 1em; break-inside: avoid; }
+  #print-sheet .response { margin: .6em 0 0; }
+}
 </style>
 </head>
 <body>
@@ -43,6 +57,10 @@ li { margin-bottom: .8rem; }
   <option>Physics (0625)</option>
   <option>First Language English (0500)</option>
 </select>
+<div class="actions print-actions">
+  <button type="button" class="secondary" id="print-paper">Print question paper / Save PDF</button>
+  <button type="button" class="secondary" id="print-guide">Print answer guide / Save PDF</button>
+</div>
 <p id="sample-description">Five Core non-calculator questions. You can change answers before submitting. Worked solutions appear after submission.</p>
 <div id="english-passage" hidden>
   <h3>Waiting for the bus</h3>
@@ -75,6 +93,7 @@ li { margin-bottom: .8rem; }
 </section>
 <p>Independent practice by Education Lesedi Scholars Hub.</p>
 </main>
+<div id="print-sheet"></div>
 <script>
 const mathematics = [
   { prompt: 'Write 0.375 as a fraction in its simplest form.', hint: 'Enter a simplified fraction, for example 1/2.', key: '3/8', solution: '0.375 = 375/1000. Divide the numerator and denominator by 125 to get 3/8.' },
@@ -216,6 +235,64 @@ form.addEventListener('submit', event => {
   }
   showResults();
 });
+
+const printSheet = get('print-sheet');
+function appendPrintText(parent, tag, value) {
+  const element = document.createElement(tag);
+  element.textContent = value;
+  parent.append(element);
+  return element;
+}
+
+function printSample(guide) {
+  const subject = picker.value;
+  const english = subject === 'First Language English (0500)';
+  printSheet.replaceChildren();
+  const header = document.createElement('header');
+  printSheet.append(header);
+  appendPrintText(header, 'div', 'Education Lesedi Scholars Hub');
+  appendPrintText(header, 'h1', guide ? 'IGCSE Practice · Answer Guide' : 'IGCSE Practice · Question Paper');
+  appendPrintText(header, 'div', subject + ' · Free sample · ' + questions.length + ' marks');
+
+  if (!guide) {
+    appendPrintText(printSheet, 'p', 'Name: __________________________   Class: __________   Date: __________');
+    appendPrintText(printSheet, 'p', questions === mathematics
+      ? 'Answer all questions without a calculator. Each question is worth one mark.'
+      : 'Answer all questions. Write A, B, C or D. Each question is worth one mark.');
+    if (english) {
+      const passage = get('english-passage');
+      appendPrintText(printSheet, 'h2', passage.querySelector('h3').textContent);
+      appendPrintText(printSheet, 'p', passage.querySelector('p').textContent);
+    }
+  }
+
+  const list = document.createElement('ol');
+  printSheet.append(list);
+  for (const question of questions) {
+    const item = document.createElement('li');
+    list.append(item);
+    appendPrintText(item, 'strong', question.prompt + ' [1 mark]');
+    if (guide) {
+      const option = question.options ? '. ' + question.options['ABCD'.indexOf(question.key)] : '';
+      appendPrintText(item, 'div', 'Answer: ' + question.key + option);
+      appendPrintText(item, 'div', question.solution);
+    } else {
+      question.options?.forEach((option, index) =>
+        appendPrintText(item, 'div', 'ABCD'[index] + '. ' + option));
+      appendPrintText(item, 'p', 'Answer: __________________________________').className = 'response';
+    }
+  }
+
+  if (english) {
+    appendPrintText(printSheet, 'h2', guide ? 'Optional writing · Self-check' : 'Optional writing · Use a separate sheet');
+    const writing = get('english-passage').querySelectorAll('details p');
+    appendPrintText(printSheet, 'p', writing[guide ? 1 : 0].textContent);
+  }
+  window.print();
+}
+
+get('print-paper').addEventListener('click', () => printSample(false));
+get('print-guide').addEventListener('click', () => printSample(true));
 </script>
 </body>
 </html>
