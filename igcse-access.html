@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IGCSE 30-day access | Education Lesedi Scholars Hub</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{font:16px/1.55 system-ui,sans-serif;color:#102b5c;background:#f4f7fc}
+body{margin:0}main{max-width:58rem;margin:auto;padding:1rem}a{color:#174a99}
+button{background:#174a99;color:#fff;font:inherit;padding:.5rem .85rem;border:0;border-radius:.4rem;cursor:pointer}
+button:disabled{opacity:.6}iframe{width:100%;height:52rem;border:1px solid #b9c9df;border-radius:.7rem;background:#fff}
+</style>
+</head>
+<body>
+<main>
+<a href="./igcse-practice.html">← Free IGCSE practice</a>
+<h1>Lesedi IGCSE Practice · P70 for 30 days</h1>
+<p>Includes Mathematics, Biology, Chemistry, Physics and First Language English. Pay after receiving instructions from Lesedi support. Access starts after payment is verified.</p>
+<p id="status" role="status">Checking your account…</p>
+<p><a href="./?section=customer-account" id="sign-in" hidden>Sign in or create a Lesedi account</a>
+<a href="./?section=requests" id="messages" hidden>View support replies</a></p>
+<button id="request" type="button" hidden>Request 30-day access</button>
+<button id="refresh" type="button">Check access</button>
+<iframe id="pack" title="Protected IGCSE practice pack" sandbox="allow-scripts allow-modals" hidden></iframe>
+<noscript><p>Enable JavaScript to check your account access.</p></noscript>
+</main>
+<script>
+const get = id => document.getElementById(id);
+const frame = get('pack');
+const status = get('status');
+const request = get('request');
+const refresh = get('refresh');
+const client = window.supabase?.createClient("https://ajcsojkyhivjjmomtufs.supabase.co", "sb_publishable_i9mPavGeRvUhgt2oTlh1-g_2JslOkNp");
+let revision = 0;
+let expiryTimer;
+let activeAccount;
+let accessOwner;
+function closePack() {
+  clearTimeout(expiryTimer);
+  accessOwner = undefined;
+  frame.hidden = true;
+  frame.removeAttribute('srcdoc');
+}
+async function checkAccess() {
+  const check = ++revision;
+  refresh.disabled = true;
+  request.hidden = true;
+  try {
+    if (!client) throw Error('The account service could not load.');
+    const {data, error} = await client.auth.getSession();
+    if (check !== revision) return;
+    if (error) throw error;
+    activeAccount = data.session?.user.id;
+    if (!activeAccount || (accessOwner && accessOwner !== activeAccount)) closePack();
+    get('sign-in').hidden = Boolean(activeAccount);
+    get('messages').hidden = !activeAccount;
+    if (!activeAccount) {
+      status.textContent = 'Sign in to request 30-day access or use an active pass.';
+      return;
+    }
+    const result = await client.rpc('lesedi_igcse_open_pack');
+    if (check !== revision) return;
+    if (result.error) throw result.error;
+    if (!result.data?.html) {
+      closePack();
+      request.hidden = false;
+      status.textContent = 'Your account has no active IGCSE pass.';
+      return;
+    }
+    const remaining = Number(result.data.remaining_ms);
+    if (!Number.isFinite(remaining) || remaining <= 0) throw Error('This pass has expired.');
+    const expires = new Date(result.data.expires_at);
+    accessOwner = activeAccount;
+    if (frame.hidden) frame.srcdoc = result.data.html;
+    frame.hidden = false;
+    clearTimeout(expiryTimer);
+    expiryTimer = setTimeout(() => {
+      closePack();
+      checkAccess();
+    }, Math.min(remaining, 86400000));
+    status.textContent = 'Active until ' + expires.toLocaleString('en-BW', {timeZone:'Africa/Gaborone'}) + ' Botswana time.';
+  } catch {
+    if (check !== revision) return;
+    closePack();
+    status.textContent = 'Could not check IGCSE access. Use Check access to try again.';
+  } finally {
+    if (check === revision) refresh.disabled = false;
+  }
+}
+request.addEventListener('click', async () => {
+  const account = activeAccount;
+  const check = revision;
+  request.disabled = true;
+  try {
+    const {data, error} = await client.rpc('lesedi_send_site_request', {
+      p_subject: 'Package request · Lesedi IGCSE Practice',
+      p_message: 'I would like the P70, 30-day IGCSE Practice pass. Please send payment and activation instructions.'
+    });
+    if (error || !data) throw error || Error('Request was not confirmed.');
+    if (check === revision && account === activeAccount) {
+      request.hidden = true;
+      status.textContent = 'Request sent. Check support replies for payment instructions.';
+    }
+  } catch {
+    if (check === revision && account === activeAccount) {
+      status.textContent = 'Your request was not confirmed. Check your support messages before trying again.';
+    }
+  } finally {
+    request.disabled = false;
+  }
+});
+refresh.addEventListener('click', checkAccess);
+if (client) client.auth.onAuthStateChange((event, session) => {
+  if (event !== 'INITIAL_SESSION' && session?.user.id !== activeAccount) {
+    closePack();
+    setTimeout(checkAccess, 0);
+  }
+});
+checkAccess();
+</script>
+</body></html>
